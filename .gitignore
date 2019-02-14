@@ -14,5 +14,4 @@
 *.out
 
 .idea/
-go.sum
 licc-user.iml
