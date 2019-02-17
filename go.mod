@@ -2,6 +2,8 @@ module github.com/lico603/lico-my-site-user
 
 replace golang.org/x/text => github.com/golang/text v0.3.0
 
+replace golang.org/x/crypto => github.com/golang/crypto v0.0.0-20181203042331-505ab145d0a9
+
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/sse v0.0.0-20190125020943-a7658810eb74 // indirect
