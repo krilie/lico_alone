@@ -1,6 +1,7 @@
 module github.com/lico603/lico-my-site-user
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/sse v0.0.0-20190125020943-a7658810eb74 // indirect
 	github.com/gin-gonic/gin v1.3.0
 	github.com/golang/protobuf v1.2.0 // indirect
