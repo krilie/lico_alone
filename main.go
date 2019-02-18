@@ -2,13 +2,13 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lico603/lico-my-site-user/common"
+	"github.com/lico603/lico-my-site-user/common/jwt"
 	"net/http"
 )
 
 func main() {
 
-	common.Hello()
+	jwt.Hello()
 
 	router := gin.Default()
 
