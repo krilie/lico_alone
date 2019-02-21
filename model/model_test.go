@@ -2,7 +2,7 @@ package model
 
 import (
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"testing"
 )
 
@@ -10,6 +10,10 @@ type Product struct {
 	gorm.Model
 	Code  string
 	Price uint
+}
+
+func TestCreate(t *testing.T) {
+
 }
 
 func TestFunc(t *testing.T) {

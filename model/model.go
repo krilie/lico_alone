@@ -8,7 +8,7 @@ import (
 var Db *gorm.DB
 
 func init() {
-	if db, err := gorm.Open("mysql", "root:9@tcp(localhost:3306)/my?charset=utf8&parseTime=True&loc=Local"); err != nil {
+	if db, err := gorm.Open("mysql", "root:123456@tcp(192.168.31.238:3306)/test?charset=utf8&parseTime=True&loc=Local"); err != nil {
 		log.Log.Panicln(err)
 		return
 	} else {
