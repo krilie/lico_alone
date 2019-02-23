@@ -1,3 +1,11 @@
-ok: 23
 service:
   port: 81
+db:
+  ip: 192.168.31.238
+  port: 3306
+  user: root
+  password: 123456
+  database: user
+  max_open_conn: 1
+  max_idle_conn: 1
+  conn_max_left_time:  3600*7 #in second

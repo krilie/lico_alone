@@ -20,15 +20,22 @@ func init() {
 	//设置配置文件类型
 	Conf.v.SetConfigType("yaml")
 
-	Conf.v.SetDefault("ok", 23)
-	Conf.v.SetDefault("ok2", 24)
 	Conf.v.SetDefault("service.port", 80)
+	Conf.v.SetDefault("db.ip", "192.168.31.238")
+	Conf.v.SetDefault("db.port", 3306)
+	Conf.v.SetDefault("db.user", "root")
+	Conf.v.SetDefault("db.password", "123456")
+	Conf.v.SetDefault("db.database", "user")
+	Conf.v.SetDefault("db.max_open_conn", 1)
+	Conf.v.SetDefault("db.max_idle_conn", 1)
+	Conf.v.SetDefault("db.conn_max_left_time", 3600*7)
 
 	if err := Conf.v.ReadInConfig(); err != nil {
 		switch err.(type) {
 		case viper.ConfigFileNotFoundError:
-			err = Conf.v.WriteConfigAs("config.yaml") //new config file and ignore err
-			log.Log.Infoln("create a new config file config.yaml at pwd path. any err:", err)
+			//err = Conf.v.WriteConfigAs("config.yaml") //new config file and ignore err
+			//log.Log.Infoln("create a new config file config.yaml at pwd path. any err:", err)
+			log.Infoln("no config file use default:", err)
 		default:
 			log.Log.Warnln(err)
 		}
