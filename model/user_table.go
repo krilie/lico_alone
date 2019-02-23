@@ -1,7 +1,7 @@
 package model
 
 type User struct {
-	ID       int64  `gorm:"primary_key;auto_increment"`
+	ID       string `gorm:"primary_key;type:varchar(32)"`
 	NickName string `gorm:"type:varchar(20);unique_index"`
 	Phone    string `gorm:"type:varchar(20);unique_index"`
 	Email    string `gorm:"type:varchar(100);unique_index"`

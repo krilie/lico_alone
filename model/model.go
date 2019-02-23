@@ -3,6 +3,7 @@ package model
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/lico603/lico-my-site-user/common/log"
+	"time"
 )
 
 var Db *gorm.DB
@@ -18,5 +19,9 @@ func init() {
 		Db.CreateTable(&Permission{})
 		Db.CreateTable(&RolePermission{})
 		Db.CreateTable(&UserRole{})
+
+		Db.DB().SetMaxOpenConns(1)
+		Db.DB().SetMaxIdleConns(1)
+		Db.DB().SetConnMaxLifetime(time.Hour * 7)
 	}
 }
