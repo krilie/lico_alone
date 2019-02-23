@@ -6,6 +6,12 @@ import (
 	"time"
 )
 
+type DbHandler struct {
+	ID         string    `gorm:"primary_key;type:varchar(32)"` // 用户id uuid
+	CreateTime time.Time `gorm:"type:DATETIME;not null"`
+	Version    int       `gorm:"not null;default:0"`
+}
+
 var Db *gorm.DB
 
 func init() {

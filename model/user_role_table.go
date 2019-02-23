@@ -6,5 +6,5 @@ type UserRole struct {
 }
 
 func (UserRole) TableName() string {
-	return "user_role"
+	return "tb_user_role"
 }

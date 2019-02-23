@@ -8,36 +8,101 @@
           "title": "user",
           "fields": [
             {
-              "name": "REVISION",
-              "type": "Integer",
-              "remark": "",
-              "chnname": "乐观锁"
+              "name": "id",
+              "type": "DefaultString",
+              "remark": "用户主键",
+              "chnname": "id",
+              "pk": true,
+              "notNull": true,
+              "relationNoShow": false
             },
             {
-              "name": "CREATED_BY",
-              "type": "IdOrKey",
-              "remark": "",
-              "chnname": "创建人"
+              "name": "nick_name",
+              "type": "DefaultString",
+              "remark": "用户的呢称",
+              "chnname": "nick_name",
+              "notNull": true
             },
             {
-              "name": "CREATED_TIME",
-              "type": "DateTime",
-              "remark": "",
-              "chnname": "创建时间"
+              "name": "phone",
+              "type": "DefaultString",
+              "remark": "用户的手机号",
+              "chnname": "phone",
+              "notNull": true
             },
             {
-              "name": "UPDATED_BY",
-              "type": "IdOrKey",
-              "remark": "",
-              "chnname": "更新人"
+              "name": "email",
+              "type": "DefaultString",
+              "remark": "邮箱",
+              "chnname": "email",
+              "notNull": true
             },
             {
-              "name": "UPDATED_TIME",
-              "type": "DateTime",
+              "name": "password",
+              "type": "LongKey",
+              "remark": "密码",
+              "chnname": "password"
+            },
+            {
+              "name": "salt",
+              "type": "",
               "remark": "",
-              "chnname": "更新时间"
+              "chnname": "salt"
             }
-          ]
+          ],
+          "indexs": [
+            {
+              "name": "uni_nick_name",
+              "isUnique": true,
+              "fields": [
+                "nick_name"
+              ]
+            }
+          ],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "user",
+          "remark": "用户表"
         }
       ],
       "graphCanvas": {

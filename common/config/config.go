@@ -1,13 +1,9 @@
 package config
 
-import "github.com/spf13/viper"
-
-func init() {
-	if err := LoadConfigFromYaml(Conf); err != nil {
-
-		return
-	}
-}
+import (
+	"github.com/lico603/lico-my-site-user/common/log"
+	"github.com/spf13/viper"
+)
 
 type config struct {
 	v *viper.Viper
@@ -15,19 +11,26 @@ type config struct {
 
 var Conf = &config{}
 
-func LoadConfigFromYaml(c *config) error {
-	c.v = viper.New()
+func init() {
+	Conf.v = viper.New()
 	//设置配置文件的名字
-	c.v.SetConfigName("config")
+	Conf.v.SetConfigName("config")
 	//添加配置文件所在的路径,注意在Linux环境下%GOPATH要替换为$GOPATH
-	c.v.AddConfigPath("./")
+	Conf.v.AddConfigPath("./")
 	//设置配置文件类型
-	c.v.SetConfigType("yaml")
+	Conf.v.SetConfigType("yaml")
 
-	c.v.SetDefault("ok", 23)
+	Conf.v.SetDefault("ok", 23)
+	Conf.v.SetDefault("ok2", 24)
+	Conf.v.SetDefault("service.port", 80)
 
-	if err := c.v.ReadInConfig(); err != nil {
-		return err
+	if err := Conf.v.ReadInConfig(); err != nil {
+		switch err.(type) {
+		case viper.ConfigFileNotFoundError:
+			err = Conf.v.WriteConfigAs("config.yaml") //new config file and ignore err
+			log.Log.Infoln("create a new config file config.yaml at pwd path. any err:", err)
+		default:
+			log.Log.Warnln(err)
+		}
 	}
-	return nil
 }
