@@ -16,5 +16,5 @@ func NewJwtToken() (string, error) {
 	claims["exp"] = time.Now().Add(time.Hour * time.Duration(1)).Unix()
 	claims["iat"] = time.Now().Unix()
 	token.Claims = claims
-	return token.SignedString("fdafsd")
+	return token.SignedString([]byte("12ef"))
 }
