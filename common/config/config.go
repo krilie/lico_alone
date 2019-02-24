@@ -29,6 +29,9 @@ func init() {
 	Conf.v.SetDefault("db.max_open_conn", 1)
 	Conf.v.SetDefault("db.max_idle_conn", 1)
 	Conf.v.SetDefault("db.conn_max_left_time", 3600*7)
+	//ssl key
+	Conf.v.SetDefault("ssl.public_key", "public.key")
+	Conf.v.SetDefault("ssl.private_key", "private.key")
 
 	if err := Conf.v.ReadInConfig(); err != nil {
 		switch err.(type) {
