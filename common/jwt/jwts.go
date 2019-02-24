@@ -8,7 +8,7 @@ import (
 func NewJwtToken(userClaims *UserClaims) (string, error) {
 	jwtToken := jwt.New(jwt.SigningMethodHS256)
 	jwtToken.Claims = userClaims
-	return jwtToken.SignedString([]byte("12ef"))
+	return jwtToken.SignedString([]byte("12ef")) //TODO: 這個換成rsa加密
 }
 
 //檢查jwt是否有效
