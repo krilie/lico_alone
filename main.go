@@ -4,14 +4,11 @@ import (
 	"github.com/fvbock/endless"
 	"github.com/gin-gonic/gin"
 	"github.com/lico603/lico-my-site-user/common/config"
-	"github.com/lico603/lico-my-site-user/common/jwt"
 	"github.com/lico603/lico-my-site-user/common/log"
 	"net/http"
 )
 
 func main() {
-
-	jwt.Hello()
 
 	router := gin.Default()
 

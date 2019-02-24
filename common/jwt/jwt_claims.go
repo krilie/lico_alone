@@ -13,7 +13,7 @@ var ErrIatTime = errors.New("jwt in bad format,iat>=exp")
 type UserClaims struct {
 	AppId    string `json:"app_id"`    //頒發給哪個端
 	UserId   string `json:"user_id"`   //用戶id
-	UserType string `json:"user_type"` //用戶類型 app,admin,normal
+	UserType string `json:"user_type"` //用戶類型 admin,normal[]
 	NickName string `json:"nick_name"` //用戶呢稱
 	Iat      int64  `json:"iat"`       //發放時間
 	Exp      int64  `json:"exp"`       //過期時間
