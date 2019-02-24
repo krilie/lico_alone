@@ -35,6 +35,7 @@ func init() {
 		Db.CreateTable(&Permission{})
 		Db.CreateTable(&RolePermission{})
 		Db.CreateTable(&UserRole{})
+		Db.CreateTable(&AppUserAccessToken{})
 
 		Db.DB().SetMaxOpenConns(config.GetInt("db.max_open_conn"))
 		Db.DB().SetMaxIdleConns(config.GetInt("db.max_idle_conn"))
