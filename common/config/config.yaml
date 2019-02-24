@@ -9,3 +9,11 @@ db:
   max_open_conn: 1
   max_idle_conn: 1
   conn_max_left_time:  3600*7 #in second
+
+jwt: #用于生成jwt
+  public_key: ""
+  private_key: ""
+
+ssl:
+  public_key: ""
+  private_key: ""
