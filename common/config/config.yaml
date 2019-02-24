@@ -13,6 +13,8 @@ db:
 jwt: #用于生成jwt
   public_key: ""
   private_key: ""
+  #app_exp_duration: 23 #app角色用戶的過期時間 app再算
+  normal_exp_duration: 345 #其他用戶的過期時間
 
 ssl:
   public_key: ""

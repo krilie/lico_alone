@@ -1,20 +1,20 @@
 package jwt
 
 import (
-	"fmt"
-	"time"
+	"github.com/dgrijalva/jwt-go"
 )
-import "github.com/dgrijalva/jwt-go"
 
-func Hello() {
-	fmt.Println("hello")
+//創建一個新的jwt,
+func NewJwtToken(userClaims *UserClaims) (string, error) {
+	jwtToken := jwt.New(jwt.SigningMethodHS256)
+	jwtToken.Claims = userClaims
+	return jwtToken.SignedString([]byte("12ef"))
 }
 
-func NewJwtToken() (string, error) {
-	token := jwt.New(jwt.SigningMethodHS256)
-	claims := make(jwt.MapClaims)
-	claims["exp"] = time.Now().Add(time.Hour * time.Duration(1)).Unix()
-	claims["iat"] = time.Now().Unix()
-	token.Claims = claims
-	return token.SignedString([]byte("12ef"))
+//檢查jwt是否有效
+func CheckJwtToken(jwtString string) (userClaims UserClaims, err error) {
+	_, err = jwt.ParseWithClaims(jwtString, &userClaims, func(_ *jwt.Token) (i interface{}, e error) {
+		return []byte("12ef"), nil
+	})
+	return
 }
