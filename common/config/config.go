@@ -32,6 +32,7 @@ func init() {
 	//ssl key
 	Conf.v.SetDefault("ssl.public_key", "public.key")
 	Conf.v.SetDefault("ssl.private_key", "private.key")
+	Conf.v.SetDefault("ssl.hs256_key", "E5Vsfs#$afasdrtfawe*^&%(")
 
 	if err := Conf.v.ReadInConfig(); err != nil {
 		switch err.(type) {
