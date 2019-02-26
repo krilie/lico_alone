@@ -1,8 +1,10 @@
 module github.com/lico603/lico-my-site-user
 
-replace golang.org/x/text => github.com/golang/text v0.3.0
-
-replace golang.org/x/crypto => github.com/golang/crypto v0.0.0-20181203042331-505ab145d0a9
+replace(
+    golang.org/x/text => github.com/golang/text v0.3.0
+    golang.org/x/sys => github.com/golang/sys
+ 	golang.org/x/crypto => github.com/golang/crypto v0.0.0-20181203042331-505ab145d0a9
+)
 
 require (
 	github.com/BurntSushi/toml v0.3.1 // indirect
