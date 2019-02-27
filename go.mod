@@ -2,6 +2,12 @@ module github.com/lico603/lico-my-site-user
 
 replace golang.org/x/text => github.com/golang/text v0.3.0
 
+replace google.golang.org/appengine => github.com/golang/appengine v1.4.0
+
+replace golang.org/x/net => github.com/golang/net v0.0.0-20180724234803-3673e40ba225
+
+replace golang.org/x/sys => github.com/golang/sys v0.0.0-20181205085412-a5c9d58dba9a
+
 replace golang.org/x/crypto => github.com/golang/crypto v0.0.0-20181203042331-505ab145d0a9
 
 require (
