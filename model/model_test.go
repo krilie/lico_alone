@@ -21,6 +21,7 @@ func TestCreate(t *testing.T) {
 	if e := Db.Create(&user).Error; e != nil {
 		t.Error(e)
 	}
+	Db.Begin()
 }
 
 func TestFunc(t *testing.T) {
