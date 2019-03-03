@@ -1,8 +1,10 @@
 package user
 
 import (
+	"github.com/jinzhu/gorm"
 	"github.com/lico603/lico-my-site-user/common/context_util"
 	"github.com/lico603/lico-my-site-user/common/jwt"
+	"github.com/lico603/lico-my-site-user/common/log"
 	"github.com/lico603/lico-my-site-user/common/pswd_md5"
 	"github.com/lico603/lico-my-site-user/common/uuid_util"
 	"github.com/lico603/lico-my-site-user/model"
@@ -10,13 +12,18 @@ import (
 )
 
 // 用户登录,到这里说明参数有可能还是不正确的。检查参数,放到上层
-func UserLogin(ctx context_util.Context, loginName, pswd string) (jwtString string, err error) {
+func UserLogin(ctx *context_util.Context, loginName, pswd string) (jwtString string, err error) {
 	//取到用户的值
 	user := new(model.User)
 	err = model.Db.First(user, "login_name = ?", loginName).Error
-	if user == nil {
+	if err != nil && err == gorm.ErrRecordNotFound {
+		log.Error(err)
 		return "", ErrNoSuchUser
+	} else if err != nil {
+		log.Error("internal error,", err)
+		return "", err
 	}
+
 	if pswd_md5.IsPasswordOk(pswd, user.Password, user.Salt) {
 		var userClaims jwt.UserClaims
 		userClaims.NickName = user.NickName

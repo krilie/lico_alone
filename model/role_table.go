@@ -1,7 +1,5 @@
 package model
 
-import "github.com/jinzhu/gorm"
-
 type Role struct {
 	DbHandler
 	Name        string `gorm:"type:varchar(50);unique_index"`

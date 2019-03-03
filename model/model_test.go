@@ -1,7 +1,6 @@
 package model
 
 import (
-	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/lico603/lico-my-site-user/common/pswd_md5"
 	"github.com/lico603/lico-my-site-user/common/uuid_util"
 	"testing"
