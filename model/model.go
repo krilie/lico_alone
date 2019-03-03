@@ -30,12 +30,37 @@ func init() {
 		return
 	} else {
 		Db = db
-		Db.CreateTable(&User{})
-		Db.CreateTable(&Role{})
-		Db.CreateTable(&Permission{})
-		Db.CreateTable(&RolePermission{})
-		Db.CreateTable(&UserRole{})
-		Db.CreateTable(&AppUserAccessToken{})
+
+		if !Db.HasTable(&User{}) {
+			if err := Db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").CreateTable(&User{}).Error; err != nil {
+				log.Log.Panicln(err)
+			}
+		}
+		if !Db.HasTable(&Role{}) {
+			if err := Db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").CreateTable(&Role{}).Error; err != nil {
+				log.Log.Panicln(err)
+			}
+		}
+		if !Db.HasTable(&Permission{}) {
+			if err := Db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").CreateTable(&Permission{}).Error; err != nil {
+				log.Log.Panicln(err)
+			}
+		}
+		if !Db.HasTable(&RolePermission{}) {
+			if err := Db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").CreateTable(&RolePermission{}).Error; err != nil {
+				log.Log.Panicln(err)
+			}
+		}
+		if !Db.HasTable(&UserRole{}) {
+			if err := Db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").CreateTable(&UserRole{}).Error; err != nil {
+				log.Log.Panicln(err)
+			}
+		}
+		if !Db.HasTable(&AppUserAccessToken{}) {
+			if err := Db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").CreateTable(&AppUserAccessToken{}).Error; err != nil {
+				log.Log.Panicln(err)
+			}
+		}
 
 		Db.DB().SetMaxOpenConns(config.GetInt("db.max_open_conn"))
 		Db.DB().SetMaxIdleConns(config.GetInt("db.max_idle_conn"))

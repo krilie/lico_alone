@@ -9,7 +9,7 @@ import (
 func UserLogin(name, pswd string) (jwtString string, err error) {
 	//取到用户的值
 	user := new(model.User)
-	model.Db.First(user, "name = ?", name)
+	err = model.Db.First(user, "name = ?", name).Error
 	if user == nil {
 		return "", ErrNoSuchUser
 	}
