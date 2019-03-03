@@ -12,7 +12,7 @@ func SetHs256Key(key string) {
 }
 
 //創建一個新的jwt,
-func NewJwtToken(userClaims *UserClaims) (string, error) {
+func GetNewJwtToken(userClaims *UserClaims) (string, error) {
 	jwtToken := jwt.New(jwt.SigningMethodHS256)
 	jwtToken.Claims = userClaims
 	return jwtToken.SignedString(hs256Key) //TODO: 這個換成rsa加密
