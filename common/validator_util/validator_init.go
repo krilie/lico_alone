@@ -1,12 +1,21 @@
 package validator_util
 
-import "github.com/asaskevich/govalidator"
+//密码
+var PatternPassword = ""
 
-func init() {
-	govalidator.CustomTypeTagMap.Set("password", func(i interface{}, o interface{}) bool {
-		return false
-	})
-	govalidator.CustomTypeTagMap.Set("userName", func(i interface{}, o interface{}) bool {
-		return false
-	})
+//登录名
+var PatternLoginName = ""
+
+//手机号
+var PatternPhoneNum = ""
+
+func IsPassword(pswd string) bool {
+	return false
+}
+func IsLoginName(name string) bool {
+	return false
+}
+
+func IsPhoneNum(num string) bool {
+	return false
 }
