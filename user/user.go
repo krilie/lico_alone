@@ -1,6 +1,9 @@
 package user
 
-import "github.com/lico603/lico-my-site-user/common/config"
+import (
+	"github.com/asaskevich/govalidator"
+	"github.com/lico603/lico-my-site-user/common/config"
+)
 
 // 用户模块的逻辑部分
 
@@ -9,4 +12,5 @@ var jwtExpDuration int64
 
 func init() {
 	jwtExpDuration = int64(config.GetInt("jwt.normal_exp_duration"))
+	govalidator.SetFieldsRequiredByDefault(true)
 }

@@ -1,6 +1,9 @@
 package model
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/jinzhu/gorm"
+	"strings"
+)
 
 type UserRole struct {
 	UserID int64 `gorm:"primary_key;type:varchar(32)"`
@@ -19,9 +22,6 @@ func GetAllRolesByUserId(db *gorm.DB, userId string) (roles string, err error) {
 	if err != nil {
 		return "", err
 	} else {
-		for _, v := range rolesS {
-			roles = roles + "," + v
-		}
-		return roles, nil
+		return strings.Join(rolesS, ","), nil
 	}
 }
