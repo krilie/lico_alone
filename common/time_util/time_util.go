@@ -12,3 +12,8 @@ func GetNowTimeString() string {
 func GetNowTimeStringFormat(format string) string {
 	return time.Now().Format(format)
 }
+
+func GetTimeNow() *time.Time {
+	timeN := time.Now()
+	return &timeN
+}

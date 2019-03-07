@@ -3,7 +3,7 @@ package model
 type Role struct {
 	DbHandler
 	Name        string `gorm:"type:varchar(50);unique_index"`
-	Description string `gorm:"type:varchar(100)"`
+	Description string `gorm:"type:varchar(100);not null"`
 }
 
 func (Role) TableName() string {

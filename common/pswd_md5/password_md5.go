@@ -3,6 +3,7 @@ package pswd_md5
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"github.com/coreos/etcd/pkg/stringutil"
 	"strings"
 )
 
@@ -17,4 +18,10 @@ func GetMd5Password(ori string, salt string) string {
 //检查password是否正常
 func IsPasswordOk(ori, md5ed, salt string) bool {
 	return GetMd5Password(ori, salt) == md5ed
+}
+
+//获取盐值
+func GetSalt(num uint) string {
+	randomStrings := stringutil.RandomStrings(num, 1)
+	return randomStrings[0]
 }

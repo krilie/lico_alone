@@ -1,6 +1,7 @@
 package model
 
 import (
+	"database/sql"
 	"github.com/lico603/lico-my-site-user/common/pswd_md5"
 	"github.com/lico603/lico-my-site-user/common/uuid_util"
 	"testing"
@@ -14,9 +15,9 @@ func TestCreate(t *testing.T) {
 	user.Version = 0
 	user.Salt = "123"
 	user.Password = pswd_md5.GetMd5Password("12345678", user.Salt)
-	user.Email = "me@example.com"
+	user.Email = sql.NullString{String: "me@example.com", Valid: true}
 	user.NickName = "ii"
-	user.Phone = "12323232323"
+	user.Phone = sql.NullString{String: "12323232323", Valid: true}
 	if e := Db.Create(&user).Error; e != nil {
 		t.Error(e)
 	}

@@ -1,6 +1,7 @@
 package pswd_md5
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -18,4 +19,13 @@ func TestIsPasswordOk(t *testing.T) {
 	} else {
 		t.Log("md5 checked ok", password)
 	}
+}
+
+func TestGetSalt(t *testing.T) {
+	fmt.Println(GetSalt(1))
+	fmt.Println(GetSalt(10))
+	fmt.Println(GetSalt(4))
+	fmt.Println(GetSalt(18))
+	fmt.Println(GetSalt(23))
+	fmt.Println(GetSalt(7))
 }
