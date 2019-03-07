@@ -2,7 +2,7 @@ package model
 
 import (
 	"github.com/jinzhu/gorm"
-	"strings"
+	"github.com/lico603/lico-my-site-user/common/log"
 )
 
 type UserRole struct {
@@ -16,12 +16,29 @@ func (UserRole) TableName() string {
 
 //取到这个用户下的所有角色，用逗号串起来
 func GetAllRolesByUserId(db *gorm.DB, userId string) (roles string, err error) {
-	var rolesS []string
-	err = db.Exec("select b.name from tb_user_role a inner join tb_role b on a.role_id = b.id and a.user_id = ?", userId).
-		Find(rolesS).Error
+	//执行语句
+	rows, err := db.Raw("select b.name as name from tb_user_role a inner join tb_role b on a.role_id = b.id and a.user_id = ?", userId).
+		Rows()
 	if err != nil {
 		return "", err
-	} else {
-		return strings.Join(rolesS, ","), nil
 	}
+	defer func() {
+		if e := rows.Close(); e != nil {
+			log.Error(e)
+		}
+	}()
+	//取字符串
+	var name string
+	var total string
+	for rows.Next() {
+		if err := rows.Scan(&name); err != nil {
+			return "", err
+		}
+		total += "," + name
+	}
+	//去掉最前一个逗号
+	if len(total) > 0 {
+		total = total[1:]
+	}
+	return total, nil
 }

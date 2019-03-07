@@ -37,6 +37,7 @@ func UserLogin(ctx *context_util.Context, loginName, password string) (jwtString
 		// 把所有角色查出放在这里
 		roles, err := model.GetAllRolesByUserId(model.Db, user.ID)
 		if err != nil {
+			log.Error("get roles err:", err)
 			return "", err
 		}
 		userClaims.UserRoles = roles
@@ -49,6 +50,7 @@ func UserLogin(ctx *context_util.Context, loginName, password string) (jwtString
 		userClaims.Exp = time.Now().Add(time.Duration(jwtExpDuration) * time.Second).Unix()
 		jwtToken, err := jwt.GetNewJwtToken(&userClaims)
 		if err != nil {
+			log.Error("jwt err:", err)
 			return "", err //未知错误
 		}
 		return jwtToken, nil
