@@ -3,7 +3,7 @@ package pswd_md5
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"github.com/coreos/etcd/pkg/stringutil"
+	"github.com/satori/go.uuid"
 	"strings"
 )
 
@@ -22,6 +22,6 @@ func IsPasswordOk(ori, md5ed, salt string) bool {
 
 //获取盐值
 func GetSalt(num uint) string {
-	randomStrings := stringutil.RandomStrings(num, 1)
-	return randomStrings[0]
+	randomStrings := hex.EncodeToString(uuid.NewV4().Bytes())
+	return randomStrings[0:num]
 }
