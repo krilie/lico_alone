@@ -12,8 +12,8 @@ type AppUserAccessToken struct {
 	Token          string    `gorm:"primary_key;type:varchar(32)"` // token本身，可以是數字字母等
 	CreateTime     time.Time `gorm:"type:DATETIME;not null"`
 	ExpirationTime time.Time `gorm:"type:DATETIME;not null"`
-	UserId         string    `gorm:"type:varchar(32)"` //與之對應的userid ，就是app user的id
-	CreateBy       string    `gorm:"type:varchar(32)"` //由哪個用戶創建
+	UserId         string    `gorm:"type:varchar(32);not null"` //與之對應的userid ，就是app user的id
+	CreateBy       string    `gorm:"type:varchar(32)"`          //由哪個用戶創建
 	IsValid        bool      `gorm:"type:boolean"`
 }
 
