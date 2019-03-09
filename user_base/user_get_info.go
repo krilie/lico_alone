@@ -1,4 +1,4 @@
-package user
+package user_base
 
 import (
 	"github.com/lico603/lico-my-site-user/common/context_util"
