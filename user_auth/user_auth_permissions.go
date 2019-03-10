@@ -11,7 +11,7 @@ import (
 
 //获取用户的 permission 列表,连表查询
 func UserAuthPermissions(ctx *context_util.Context, userId string) (set mapset.Set, err error) {
-	if !validator_util.IsIdString(userId) {
+	if !validator_util.IsIdStr(userId) {
 		log.Infoln("UserAuthPermissions", "user id format error:", userId)
 		return nil, errs.ErrParam
 	}

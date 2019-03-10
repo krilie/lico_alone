@@ -24,6 +24,6 @@ func IsPhoneNum(num string) bool {
 	return govalidator.Matches(num, PatternPhoneNum)
 }
 
-func IsIdString(id string) bool {
+func IsIdStr(id string) bool {
 	return govalidator.Matches(id, PatternId)
 }

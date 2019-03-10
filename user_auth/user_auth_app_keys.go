@@ -11,7 +11,7 @@ import (
 //取到app角色用户的所有keys
 func UserAuthAppKeys(ctx *context_util.Context, appUserId string) (list []model.AppUserAccessToken, err error) {
 	//校验参数
-	if !validator_util.IsIdString(appUserId) {
+	if !validator_util.IsIdStr(appUserId) {
 		log.Infoln("UserAuthAppKeys", "err param:", appUserId)
 		return nil, errs.ErrParam
 	}

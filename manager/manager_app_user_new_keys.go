@@ -13,7 +13,7 @@ import (
 // 给app用户添加新的key 访问key
 func ManagerAppUserNewKeys(ctx *context_util.Context, userId, keyDescription string, Exp time.Time) (key *model.AppUserAccessToken, err error) {
 	//参数检查
-	if !validator_util.IsIdString(userId) || len(keyDescription) == 0 {
+	if !validator_util.IsIdStr(userId) || len(keyDescription) == 0 {
 		log.Infoln("", "param error:", userId, keyDescription)
 		return nil, errs.ErrParam
 	}

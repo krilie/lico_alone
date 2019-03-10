@@ -14,7 +14,7 @@ func UserAuthHasRole(ctx *context_util.Context, userId, roleName string) (bool, 
 	//参数检查
 	if len(roleName) == 0 ||
 		(!govalidator.IsAlpha(roleName)) ||
-		!(validator_util.IsIdString(userId)) {
+		!(validator_util.IsIdStr(userId)) {
 		log.Error("UserAuthHasRole", "参数格式不正确")
 		return false, errs.ErrParam
 	}
