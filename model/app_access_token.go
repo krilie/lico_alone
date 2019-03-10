@@ -1,6 +1,8 @@
 package model
 
-import "time"
+import (
+	"time"
+)
 
 // 客戶端也是用戶的一種，可以登錄后臺，請請一個access_token，
 // 用于調用普通用戶登錄接口時認證，或是調用其他需要的接口時加上
@@ -15,8 +17,10 @@ type AppUserAccessToken struct {
 	UserId         string    `gorm:"type:varchar(32);not null"` //與之對應的userid ，就是app user的id
 	CreateBy       string    `gorm:"type:varchar(32)"`          //由哪個用戶創建
 	IsValid        bool      `gorm:"type:boolean"`
+	Description    string    `gorm:"type:varchar(128)"` //给这个token加个描述，表明是那个干什么的
 }
 
+//一个app用户可以有多个token
 func (AppUserAccessToken) TableName() string {
 	return "tb_app_user_token"
 }

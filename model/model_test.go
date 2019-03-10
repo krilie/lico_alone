@@ -2,6 +2,7 @@ package model
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/lico603/lico-my-site-user/common/pswd_md5"
 	"github.com/lico603/lico-my-site-user/common/uuid_util"
 	"testing"
@@ -26,4 +27,9 @@ func TestCreate(t *testing.T) {
 
 func TestFunc(t *testing.T) {
 
+}
+
+func TestFuncGetRoleIdByName(t *testing.T) {
+	id, err := GetRoleIdByName(Db, "123")
+	fmt.Println(id, err)
 }
