@@ -3,6 +3,7 @@ package user_base
 import (
 	"database/sql"
 	"github.com/lico603/lico-my-site-user/common/context_util"
+	"github.com/lico603/lico-my-site-user/common/errs"
 	"github.com/lico603/lico-my-site-user/common/log"
 	"github.com/lico603/lico-my-site-user/common/pswd_md5"
 	"github.com/lico603/lico-my-site-user/common/uuid_util"
@@ -16,7 +17,7 @@ func UserRegister(ctx *context_util.Context, loginName string, password string) 
 	//检查密码与用户名
 	if !(validator_util.IsLoginName(loginName) && validator_util.IsPassword(password)) {
 		log.Infoln("user loginName or password format error.")
-		return ErrParam
+		return errs.ErrParam
 	}
 	//插入用户数据
 	var user model.User

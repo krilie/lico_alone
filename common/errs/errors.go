@@ -1,4 +1,4 @@
-package user_base
+package errs
 
 import "fmt"
 
