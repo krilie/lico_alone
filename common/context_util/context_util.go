@@ -24,10 +24,19 @@ func (ctx *Context) GetAppIdOrEmpty() string {
 		return ""
 	}
 }
+
 func (ctx *Context) GetUserIdOrEmpty() string {
 	if ctx.Auth != nil && ctx.Auth.UserId != nil {
 		return *ctx.Auth.UserId
 	} else {
 		return ""
+	}
+}
+
+func (ctx *Context) GetUserIdOrDefault(def string) string {
+	if ctx.Auth != nil && ctx.Auth.UserId != nil {
+		return *ctx.Auth.UserId
+	} else {
+		return def
 	}
 }

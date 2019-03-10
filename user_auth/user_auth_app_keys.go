@@ -1,6 +1,7 @@
 package user_auth
 
 import (
+	"github.com/lico603/lico-my-site-user/common/context_util"
 	"github.com/lico603/lico-my-site-user/common/errs"
 	"github.com/lico603/lico-my-site-user/common/log"
 	"github.com/lico603/lico-my-site-user/common/validator_util"
@@ -8,7 +9,7 @@ import (
 )
 
 //取到app角色用户的所有keys
-func UserAuthAppKeys(appUserId string) (list []model.AppUserAccessToken, err error) {
+func UserAuthAppKeys(ctx *context_util.Context, appUserId string) (list []model.AppUserAccessToken, err error) {
 	//校验参数
 	if !validator_util.IsIdString(appUserId) {
 		log.Infoln("UserAuthAppKeys", "err param:", appUserId)
