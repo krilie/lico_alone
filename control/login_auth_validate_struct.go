@@ -16,34 +16,38 @@ type validate map[string]auth
 var authMap validate
 
 //添加一个role
-func (v validate) addRole(url, role string) bool {
+func (v validate) addRole(url string, role ...string) {
 	if _, ok := v[url]; !ok {
 		//不存在
 		v[url] = auth{}
 	}
-	return v[url].addRole(role)
+	v[url].addRole(role...)
 }
 
 //添加一个permission
-func (v validate) addPermission(url, permission string) bool {
+func (v validate) addPermission(url string, permission ...string) {
 	if _, ok := v[url]; !ok {
 		//不存在
 		v[url] = auth{}
 	}
-	return v[url].addPermission(permission)
+	v[url].addPermission(permission...)
 }
 
-func (a *auth) addRole(role string) bool {
+func (a *auth) addRole(role ...string) {
 	if a.role == nil {
 		a.role = mapset.NewThreadUnsafeSet()
 	}
-	return a.role.Add(role)
+	for _, val := range role {
+		a.role.Add(val)
+	}
 }
-func (a *auth) addPermission(permission string) bool {
+func (a *auth) addPermission(permission ...string) {
 	if a.permission == nil {
 		a.permission = mapset.NewThreadUnsafeSet()
 	}
-	return a.permission.Add(permission)
+	for _, val := range permission {
+		a.permission.Add(val)
+	}
 }
 
 //添加一个permission
@@ -68,4 +72,13 @@ func (v validate) hasPermission(url, permission string) bool {
 		return false
 	}
 	return v[url].permission.Contains(permission)
+}
+
+//添加一个permission
+func (v validate) hasUrl(url string) bool {
+	if _, ok := v[url]; !ok {
+		//不存在
+		return false
+	}
+	return true
 }

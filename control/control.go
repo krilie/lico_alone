@@ -6,6 +6,7 @@ package control
  *   /user/base/logout				登出
  *   /user/base/info				信息
  *   /user/base/valid				检查用户的key是否正常
+ *   /user/base/valid_sys_acc_key   检查acckey是否有效过期
  *   /user/base/register			注册
  *
  *   /user/auth/has_role			检查用户是否有role
