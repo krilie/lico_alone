@@ -12,11 +12,11 @@ package control
  *   /user/auth/has_permission		检查用户是否有permission
  *   /user/auth/roles				返回用户的所有role
  *   /user/auth/permissions			返回用户的所有权限permission
- *   /user/auth/app_keys			返回app用户的所有app_token
+ *   /user/auth/sys_acc_keys			返回app用户的所有app_token
  *
  *   /manager/role/new_role             给系统添加新角色
  *   /manager/role/new_permission       给角色添加permission
  *	 /manager/permission/new_permission 给系统添加新权限
  *   /manager/user/new_role             给用户添加新角色
- *   /manager/app_user/new_keys         给app用户添加新的key
+ *   /manager/sys_user/new_keys         给app用户添加新的key
  */

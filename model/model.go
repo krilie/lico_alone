@@ -57,8 +57,8 @@ func init() {
 				log.Log.Panicln(err)
 			}
 		}
-		if !Db.HasTable(&AppUserAccessToken{}) {
-			if err := Db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").CreateTable(&AppUserAccessToken{}).Error; err != nil {
+		if !Db.HasTable(&SysUserAccessToken{}) {
+			if err := Db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").CreateTable(&SysUserAccessToken{}).Error; err != nil {
 				log.Log.Panicln(err)
 			}
 		}

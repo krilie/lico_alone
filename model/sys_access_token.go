@@ -10,7 +10,7 @@ import (
 //這個就不是jwt了，并且有效時間長一些，可以控制是否有效，可以吊銷等
 //為簡間，只在部份接口上要求要有accesstoken 比如登錄，
 //web 瀏覽器沒有token，要通過其它方式認證
-type AppUserAccessToken struct {
+type SysUserAccessToken struct {
 	Token          string    `gorm:"primary_key;type:varchar(32)"` // token本身，可以是數字字母等
 	CreateTime     time.Time `gorm:"type:DATETIME;not null"`
 	ExpirationTime time.Time `gorm:"type:DATETIME;not null"`
@@ -21,6 +21,6 @@ type AppUserAccessToken struct {
 }
 
 //一个app用户可以有多个token
-func (AppUserAccessToken) TableName() string {
-	return "tb_app_user_token"
+func (SysUserAccessToken) TableName() string {
+	return "tb_sys_user_token"
 }
