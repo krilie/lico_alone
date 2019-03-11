@@ -8,7 +8,7 @@ import (
 
 //由token取得用户基本信息
 
-func UserGetInfo(ctx *context_util.Context, userId string) map[string]string {
+func UserBaseGetInfo(ctx *context_util.Context, userId string) map[string]string {
 	//已经登录了
 	var user model.User
 	err := model.Db.First(&user, "id = ?", userId).Error
