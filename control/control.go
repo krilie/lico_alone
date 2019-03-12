@@ -9,6 +9,7 @@ package control
  *   /user/base/valid_client_acc_token   检查acckey是否有效过期
  *   /user/base/register			注册
  *
+ *	 /user/auth/has_client_acc_token 检查是否有这个acctoken
  *   /user/auth/has_role			检查用户是否有role
  *   /user/auth/has_permission		检查用户是否有permission
  *   /user/auth/roles				返回用户的所有role

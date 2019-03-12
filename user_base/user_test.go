@@ -22,7 +22,7 @@ func TestUserLogin(t *testing.T) {
 	fmt.Println("user_name:", userName)
 	fmt.Println("user_password:", userPswd)
 	//注册
-	err := UserRegister(&ctx, userName, userPswd)
+	err := UserBaseRegister(&ctx, userName, userPswd)
 	if err != nil {
 		t.Error(err)
 		t.FailNow()

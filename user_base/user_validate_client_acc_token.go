@@ -19,11 +19,11 @@ func UserValidateClientAccToken(ctx *context_util.Context, sysAccKey string) (ke
 	}
 	//检查是否过期
 	if key.ExpirationTime.Before(time.Now()) {
-		return nil, errs.ErrParam //过期时间 在 当前时间 之前，过期了
+		return nil, errs.ErrClientAccTokenExp //过期时间 在 当前时间 之前，过期了
 	}
 	//检查是否可用
 	if !key.IsValid {
-		return nil, errs.ErrInternal
+		return nil, errs.ErrClientAccTokenNotValid
 	}
 	return key, nil
 }
