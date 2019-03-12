@@ -11,14 +11,14 @@ import (
 )
 
 // 给app用户添加新的key 访问key
-func ManagerSysUserNewKeys(ctx *context_util.Context, userId, keyDescription string, Exp time.Time) (key *model.SysUserAccessToken, err error) {
+func ManagerClientUserNewAccToken(ctx *context_util.Context, userId, keyDescription string, Exp time.Time) (key *model.ClientUserAccessToken, err error) {
 	//参数检查
 	if !validator_util.IsIdStr(userId) || len(keyDescription) == 0 {
 		log.Infoln("", "param error:", userId, keyDescription)
 		return nil, errs.ErrParam
 	}
 	//添加一个key
-	key = new(model.SysUserAccessToken)
+	key = new(model.ClientUserAccessToken)
 	key.CreateTime = time.Now()
 	key.UserId = userId
 	key.CreateBy = ctx.GetUserIdOrDefault(userId)

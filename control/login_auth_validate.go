@@ -26,10 +26,12 @@ func init() {
 func LoginAuthValidate() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		//取appKey和userKey，没有就是返回了""
-		appKey := c.GetHeader("AppKey")
+		clientKey := c.GetHeader("ClientKey")
 		userKey := c.GetHeader("Authorization")
 		url := c.Request.URL.String()
 		ip := c.ClientIP()
+
+		//检查clientKey即appkey
 
 		//检查当前url是否在拦截表里,不在则放行，放行不要appKey
 		if !authMap.hasUrl(url) {
@@ -37,7 +39,7 @@ func LoginAuthValidate() gin.HandlerFunc {
 			return
 		}
 		//如果在,就是需要appKey了,注册不要任何权限，包括appkey
-		_ = appKey
+		_ = clientKey
 		_ = userKey
 		_ = ip
 

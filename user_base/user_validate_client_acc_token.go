@@ -8,9 +8,9 @@ import (
 	"time"
 )
 
-func UserValidateSysAccKey(ctx *context_util.Context, sysAccKey string) (key *model.SysUserAccessToken, err error) {
+func UserValidateClientAccToken(ctx *context_util.Context, sysAccKey string) (key *model.ClientUserAccessToken, err error) {
 	row := model.Db.Where("token=?", sysAccKey).Row()
-	key = new(model.SysUserAccessToken)
+	key = new(model.ClientUserAccessToken)
 	err = row.Scan(key)
 	if err != nil && err == sql.ErrNoRows {
 		return nil, nil
