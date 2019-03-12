@@ -1,4 +1,4 @@
-package control
+package middle_funcs
 
 import (
 	"github.com/deckarep/golang-set"
