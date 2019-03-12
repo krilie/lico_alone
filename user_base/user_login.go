@@ -7,6 +7,7 @@ import (
 	"github.com/lico603/lico-my-site-user/common/jwt"
 	"github.com/lico603/lico-my-site-user/common/log"
 	"github.com/lico603/lico-my-site-user/common/pswd_md5"
+	"github.com/lico603/lico-my-site-user/common/string_util"
 	"github.com/lico603/lico-my-site-user/common/uuid_util"
 	"github.com/lico603/lico-my-site-user/common/validator_util"
 	"github.com/lico603/lico-my-site-user/model"
@@ -41,7 +42,7 @@ func UserLogin(ctx *context_util.Context, loginName, password string) (jwtString
 			log.Error("get roles err:", err)
 			return "", err
 		}
-		userClaims.UserRoles = roles
+		userClaims.UserRoles = string_util.JoinWith(roles, ",")
 		userClaims.AppId = ctx.GetAppIdOrEmpty()
 		userClaims.Iss = "sys-user-module"
 		userClaims.UserId = user.ID

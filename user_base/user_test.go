@@ -5,7 +5,6 @@ import (
 	"github.com/lico603/lico-my-site-user/common/context_util"
 	"github.com/lico603/lico-my-site-user/common/jwt"
 	"github.com/lico603/lico-my-site-user/common/random_token"
-	"github.com/lico603/lico-my-site-user/common/string_util"
 	"github.com/lico603/lico-my-site-user/common/uuid_util"
 	"testing"
 )
@@ -13,9 +12,9 @@ import (
 func TestUserLogin(t *testing.T) {
 	//上下文对象
 	var ctx context_util.Context
-	ctx.StackId = uuid_util.GetUuid()
-	ctx.Auth = new(context_util.AuthInfo)
-	ctx.Auth.AppId = string_util.NewString("123")
+	ctx.TraceId = uuid_util.GetUuid()
+	ctx.UserClaims = new(jwt.UserClaims)
+	ctx.UserClaims.AppId = "123"
 	//测试数据
 	userName := random_token.GetAToken()
 	userPswd := random_token.GetAToken()

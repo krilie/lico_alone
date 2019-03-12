@@ -15,6 +15,7 @@ import (
 // context: key[context]
 // 按顺序检查这些信息
 // 根据需要选择使用
+// 从context中取到有用的值
 func UserIdMustMatchLogged() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		//取用户信息
@@ -38,7 +39,7 @@ func UserIdMustMatchLogged() gin.HandlerFunc {
 			return
 		} else if ctx.GetUserIdOrEmpty() != userId {
 			log.Errorln("UserIdMustMatchLogged", "user id and login user id not match.")
-			c.AbortWithStatusJSON(400, errs.NewErr(errs.ErrParam, "no user id find"))
+			c.AbortWithStatusJSON(400, errs.NewErr(errs.ErrParam, "user id and login user id not match."))
 			return
 		}
 		c.Next()

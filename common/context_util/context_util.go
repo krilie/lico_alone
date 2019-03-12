@@ -5,10 +5,10 @@ import (
 	"time"
 )
 
-//运行上下文对象
-
+// 运行上下文对象
+// 可记录来自那个ip 用户的信息等
 type Context struct {
-	StackId string //微服务调用栈分析追踪
+	TraceId string //微服务调用栈分析追踪
 
 	//开始时间和结束时间打在日志上这里不要加
 	StartTime time.Time //开始调用时间
