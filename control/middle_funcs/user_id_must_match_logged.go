@@ -28,8 +28,6 @@ func UserIdMustMatchLogged() gin.HandlerFunc {
 		//取认证信息
 		ctx := gin_util.GetApplicationContextOrAbort(c)
 		if ctx == nil {
-			log.Errorln("UserIdMustMatchLogged", "context not set,no context find")
-			c.AbortWithStatusJSON(500, errs.ErrInternal.ToStdWithMsg("internal err.please upload this issue to us"))
 			return
 		} else if ctx.GetUserIdOrEmpty() != userId {
 			log.Errorln("UserIdMustMatchLogged", "user id and login user id not match.")

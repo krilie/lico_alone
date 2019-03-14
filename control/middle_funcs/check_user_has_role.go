@@ -16,7 +16,7 @@ func CheckUserHasRole(roles ...interface{}) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// check user get context
 		ctx := gin_util.GetApplicationContextOrAbort(c)
-		if ctx != nil {
+		if ctx == nil {
 			return
 		}
 		//get user id from context
