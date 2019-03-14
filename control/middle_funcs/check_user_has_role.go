@@ -8,7 +8,11 @@ import (
 	"github.com/lico603/lico-my-site-user/user_auth"
 )
 
-func CheckUserHasRole(roles mapset.Set) gin.HandlerFunc {
+func CheckUserHasRole(roles ...interface{}) gin.HandlerFunc {
+	roleSet := mapset.NewThreadUnsafeSet()
+	for e := range roles {
+		roleSet.Add(e)
+	}
 	return func(c *gin.Context) {
 		// check user get context
 		ctx := gin_util.GetApplicationContextOrAbort(c)
@@ -27,7 +31,7 @@ func CheckUserHasRole(roles mapset.Set) gin.HandlerFunc {
 			gin_util.AbortWithAppErr(ctx, c, err)
 			return
 		}
-		sect := roles.Intersect(userRoles)
+		sect := roleSet.Intersect(userRoles)
 		if sect.Cardinality() == 0 {
 			c.AbortWithStatusJSON(401, errs.UnAuthorized.ToStdWithMsg("no permission"))
 			return

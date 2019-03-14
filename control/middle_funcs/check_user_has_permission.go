@@ -9,7 +9,11 @@ import (
 )
 
 // check user has some permission request by used url
-func CheckUserHasPermission(perms mapset.Set) gin.HandlerFunc {
+func CheckUserHasPermission(perms ...interface{}) gin.HandlerFunc {
+	permsSet := mapset.NewThreadUnsafeSet()
+	for e := range perms {
+		permsSet.Add(e)
+	}
 	return func(c *gin.Context) {
 		// check user get context
 		ctx := gin_util.GetApplicationContextOrAbort(c)
@@ -28,7 +32,7 @@ func CheckUserHasPermission(perms mapset.Set) gin.HandlerFunc {
 			gin_util.AbortWithAppErr(ctx, c, err)
 			return
 		}
-		sect := perms.Intersect(permissions)
+		sect := permsSet.Intersect(permissions)
 		if sect.Cardinality() == 0 {
 			c.AbortWithStatusJSON(401, errs.UnAuthorized.ToStdWithMsg("no permission"))
 			return
