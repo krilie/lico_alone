@@ -2,9 +2,9 @@ package middle_funcs
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lico603/lico-my-site-user/common/context_util"
 	"github.com/lico603/lico-my-site-user/common/errs"
 	"github.com/lico603/lico-my-site-user/common/log"
+	"github.com/lico603/lico-my-site-user/control/gin_util"
 )
 
 // 中间件
@@ -22,24 +22,18 @@ func UserIdMustMatchLogged() gin.HandlerFunc {
 		userId := checkUserId(c)
 		if userId == "" {
 			log.Errorln("UserIdMustMatchLogged", "no user_id find")
-			c.AbortWithStatusJSON(400, errs.NewErr(errs.ErrParam, "no user id find"))
+			c.AbortWithStatusJSON(400, errs.ErrParam.ToStdWithMsg("no user id find"))
 			return
 		}
 		//取认证信息
-		value, exists := c.Get("context")
-		if !exists {
-			log.Errorln("UserIdMustMatchLogged", "context not set,no context find")
-			c.AbortWithStatusJSON(500, errs.NewErr(errs.ErrInternal, "internal err.please upload this issue to us"))
-			return
-		}
-		ctx := context_util.GetContextOrNil(value)
+		ctx := gin_util.GetApplicationContextOrAbort(c)
 		if ctx == nil {
 			log.Errorln("UserIdMustMatchLogged", "context not set,no context find")
-			c.AbortWithStatusJSON(500, errs.NewErr(errs.ErrInternal, "internal err.please upload this issue to us"))
+			c.AbortWithStatusJSON(500, errs.ErrInternal.ToStdWithMsg("internal err.please upload this issue to us"))
 			return
 		} else if ctx.GetUserIdOrEmpty() != userId {
 			log.Errorln("UserIdMustMatchLogged", "user id and login user id not match.")
-			c.AbortWithStatusJSON(400, errs.NewErr(errs.ErrParam, "user id and login user id not match."))
+			c.AbortWithStatusJSON(400, errs.ErrParam.ToStdWithMsg("user id and login user id not match."))
 			return
 		}
 		c.Next()

@@ -5,6 +5,7 @@ import (
 	"github.com/lico603/lico-my-site-user/common/context_util"
 	"github.com/lico603/lico-my-site-user/common/string_util"
 	"github.com/lico603/lico-my-site-user/common/uuid_util"
+	"github.com/lico603/lico-my-site-user/control/gin_util"
 	"time"
 )
 
@@ -12,10 +13,10 @@ import (
 // 从请中中构建context上下文的中间件
 func BuildContextFunc() gin.HandlerFunc {
 	return func(c *gin.Context) {
-
 		context := &context_util.Context{}
-		context.TraceId = string_util.EmptyDefault(c.GetHeader("TraceId"), uuid_util.GetUuid())
+		context.TraceId = string_util.EmptyDefault(c.GetHeader(gin_util.HeaderTraceId), uuid_util.GetUuid())
 		context.StartTime = time.Now()
-		c.Set("context", context)
+		c.Set(gin_util.GinKeyAppContext, context)
+		c.Next()
 	}
 }

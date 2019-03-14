@@ -14,6 +14,7 @@ type Context struct {
 	StartTime time.Time //开始调用时间
 	LastTime  time.Time //调用结束时间
 
+	ClientId   *string
 	UserClaims *jwt.UserClaims //一些认证信息，可以为nil
 }
 
@@ -38,6 +39,14 @@ func (ctx *Context) GetUserIdOrDefault(def string) string {
 		return ctx.UserClaims.UserId
 	} else {
 		return def
+	}
+}
+
+func (ctx *Context) GetClientIdOrEmpty(def string) string {
+	if ctx.ClientId != nil {
+		return *ctx.ClientId
+	} else {
+		return ""
 	}
 }
 
