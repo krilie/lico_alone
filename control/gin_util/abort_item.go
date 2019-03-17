@@ -36,7 +36,3 @@ func AbortWithErr(ctx *context_util.Context, c *gin.Context, err error) {
 func AbortWithAppErr(ctx *context_util.Context, c *gin.Context, err *errs.Error) {
 	c.AbortWithStatusJSON(err.HttpStatus, err.ToStdReturn())
 }
-
-func ParamCheckEmptyOkOrAbort() {
-
-}

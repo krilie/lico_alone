@@ -1,7 +1,6 @@
 package common_struct
 
-import "github.com/lico603/lico-my-site-user/common/common_struct/errs"
-
+//标准返回不引用error类型
 //常规返回类型
 var (
 	StdSuccess = &StdReturn{Code: "success", Message: "success"}
@@ -20,17 +19,4 @@ func (s *StdReturn) WithCode(code string) {
 
 func (s *StdReturn) WithMessage(msg string) {
 	s.Message = msg
-}
-
-func NewStdRet(code, msg string) *StdReturn {
-	return &StdReturn{Code: code, Message: msg}
-}
-func NewStdRetFromErr(e *errs.Error) *StdReturn {
-	return &StdReturn{e.Code, e.Message}
-}
-func NewStdRetFromErrWithMsg(e *errs.Error, msg string) *StdReturn {
-	return &StdReturn{e.Code, msg}
-}
-func NewStdRetFromErrAppendMsg(e *errs.Error, msg string) *StdReturn {
-	return &StdReturn{e.Code, e.Message + ":" + msg}
 }

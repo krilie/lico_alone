@@ -12,14 +12,14 @@ import (
 // name		permission的名称
 // description description的描述
 func ManagerPermissionNewPermission(c *gin.Context) {
-	ctx := gin_util.GetApplicationContextOrAbort(c)
+	ctx := gin_util.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return
 	}
 	name := c.PostForm("name")
 	description := c.PostForm("description")
 	if name == "" || description == "" {
-		gin_util.AbortWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("name or description mast not empty"))
+		gin_util.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("name or description mast not empty"))
 		return
 	}
 	permission, err := manager.ManagerPermissionNewPermission(ctx, name, description)
@@ -27,7 +27,7 @@ func ManagerPermissionNewPermission(c *gin.Context) {
 		c.JSON(200, permission)
 		return
 	} else {
-		gin_util.AbortWithErr(ctx, c, err)
+		gin_util.ReturnWithErr(ctx, c, err)
 		return
 	}
 }

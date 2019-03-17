@@ -14,7 +14,7 @@ import (
 // role_id 角色的id
 // user_id 用户的id
 func ManagerUserAddRole(c *gin.Context) {
-	ctx := gin_util.GetApplicationContextOrAbort(c)
+	ctx := gin_util.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return
 	}
@@ -24,12 +24,12 @@ func ManagerUserAddRole(c *gin.Context) {
 	}{}
 	err := c.ShouldBindWith(req, binding.FormPost)
 	if err != nil {
-		gin_util.AbortWithAppErr(ctx, c, errs.ErrParam.NewWithMsg(err.Error()))
+		gin_util.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg(err.Error()))
 		return
 	}
 	err = manager.ManagerUserAddRole(ctx, req.UserId, req.RoleId)
 	if err != nil {
-		gin_util.AbortWithErr(ctx, c, err)
+		gin_util.ReturnWithErr(ctx, c, err)
 		return
 	} else {
 		c.JSON(200, common_struct.StdSuccess)

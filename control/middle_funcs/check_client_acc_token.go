@@ -30,6 +30,7 @@ func CheckClientAccToken() gin.HandlerFunc {
 			return
 		} else {
 			context.ClientId = string_util.NewString(key.UserId)
+			context.ClientAccToken = string_util.NewString(key.Token)
 			c.Next()
 			return
 		}

@@ -16,28 +16,28 @@ import (
 // exp time.Time 这个key的过期时间,utx时间戳
 // 逻辑层做了参数检查，不用在这里检查参数，一些非空检查是必要的
 func ManagerClientUserNewAccToken(c *gin.Context) {
-	ctx := gin_util.GetApplicationContextOrAbort(c)
+	ctx := gin_util.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return
 	}
 	//取参数
 	targetUserId := c.PostForm("target_user_id")
 	if targetUserId == "" {
-		gin_util.AbortWithErr(ctx, c, errs.ErrParam.NewWithMsg("target_user_id must exists"))
+		gin_util.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("target_user_id must exists"))
 		return
 	}
 	description := c.PostForm("description")
 	if description == "" {
-		gin_util.AbortWithErr(ctx, c, errs.ErrParam.NewWithMsg("description must exists"))
+		gin_util.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("description must exists"))
 		return
 	}
 	var expNum int64
 	exp := c.PostForm("exp")
 	if exp == "" {
-		gin_util.AbortWithErr(ctx, c, errs.ErrParam.NewWithMsg("exp must exists"))
+		gin_util.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("exp must exists"))
 		return
 	} else if num, err := string_util.GetInt64(exp); err != nil {
-		gin_util.AbortWithErr(ctx, c, errs.ErrParam.NewWithMsg("exp must a utx num"))
+		gin_util.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("exp must a utx num"))
 		return
 	} else {
 		expNum = num //默认中国上海时区
@@ -45,7 +45,7 @@ func ManagerClientUserNewAccToken(c *gin.Context) {
 	//添加新的token
 	token, err := manager.ManagerClientUserNewAccToken(ctx, targetUserId, description, time.Unix(expNum, 0))
 	if err != nil {
-		gin_util.AbortWithErr(ctx, c, err)
+		gin_util.ReturnWithErr(ctx, c, err)
 		return
 	} else {
 		//200

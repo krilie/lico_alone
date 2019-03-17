@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/lico603/lico-my-site-user/common/common_struct/errs"
 	"github.com/lico603/lico-my-site-user/common/jwt"
+	"github.com/lico603/lico-my-site-user/common/string_util"
 	"github.com/lico603/lico-my-site-user/control/gin_util"
 	"github.com/lico603/lico-my-site-user/user_base"
 )
@@ -18,7 +19,7 @@ func CheckUserAuthToken() gin.HandlerFunc {
 		}
 		headerAuth := c.GetHeader(gin_util.HeaderAuthorization)
 
-		userValidate := user_base.UserValidate(ctx, headerAuth)
+		claims, userValidate := user_base.UserValidate(ctx, headerAuth)
 		if userValidate != nil {
 			if userValidate == jwt.ErrIatTime {
 				c.AbortWithStatusJSON(401, errs.UnAuthorized.ToStdWithMsg("token format error"))
@@ -31,6 +32,8 @@ func CheckUserAuthToken() gin.HandlerFunc {
 				return
 			}
 		} else {
+			ctx.NowUserToken = string_util.NewString(headerAuth)
+			ctx.UserClaims = claims.(*jwt.UserClaims)
 			c.Next()
 			return
 		}

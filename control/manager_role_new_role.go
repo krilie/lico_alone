@@ -13,7 +13,7 @@ import (
 // name	名称
 // description 描述
 func ManagerRoleNewRole(c *gin.Context) {
-	ctx := gin_util.GetApplicationContextOrAbort(c)
+	ctx := gin_util.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return
 	}
@@ -24,12 +24,12 @@ func ManagerRoleNewRole(c *gin.Context) {
 	}{}
 	e := c.ShouldBindWith(req, binding.FormPost)
 	if e != nil {
-		gin_util.AbortWithAppErr(ctx, c, errs.ErrParam.NewWithMsg(e.Error()))
+		gin_util.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg(e.Error()))
 		return
 	}
 	role, e := manager.ManagerRoleNewRole(ctx, req.Name, req.Description)
 	if e != nil {
-		gin_util.AbortWithErr(ctx, c, e)
+		gin_util.ReturnWithErr(ctx, c, e)
 		return
 	} else {
 		c.JSON(200, role)

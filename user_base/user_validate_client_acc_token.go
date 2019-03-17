@@ -8,8 +8,8 @@ import (
 	"time"
 )
 
-func UserValidateClientAccToken(ctx *context_util.Context, sysAccKey string) (key *model.ClientUserAccessToken, err error) {
-	row := model.Db.Where("token=?", sysAccKey).Row()
+func UserValidateClientAccToken(ctx *context_util.Context, clientAccKey string) (key *model.ClientUserAccessToken, err error) {
+	row := model.Db.Where("token=?", clientAccKey).Row()
 	key = new(model.ClientUserAccessToken)
 	err = row.Scan(key)
 	if err != nil && err == sql.ErrNoRows {

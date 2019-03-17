@@ -23,7 +23,7 @@ type UserClaims struct {
 }
 
 //jwt 是否有效，如果沒效，則入出錯誤
-func (u *UserClaims) Valid() error {
+func (u UserClaims) Valid() error {
 	if time.Now().Unix() > u.Exp {
 		return ErrTimeExp
 	}
