@@ -3,7 +3,7 @@ package model
 import (
 	"github.com/deckarep/golang-set"
 	"github.com/jinzhu/gorm"
-	"github.com/lico603/lico-my-site-user/common/errs"
+	"github.com/lico603/lico-my-site-user/common/common_struct/errs"
 	"github.com/lico603/lico-my-site-user/common/log"
 )
 

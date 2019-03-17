@@ -2,8 +2,8 @@ package gin_util
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/lico603/lico-my-site-user/common/common_struct/errs"
 	"github.com/lico603/lico-my-site-user/common/context_util"
-	"github.com/lico603/lico-my-site-user/common/errs"
 	"github.com/lico603/lico-my-site-user/common/log"
 )
 
@@ -25,10 +25,18 @@ func GetApplicationContextOrAbort(c *gin.Context) *context_util.Context {
 }
 
 // abort with err use err's default http status
-func AbortWithAppErr(ctx *context_util.Context, c *gin.Context, err error) {
+func AbortWithErr(ctx *context_util.Context, c *gin.Context, err error) {
 	if errLocal, ok := err.(*errs.Error); ok {
-		c.AbortWithStatusJSON(errLocal.RefHttpStatus, errLocal.ToStdReturn())
+		c.AbortWithStatusJSON(errLocal.HttpStatus, errLocal.ToStdReturn())
 	} else {
 		c.AbortWithStatusJSON(500, errs.ErrInternal.ToStdAppendMsg(err.Error()))
 	}
+}
+
+func AbortWithAppErr(ctx *context_util.Context, c *gin.Context, err *errs.Error) {
+	c.AbortWithStatusJSON(err.HttpStatus, err.ToStdReturn())
+}
+
+func ParamCheckEmptyOkOrAbort() {
+
 }

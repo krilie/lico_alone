@@ -2,8 +2,8 @@ package user_base
 
 import (
 	"database/sql"
+	"github.com/lico603/lico-my-site-user/common/common_struct/errs"
 	"github.com/lico603/lico-my-site-user/common/context_util"
-	"github.com/lico603/lico-my-site-user/common/errs"
 	"github.com/lico603/lico-my-site-user/common/log"
 	"github.com/lico603/lico-my-site-user/common/pswd_md5"
 	"github.com/lico603/lico-my-site-user/common/uuid_util"

@@ -2,7 +2,7 @@ package middle_funcs
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lico603/lico-my-site-user/common/errs"
+	"github.com/lico603/lico-my-site-user/common/common_struct/errs"
 	"github.com/lico603/lico-my-site-user/common/jwt"
 	"github.com/lico603/lico-my-site-user/control/gin_util"
 	"github.com/lico603/lico-my-site-user/user_base"

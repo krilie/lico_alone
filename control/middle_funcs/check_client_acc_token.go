@@ -2,7 +2,7 @@ package middle_funcs
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lico603/lico-my-site-user/common/errs"
+	"github.com/lico603/lico-my-site-user/common/common_struct/errs"
 	"github.com/lico603/lico-my-site-user/common/log"
 	"github.com/lico603/lico-my-site-user/common/string_util"
 	"github.com/lico603/lico-my-site-user/control/gin_util"
@@ -26,7 +26,7 @@ func CheckClientAccToken() gin.HandlerFunc {
 		}
 		key, err := user_base.UserValidateClientAccToken(context, headerToken)
 		if err != nil {
-			gin_util.AbortWithAppErr(context, c, err)
+			gin_util.AbortWithErr(context, c, err)
 			return
 		} else {
 			context.ClientId = string_util.NewString(key.UserId)

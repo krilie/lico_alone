@@ -10,9 +10,9 @@ import (
 )
 
 type DbHandler struct {
-	ID         string    `gorm:"primary_key;type:varchar(32)"` // 用户id uuid
-	CreateTime time.Time `gorm:"type:DATETIME;not null"`
-	Version    int       `gorm:"not null;default:0"`
+	ID         string    `gorm:"primary_key;type:varchar(32)" json:"id"` // 用户id uuid
+	CreateTime time.Time `gorm:"type:DATETIME;not null" json:"create_time"`
+	Version    int       `gorm:"not null;default:0" json:"version"`
 }
 
 var Db *gorm.DB

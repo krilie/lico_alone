@@ -3,13 +3,13 @@ package model
 import (
 	"database/sql"
 	"github.com/jinzhu/gorm"
-	"github.com/lico603/lico-my-site-user/common/errs"
+	"github.com/lico603/lico-my-site-user/common/common_struct/errs"
 )
 
 type Role struct {
 	DbHandler
-	Name        string `gorm:"type:varchar(50);unique_index;not null"`
-	Description string `gorm:"type:varchar(100);not null"`
+	Name        string `gorm:"type:varchar(50);unique_index;not null" json:"name"`
+	Description string `gorm:"type:varchar(100);not null" json:"description"`
 }
 
 func (Role) TableName() string {

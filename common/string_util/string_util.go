@@ -3,6 +3,7 @@ package string_util
 import (
 	"database/sql"
 	"github.com/deckarep/golang-set"
+	"strconv"
 	"strings"
 )
 
@@ -17,7 +18,7 @@ func SqlStringOrEmpty(str sql.NullString) string {
 		return ""
 	}
 }
-func EmptyDefault(ori, def string) string {
+func EmptyOrDefault(ori, def string) string {
 	if ori == "" {
 		return def
 	} else {
@@ -54,4 +55,11 @@ func JoinWith(set mapset.Set, sep string) string {
 		b.WriteString(MustToString(s))
 	}
 	return b.String()
+}
+
+func GetInt64(ori string) (int64, error) {
+	return strconv.ParseInt(ori, 10, 64)
+}
+func GetFloat64(ori string) (float64, error) {
+	return strconv.ParseFloat(ori, 64)
 }
