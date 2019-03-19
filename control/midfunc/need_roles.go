@@ -1,4 +1,4 @@
-package middle_funcs
+package midfunc
 
 import (
 	"github.com/deckarep/golang-set"
@@ -8,11 +8,10 @@ import (
 	"github.com/lico603/lico-my-site-user/user_auth"
 )
 
-// check user has some permission request by used url
-func CheckUserHasPermission(perms ...interface{}) gin.HandlerFunc {
-	permsSet := mapset.NewThreadUnsafeSet()
-	for e := range perms {
-		permsSet.Add(e)
+func NeedRoles(roles ...interface{}) gin.HandlerFunc {
+	roleSet := mapset.NewThreadUnsafeSet()
+	for e := range roles {
+		roleSet.Add(e)
 	}
 	return func(c *gin.Context) {
 		// check user get context
@@ -27,14 +26,14 @@ func CheckUserHasPermission(perms ...interface{}) gin.HandlerFunc {
 			return
 		}
 		//check user has permission
-		permissions, err := user_auth.UserAuthPermissions(ctx, userId)
+		userRoles, err := user_auth.UserAuthRoles(ctx, userId)
 		if err != nil {
 			gin_util.AbortWithErr(ctx, c, err)
 			return
 		}
-		sect := permsSet.Intersect(permissions)
+		sect := roleSet.Intersect(userRoles)
 		if sect.Cardinality() == 0 {
-			c.AbortWithStatusJSON(errs.ErrNoPermission.HttpStatus, errs.ErrNoPermission.ToStdWithMsg("no permission"))
+			gin_util.AbortWithAppErr(ctx, c, errs.ErrNoPermission.NewWithMsg("no permission"))
 			return
 		}
 		c.Next()

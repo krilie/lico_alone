@@ -1,4 +1,4 @@
-package middle_funcs
+package midfunc
 
 import (
 	"github.com/gin-gonic/gin"
@@ -10,7 +10,7 @@ import (
 )
 
 // check user is login and auth token validation
-func CheckUserAuthToken() gin.HandlerFunc {
+func CheckAuthToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// get context
 		ctx := gin_util.GetApplicationContextOrAbort(c)

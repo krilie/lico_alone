@@ -1,4 +1,4 @@
-package middle_funcs
+package midfunc
 
 import (
 	"github.com/gin-gonic/gin"
@@ -11,7 +11,7 @@ import (
 
 // check if request has client access token
 // on header "ClientAccToken"
-func CheckClientAccToken() gin.HandlerFunc {
+func CheckClientToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// take application context
 		context := gin_util.GetApplicationContextOrAbort(c)

@@ -1,4 +1,4 @@
-package middle_funcs
+package midfunc
 
 import (
 	"github.com/gin-gonic/gin"
@@ -16,12 +16,12 @@ import (
 // 按顺序检查这些信息
 // 根据需要选择使用
 // 从context中取到有用的值
-func UserIdMustMatchLogged() gin.HandlerFunc {
+func ParamLoginIdMatch() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		//取用户信息
 		userId := checkUserId(c)
 		if userId == "" {
-			log.Errorln("UserIdMustMatchLogged", "no user_id find")
+			log.Errorln("ParamLoginIdMatch", "no user_id find")
 			c.AbortWithStatusJSON(400, errs.ErrParam.ToStdWithMsg("no user id find"))
 			return
 		}
@@ -30,7 +30,7 @@ func UserIdMustMatchLogged() gin.HandlerFunc {
 		if ctx == nil {
 			return
 		} else if ctx.GetUserIdOrEmpty() != userId {
-			log.Errorln("UserIdMustMatchLogged", "user id and login user id not match.")
+			log.Errorln("ParamLoginIdMatch", "user id and login user id not match.")
 			c.AbortWithStatusJSON(400, errs.ErrParam.ToStdWithMsg("user id and login user id not match."))
 			return
 		}

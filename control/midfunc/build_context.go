@@ -1,4 +1,4 @@
-package middle_funcs
+package midfunc
 
 import (
 	"github.com/gin-gonic/gin"
@@ -11,7 +11,7 @@ import (
 
 // 请求到来后第一个经过的中间件
 // 从请中中构建context上下文的中间件
-func BuildContextFunc() gin.HandlerFunc {
+func BuildContext() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		context := &context_util.Context{}
 		context.TraceId = string_util.EmptyOrDefault(c.GetHeader(gin_util.HeaderTraceId), uuid_util.GetUuid())
