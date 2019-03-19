@@ -9,11 +9,14 @@ var LocalRouter *gin.Engine
 
 func init() {
 	LocalRouter = gin.Default()
-	LocalRouter.Use(midfunc.BuildContext())     //创建上下文
-	LocalRouter.Use(midfunc.CheckClientToken()) //检查客户端的acc token
+	//api for client token need to check
+	apis := LocalRouter.Group("/api")
+	//check context and acc token
+	apis.Use(midfunc.BuildContext())     //创建上下文
+	apis.Use(midfunc.CheckClientToken()) //检查客户端的acc token
 	{
 		//要登录的接口
-		needLogged := LocalRouter.Group("")
+		needLogged := apis.Group("")
 		needLogged.Use(midfunc.CheckAuthToken()) //检查用户的token是否登录了,即检查是否有基本准入门槛
 		{
 			//管理组
@@ -38,7 +41,7 @@ func init() {
 		}
 	}
 	//用户基础
-	userBase := LocalRouter.Group("/user/base")
+	userBase := apis.Group("/user/base")
 	userBase.POST("/login", UserBaseLogin)
 	userBase.POST("/logout", UserBaseLogout)
 	userBase.GET("/valid", UserBaseValid)                                // 不要登录，要有客户端的key

@@ -2,7 +2,16 @@ package jwt
 
 import (
 	"github.com/dgrijalva/jwt-go"
+	"github.com/lico603/lico-my-site-user/common/config"
 )
+
+func init() {
+	if config.GetString("jwt.hs256_key") == "" {
+		SetHs256Key("fasdfasdrewq^&(*()&*(^%*&FLSJDF")
+	} else {
+		SetHs256Key(config.GetString("jwt.hs256_key"))
+	}
+}
 
 var hs256Key []byte
 
