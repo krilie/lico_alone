@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-export PATH=$PATH:/opt/go/bin/go
+export PATH=$PATH:/opt/go/bin/
 
 go build .
 
