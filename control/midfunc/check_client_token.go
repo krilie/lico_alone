@@ -20,7 +20,7 @@ func CheckClientToken() gin.HandlerFunc {
 		}
 		headerToken := c.GetHeader(gin_util.HeaderClientAccToken)
 		if headerToken == "" {
-			log.Info("", "url no client access token", c.Request.URL)
+			log.Info("CheckClientToken", "url no client access token", c.Request.URL)
 			c.AbortWithStatusJSON(401, errs.UnAuthorized.ToStdWithMsg("no client access token find"))
 			return
 		}
