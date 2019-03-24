@@ -1,3 +1,2 @@
-#!/bin/sh
-
-/opt/lico_user
+#!/bin/sh -v
+/opt/app

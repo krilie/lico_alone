@@ -1,6 +1,7 @@
 #!/bin/bash -x
 
 export PATH=$PATH:/opt/go/bin/
+export CGO_ENABLED=0
 
 go build .
 
