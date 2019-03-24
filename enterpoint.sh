@@ -1,3 +1,3 @@
-#!/bin/bash -v
+#!/bin/sh
 
 /opt/lico_user
