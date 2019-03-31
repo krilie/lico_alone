@@ -2,11 +2,11 @@ package user_auth
 
 import (
 	"github.com/asaskevich/govalidator"
-	"github.com/lico603/lico-my-site-user/common/common_struct/errs"
-	"github.com/lico603/lico-my-site-user/common/context_util"
-	"github.com/lico603/lico-my-site-user/common/log"
-	"github.com/lico603/lico-my-site-user/common/validator_util"
-	"github.com/lico603/lico-my-site-user/model"
+	"github.com/lico603/lico_user/common/common_struct/errs"
+	"github.com/lico603/lico_user/common/context_util"
+	"github.com/lico603/lico_user/common/log"
+	"github.com/lico603/lico_user/common/validator_util"
+	"github.com/lico603/lico_user/model"
 )
 
 //用户是否有这个角色,有app权限才能调用这个接口

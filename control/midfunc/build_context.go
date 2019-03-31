@@ -2,10 +2,10 @@ package midfunc
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lico603/lico-my-site-user/common/context_util"
-	"github.com/lico603/lico-my-site-user/common/string_util"
-	"github.com/lico603/lico-my-site-user/common/uuid_util"
-	"github.com/lico603/lico-my-site-user/control/gin_util"
+	"github.com/lico603/lico_user/common/context_util"
+	"github.com/lico603/lico_user/common/string_util"
+	"github.com/lico603/lico_user/common/uuid_util"
+	"github.com/lico603/lico_user/control/gin_util"
 	"time"
 )
 

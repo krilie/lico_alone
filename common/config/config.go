@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/lico603/lico-my-site-user/common/log"
+	"github.com/lico603/lico_user/common/log"
 	"github.com/spf13/viper"
 )
 

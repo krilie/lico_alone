@@ -3,9 +3,9 @@ package midfunc
 import (
 	"github.com/deckarep/golang-set"
 	"github.com/gin-gonic/gin"
-	"github.com/lico603/lico-my-site-user/common/common_struct/errs"
-	"github.com/lico603/lico-my-site-user/control/gin_util"
-	"github.com/lico603/lico-my-site-user/user_auth"
+	"github.com/lico603/lico_user/common/common_struct/errs"
+	"github.com/lico603/lico_user/control/gin_util"
+	"github.com/lico603/lico_user/user_auth"
 )
 
 // check user has some permission request by used url

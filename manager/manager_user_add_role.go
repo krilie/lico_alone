@@ -1,10 +1,10 @@
 package manager
 
 import (
-	"github.com/lico603/lico-my-site-user/common/context_util"
-	"github.com/lico603/lico-my-site-user/common/log"
-	"github.com/lico603/lico-my-site-user/common/validator_util"
-	"github.com/lico603/lico-my-site-user/model"
+	"github.com/lico603/lico_user/common/context_util"
+	"github.com/lico603/lico_user/common/log"
+	"github.com/lico603/lico_user/common/validator_util"
+	"github.com/lico603/lico_user/model"
 )
 
 //给用户添加新角色

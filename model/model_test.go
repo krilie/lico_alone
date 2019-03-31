@@ -3,8 +3,8 @@ package model
 import (
 	"database/sql"
 	"fmt"
-	"github.com/lico603/lico-my-site-user/common/pswd_md5"
-	"github.com/lico603/lico-my-site-user/common/uuid_util"
+	"github.com/lico603/lico_user/common/pswd_md5"
+	"github.com/lico603/lico_user/common/uuid_util"
 	"testing"
 	"time"
 )

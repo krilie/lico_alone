@@ -2,9 +2,9 @@ package control
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lico603/lico-my-site-user/common/common_struct/errs"
-	"github.com/lico603/lico-my-site-user/control/gin_util"
-	"github.com/lico603/lico-my-site-user/user_auth"
+	"github.com/lico603/lico_user/common/common_struct/errs"
+	"github.com/lico603/lico_user/control/gin_util"
+	"github.com/lico603/lico_user/user_auth"
 )
 
 // /user/auth/client/acc_token POST

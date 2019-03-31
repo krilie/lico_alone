@@ -2,11 +2,11 @@ package midfunc
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lico603/lico-my-site-user/common/common_struct/errs"
-	"github.com/lico603/lico-my-site-user/common/jwt"
-	"github.com/lico603/lico-my-site-user/common/string_util"
-	"github.com/lico603/lico-my-site-user/control/gin_util"
-	"github.com/lico603/lico-my-site-user/user_base"
+	"github.com/lico603/lico_user/common/common_struct/errs"
+	"github.com/lico603/lico_user/common/jwt"
+	"github.com/lico603/lico_user/common/string_util"
+	"github.com/lico603/lico_user/control/gin_util"
+	"github.com/lico603/lico_user/user_base"
 )
 
 // check user is login and auth token validation
