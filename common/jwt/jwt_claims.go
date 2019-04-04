@@ -16,10 +16,11 @@ type UserClaims struct {
 	UserRoles string `json:"user_roles"` //用戶角色 以逗号隔开 admin,app,user
 	NickName  string `json:"nick_name"`  //用戶呢稱
 	LoginName string `json:"login_name"` //登录名，唯一的
-	Iat       int64  `json:"iat"`        //發放時間
-	Exp       int64  `json:"exp"`        //過期時間
-	Jti       string `json:"jti"`        //token 的id ,唯一標識
-	Iss       string `json:"iss"`        //簽發者 是sys_user_control
+	//todo:加图像
+	Iat int64  `json:"iat"` //發放時間
+	Exp int64  `json:"exp"` //過期時間
+	Jti string `json:"jti"` //token 的id ,唯一標識
+	Iss string `json:"iss"` //簽發者 是sys_user_control
 }
 
 //jwt 是否有效，如果沒效，則入出錯誤
