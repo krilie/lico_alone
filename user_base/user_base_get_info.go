@@ -27,6 +27,7 @@ func UserBaseGetInfo(ctx *context_util.Context, userId string) (map[string]strin
 		mUser["nick_name"] = user.NickName
 		mUser["phone"] = string_util.SqlStringOrEmpty(user.Phone)
 		mUser["email"] = string_util.SqlStringOrEmpty(user.Email)
+		mUser["picture"] = string_util.SqlStringOrEmpty(user.Picture)
 		return mUser, nil
 	}
 }

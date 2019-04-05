@@ -8,15 +8,13 @@ import (
 // 运行上下文对象
 // 可记录来自那个ip 用户的信息等
 type Context struct {
-	TraceId string //微服务调用栈分析追踪
-	//开始时间和结束时间打在日志上这里不要加
-	StartTime      time.Time //开始调用时间
-	LastTime       time.Time //调用结束时间
-	ClientId       *string   //client的id号
-	ClientAccToken *string   //当前client的acctoken
-	NowUserToken   *string   //当前用户的acctoken
-
-	UserClaims *jwt.UserClaims //一些认证信息，可以为nil
+	TraceId        string          //微服务调用栈分析追踪
+	StartTime      time.Time       //开始调用时间
+	LastTime       time.Time       //调用结束时间
+	ClientId       *string         //client的id号
+	ClientAccToken *string         //当前client的acctoken
+	NowUserToken   *string         //当前用户的acctoken jwt
+	UserClaims     *jwt.UserClaims //一些认证信息，可以为nil
 }
 
 func (ctx *Context) GetAppIdOrEmpty() string {

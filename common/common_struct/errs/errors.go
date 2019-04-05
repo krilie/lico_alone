@@ -15,7 +15,7 @@ var (
 	ErrClientAccTokenExp      = &Error{HttpStatus: 401, Code: "ErrClientAccTokenExp", Message: "acc token is expiration"}
 	ErrClientAccTokenNotValid = &Error{HttpStatus: 401, Code: "ErrClientAccTokenNotValid", Message: "token not valid"}
 	UnAuthorized              = &Error{HttpStatus: 401, Code: "UnAuthorized", Message: "un authorized"}
-	ErrNoPermission           = &Error{HttpStatus: 403, Code: "errNoPermission", Message: "no permission"}
+	ErrNoPermission           = &Error{HttpStatus: 403, Code: "ErrNoPermission", Message: "no permission"}
 )
 
 type Error struct {

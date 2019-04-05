@@ -30,6 +30,7 @@ func UserBaseRegister(ctx *context_util.Context, loginName string, password stri
 	user.CreateTime = time.Now()
 	user.Phone = sql.NullString{Valid: false}
 	user.Email = sql.NullString{Valid: false}
+	user.Picture = sql.NullString{Valid: false}
 
 	err := model.Db.Create(&user).Error
 	if err != nil {
