@@ -18,5 +18,6 @@ func BuildContext() gin.HandlerFunc {
 		context.StartTime = time.Now()
 		c.Set(gin_util.GinKeyAppContext, context)
 		c.Next()
+		context.LastTime = time.Now()
 	}
 }

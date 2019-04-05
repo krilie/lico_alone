@@ -48,6 +48,7 @@ func UserLogin(ctx *context_util.Context, loginName, password string) (jwtString
 		userClaims.UserId = user.ID
 		userClaims.Jti = uuid_util.GetUuid()
 		userClaims.Iat = time.Now().Unix()
+		userClaims.Picture = string_util.SqlStringOrEmpty(user.Picture)
 		//userClaims.Exp = time.Now().Add(time.Hour).Unix()
 		userClaims.Exp = time.Now().Add(time.Duration(jwtExpDuration) * time.Second).Unix()
 		jwtToken, err := jwt.GetNewJwtToken(&userClaims)
