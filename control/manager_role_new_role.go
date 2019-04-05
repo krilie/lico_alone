@@ -3,9 +3,9 @@ package control
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/lico603/lico-my-site-user/common/common_struct/errs"
-	"github.com/lico603/lico-my-site-user/control/gin_util"
-	"github.com/lico603/lico-my-site-user/manager"
+	"github.com/lico603/lico_user/common/common_struct/errs"
+	"github.com/lico603/lico_user/control/gin_util"
+	"github.com/lico603/lico_user/manager"
 )
 
 // /manager/role/new_role POST

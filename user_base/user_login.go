@@ -2,15 +2,15 @@ package user_base
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/lico603/lico-my-site-user/common/common_struct/errs"
-	"github.com/lico603/lico-my-site-user/common/context_util"
-	"github.com/lico603/lico-my-site-user/common/jwt"
-	"github.com/lico603/lico-my-site-user/common/log"
-	"github.com/lico603/lico-my-site-user/common/pswd_md5"
-	"github.com/lico603/lico-my-site-user/common/string_util"
-	"github.com/lico603/lico-my-site-user/common/uuid_util"
-	"github.com/lico603/lico-my-site-user/common/validator_util"
-	"github.com/lico603/lico-my-site-user/model"
+	"github.com/lico603/lico_user/common/common_struct/errs"
+	"github.com/lico603/lico_user/common/context_util"
+	"github.com/lico603/lico_user/common/jwt"
+	"github.com/lico603/lico_user/common/log"
+	"github.com/lico603/lico_user/common/pswd_md5"
+	"github.com/lico603/lico_user/common/string_util"
+	"github.com/lico603/lico_user/common/uuid_util"
+	"github.com/lico603/lico_user/common/validator_util"
+	"github.com/lico603/lico_user/model"
 	"time"
 )
 
@@ -48,6 +48,7 @@ func UserLogin(ctx *context_util.Context, loginName, password string) (jwtString
 		userClaims.UserId = user.ID
 		userClaims.Jti = uuid_util.GetUuid()
 		userClaims.Iat = time.Now().Unix()
+		userClaims.Picture = string_util.SqlStringOrEmpty(user.Picture)
 		//userClaims.Exp = time.Now().Add(time.Hour).Unix()
 		userClaims.Exp = time.Now().Add(time.Duration(jwtExpDuration) * time.Second).Unix()
 		jwtToken, err := jwt.GetNewJwtToken(&userClaims)

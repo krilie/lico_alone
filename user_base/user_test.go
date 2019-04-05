@@ -2,10 +2,10 @@ package user_base
 
 import (
 	"fmt"
-	"github.com/lico603/lico-my-site-user/common/context_util"
-	"github.com/lico603/lico-my-site-user/common/jwt"
-	"github.com/lico603/lico-my-site-user/common/random_token"
-	"github.com/lico603/lico-my-site-user/common/uuid_util"
+	"github.com/lico603/lico_user/common/context_util"
+	"github.com/lico603/lico_user/common/jwt"
+	"github.com/lico603/lico_user/common/random_token"
+	"github.com/lico603/lico_user/common/uuid_util"
 	"testing"
 )
 

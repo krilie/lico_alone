@@ -2,7 +2,7 @@ package user_base
 
 import (
 	"github.com/asaskevich/govalidator"
-	"github.com/lico603/lico-my-site-user/common/config"
+	"github.com/lico603/lico_user/common/config"
 )
 
 // 用户模块的逻辑部分

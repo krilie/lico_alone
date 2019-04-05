@@ -2,10 +2,10 @@ package user_base
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/lico603/lico-my-site-user/common/common_struct/errs"
-	"github.com/lico603/lico-my-site-user/common/context_util"
-	"github.com/lico603/lico-my-site-user/common/string_util"
-	"github.com/lico603/lico-my-site-user/model"
+	"github.com/lico603/lico_user/common/common_struct/errs"
+	"github.com/lico603/lico_user/common/context_util"
+	"github.com/lico603/lico_user/common/string_util"
+	"github.com/lico603/lico_user/model"
 )
 
 //由token取得用户基本信息
@@ -27,6 +27,7 @@ func UserBaseGetInfo(ctx *context_util.Context, userId string) (map[string]strin
 		mUser["nick_name"] = user.NickName
 		mUser["phone"] = string_util.SqlStringOrEmpty(user.Phone)
 		mUser["email"] = string_util.SqlStringOrEmpty(user.Email)
+		mUser["picture"] = string_util.SqlStringOrEmpty(user.Picture)
 		return mUser, nil
 	}
 }

@@ -1,4 +1,4 @@
-# lico-my-site-user
+# lico_user
 
 用戶
 

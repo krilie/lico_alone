@@ -3,9 +3,9 @@ package main
 import (
 	"github.com/fvbock/endless"
 	"github.com/gin-gonic/gin"
-	"github.com/lico603/lico-my-site-user/common/config"
-	"github.com/lico603/lico-my-site-user/common/log"
-	"github.com/lico603/lico-my-site-user/control"
+	"github.com/lico603/lico_user/common/config"
+	"github.com/lico603/lico_user/common/log"
+	"github.com/lico603/lico_user/control"
 	"net/http"
 )
 

@@ -2,7 +2,7 @@ package control
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lico603/lico-my-site-user/control/midfunc"
+	"github.com/lico603/lico_user/control/midfunc"
 )
 
 var LocalRouter *gin.Engine

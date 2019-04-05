@@ -2,9 +2,9 @@ package user_base
 
 import (
 	"database/sql"
-	"github.com/lico603/lico-my-site-user/common/common_struct/errs"
-	"github.com/lico603/lico-my-site-user/common/context_util"
-	"github.com/lico603/lico-my-site-user/model"
+	"github.com/lico603/lico_user/common/common_struct/errs"
+	"github.com/lico603/lico_user/common/context_util"
+	"github.com/lico603/lico_user/model"
 	"time"
 )
 
