@@ -1,4 +1,4 @@
-package control
+package auth
 
 import (
 	"github.com/gin-gonic/gin"
@@ -8,10 +8,14 @@ import (
 	"github.com/krilie/lico_alone/module_user_auth/user_auth"
 )
 
-// /user/auth/has_role get
-// role 参数
-//
-func UserAuthHasRole(c *gin.Context) {
+/**
+ *  /user/auth/has_permission get
+ *  是不是有那个权限
+ *  要求role base
+ *  userId, permissionName string
+ *  permission  参数要查的权限
+ */
+func UserAuthHasPermission(c *gin.Context) {
 	ctx := gin_util.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return
@@ -21,13 +25,13 @@ func UserAuthHasRole(c *gin.Context) {
 		gin_util.ReturnWithAppErr(ctx, c, errs.UnAuthorized.NewWithMsg("can not take login user id"))
 		return
 	}
-	role := c.Query("role")
-	if role == "" {
-		gin_util.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("no role param received"))
+	permission := c.Query("permission")
+	if permission == "" {
+		gin_util.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("no permission param received"))
 		return
 	}
 	//
-	b, e := user_auth.UserAuthHasRole(ctx, userId, role)
+	b, e := user_auth.UserAuthHasPermission(ctx, userId, permission)
 	if e != nil {
 		gin_util.ReturnWithErr(ctx, c, e)
 		return
@@ -36,7 +40,7 @@ func UserAuthHasRole(c *gin.Context) {
 			c.JSON(200, &common_struct.StdReturn{Code: "success", Message: "find"})
 			return
 		} else {
-			c.JSON(404, &common_struct.StdReturn{Code: "noThisRole", Message: "not find"})
+			c.JSON(404, &common_struct.StdReturn{Code: "noThisPermission", Message: "not find"})
 			return
 		}
 	}
