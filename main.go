@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/log"
@@ -48,7 +47,7 @@ func main() {
 	for {
 		// Block until a signal is received.
 		s := <-c
-		fmt.Println("Got signal:", s) //Got signal: terminated
+		log.Info("Got signal:", s) //Got signal: terminated
 		if s == syscall.SIGINT || s == syscall.SIGTERM {
 			// shutdown
 			shutdown := srv.Shutdown(context.Background())
