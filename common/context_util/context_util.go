@@ -1,7 +1,7 @@
 package context_util
 
 import (
-	"github.com/lico603/lico_user/common/jwt"
+	"github.com/krilie/lico_alone/common/jwt"
 	"time"
 )
 

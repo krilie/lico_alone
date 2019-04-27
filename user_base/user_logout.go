@@ -1,8 +1,8 @@
 package user_base
 
 import (
-	"github.com/lico603/lico_user/common/context_util"
-	"github.com/lico603/lico_user/common/jwt"
+	"github.com/krilie/lico_alone/common/context_util"
+	"github.com/krilie/lico_alone/common/jwt"
 )
 
 //用户登出，只判断是否jwtToken有效并返回

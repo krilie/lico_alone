@@ -2,8 +2,8 @@ package user_base
 
 import (
 	jwt2 "github.com/dgrijalva/jwt-go"
-	"github.com/lico603/lico_user/common/context_util"
-	"github.com/lico603/lico_user/common/jwt"
+	"github.com/krilie/lico_alone/common/context_util"
+	"github.com/krilie/lico_alone/common/jwt"
 )
 
 //验证用户是否有效

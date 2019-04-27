@@ -2,9 +2,9 @@ package control
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lico603/lico_user/common/common_struct/errs"
-	"github.com/lico603/lico_user/control/gin_util"
-	"github.com/lico603/lico_user/manager"
+	"github.com/krilie/lico_alone/common/common_struct/errs"
+	"github.com/krilie/lico_alone/control/gin_util"
+	"github.com/krilie/lico_alone/manager"
 )
 
 // /manager/permission/new_permission POST

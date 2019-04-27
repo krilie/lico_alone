@@ -2,10 +2,10 @@ package user_base
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/lico603/lico_user/common/common_struct/errs"
-	"github.com/lico603/lico_user/common/context_util"
-	"github.com/lico603/lico_user/common/string_util"
-	"github.com/lico603/lico_user/model"
+	"github.com/krilie/lico_alone/common/common_struct/errs"
+	"github.com/krilie/lico_alone/common/context_util"
+	"github.com/krilie/lico_alone/common/string_util"
+	"github.com/krilie/lico_alone/model"
 )
 
 //由token取得用户基本信息

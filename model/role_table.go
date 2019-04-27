@@ -3,7 +3,7 @@ package model
 import (
 	"database/sql"
 	"github.com/jinzhu/gorm"
-	"github.com/lico603/lico_user/common/common_struct/errs"
+	"github.com/krilie/lico_alone/common/common_struct/errs"
 )
 
 type Role struct {

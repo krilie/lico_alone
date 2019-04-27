@@ -3,11 +3,11 @@ package user_auth
 import (
 	"github.com/asaskevich/govalidator"
 	"github.com/jinzhu/gorm"
-	"github.com/lico603/lico_user/common/common_struct/errs"
-	"github.com/lico603/lico_user/common/context_util"
-	"github.com/lico603/lico_user/common/log"
-	"github.com/lico603/lico_user/common/validator_util"
-	"github.com/lico603/lico_user/model"
+	"github.com/krilie/lico_alone/common/common_struct/errs"
+	"github.com/krilie/lico_alone/common/context_util"
+	"github.com/krilie/lico_alone/common/log"
+	"github.com/krilie/lico_alone/common/validator_util"
+	"github.com/krilie/lico_alone/model"
 )
 
 //查看client是否有acc token

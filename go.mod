@@ -1,4 +1,4 @@
-module github.com/lico603/lico_user
+module github.com/krilie/lico_alone
 
 replace golang.org/x/text => github.com/golang/text v0.3.0
 

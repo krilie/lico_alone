@@ -2,7 +2,7 @@ package jwt
 
 import (
 	"github.com/dgrijalva/jwt-go"
-	"github.com/lico603/lico_user/common/config"
+	"github.com/krilie/lico_alone/common/config"
 )
 
 func init() {

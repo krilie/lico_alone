@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/lico603/lico_user/common/config"
-	"github.com/lico603/lico_user/common/log"
+	"github.com/krilie/lico_alone/common/config"
+	"github.com/krilie/lico_alone/common/log"
 	"time"
 )
 

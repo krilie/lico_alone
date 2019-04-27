@@ -2,15 +2,15 @@ package user_base
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/lico603/lico_user/common/common_struct/errs"
-	"github.com/lico603/lico_user/common/context_util"
-	"github.com/lico603/lico_user/common/jwt"
-	"github.com/lico603/lico_user/common/log"
-	"github.com/lico603/lico_user/common/pswd_md5"
-	"github.com/lico603/lico_user/common/string_util"
-	"github.com/lico603/lico_user/common/uuid_util"
-	"github.com/lico603/lico_user/common/validator_util"
-	"github.com/lico603/lico_user/model"
+	"github.com/krilie/lico_alone/common/common_struct/errs"
+	"github.com/krilie/lico_alone/common/context_util"
+	"github.com/krilie/lico_alone/common/jwt"
+	"github.com/krilie/lico_alone/common/log"
+	"github.com/krilie/lico_alone/common/pswd_md5"
+	"github.com/krilie/lico_alone/common/string_util"
+	"github.com/krilie/lico_alone/common/uuid_util"
+	"github.com/krilie/lico_alone/common/validator_util"
+	"github.com/krilie/lico_alone/model"
 	"time"
 )
 
