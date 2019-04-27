@@ -54,8 +54,10 @@ func main() {
 			shutdown := srv.Shutdown(context.Background())
 			if shutdown != nil {
 				log.Error(shutdown)
+				return
 			} else {
 				log.Info("end of service...")
+				return
 			}
 		}
 	}
