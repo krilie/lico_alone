@@ -20,7 +20,7 @@ func init() {
 	//设置配置文件类型
 	Conf.v.SetConfigType("yaml")
 
-	Conf.v.SetDefault("service.port", 8080)
+	Conf.v.SetDefault("service.port", 443)
 	Conf.v.SetDefault("db.ip", "192.168.31.238")
 	Conf.v.SetDefault("db.port", 3306)
 	Conf.v.SetDefault("db.user", "root")

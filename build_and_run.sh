@@ -5,11 +5,15 @@ export CGO_ENABLED=0
 
 go build .
 
+mv ./lico_alone ./docker/
+cd ./docker
+
+#lico603为dockerhub帐号
 docker build -t lico603/lico_user:$BUILD_NUMBER .
 
-docker stop lico_user
-docker rm lico_user
-docker run --name lico_user -d -p 1000:8080 lico603/lico_user:$BUILD_NUMBER
+docker stop lico_alone
+docker rm lico_alone
+docker run --name lico_alone -d -p 443:443 lico603/lico_user:$BUILD_NUMBER
 
 echo "end"
 
