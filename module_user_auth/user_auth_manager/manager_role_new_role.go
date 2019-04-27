@@ -1,4 +1,4 @@
-package manager
+package user_auth_manager
 
 import (
 	"github.com/asaskevich/govalidator"
@@ -6,7 +6,7 @@ import (
 	"github.com/krilie/lico_alone/common/context_util"
 	"github.com/krilie/lico_alone/common/log"
 	"github.com/krilie/lico_alone/common/uuid_util"
-	"github.com/krilie/lico_alone/model"
+	"github.com/krilie/lico_alone/module_user_auth/model"
 	"time"
 )
 

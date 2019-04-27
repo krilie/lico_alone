@@ -5,7 +5,7 @@ import (
 	"github.com/krilie/lico_alone/common/common_struct"
 	"github.com/krilie/lico_alone/common/common_struct/errs"
 	"github.com/krilie/lico_alone/control/gin_util"
-	"github.com/krilie/lico_alone/manager"
+	"github.com/krilie/lico_alone/module_user_auth/user_auth_manager"
 )
 
 // /manager/role/new_permission Post
@@ -22,7 +22,7 @@ func ManagerRoleAddPermission(c *gin.Context) {
 	if roleId == "" || permissionID == "" {
 		gin_util.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("role_id or permission_id must exists"))
 	}
-	err := manager.ManagerRoleAddPermission(ctx, roleId, permissionID)
+	err := user_auth_manager.ManagerRoleAddPermission(ctx, roleId, permissionID)
 	if err != nil {
 		gin_util.ReturnWithErr(ctx, c, err)
 		return

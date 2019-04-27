@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/common_struct/errs"
 	"github.com/krilie/lico_alone/control/gin_util"
-	"github.com/krilie/lico_alone/manager"
+	"github.com/krilie/lico_alone/module_user_auth/user_auth_manager"
 )
 
 // /manager/permission/new_permission POST
@@ -22,7 +22,7 @@ func ManagerPermissionNewPermission(c *gin.Context) {
 		gin_util.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("name or description mast not empty"))
 		return
 	}
-	permission, err := manager.ManagerPermissionNewPermission(ctx, name, description)
+	permission, err := user_auth_manager.ManagerPermissionNewPermission(ctx, name, description)
 	if err != nil {
 		c.JSON(200, permission)
 		return

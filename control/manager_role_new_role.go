@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin/binding"
 	"github.com/krilie/lico_alone/common/common_struct/errs"
 	"github.com/krilie/lico_alone/control/gin_util"
-	"github.com/krilie/lico_alone/manager"
+	"github.com/krilie/lico_alone/module_user_auth/user_auth_manager"
 )
 
 // /manager/role/new_role POST
@@ -27,7 +27,7 @@ func ManagerRoleNewRole(c *gin.Context) {
 		gin_util.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg(e.Error()))
 		return
 	}
-	role, e := manager.ManagerRoleNewRole(ctx, req.Name, req.Description)
+	role, e := user_auth_manager.ManagerRoleNewRole(ctx, req.Name, req.Description)
 	if e != nil {
 		gin_util.ReturnWithErr(ctx, c, e)
 		return

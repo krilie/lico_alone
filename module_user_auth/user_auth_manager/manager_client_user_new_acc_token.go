@@ -1,4 +1,4 @@
-package manager
+package user_auth_manager
 
 import (
 	"github.com/krilie/lico_alone/common/common_struct/errs"
@@ -6,8 +6,8 @@ import (
 	"github.com/krilie/lico_alone/common/log"
 	"github.com/krilie/lico_alone/common/random_token"
 	"github.com/krilie/lico_alone/common/validator_util"
-	"github.com/krilie/lico_alone/model"
-	"github.com/krilie/lico_alone/user_auth"
+	"github.com/krilie/lico_alone/module_user_auth/model"
+	"github.com/krilie/lico_alone/module_user_auth/user_auth"
 	"time"
 )
 

@@ -5,7 +5,7 @@ import (
 	"github.com/krilie/lico_alone/common/common_struct/errs"
 	"github.com/krilie/lico_alone/common/context_util"
 	"github.com/krilie/lico_alone/common/validator_util"
-	"github.com/krilie/lico_alone/model"
+	"github.com/krilie/lico_alone/module_user_auth/model"
 )
 
 //获取用户的所有角色

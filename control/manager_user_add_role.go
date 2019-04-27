@@ -6,7 +6,7 @@ import (
 	"github.com/krilie/lico_alone/common/common_struct"
 	"github.com/krilie/lico_alone/common/common_struct/errs"
 	"github.com/krilie/lico_alone/control/gin_util"
-	"github.com/krilie/lico_alone/manager"
+	"github.com/krilie/lico_alone/module_user_auth/user_auth_manager"
 )
 
 // /manager/user/add_role POST
@@ -27,7 +27,7 @@ func ManagerUserAddRole(c *gin.Context) {
 		gin_util.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg(err.Error()))
 		return
 	}
-	err = manager.ManagerUserAddRole(ctx, req.UserId, req.RoleId)
+	err = user_auth_manager.ManagerUserAddRole(ctx, req.UserId, req.RoleId)
 	if err != nil {
 		gin_util.ReturnWithErr(ctx, c, err)
 		return

@@ -5,7 +5,7 @@ import (
 	"github.com/krilie/lico_alone/common/common_struct/errs"
 	"github.com/krilie/lico_alone/common/string_util"
 	"github.com/krilie/lico_alone/control/gin_util"
-	"github.com/krilie/lico_alone/manager"
+	"github.com/krilie/lico_alone/module_user_auth/user_auth_manager"
 	"time"
 )
 
@@ -43,7 +43,7 @@ func ManagerClientUserNewAccToken(c *gin.Context) {
 		expNum = num //默认中国上海时区
 	}
 	//添加新的token
-	token, err := manager.ManagerClientUserNewAccToken(ctx, targetUserId, description, time.Unix(expNum, 0))
+	token, err := user_auth_manager.ManagerClientUserNewAccToken(ctx, targetUserId, description, time.Unix(expNum, 0))
 	if err != nil {
 		gin_util.ReturnWithErr(ctx, c, err)
 		return

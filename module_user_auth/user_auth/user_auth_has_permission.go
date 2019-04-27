@@ -6,7 +6,7 @@ import (
 	"github.com/krilie/lico_alone/common/context_util"
 	"github.com/krilie/lico_alone/common/log"
 	"github.com/krilie/lico_alone/common/validator_util"
-	"github.com/krilie/lico_alone/model"
+	"github.com/krilie/lico_alone/module_user_auth/model"
 )
 
 //判断用户是否有这个权限，联合查询

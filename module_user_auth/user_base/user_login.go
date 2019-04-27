@@ -10,7 +10,7 @@ import (
 	"github.com/krilie/lico_alone/common/string_util"
 	"github.com/krilie/lico_alone/common/uuid_util"
 	"github.com/krilie/lico_alone/common/validator_util"
-	"github.com/krilie/lico_alone/model"
+	"github.com/krilie/lico_alone/module_user_auth/model"
 	"time"
 )
 
