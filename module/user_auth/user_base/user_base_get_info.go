@@ -5,7 +5,7 @@ import (
 	"github.com/krilie/lico_alone/common/common_struct/errs"
 	"github.com/krilie/lico_alone/common/context_util"
 	"github.com/krilie/lico_alone/common/string_util"
-	"github.com/krilie/lico_alone/module_user_auth/model"
+	"github.com/krilie/lico_alone/module/user_auth/model"
 )
 
 //由token取得用户基本信息

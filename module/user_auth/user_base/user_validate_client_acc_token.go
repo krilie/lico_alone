@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"github.com/krilie/lico_alone/common/common_struct/errs"
 	"github.com/krilie/lico_alone/common/context_util"
-	"github.com/krilie/lico_alone/module_user_auth/model"
+	"github.com/krilie/lico_alone/module/user_auth/model"
 	"time"
 )
 

@@ -6,7 +6,7 @@ import (
 	"github.com/krilie/lico_alone/common/log"
 	"github.com/krilie/lico_alone/common/string_util"
 	"github.com/krilie/lico_alone/control/gin_util"
-	"github.com/krilie/lico_alone/module_user_auth/user_base"
+	"github.com/krilie/lico_alone/module/user_auth/user_base"
 )
 
 // check if request has client access token
