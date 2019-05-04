@@ -1,4 +1,4 @@
-package user_auth_manager
+package manager
 
 import (
 	"github.com/gin-gonic/gin"
