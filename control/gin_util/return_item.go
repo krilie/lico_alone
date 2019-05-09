@@ -2,9 +2,9 @@ package gin_util
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/lico603/lico_user/common/common_struct/errs"
-	"github.com/lico603/lico_user/common/context_util"
-	"github.com/lico603/lico_user/common/log"
+	"github.com/krilie/lico_alone/common/common_struct/errs"
+	"github.com/krilie/lico_alone/common/context_util"
+	"github.com/krilie/lico_alone/common/log"
 )
 
 // get app context or nil

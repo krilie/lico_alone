@@ -2,7 +2,7 @@ package errs
 
 import (
 	"fmt"
-	"github.com/lico603/lico_user/common/common_struct"
+	"github.com/krilie/lico_alone/common/common_struct"
 )
 
 //业务上的错误

@@ -1,4 +1,4 @@
-module github.com/lico603/lico_user
+module github.com/krilie/lico_alone
 
 replace golang.org/x/text => github.com/golang/text v0.3.0
 
@@ -36,7 +36,7 @@ require (
 	github.com/spf13/viper v1.3.1
 	github.com/stretchr/testify v1.3.0 // indirect
 	github.com/ugorji/go/codec v0.0.0-20190204201341-e444a5086c43 // indirect
-	google.golang.org/appengine v1.4.0 // indirect
+	google.golang.org/appengine v1.4.0
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect
 )

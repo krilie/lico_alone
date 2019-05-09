@@ -1,6 +1,6 @@
 package config
 
-import "github.com/lico603/lico_user/common/log"
+import "github.com/krilie/lico_alone/common/log"
 
 func GetInt(key string) int {
 	ok := Conf.v.IsSet(key)
