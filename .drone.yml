@@ -4,5 +4,7 @@ name: default
 steps:
   - name: build
     image: golang:1.12.5
+    privileged: true
     commands:
       - go install
+      - ls -al
