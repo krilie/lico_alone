@@ -51,15 +51,15 @@ steps:
 #      - docker rmi lico603/lico_alone
 #      - docker run lico603/lico_alone
 
-    - name: ssh
-      image: appleboy/drone-ssh
-      host: foo.com
-      username: root
-      password: 1234
-      port: 22
-      script:
-        - echo hello
-        - echo world
+  - name: ssh
+    image: appleboy/drone-ssh
+    host: foo.com
+    username: root
+    password: 1234
+    port: 22
+    script:
+      - echo hello
+      - echo world
 
   - name: rebuild-cache
     image: drillster/drone-volume-cache
