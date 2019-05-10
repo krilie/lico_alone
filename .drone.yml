@@ -8,7 +8,6 @@ steps:
     commands:
       - go test
       - go build
-      - mv lico_alone ./docker/
       - ls -al
   - name: build_docker_image
     image: plugins/docker
