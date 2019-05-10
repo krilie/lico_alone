@@ -12,7 +12,7 @@ steps:
       - ls -al
   - name: build_docker_image
     image: plugins/docker
-    workerspace: ./docker/
+
     settings:
       username:
         from_secret: docker_hub_user_name
