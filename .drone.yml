@@ -9,7 +9,7 @@ steps:
     mount:
      - /root/go
     volumes:
-      - /tmp/cache:/cache
+      - "/tmp/cache:/cache"
 
   - name: build_binary
     image: golang
@@ -57,4 +57,4 @@ steps:
     mount:
       - /root/go
     volumes:
-      - /tmp/cache:/cache
+      - "/tmp/cache:/cache"
