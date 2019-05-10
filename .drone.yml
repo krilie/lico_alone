@@ -11,15 +11,15 @@ steps:
       - ls -al
   - name: build_docker_image
     image: plugins/docker
-      settings:
-        username:
-          from_secret: docker_hub_user_name
-        password:
-          from_secret: docker_hub_password
-        repo: lico603/lico_alone
-        tags:
-         - latest
-         - $DRONE_BUILD_NUMBER
+    settings:
+      username:
+        from_secret: docker_hub_user_name
+      password:
+        from_secret: docker_hub_password
+      repo: lico603/lico_alone
+      tags:
+       - latest
+       - $DRONE_BUILD_NUMBER
   - name: start_lico_alone
     image: appleboy/drone-ssh
     host: host.com
