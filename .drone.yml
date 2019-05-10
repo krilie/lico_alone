@@ -2,10 +2,41 @@ kind: pipeline
 name: default
 
 steps:
-  - name: build
+  - name: build_binary
     image: golang
     privileged: true
     commands:
-      - go install
       - go test
+      - go build
       - ls -al
+  - name: build_docker_image
+    image: plugins/docker
+      settings:
+        username:
+          from_secret: docker_hub_user_name
+        password:
+          from_secret: docker_hub_password
+        repo: lico603/lico_alone
+        tags:
+         - latest
+         - $DRONE_BUILD_NUMBER
+  - name: start_lico_alone
+    image: appleboy/drone-ssh
+    host: host.com
+    username:
+      from_secret: ssh_user_name
+    password:
+      from_secret: ssh_password
+    port: 22
+    script:
+      - docker stop local_lico_alone
+      - docker rm local_lico_alone
+      - docker rmi lico603/lico_alone
+      - docker run lico603/lico_alone
+
+
+
+
+
+
+
