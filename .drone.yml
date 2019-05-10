@@ -26,7 +26,7 @@ steps:
        - ${DRONE_BUILD_NUMBER}
   - name: start_lico_alone
     image: appleboy/drone-ssh
-    host: host.com
+    host: ligo.ml
     username:
       from_secret: ssh_user_name
     password:
