@@ -63,4 +63,4 @@ steps:
 volumes:
   - name: cache
     host:
-      path: /tmp/go_cache
+      path: /tmp/cache
