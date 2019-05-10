@@ -2,6 +2,13 @@ kind: pipeline
 name: default
 
 steps:
+  - restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - /root/go
+    volumes:
+      - /var/local/drone-cache:/cache
   - name: build_binary
     image: golang
     privileged: true
@@ -27,17 +34,24 @@ steps:
   - name: start_lico_alone
     image: appleboy/drone-ssh
     host: ligo.ml
+    port: 22
     username:
       from_secret: ssh_user_name
     password:
       from_secret: ssh_password
-    port: 22
+
     script:
       - docker stop local_lico_alone
       - docker rm local_lico_alone
       - docker rmi lico603/lico_alone
       - docker run lico603/lico_alone
-
+  - rebuild-cache:
+    image: drillster/drone-volume-cache
+    rebuild: true
+    mount:
+      - /root/go
+    volumes:
+      - /var/local/drone-cache:/cache
 
 
 
