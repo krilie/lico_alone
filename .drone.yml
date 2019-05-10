@@ -5,11 +5,13 @@ steps:
 
   - name: restore-cache
     image: drillster/drone-volume-cache
-    restore: true
-    mount:
-     - /root/go
     volumes:
-      - "/tmp/cache:/cache"
+      - name: cache
+        path: /cache
+    settings:
+      restore: true
+      mount:
+        - /root/go
 
   - name: build_binary
     image: golang
@@ -53,8 +55,15 @@ steps:
 
   - name: rebuild-cache
     image: drillster/drone-volume-cache
-    rebuild: true
-    mount:
-      - /root/go
     volumes:
-      - "/tmp/cache:/cache"
+      - name: cache
+        path: /cache
+    settings:
+      rebuild: true
+      mount:
+        - /root/go
+
+volumes:
+  - name: cache
+    host:
+      path: /tmp/cache
