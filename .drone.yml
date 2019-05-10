@@ -6,7 +6,8 @@ steps:
   - name: restore-cache
     image: drillster/drone-volume-cache
     volumes:
-      - /temp/cache/gocache:/cache
+      - name: cache
+        path: /tmp/gocache
     settings:
       restore: true
       mount:
@@ -52,7 +53,8 @@ steps:
   - name: rebuild-cache
     image: drillster/drone-volume-cache
     volumes:
-       - /temp/cache/gocache:/cache
+      - name: cache
+        path: /tmp/gocache
     settings:
       rebuild: true
       mount:
