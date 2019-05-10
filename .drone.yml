@@ -36,31 +36,22 @@ steps:
        - latest
        - ${DRONE_BUILD_NUMBER}
 
-#  - name: start_lico_alone
-#    image: appleboy/drone-ssh
-#    host:
-#      - ligo.ml
-#    port: 22
-#    username:
-#      from_secret: ssh_user_name
-#    password:
-#      from_secret: ssh_password
-#    script:
-#      - docker stop local_lico_alone
-#      - docker rm local_lico_alone
-#      - docker rmi lico603/lico_alone
-#      - docker run lico603/lico_alone
-
-  - name: ssh
+  - name: start_lico_alone
     image: appleboy/drone-ssh
     settings:
-      host: foo.com
-    username: root
-    password: 1234
+      host:
+        - ligo.ml
     port: 22
+    username:
+      from_secret: ssh_user_name
+    password:
+      from_secret: ssh_password
     script:
-      - echo hello
-      - echo world
+      - docker stop local_lico_alone
+      - docker rm local_lico_alone
+      - docker rmi lico603/lico_alone
+      - docker run lico603/lico_alone
+
 
   - name: rebuild-cache
     image: drillster/drone-volume-cache
