@@ -3,7 +3,8 @@ name: default
 
 steps:
   - name: build
-    image: golang:1.12.5
+    image: golang
+    privileged: true
     commands:
       - go install
       - go test
