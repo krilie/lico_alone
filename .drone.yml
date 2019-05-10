@@ -8,6 +8,7 @@ steps:
     commands:
       - go test
       - go build
+      - mv lico_alone ./docker/
       - ls -al
   - name: build_docker_image
     image: plugins/docker
@@ -16,6 +17,7 @@ steps:
         from_secret: docker_hub_user_name
       password:
         from_secret: docker_hub_password
+      dockerfile: ./docker/Dockerfile
       repo: lico603/lico_alone
       tags:
        - latest
