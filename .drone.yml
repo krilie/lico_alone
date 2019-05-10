@@ -50,7 +50,7 @@ steps:
       - docker stop local_lico_alone
       - docker rm local_lico_alone
       - docker rmi lico603/lico_alone
-      - docker run lico603/lico_alone
+      - docker run -p 81:80 lico603/lico_alone
 
 
   - name: rebuild-cache
