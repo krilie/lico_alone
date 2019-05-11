@@ -19,7 +19,7 @@ steps:
     privileged: true
     commands:
       - mkdir -p .cache
-      - export GOCACHE=.cache
+      - export GOCACHE=drone/src/cache
       - go test
       - go build
       - mv lico_alone ./docker/
