@@ -11,15 +11,15 @@ steps:
     settings:
       restore: true
       mount:
-        - ./.cache
+        - ./gopath
 
   - name: build_binary
     image: golang
     environment:
     privileged: true
     commands:
-      - mkdir -p .cache
-      - export GOCACHE=drone/src/cache
+      - mkdir -p gopath
+      - export GOPATH=./gopath
       - go test
       - go build
       - mv lico_alone ./docker/
@@ -34,7 +34,7 @@ steps:
     settings:
       rebuild: true
       mount:
-        - ./.cache
+        - ./gopath
 
   - name: build_docker_image
     image: plugins/docker
