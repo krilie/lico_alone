@@ -25,7 +25,7 @@ steps:
       - go build
       - mv lico_alone ./docker/
       - ls -al
-      - ls -al .cache
+      - ls -al gopath
 
   - name: rebuild-cache
     image: drillster/drone-volume-cache
