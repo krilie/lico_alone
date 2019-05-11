@@ -23,7 +23,6 @@ steps:
       - go test
       - go build
       - mv lico_alone ./docker/
-      - ls $GOPATH/pkg/mod
       - ls -al
 
   - name: rebuild-cache
