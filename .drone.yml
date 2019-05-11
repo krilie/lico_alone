@@ -20,6 +20,7 @@ steps:
       - mkdir -p gopath
       - export GOPATH=$PWD/gopath
       - go build
+      - go test
       - mv lico_alone ./docker/
 
   - name: rebuild-cache
