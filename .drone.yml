@@ -26,7 +26,7 @@ steps:
 
   - name: build_docker_image
     image: plugins/docker
-    commands:
+    env:
       - export DOCKER_OPTS="-g /drone/src/docker_cache"
     settings:
       username:
