@@ -10,4 +10,4 @@ RUN chmod u+x /opt/enterpoint.sh \
 
 EXPOSE 443
 
-ENTRYPOINT ["/opt/app"]
+ENTRYPOINT ["/opt/enterpoint.sh"]

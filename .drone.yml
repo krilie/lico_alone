@@ -65,7 +65,7 @@ steps:
         - echo "begin ssh"
         - docker stop local_lico_alone
         - docker rm local_lico_alone
-        - docker rmi lico603/lico_alone
+        - docker rmi -f lico603/lico_alone
         - docker run -p 81:80 lico603/lico_alone
 
 volumes:
