@@ -21,6 +21,7 @@ steps:
       - go build
       - mv lico_alone ./docker/
       - echo $GOPATH/pkg/mod
+      - cat /go/1.txt
       - ls -al
 
   - name: build_docker_image
