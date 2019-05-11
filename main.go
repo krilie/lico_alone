@@ -15,7 +15,7 @@ import (
 func main() {
 
 	control.LocalRouter.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "Hello World")
+		c.String(http.StatusOK, "Hello World 2")
 	})
 	// 开始
 	srv := &http.Server{
