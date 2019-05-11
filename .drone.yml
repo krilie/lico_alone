@@ -34,6 +34,10 @@ steps:
 
   - name: build_docker_image
     image: plugins/docker
+    environment:
+      - M2_HOME=/drone/.m2
+      - MAVEN_HOME=/drone/.m2
+      - GRADLE_USER_HOME=/drone/.gradle
     settings:
       username:
         from_secret: docker_hub_user_name
