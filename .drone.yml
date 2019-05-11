@@ -17,7 +17,7 @@ steps:
     image: golang
     privileged: true
     environment:
-      - GOPATH=drone/gopath
+      - "GOPATH=drone/gopath"
     commands:
       - go build
       - go test
