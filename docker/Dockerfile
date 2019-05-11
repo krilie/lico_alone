@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM centos
 MAINTAINER lico603
 
 ENV  GIN_MODE=release
