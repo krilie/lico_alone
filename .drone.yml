@@ -11,14 +11,12 @@ steps:
     settings:
       restore: true
       mount:
-        - ./gopath
+        - /go
 
   - name: build_binary
     image: golang
     privileged: true
     commands:
-      - mkdir -p gopath
-      - export GOPATH=$PWD/gopath
       - go build
       - go test
       - mv lico_alone ./docker/
@@ -31,7 +29,7 @@ steps:
     settings:
       rebuild: true
       mount:
-        - ./gopath
+        - /go
 
   - name: build_docker_image
     image: plugins/docker
