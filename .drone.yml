@@ -16,9 +16,8 @@ steps:
   - name: build_binary
     image: golang
     privileged: true
-    environment:
-      - "GOPATH=drone/gopath"
     commands:
+      - export GOPATH=drone/gopath
       - go build
       - go test
       - mv lico_alone ./docker/
