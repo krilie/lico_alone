@@ -19,12 +19,12 @@ steps:
     privileged: true
     commands:
       - mkdir -p .cache
-      - ls -al .cache
       - export GOTMPDIR=.cache
       - go test
       - go build
       - mv lico_alone ./docker/
       - ls -al
+      - ls -al .cache
 
   - name: rebuild-cache
     image: drillster/drone-volume-cache
