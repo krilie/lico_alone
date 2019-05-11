@@ -19,6 +19,7 @@ steps:
     privileged: true
     commands:
       - export GOPATH=/drone/src/gopath
+      - export CGO_ENABLED=0
       - echo $GOPATH
       - go build
       - go test
