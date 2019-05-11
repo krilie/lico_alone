@@ -19,7 +19,6 @@ steps:
     commands:
       - mkdir -p gopath
       - export GOPATH=$PWD/gopath
-      - go test
       - go build
       - mv lico_alone ./docker/
 
