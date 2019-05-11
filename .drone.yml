@@ -22,7 +22,7 @@ steps:
       - echo $GOPATH
       - go build
       - go test
-      - mv lico_alone ./docker/
+      - mv lico_alone ./docker/lico_alone
 
   - name: build_docker_image
     image: plugins/docker
