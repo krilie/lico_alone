@@ -62,6 +62,7 @@ steps:
       password:
         from_secret: ssh_password
     script:
+      - echo "begin ssh"
       - docker stop local_lico_alone
       - docker rm local_lico_alone
       - docker rmi lico603/lico_alone
