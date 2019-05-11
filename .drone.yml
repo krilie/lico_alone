@@ -11,12 +11,14 @@ steps:
     settings:
       restore: true
       mount:
-        - /go
+        - ./gopath
 
   - name: build_binary
     image: golang
     privileged: true
     commands:
+      - mkdir -p gopath
+      - export GOPATH=$PWD/gopath
       - go build
       - go test
       - mv lico_alone ./docker/
@@ -29,7 +31,7 @@ steps:
     settings:
       rebuild: true
       mount:
-        - /go
+        - ./gopath
 
   - name: build_docker_image
     image: plugins/docker
@@ -42,8 +44,8 @@ steps:
       context: ./docker/
       repo: lico603/lico_alone
       tags:
-       - latest
-       - ${DRONE_BUILD_NUMBER}
+        - latest
+        - ${DRONE_BUILD_NUMBER}
 
   - name: start_lico_alone
     image: appleboy/drone-ssh
