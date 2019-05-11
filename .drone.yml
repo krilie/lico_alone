@@ -18,6 +18,7 @@ steps:
     environment:
     privileged: true
     commands:
+      - mkdir .cache
       - export GOTMPDIR=.cache
       - go test
       - go build
