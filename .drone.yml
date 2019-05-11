@@ -18,8 +18,9 @@ steps:
     environment:
     privileged: true
     commands:
+      - pwd
       - mkdir -p gopath
-      - export GOPATH=./gopath
+      - export GOPATH=$PWD/gopath
       - go test
       - go build
       - mv lico_alone ./docker/
