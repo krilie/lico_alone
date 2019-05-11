@@ -11,7 +11,7 @@ steps:
     settings:
       restore: true
       mount:
-        - /root/go
+        - /go/pkg/mod
 
   - name: build_binary
     image: golang
@@ -62,7 +62,7 @@ steps:
     settings:
       rebuild: true
       mount:
-        - /root/go
+        - /go/pkg/mod
 
 volumes:
   - name: cache
