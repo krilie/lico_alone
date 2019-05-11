@@ -11,17 +11,29 @@ steps:
     settings:
       restore: true
       mount:
-        - /go/pkg/mod
+        - ./.cache
 
   - name: build_binary
     image: golang
+    environment:
     privileged: true
     commands:
+      - export GOTMPDIR=.cache
       - go test
       - go build
       - mv lico_alone ./docker/
       - ls $GOPATH/pkg/mod
       - ls -al
+
+  - name: rebuild-cache
+    image: drillster/drone-volume-cache
+    volumes:
+      - name: cache
+        path: /cache
+    settings:
+      rebuild: true
+      mount:
+        - ./.cache
 
   - name: build_docker_image
     image: plugins/docker
@@ -52,17 +64,6 @@ steps:
       - docker rm local_lico_alone
       - docker rmi lico603/lico_alone
       - docker run -p 81:80 lico603/lico_alone
-
-
-  - name: rebuild-cache
-    image: drillster/drone-volume-cache
-    volumes:
-      - name: cache
-        path: /cache
-    settings:
-      rebuild: true
-      mount:
-        - /go/pkg/mod
 
 volumes:
   - name: cache
