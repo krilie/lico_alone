@@ -8,6 +8,6 @@ COPY enterpoint.sh /opt/enterpoint.sh
 RUN chmod u+x /opt/enterpoint.sh \
     && chmod u+x /opt/app
 
-EXPOSE 443
+EXPOSE 80
 
 ENTRYPOINT ["/opt/enterpoint.sh"]

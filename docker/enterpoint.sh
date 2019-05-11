@@ -1,3 +1,4 @@
 #!/bin/sh -v
-ls -alh opt
-/opt/app
+cd /opt
+ls -alh
+app
