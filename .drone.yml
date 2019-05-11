@@ -25,9 +25,9 @@ steps:
 
   - name: build_docker_image
     image: plugins/docker
-    environment:
-      - DEBUG
     settings:
+      environment:
+        - DEBUG=1
       username:
         from_secret: docker_hub_user_name
       password:
