@@ -17,8 +17,10 @@ steps:
   - name: build_binary
     image: golang
     privileged: true
+    settings:
+      environment:
+        - GOPATH=/drone/src/gopath
     commands:
-      - export GOPATH=/drone/src/gopath
       - go build
       - go test
       - mv lico_alone ./docker/
@@ -27,7 +29,7 @@ steps:
     image: plugins/docker
     settings:
       environment:
-        - DEBUG=1
+        - DOCKER_OPTS="-g /drone/src/docker_cache"
       username:
         from_secret: docker_hub_user_name
       password:
