@@ -15,17 +15,13 @@ steps:
 
   - name: build_binary
     image: golang
-    environment:
     privileged: true
     commands:
-      - pwd
       - mkdir -p gopath
       - export GOPATH=$PWD/gopath
       - go test
       - go build
       - mv lico_alone ./docker/
-      - ls -al
-      - ls -al gopath
 
   - name: rebuild-cache
     image: drillster/drone-volume-cache
