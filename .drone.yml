@@ -12,6 +12,7 @@ steps:
       restore: true
       mount:
         - /drone/src/gopath
+        - /drone/src/docker_cache
 
   - name: build_binary
     image: golang
@@ -22,22 +23,10 @@ steps:
       - go test
       - mv lico_alone ./docker/
 
-  - name: rebuild-cache
-    image: drillster/drone-volume-cache
-    volumes:
-      - name: cache
-        path: /cache
-    settings:
-      rebuild: true
-      mount:
-        - /drone/src/gopath
-
   - name: build_docker_image
     image: plugins/docker
     environment:
-      - M2_HOME=/drone/.m2
-      - MAVEN_HOME=/drone/.m2
-      - GRADLE_USER_HOME=/drone/.gradle
+      - DOCKER_OPTS:"-g /drone/src/docker_cache"
     settings:
       username:
         from_secret: docker_hub_user_name
@@ -49,6 +38,17 @@ steps:
       tags:
         - latest
         - ${DRONE_BUILD_NUMBER}
+
+  - name: rebuild-cache
+    image: drillster/drone-volume-cache
+    volumes:
+      - name: cache
+        path: /cache
+    settings:
+      rebuild: true
+      mount:
+        - /drone/src/gopath
+        - /drone/src/docker_cache
 
   - name: start_lico_alone
     image: appleboy/drone-ssh
