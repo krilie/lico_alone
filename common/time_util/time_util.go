@@ -27,3 +27,6 @@ func GetTimeNow() *time.Time {
 func GetBeijingTimeString(unix int64) string {
 	return time.Unix(unix, 0).In(BeijingZone).Format("2006-01-02 15:04:05")
 }
+func GetNowUtcTimeString() string {
+	return time.Now().In(time.UTC).Format("2006-01-02 15:04:05")
+}
