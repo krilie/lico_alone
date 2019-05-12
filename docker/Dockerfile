@@ -7,10 +7,11 @@ ENV  GIN_MODE=release \
   LICO_DB_PORT=3306 \
   LICO_DB_USER=root \
   LICO_DB_PASSWORD=123456#b*a \
-  LICO_SSL_PUBLIC_KEY=/opt/cert/full_chain.pem \
-  LICO_SSL_PRIVATE_KEY=/opt/cert/private.key
+  LICO_SSL_PUBLIC_KEY=/cert/full_chain.pem \
+  LICO_SSL_PRIVATE_KEY=/cert/private.key
 
-COPY certs/ lico_alone enterpoint.sh /opt/
+COPY certs/ /cert/
+COPY lico_alone enterpoint.sh /opt/
 
 RUN chmod u+x /opt/enterpoint.sh \
     && chmod u+x /opt/lico_alone
