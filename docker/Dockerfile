@@ -1,18 +1,16 @@
 FROM alpine:3.9
 MAINTAINER lico603
 
-ENV  GIN_MODE=release
-ENV  LICO_SERVICE_PORT=80
-ENV  LICO_DB_IP=ligo.ml
-ENV  LICO_DB_PORT=3306
-ENV  LICO_DB_USER=root
-ENV  LICO_DB_PASSWORD=123456#b*a
-ENV  LICO_SSL_PUBLIC_KEY=/cert/full_chain.pem
-ENV  LICO_SSL_PRIVATE_KEY=/cert/private.key
+ENV  GIN_MODE=release \
+  LICO_SERVICE_PORT=80 \
+  LICO_DB_IP=ligo.ml \
+  LICO_DB_PORT=3306 \
+  LICO_DB_USER=root \
+  LICO_DB_PASSWORD=123456#b*a \
+  LICO_SSL_PUBLIC_KEY=/opt/cert/full_chain.pem \
+  LICO_SSL_PRIVATE_KEY=/opt/cert/private.key
 
-COPY certs/ /cert/
-COPY lico_alone /opt/lico_alone
-COPY enterpoint.sh /opt/enterpoint.sh
+COPY certs/ lico_alone enterpoint.sh /opt/
 
 RUN chmod u+x /opt/enterpoint.sh \
     && chmod u+x /opt/lico_alone
