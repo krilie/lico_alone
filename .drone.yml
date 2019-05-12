@@ -24,7 +24,7 @@ steps:
       - go build
       - go install
       - go test
-      - mv lico_alone ./docker/lico_alone
+      - mv $GOPATH/bin/lico_alone ./docker/lico_alone
 
   - name: build_docker_image
     image: plugins/docker
