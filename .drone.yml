@@ -21,7 +21,7 @@ steps:
       - export GOPATH=/drone/src/gopath
       - export CGO_ENABLED=0
       - echo $GOPATH
-      - go build -v
+      - go build
       - go test
       - mv lico_alone ./docker/lico_alone
 
