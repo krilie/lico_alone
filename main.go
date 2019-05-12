@@ -17,6 +17,11 @@ func main() {
 	control.LocalRouter.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "Hello World 2")
 	})
+
+	control.LocalRouter.GET("/ping", func(c *gin.Context) {
+		c.String(http.StatusOK, "pong")
+	})
+
 	// 开始
 	srv := &http.Server{
 		Addr:    ":" + config.GetString("service.port"),
