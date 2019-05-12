@@ -21,9 +21,9 @@ steps:
       - export GOPATH=/drone/src/gopath
       - export CGO_ENABLED=0
       - echo $GOPATH
-      - go install
+      - go build
       - go test
-      - mv $GOPATH/bin/lico_alone ./docker/lico_alone
+      - mv lico_alone ./docker/lico_alone
 
   - name: build_docker_image
     image: plugins/docker
