@@ -33,7 +33,7 @@ func init() {
 	Conf.v.SetDefault("db.port", 3306)
 	Conf.v.SetDefault("db.user", "root")
 	Conf.v.SetDefault("db.password", "123456")
-	Conf.v.SetDefault("db.database", "user")
+	Conf.v.SetDefault("db.database", "lico")
 	Conf.v.SetDefault("db.max_open_conn", 1)
 	Conf.v.SetDefault("db.max_idle_conn", 1)
 	Conf.v.SetDefault("db.conn_max_left_time", 3600*7)
