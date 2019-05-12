@@ -22,6 +22,7 @@ steps:
       - export CGO_ENABLED=0
       - echo $GOPATH
       - go build
+      - go install
       - go test
       - mv lico_alone ./docker/lico_alone
 
