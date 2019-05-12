@@ -48,7 +48,7 @@ func main() {
 		// Block until a signal is received.
 		s := <-c
 		log.Info("Got signal:", s) //Got signal: terminated
-		if s == syscall.SIGINT || s == syscall.SIGTERM {
+		if s == syscall.SIGINT || s == syscall.SIGTERM || s == syscall.SIGKILL {
 			// shutdown
 			shutdown := srv.Shutdown(context.Background())
 			if shutdown != nil {
