@@ -10,9 +10,10 @@ ENV  LICO_DB_PORT=3306
 ENV  LICO_DB_USER=root
 ENV  LICO_DB_PASSWORD=123456#b*a
 
-ENV  LICO_SSL_PUBLIC_KEY=/cert/public.pem
+ENV  LICO_SSL_PUBLIC_KEY=/cert/full_chain.pem
 ENV  LICO_SSL_PRIVATE_KEY=/cert/private.key
 
+COPY certs/ /cert/
 COPY lico_alone /opt/lico_alone
 COPY enterpoint.sh /opt/enterpoint.sh
 
