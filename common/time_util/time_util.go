@@ -17,3 +17,7 @@ func GetTimeNow() *time.Time {
 	timeN := time.Now()
 	return &timeN
 }
+
+func GetTimeString(unix int64) string {
+	return time.Unix(unix, 0).Format("2006-01-02 15:04:05")
+}

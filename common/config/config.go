@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/krilie/lico_alone/common/log"
+	"github.com/krilie/lico_alone/common/time_util"
 	"github.com/spf13/viper"
 	"strings"
 )
@@ -28,6 +29,7 @@ func init() {
 	//设置配置文件类型
 	Conf.v.SetConfigType("yaml")
 
+	Conf.v.SetDefault("info.update_time", time_util.GetTimeNow().Unix()) //时间戳
 	Conf.v.SetDefault("service.port", 443)
 	Conf.v.SetDefault("db.ip", "192.168.31.238")
 	Conf.v.SetDefault("db.port", 3306)

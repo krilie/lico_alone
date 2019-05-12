@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/log"
+	"github.com/krilie/lico_alone/common/time_util"
 	"github.com/krilie/lico_alone/control"
 	"golang.org/x/net/context"
 	"net/http"
@@ -15,11 +16,11 @@ import (
 func main() {
 
 	control.LocalRouter.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "Hello World 2")
+		c.String(http.StatusOK, "hello lico")
 	})
 
 	control.LocalRouter.GET("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong")
+		c.String(http.StatusOK, "pong last update time "+time_util.GetTimeString(int64(config.GetInt("info.update_time"))))
 	})
 
 	// 开始
