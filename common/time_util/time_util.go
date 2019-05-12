@@ -2,27 +2,28 @@ package time_util
 
 import "time"
 
-//func GetNowUnix() int64 {
-//	return time.Now().Unix()
-//}
-var cstZone *time.Location
+var BeijingZone *time.Location
+
+var DefaultFormat = "2006-01-02 15:04:05"
+var StringFormat = "20060102150405"
 
 func init() {
-	cstZone = time.FixedZone("CST", 8*3600) // 东八
+	// 东八区北京时间
+	BeijingZone = time.FixedZone("CST", 8*3600)
 }
 
-func GetNowTimeString() string {
-	return time.Now().In(cstZone).Format("2006-01-02 15:04:05")
+func GetBeijingNowTimeString() string {
+	return time.Now().In(BeijingZone).Format("2006-01-02 15:04:05")
 }
-func GetNowTimeStringFormat(format string) string {
-	return time.Now().In(cstZone).Format(format)
+func GetBeijingNowTimeStringFormat(format string) string {
+	return time.Now().In(BeijingZone).Format(format)
 }
 
 func GetTimeNow() *time.Time {
-	timeN := time.Now().In(cstZone)
+	timeN := time.Now().In(BeijingZone)
 	return &timeN
 }
 
-func GetTimeString(unix int64) string {
-	return time.Unix(unix, 0).In(cstZone).Format("2006-01-02 15:04:05")
+func GetBeijingTimeString(unix int64) string {
+	return time.Unix(unix, 0).In(BeijingZone).Format("2006-01-02 15:04:05")
 }

@@ -20,7 +20,7 @@ func main() {
 	})
 
 	control.LocalRouter.GET("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong last update time "+time_util.GetTimeString(int64(config.GetInt("info.update_time"))))
+		c.String(http.StatusOK, "pong last update time "+time_util.GetBeijingTimeString(int64(config.GetInt("info.update_time"))))
 	})
 
 	// 开始
