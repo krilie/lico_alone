@@ -14,7 +14,6 @@ func TestCreate(t *testing.T) {
 	var user User
 	user.ID = uuid_util.GetUuid()
 	user.CreateTime = time.Now()
-	user.Version = 0
 	user.Salt = "123"
 	user.Password = pswd_md5.GetMd5Password("12345678", user.Salt)
 	user.Email = sql.NullString{String: "me@example.com", Valid: true}
