@@ -6,6 +6,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/log"
+	"net/url"
 	"time"
 )
 
@@ -18,12 +19,13 @@ type DbHandler struct {
 var Db *gorm.DB
 
 func init() {
-	connStr := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True",
+	connStr := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=%v",
 		config.GetString("db.user"),
 		config.GetString("db.password"),
 		config.GetString("db.ip"),
 		config.GetInt("db.port"),
 		config.GetString("db.database"),
+		url.QueryEscape("Asia/Shanghai"),
 	)
 
 	if db, err := gorm.Open("mysql", connStr); err != nil {

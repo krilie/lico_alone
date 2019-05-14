@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/krilie/lico_alone/common/pswd_md5"
 	"github.com/krilie/lico_alone/common/uuid_util"
+	"net/url"
 	"testing"
 	"time"
 )
@@ -26,7 +27,7 @@ func TestCreate(t *testing.T) {
 }
 
 func TestFunc(t *testing.T) {
-
+	fmt.Println(url.QueryEscape("Asia/Shanghai"))
 }
 
 func TestFuncGetRoleIdByName(t *testing.T) {
