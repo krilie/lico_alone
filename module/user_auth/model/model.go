@@ -19,7 +19,7 @@ type DbHandler struct {
 var Db *gorm.DB
 
 func init() {
-	connStr := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=%v",
+	connStr := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&loc=%v&parseTime=True",
 		config.GetString("db.user"),
 		config.GetString("db.password"),
 		config.GetString("db.ip"),
