@@ -23,7 +23,6 @@ func ManagerPermissionNewPermission(ctx *context_util.Context, pName string, pDe
 	p.CreateTime = time.Now()
 	p.Description = pDescription
 	p.Name = pName
-	p.Version = 0
 	err = model.Db.Create(p).Error
 	if err != nil {
 		return nil, err

@@ -26,7 +26,6 @@ func UserBaseRegister(ctx *context_util.Context, loginName string, password stri
 	user.NickName = loginName
 	user.Salt = pswd_md5.GetSalt(5)
 	user.Password = pswd_md5.GetMd5Password(password, user.Salt)
-	user.Version = 0
 	user.CreateTime = time.Now()
 	user.Phone = sql.NullString{Valid: false}
 	user.Email = sql.NullString{Valid: false}

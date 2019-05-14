@@ -20,7 +20,6 @@ func ManagerRoleNewRole(ctx *context_util.Context, roleName string, roleDescript
 	//生成新角色并添加
 	role = new(model.Role)
 	role.ID = uuid_util.GetUuid()
-	role.Version = 0
 	role.Name = roleName
 	role.Description = roleDescription
 	role.CreateTime = time.Now()
