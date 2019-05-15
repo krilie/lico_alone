@@ -11,7 +11,7 @@ import (
 )
 
 //给系统添加新的角色
-func ManagerRoleNewRole(ctx *context_util.Context, roleName string, roleDescription string) (role *model.Role, err error) {
+func (Manage) ManagerRoleNewRole(ctx *context_util.Context, roleName string, roleDescription string) (role *model.Role, err error) {
 	//检查参数
 	if !govalidator.IsAlpha(roleName) || len(roleDescription) == 0 {
 		log.Infoln("ManagerRoleNewRole", "param err:", roleName, roleDescription)

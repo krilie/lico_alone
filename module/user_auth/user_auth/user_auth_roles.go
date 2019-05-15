@@ -9,7 +9,7 @@ import (
 )
 
 //获取用户的所有角色
-func UserAuthRoles(ctx *context_util.Context, userId string) (roles mapset.Set, err error) {
+func (UserAuth) UserAuthRoles(ctx *context_util.Context, userId string) (roles mapset.Set, err error) {
 	if !validator_util.IsIdStr(userId) {
 		return nil, errs.ErrParam
 	}

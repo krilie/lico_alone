@@ -20,6 +20,7 @@ require (
 	github.com/fvbock/endless v0.0.0-20170109170031-447134032cb6
 	github.com/gin-contrib/sse v0.0.0-20190125020943-a7658810eb74 // indirect
 	github.com/gin-gonic/gin v1.3.0
+	github.com/go-ini/ini v1.42.0 // indirect
 	github.com/go-sql-driver/mysql v1.4.1 // indirect
 	github.com/gofrs/uuid v3.2.0+incompatible // indirect
 	github.com/jinzhu/gorm v1.9.2
@@ -29,6 +30,8 @@ require (
 	github.com/lib/pq v1.0.0 // indirect
 	github.com/mattn/go-isatty v0.0.4 // indirect
 	github.com/mattn/go-sqlite3 v1.10.0 // indirect
+	github.com/minio/minio-go v6.0.14+incompatible // indirect
+	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/satori/go.uuid v1.2.0

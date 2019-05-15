@@ -13,7 +13,7 @@ import (
 
 // 给app用户添加新的key 访问key
 // admin 和cleint，如果没有admin而只有cleint权限，则检查登录者与userId是否一致
-func ManagerClientUserNewAccToken(ctx *context_util.Context, userId, keyDescription string, Exp time.Time) (key *model.ClientUserAccessToken, err error) {
+func (Manage) ManagerClientUserNewAccToken(ctx *context_util.Context, userId, keyDescription string, Exp time.Time) (key *model.ClientUserAccessToken, err error) {
 	//参数检查
 	if !validator_util.IsIdStr(userId) || len(keyDescription) == 0 {
 		log.Infoln("", "param error:", userId, keyDescription)
@@ -25,12 +25,12 @@ func ManagerClientUserNewAccToken(ctx *context_util.Context, userId, keyDescript
 		return nil, errs.UnAuthorized
 	}
 	//判断是否没有admin权限而有client权限
-	hasRole, err := user_auth.UserAuthHasRole(ctx, loginUserId, model.RoleAdmin)
+	hasRole, err := user_auth.User.UserAuthHasRole(ctx, loginUserId, model.RoleAdmin)
 	if err != nil {
 		return nil, err
 	}
 	if !hasRole {
-		if hasRoleClient, err := user_auth.UserAuthHasRole(ctx, loginUserId, model.RoleClient); err != nil {
+		if hasRoleClient, err := user_auth.User.UserAuthHasRole(ctx, loginUserId, model.RoleClient); err != nil {
 			return nil, err
 		} else if hasRoleClient {
 			//没有admin只有client权限,检查登录者是否与target一致

@@ -9,7 +9,7 @@ import (
 )
 
 //取到app角色用户的所有keys
-func UserAuthClientAccToken(ctx *context_util.Context, appUserId string) (list []model.ClientUserAccessToken, err error) {
+func (ua UserAuth) UserAuthClientAccToken(ctx *context_util.Context, appUserId string) (list []model.ClientUserAccessToken, err error) {
 	//校验参数
 	if !validator_util.IsIdStr(appUserId) {
 		log.Infoln("UserAuthAppKeys", "err param:", appUserId)
@@ -21,12 +21,12 @@ func UserAuthClientAccToken(ctx *context_util.Context, appUserId string) (list [
 		return nil, errs.UnAuthorized
 	}
 	//判断是否没有admin权限而有client权限
-	hasRole, err := UserAuthHasRole(ctx, loginUserId, model.RoleAdmin)
+	hasRole, err := ua.UserAuthHasRole(ctx, loginUserId, model.RoleAdmin)
 	if err != nil {
 		return nil, err
 	}
 	if !hasRole {
-		if hasRoleClient, err := UserAuthHasRole(ctx, loginUserId, model.RoleClient); err != nil {
+		if hasRoleClient, err := ua.UserAuthHasRole(ctx, loginUserId, model.RoleClient); err != nil {
 			return nil, err
 		} else if hasRoleClient {
 			//没有admin只有client权限,检查登录者是否与target一致

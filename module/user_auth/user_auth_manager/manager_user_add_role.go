@@ -8,7 +8,7 @@ import (
 )
 
 //给用户添加新角色
-func ManagerUserAddRole(ctx *context_util.Context, roleId string, userId string) error {
+func (Manage) ManagerUserAddRole(ctx *context_util.Context, roleId string, userId string) error {
 	//检查参数
 	if !(validator_util.IsIdStr(roleId) && validator_util.IsIdStr(userId)) {
 		log.Infoln("ManagerRoleAddPermission", "param error:", roleId, userId)
