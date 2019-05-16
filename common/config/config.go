@@ -43,6 +43,10 @@ func init() {
 	Conf.v.SetDefault("ssl.private_key", "")
 	Conf.v.SetDefault("jwt.normal_exp_duration", 3600*24*30)
 	Conf.v.SetDefault("jwt.hs256_key", "E5Vsfs#$afasdrtfawe*^&%(")
+	Conf.v.SetDefault("oss.key", "123")
+	Conf.v.SetDefault("oss.secret", "123")
+	Conf.v.SetDefault("oss.endpoint", "123")
+	Conf.v.SetDefault("oss.bucket", "123")
 
 	if err := Conf.v.ReadInConfig(); err != nil {
 		switch err.(type) {
