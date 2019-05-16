@@ -8,7 +8,11 @@ ENV  GIN_MODE=release \
   LICO_DB_USER=root \
   LICO_DB_PASSWORD=123456#b*a \
   LICO_SSL_PUBLIC_KEY=/cert/full_chain.pem \
-  LICO_SSL_PRIVATE_KEY=/cert/private.key
+  LICO_SSL_PRIVATE_KEY=/cert/private.key \
+  LICO_OSS_KEY=123 \
+  LICO_OSS_SECRET=123 \
+  LICO_OSS_ENDPOINT=https://ligo.ml:9000 \
+  LICO_OSS_BUCKET=image
 
 COPY certs/ /cert/
 COPY lico_alone enterpoint.sh /opt/
