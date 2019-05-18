@@ -13,7 +13,7 @@ import (
 // name	名称
 // description 描述
 func ManagerRoleNewRole(c *gin.Context) {
-	ctx := common.GetApplicationContextOrReturn(c)
+	ctx := utils.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return
 	}
@@ -24,12 +24,12 @@ func ManagerRoleNewRole(c *gin.Context) {
 	}{}
 	e := c.ShouldBindWith(req, binding.FormPost)
 	if e != nil {
-		common.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg(e.Error()))
+		utils.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg(e.Error()))
 		return
 	}
-	role, e := auth_manager.ManagerRoleNewRole(ctx, req.Name, req.Description)
+	role, e := apiManagerUser.NewRole(ctx, req.Name, req.Description)
 	if e != nil {
-		common.ReturnWithErr(ctx, c, e)
+		utils.ReturnWithErr(ctx, c, e)
 		return
 	} else {
 		c.JSON(200, role)

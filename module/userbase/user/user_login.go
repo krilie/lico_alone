@@ -15,7 +15,7 @@ import (
 )
 
 // 用户登录,到这里说明参数有可能还是不正确的。检查参数,放到上层
-func (User) UserLogin(ctx *context_util.Context, loginName, password string) (jwtString string, err error) {
+func (User) Login(ctx *context_util.Context, loginName, password string) (jwtString string, err error) {
 	//检查密码与用户名
 	if !(validator_util.IsLoginName(loginName) && validator_util.IsPassword(password)) {
 		log.Infoln("user loginName or password format error.")

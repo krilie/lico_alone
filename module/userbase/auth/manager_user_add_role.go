@@ -8,10 +8,10 @@ import (
 )
 
 //给用户添加新角色
-func (Manage) ManagerUserAddRole(ctx *context_util.Context, roleId string, userId string) error {
+func (Manage) AddRoleToUser(ctx *context_util.Context, roleId string, userId string) error {
 	//检查参数
 	if !(validator_util.IsIdStr(roleId) && validator_util.IsIdStr(userId)) {
-		log.Infoln("ManagerRoleAddPermission", "param error:", roleId, userId)
+		log.Infoln("AddPermissionToRole", "param error:", roleId, userId)
 	}
 	//添加关系
 	var relation model.UserRole

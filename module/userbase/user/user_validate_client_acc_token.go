@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (User) UserValidateClientAccToken(ctx *context_util.Context, clientAccKey string) (key *model.ClientUserAccessToken, err error) {
+func (User) ValidateClientAccToken(ctx *context_util.Context, clientAccKey string) (key *model.ClientUserAccessToken, err error) {
 	row := model.Db.Where("token=?", clientAccKey).Row()
 	key = new(model.ClientUserAccessToken)
 	err = row.Scan(key)

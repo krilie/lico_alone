@@ -3,8 +3,8 @@ package control
 import (
 	"github.com/gin-gonic/gin"
 	mg "github.com/krilie/lico_alone/control/manager"
+	"github.com/krilie/lico_alone/control/middleware"
 	"github.com/krilie/lico_alone/control/user"
-	"github.com/krilie/lico_alone/control/utils"
 )
 
 var LocalRouter *gin.Engine
@@ -14,16 +14,16 @@ func init() {
 	//api for client token need to check
 	apis := LocalRouter.Group("/api")
 	//check context and acc token
-	apis.Use(common.BuildContext())     //创建上下文
-	apis.Use(common.CheckClientToken()) //检查客户端的acc token
+	apis.Use(middleware.BuildContext())     //创建上下文
+	apis.Use(middleware.CheckClientToken()) //检查客户端的acc token
 	{
 		//要登录的接口
 		needLogged := apis.Group("")
-		needLogged.Use(common.CheckAuthToken()) //检查用户的token是否登录了,即检查是否有基本准入门槛
+		needLogged.Use(middleware.CheckAuthToken()) //检查用户的token是否登录了,即检查是否有基本准入门槛
 		{
 			//管理组
 			manager := needLogged.Group("/manager")
-			manager.Use(common.NeedRoles("admin")) //是否有admin权限
+			manager.Use(middleware.NeedRoles("admin")) //是否有admin权限
 			manager.POST("/client_user/new_acc_token", mg.ManagerClientUserNewAccToken)
 			manager.POST("/permission/new_permission", mg.ManagerPermissionNewPermission)
 			manager.POST("/role/add_permission", mg.ManagerRoleAddPermission)
@@ -33,9 +33,9 @@ func init() {
 		{
 			//用户认证组
 			userAuth := needLogged.Group("/user/auth")
-			userAuth.GET("/client/acc_token", common.NeedRoles("client", "admin"), user.UserAuthClientAccToken)
-			userAuth.POST("/client/has_acc_token", common.NeedRoles("client", "admin"), user.UserAuthClientHasAccToken)
-			userAuth.POST("/client/new_acc_token", common.NeedRoles("client"), mg.ManagerClientUserNewAccToken)
+			userAuth.GET("/client/acc_token", middleware.NeedRoles("client", "admin"), user.UserAuthClientAccToken)
+			userAuth.POST("/client/has_acc_token", middleware.NeedRoles("client", "admin"), user.UserAuthClientHasAccToken)
+			userAuth.POST("/client/new_acc_token", middleware.NeedRoles("client"), mg.ManagerClientUserNewAccToken)
 			userAuth.POST("/has_permission", user.UserAuthHasPermission) //登录就可以调用的接口
 			userAuth.POST("/has_role", user.UserAuthHasRole)
 			userAuth.GET("/permissions", user.UserAuthPermissions)

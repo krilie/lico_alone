@@ -10,6 +10,9 @@ import (
 )
 
 func TestUserLogin(t *testing.T) {
+
+	userBase := User{}
+
 	//上下文对象
 	var ctx context_util.Context
 	ctx.TraceId = uuid_util.GetUuid()
@@ -21,13 +24,13 @@ func TestUserLogin(t *testing.T) {
 	fmt.Println("user_name:", userName)
 	fmt.Println("user_password:", userPswd)
 	//注册
-	err := UserBaseRegister(&ctx, userName, userPswd)
+	err := userBase.Register(&ctx, userName, userPswd)
 	if err != nil {
 		t.Error(err)
 		t.FailNow()
 	}
 	//登录
-	jwtString, err := UserLogin(&ctx, userName, userPswd)
+	jwtString, err := userBase.Login(&ctx, userName, userPswd)
 	if err != nil {
 		t.Error(err)
 		t.FailNow()
@@ -42,7 +45,7 @@ func TestUserLogin(t *testing.T) {
 		t.Log("jwt ok", userClaims)
 	}
 	//登出
-	err = UserLogout(&ctx, jwtString)
+	err = userBase.Logout(&ctx, jwtString)
 	if err != nil {
 		t.Error(err)
 		t.FailNow()

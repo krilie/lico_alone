@@ -9,7 +9,7 @@ import (
 
 // get app context or nil
 func GetApplicationContextOrReturn(c *gin.Context) *context_util.Context {
-	value, exists := c.Get(common.GinKeyAppContext)
+	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
 		log.Error("GetApplicationContextOrReturn", "can not get application context for next step")
 		c.JSON(500, errs.ErrInternal.ToStdReturn())

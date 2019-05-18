@@ -14,9 +14,9 @@ import (
 func BuildContext() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		context := &context_util.Context{}
-		context.TraceId = string_util.EmptyOrDefault(c.GetHeader(common.HeaderTraceId), uuid_util.GetUuid())
+		context.TraceId = string_util.EmptyOrDefault(c.GetHeader(utils.HeaderTraceId), uuid_util.GetUuid())
 		context.StartTime = time.Now()
-		c.Set(common.GinKeyAppContext, context)
+		c.Set(utils.GinKeyAppContext, context)
 		c.Next()
 		context.LastTime = time.Now()
 	}

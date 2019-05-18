@@ -10,9 +10,9 @@ import (
 )
 
 //判断用户是否有这个权限，联合查询
-func (UserAuth) UserAuthHasPermission(ctx *context_util.Context, userId, permissionName string) (bool, error) {
+func (UserAuth) HasPermission(ctx *context_util.Context, userId, permissionName string) (bool, error) {
 	if !(validator_util.IsIdStr(userId) && govalidator.IsAlpha(permissionName)) {
-		log.Infoln("UserAuthHasPermission", "param error:", userId, permissionName)
+		log.Infoln("HasPermission", "param error:", userId, permissionName)
 		return false, errs.ErrParam
 	}
 	return model.IsPermissionExistsWithUser(model.Db, userId, permissionName)

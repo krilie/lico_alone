@@ -10,9 +10,9 @@ import (
 )
 
 //获取用户的 permission 列表,连表查询
-func (UserAuth) UserAuthPermissions(ctx *context_util.Context, userId string) (set mapset.Set, err error) {
+func (UserAuth) GetPermissions(ctx *context_util.Context, userId string) (set mapset.Set, err error) {
 	if !validator_util.IsIdStr(userId) {
-		log.Infoln("UserAuthPermissions", "user id format error:", userId)
+		log.Infoln("GetPermissions", "user id format error:", userId)
 		return nil, errs.ErrParam
 	}
 	return model.GetAllPermissionByUserId(model.Db, userId)

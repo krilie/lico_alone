@@ -9,7 +9,7 @@ import (
 
 // get app context or nil
 func GetApplicationContextOrAbort(c *gin.Context) *context_util.Context {
-	value, exists := c.Get(common.GinKeyAppContext)
+	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
 		log.Error("GetApplicationContextOrAbort", "can not get application context for next step")
 		c.AbortWithStatusJSON(500, errs.ErrInternal.ToStdReturn())

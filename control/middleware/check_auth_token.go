@@ -6,20 +6,19 @@ import (
 	"github.com/krilie/lico_alone/common/jwt"
 	"github.com/krilie/lico_alone/common/string_util"
 	"github.com/krilie/lico_alone/control/utils"
-	"github.com/krilie/lico_alone/module/userbase/user"
 )
 
 // check user is login and auth token validation
 func CheckAuthToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// get context
-		ctx := common.GetApplicationContextOrAbort(c)
+		ctx := utils.GetApplicationContextOrAbort(c)
 		if ctx == nil {
 			return
 		}
-		headerAuth := c.GetHeader(common.HeaderAuthorization)
+		headerAuth := c.GetHeader(utils.HeaderAuthorization)
 
-		var claims, userValidate = user.UserValidate(ctx, headerAuth)
+		var claims, userValidate = apiUser.Validate(ctx, headerAuth)
 		if userValidate != nil {
 			if userValidate == jwt.ErrIatTime {
 				c.AbortWithStatusJSON(401, errs.UnAuthorized.ToStdWithMsg("token format error"))

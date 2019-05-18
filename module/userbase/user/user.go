@@ -19,11 +19,11 @@ func init() {
 }
 
 type IUser interface {
-	UserLogin(ctx *context_util.Context, loginName, password string) (jwtString string, err error)
-	UserValidate(ctx *context_util.Context, jwtToken string) (jwt.Claims, error)
-	UserBaseRegister(ctx *context_util.Context, loginName string, password string) error
-	UserLogout(ctx *context_util.Context, jwtToken string) error
-	UserValidateClientAccToken(ctx *context_util.Context, clientAccKey string) (key *model.ClientUserAccessToken, err error)
-	UserBaseGetInfo(ctx *context_util.Context, userId string) (map[string]string, error)
+	Login(ctx *context_util.Context, loginName, password string) (jwtString string, err error)
+	Validate(ctx *context_util.Context, jwtToken string) (jwt.Claims, error)
+	Register(ctx *context_util.Context, loginName string, password string) error
+	Logout(ctx *context_util.Context, jwtToken string) error
+	ValidateClientAccToken(ctx *context_util.Context, clientAccKey string) (key *model.ClientUserAccessToken, err error)
+	GetInfo(ctx *context_util.Context, userId string) (map[string]string, error)
 }
 type User struct{}

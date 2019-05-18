@@ -13,7 +13,7 @@ import (
 )
 
 //用户注册，注册，normal用户注册
-func (User) UserBaseRegister(ctx *context_util.Context, loginName string, password string) error {
+func (User) Register(ctx *context_util.Context, loginName string, password string) error {
 	//检查密码与用户名
 	if !(validator_util.IsLoginName(loginName) && validator_util.IsPassword(password)) {
 		log.Infoln("user loginName or password format error.")

@@ -5,7 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/common_struct/errs"
 	"github.com/krilie/lico_alone/control/utils"
-	"github.com/krilie/lico_alone/module/userbase/auth"
 )
 
 func NeedRoles(roles ...interface{}) gin.HandlerFunc {
@@ -15,7 +14,7 @@ func NeedRoles(roles ...interface{}) gin.HandlerFunc {
 	}
 	return func(c *gin.Context) {
 		// check user get context
-		ctx := common.GetApplicationContextOrAbort(c)
+		ctx := utils.GetApplicationContextOrAbort(c)
 		if ctx == nil {
 			return
 		}
@@ -26,14 +25,14 @@ func NeedRoles(roles ...interface{}) gin.HandlerFunc {
 			return
 		}
 		//check user has permission
-		userRoles, err := auth.UserAuthRoles(ctx, userId)
+		userRoles, err := apiAuthUser.GetRoles(ctx, userId)
 		if err != nil {
-			common.AbortWithErr(ctx, c, err)
+			utils.AbortWithErr(ctx, c, err)
 			return
 		}
 		sect := roleSet.Intersect(userRoles)
 		if sect.Cardinality() == 0 {
-			common.AbortWithAppErr(ctx, c, errs.ErrNoPermission.NewWithMsg("no permission"))
+			utils.AbortWithAppErr(ctx, c, errs.ErrNoPermission.NewWithMsg("no permission"))
 			return
 		}
 		c.Next()

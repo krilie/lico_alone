@@ -5,7 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/common_struct/errs"
 	"github.com/krilie/lico_alone/control/utils"
-	"github.com/krilie/lico_alone/module/userbase/auth"
 )
 
 // check user has some permission request by used url
@@ -16,7 +15,7 @@ func NeedPermission(perms ...interface{}) gin.HandlerFunc {
 	}
 	return func(c *gin.Context) {
 		// check user get context
-		ctx := common.GetApplicationContextOrAbort(c)
+		ctx := utils.GetApplicationContextOrAbort(c)
 		if ctx == nil {
 			return
 		}
@@ -27,9 +26,9 @@ func NeedPermission(perms ...interface{}) gin.HandlerFunc {
 			return
 		}
 		//check user has permission
-		permissions, err := auth.UserAuthPermissions(ctx, userId)
+		permissions, err := apiAuthUser.GetPermissions(ctx, userId)
 		if err != nil {
-			common.AbortWithErr(ctx, c, err)
+			utils.AbortWithErr(ctx, c, err)
 			return
 		}
 		sect := permsSet.Intersect(permissions)

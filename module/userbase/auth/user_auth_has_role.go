@@ -10,12 +10,12 @@ import (
 )
 
 //用户是否有这个角色,有app权限才能调用这个接口
-func (UserAuth) UserAuthHasRole(ctx *context_util.Context, userId, roleName string) (bool, error) {
+func (UserAuth) HasRole(ctx *context_util.Context, userId, roleName string) (bool, error) {
 	//参数检查
 	if len(roleName) == 0 ||
 		(!govalidator.IsAlpha(roleName)) ||
 		!(validator_util.IsIdStr(userId)) {
-		log.Error("UserAuthHasRole", "参数格式不正确")
+		log.Error("HasRole", "参数格式不正确")
 		return false, errs.ErrParam
 	}
 	//直接取到role id
