@@ -1,16 +1,16 @@
 package manager
 
 import (
-	"github.com/krilie/lico_alone/control"
+	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/control/middleware"
 	"github.com/krilie/lico_alone/module/userbase/auth"
 )
 
 var apiManagerUser auth.Manage
 
-func init() {
+func Init(group *gin.RouterGroup) {
 	//管理组
-	manager := control.NeedLogin.Group("/manager")
+	manager := group.Group("/manager")
 	manager.Use(middleware.NeedRoles("admin")) //是否有admin权限
 	manager.POST("/client_user/new_acc_token", ManagerClientUserNewAccToken)
 	manager.POST("/permission/new_permission", ManagerPermissionNewPermission)
