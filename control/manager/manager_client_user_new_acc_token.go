@@ -5,7 +5,6 @@ import (
 	"github.com/krilie/lico_alone/common/common_struct/errs"
 	"github.com/krilie/lico_alone/common/string_util"
 	"github.com/krilie/lico_alone/control/utils"
-	"github.com/krilie/lico_alone/module/userbase/auth_manager"
 	"time"
 )
 

@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/common_struct/errs"
 	"github.com/krilie/lico_alone/control/utils"
-	"github.com/krilie/lico_alone/module/userbase/auth_manager"
 )
 
 // /manager/permission/new_permission POST

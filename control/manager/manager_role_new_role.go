@@ -5,7 +5,6 @@ import (
 	"github.com/gin-gonic/gin/binding"
 	"github.com/krilie/lico_alone/common/common_struct/errs"
 	"github.com/krilie/lico_alone/control/utils"
-	"github.com/krilie/lico_alone/module/userbase/auth_manager"
 )
 
 // /manager/role/new_role POST
