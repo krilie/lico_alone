@@ -1,9 +1,9 @@
-package normal_user
+package middleware
 
 import (
 	"github.com/krilie/lico_alone/module/userbase/auth"
 	"github.com/krilie/lico_alone/module/userbase/user"
 )
 
-var NUser user.User
-var NManageUser auth.Manage
+var apiUser user.User
+var apiAuthUser auth.UserAuth
