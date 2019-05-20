@@ -67,7 +67,7 @@ steps:
         - docker stop local_lico_alone
         - docker rm local_lico_alone
         - docker rmi -f lico603/lico_alone
-        - docker run --name=local_lico_alone -e LICO_INFO_UPDATE_TIME=$DRONE_BUILD_CREATED -d -p 81:80 lico603/lico_alone
+        - docker run --name=local_lico_alone -e LICO_INFO_UPDATE_TIME=$DRONE_BUILD_CREATED --network=local_net -d -p 80:80 lico603/lico_alone
 
 volumes:
   - name: cache
