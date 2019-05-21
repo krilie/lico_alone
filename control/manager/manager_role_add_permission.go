@@ -11,7 +11,7 @@ import (
 // roleId string, permissionId string
 // role_id role的id
 // permission_id permission的id
-func ManagerRoleAddPermission(c *gin.Context) {
+func (ManagerCtrl) AddPermissionToRole(c *gin.Context) {
 	ctx := utils.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return

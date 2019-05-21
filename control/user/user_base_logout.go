@@ -9,7 +9,7 @@ import (
 // /user/base/logout post
 // jwtToken string
 // 从登录信息中取jwttoken
-func UserBaseLogout(c *gin.Context) {
+func (UserCtrl) Logout(c *gin.Context) {
 	ctx := utils.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return

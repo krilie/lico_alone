@@ -9,7 +9,7 @@ import (
 // /user/base/valid_client_acc_token POST
 // token
 // 无权限
-func UserBaseValidClientAccToken(c *gin.Context) {
+func (UserCtrl) ValidClientAccToken(c *gin.Context) {
 	ctx := utils.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return

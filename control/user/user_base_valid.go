@@ -9,7 +9,7 @@ import (
 // /user/base/valid POST
 // token 用户的jwttoken
 // 检查这个jwtToken是否有效，并返回有效载荷
-func UserBaseValid(c *gin.Context) {
+func (UserCtrl) Valid(c *gin.Context) {
 	ctx := utils.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return

@@ -14,7 +14,7 @@ import (
 // description string 这个key的描述
 // exp time.Time 这个key的过期时间,utx时间戳
 // 逻辑层做了参数检查，不用在这里检查参数，一些非空检查是必要的
-func ManagerClientUserNewAccToken(c *gin.Context) {
+func (ManagerCtrl) CreateNewAccToken(c *gin.Context) {
 	ctx := utils.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return

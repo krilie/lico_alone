@@ -11,7 +11,7 @@ import (
 // roleName string, roleDescription string
 // name	名称
 // description 描述
-func ManagerRoleNewRole(c *gin.Context) {
+func (ManagerCtrl) CreateNewRole(c *gin.Context) {
 	ctx := utils.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return

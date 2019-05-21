@@ -12,9 +12,21 @@ func Init(group *gin.RouterGroup) {
 	//管理组
 	manager := group.Group("/manager")
 	manager.Use(middleware.NeedRoles("admin")) //是否有admin权限
-	manager.POST("/client_user/new_acc_token", ManagerClientUserNewAccToken)
-	manager.POST("/permission/new_permission", ManagerPermissionNewPermission)
-	manager.POST("/role/add_permission", ManagerRoleAddPermission)
-	manager.POST("/role/new_role", ManagerRoleNewRole)
-	manager.POST("/user/add_role", ManagerUserAddRole)
+	manager.POST("/client_user/new_acc_token", MCtrl.CreateNewAccToken)
+	manager.POST("/permission/new_permission", MCtrl.CreateNewPermission)
+	manager.POST("/role/add_permission", MCtrl.AddPermissionToRole)
+	manager.POST("/role/new_role", MCtrl.CreateNewRole)
+	manager.POST("/user/add_role", MCtrl.AddRoleToUser)
+}
+
+type ManagerCtrl struct{}
+
+var MCtrl ManagerCtrl
+
+type ManagerCtrler interface {
+	AddPermissionToRole(c *gin.Context)
+	CreateNewRole(c *gin.Context)
+	CreateNewPermission(c *gin.Context)
+	AddRoleToUser(c *gin.Context)
+	CreateNewAccToken(c *gin.Context)
 }

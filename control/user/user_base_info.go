@@ -8,7 +8,7 @@ import (
 
 // /user/base/info get
 // get info
-func UserBaseInfo(c *gin.Context) {
+func (UserCtrl) GetInfo(c *gin.Context) {
 	ctx := utils.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return

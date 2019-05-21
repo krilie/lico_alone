@@ -14,7 +14,7 @@ import (
 func (Manage) NewRole(ctx *context_util.Context, roleName string, roleDescription string) (role *model.Role, err error) {
 	//检查参数
 	if !govalidator.IsAlpha(roleName) || len(roleDescription) == 0 {
-		log.Infoln("NewRole", "param err:", roleName, roleDescription)
+		log.Infoln("CreateNewRole", "param err:", roleName, roleDescription)
 		return nil, errs.ErrParam
 	}
 	//生成新角色并添加

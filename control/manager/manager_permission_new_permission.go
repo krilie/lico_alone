@@ -10,7 +10,7 @@ import (
 // pName string, pDescription string
 // name		permission的名称
 // description description的描述
-func ManagerPermissionNewPermission(c *gin.Context) {
+func (ManagerCtrl) CreateNewPermission(c *gin.Context) {
 	ctx := utils.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return

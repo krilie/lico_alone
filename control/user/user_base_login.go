@@ -11,7 +11,7 @@ import (
 // loginName, password string
 // login_name 登录名
 // password 密码
-func UserBaseLogin(c *gin.Context) {
+func (UserCtrl) Login(c *gin.Context) {
 	ctx := utils.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return

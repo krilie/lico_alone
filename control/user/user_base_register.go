@@ -12,7 +12,7 @@ import (
 // loginName string, password string
 // login_name 登录名
 // password 密码
-func UserBaseRegister(c *gin.Context) {
+func (UserCtrl) Register(c *gin.Context) {
 	ctx := utils.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return

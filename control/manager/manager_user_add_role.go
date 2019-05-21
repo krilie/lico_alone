@@ -12,7 +12,7 @@ import (
 //  roleId string, userId string
 // role_id 角色的id
 // user_id 用户的id
-func ManagerUserAddRole(c *gin.Context) {
+func (ManagerCtrl) AddRoleToUser(c *gin.Context) {
 	ctx := utils.GetApplicationContextOrReturn(c)
 	if ctx == nil {
 		return
