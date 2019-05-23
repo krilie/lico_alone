@@ -20,7 +20,7 @@ func (UserCtrl) Login(c *gin.Context) {
 		LoginName string `form:"login_name" binding:"required"`
 		Password  string `form:"password" binding:"required"`
 	}{}
-	if e := c.ShouldBindWith(req, binding.FormPost); e != nil {
+	if e := c.ShouldBindWith(&req, binding.FormPost); e != nil {
 		utils.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg(e.Error()))
 		return
 	}

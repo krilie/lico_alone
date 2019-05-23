@@ -1,7 +1,7 @@
 package user
 
 import (
-	"database/sql"
+	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/common_struct/errs"
 	"github.com/krilie/lico_alone/common/context_util"
 	"github.com/krilie/lico_alone/module/userbase/model"
@@ -9,10 +9,9 @@ import (
 )
 
 func (User) ValidateClientAccToken(ctx *context_util.Context, clientAccKey string) (key *model.ClientUserAccessToken, err error) {
-	row := model.Db.Where("token=?", clientAccKey).Row()
 	key = new(model.ClientUserAccessToken)
-	err = row.Scan(key)
-	if err != nil && err == sql.ErrNoRows {
+	err = model.Db.Find(key, "token=?", clientAccKey).Error
+	if err != nil && err == gorm.ErrRecordNotFound {
 		return nil, nil
 	} else if err != nil {
 		return nil, err

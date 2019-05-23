@@ -28,10 +28,15 @@ func CheckClientToken() gin.HandlerFunc {
 			utils.AbortWithErr(context, c, err)
 			return
 		} else {
-			context.ClientId = string_util.NewString(key.UserId)
-			context.ClientAccToken = string_util.NewString(key.Token)
-			c.Next()
-			return
+			if key == nil {
+				c.AbortWithStatusJSON(401, errs.UnAuthorized.ToStdWithMsg("client acc key not valid"))
+				return
+			} else {
+				context.ClientId = string_util.NewString(key.UserId)
+				context.ClientAccToken = string_util.NewString(key.Token)
+				c.Next()
+				return
+			}
 		}
 	}
 }

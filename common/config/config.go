@@ -30,8 +30,8 @@ func init() {
 	Conf.v.SetConfigType("yaml")
 
 	Conf.v.SetDefault("info.update_time", time_util.GetTimeNow().Unix()) //时间戳
-	Conf.v.SetDefault("service.port", 443)
-	Conf.v.SetDefault("db.ip", "192.168.31.238")
+	Conf.v.SetDefault("service.port", 80)
+	Conf.v.SetDefault("db.ip", "localhost")
 	Conf.v.SetDefault("db.port", 3306)
 	Conf.v.SetDefault("db.user", "root")
 	Conf.v.SetDefault("db.password", "123456")

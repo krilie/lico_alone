@@ -21,7 +21,7 @@ func (ManagerCtrl) CreateNewRole(c *gin.Context) {
 		Name        string `binding:"required" form:"name"`
 		Description string `binding:"required" form:"description"`
 	}{}
-	e := c.ShouldBindWith(req, binding.FormPost)
+	e := c.ShouldBindWith(&req, binding.FormPost)
 	if e != nil {
 		utils.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg(e.Error()))
 		return

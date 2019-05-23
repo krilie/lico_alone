@@ -21,7 +21,7 @@ func (ManagerCtrl) AddRoleToUser(c *gin.Context) {
 		RoleId string `form:"role_id" binding:"required"`
 		UserId string `form:"user_id" binding:"required"`
 	}{}
-	err := c.ShouldBindWith(req, binding.FormPost)
+	err := c.ShouldBindWith(&req, binding.FormPost)
 	if err != nil {
 		utils.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg(err.Error()))
 		return
