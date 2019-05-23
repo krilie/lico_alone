@@ -19,7 +19,7 @@ func (User) Login(ctx *context_util.Context, loginName, password string) (jwtStr
 	//检查密码与用户名
 	if !(validator_util.IsLoginName(loginName) && validator_util.IsPassword(password)) {
 		log.Infoln("user loginName or password format error.")
-		return "", errs.ErrParam
+		return "", errs.ErrParam.NewWithMsg("login name or password format error")
 	}
 	//取到用户的值
 	user := new(model.User)
