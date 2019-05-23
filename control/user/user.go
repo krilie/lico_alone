@@ -9,7 +9,7 @@ var apiUser user.User
 
 func Init(group *gin.RouterGroup) {
 	//用户基础
-	userBase := group.Group("/user/base")
+	userBase := group.Group("/user")
 	userBase.POST("/login", userCtrl.Login)
 	userBase.POST("/logout", userCtrl.Logout)
 	userBase.GET("/valid", userCtrl.Valid)                                // 不要登录，要有客户端的key
