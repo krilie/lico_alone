@@ -2,7 +2,7 @@ FROM alpine:3.9
 MAINTAINER lico603
 
 ENV  GIN_MODE=release \
-  LICO_SERVICE_PORT=443 \
+  LICO_SERVICE_PORT=83 \
   LICO_DB_IP=local_mysql \
   LICO_DB_PORT=3306 \
   LICO_DB_USER=root \
@@ -20,6 +20,6 @@ COPY lico_alone enterpoint.sh /opt/
 RUN chmod u+x /opt/enterpoint.sh \
     && chmod u+x /opt/lico_alone
 
-EXPOSE 443
+EXPOSE 83
 
 ENTRYPOINT ["/opt/enterpoint.sh"]
