@@ -12,11 +12,13 @@ import (
 )
 
 func main() {
+
 	// 开始
 	srv := &http.Server{
 		Addr:    ":" + config.GetString("service.port"),
 		Handler: control.LocalRouter,
 	}
+
 	//是否有ssl.public_key ssl.private_key
 	pubKey := config.GetString("ssl.public_key")
 	priKey := config.GetString("ssl.private_key")
