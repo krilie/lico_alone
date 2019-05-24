@@ -11,7 +11,7 @@ var ErrIatTime = errors.New("jwt in bad format,iat>=exp")
 
 //jwt payload的內容，如果是app角色，則appid為空。,web端默認web
 type UserClaims struct {
-	AppId     string `json:"app_id"`     //頒發給哪個端
+	ClientId  string `json:"client_id"`  //頒發給哪個端
 	UserId    string `json:"user_id"`    //用戶id
 	UserRoles string `json:"user_roles"` //用戶角色 以逗号隔开 admin,app,user
 	NickName  string `json:"nick_name"`  //用戶呢稱

@@ -17,9 +17,9 @@ type Context struct {
 	UserClaims     *jwt.UserClaims //一些认证信息，可以为nil
 }
 
-func (ctx *Context) GetAppIdOrEmpty() string {
+func (ctx *Context) GetGwtClientIdOrEmpty() string {
 	if ctx.UserClaims != nil {
-		return ctx.UserClaims.AppId
+		return ctx.UserClaims.ClientId
 	} else {
 		return ""
 	}

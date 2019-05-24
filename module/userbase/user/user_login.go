@@ -43,7 +43,7 @@ func (User) Login(ctx *context_util.Context, loginName, password string) (jwtStr
 			return "", err
 		}
 		userClaims.UserRoles = string_util.JoinWith(roles, ",")
-		userClaims.AppId = ctx.GetAppIdOrEmpty()
+		userClaims.ClientId = ctx.GetClientIdOrEmpty()
 		userClaims.Iss = "sys-user-module"
 		userClaims.UserId = user.ID
 		userClaims.Jti = uuid_util.GetUuid()

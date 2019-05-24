@@ -17,7 +17,7 @@ func TestUserLogin(t *testing.T) {
 	var ctx context_util.Context
 	ctx.TraceId = uuid_util.GetUuid()
 	ctx.UserClaims = new(jwt.UserClaims)
-	ctx.UserClaims.AppId = "123"
+	ctx.UserClaims.ClientId = "123"
 	//测试数据
 	userName := random_token.GetAToken()
 	userPswd := random_token.GetAToken()
