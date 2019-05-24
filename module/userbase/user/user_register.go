@@ -2,6 +2,7 @@ package user
 
 import (
 	"database/sql"
+	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/common_struct/errs"
 	"github.com/krilie/lico_alone/common/context_util"
 	"github.com/krilie/lico_alone/common/log"
@@ -23,6 +24,8 @@ func (User) Register(ctx *context_util.Context, loginName string, password strin
 	var user model.User
 	if e := model.Db.Find(&user, "login_name = ?", loginName).Error; e == nil {
 		return errs.ErrParam.NewWithMsg("此名称已被使用")
+	} else if e != gorm.ErrRecordNotFound {
+		return e
 	}
 	// 插入用户数据
 	user.ID = uuid_util.GetUuid()
