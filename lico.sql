@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-05-24 08:59:05
+Date: 2019-05-24 09:02:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -109,6 +109,7 @@ CREATE TABLE `tb_user` (
 -- Records of tb_user
 -- ----------------------------
 INSERT INTO `tb_user` VALUES ('1', '2019-05-24 08:51:09', '1', '1', '18855566126', '1197829331@qq.com', '123', null, '123');
+INSERT INTO `tb_user` VALUES ('2', '2019-05-24 09:00:58', '2', '2', null, null, '234', null, '234');
 
 -- ----------------------------
 -- Table structure for tb_user_role
