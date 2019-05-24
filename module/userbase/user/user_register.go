@@ -17,7 +17,7 @@ func (User) Register(ctx *context_util.Context, loginName string, password strin
 	//检查密码与用户名
 	if !(validator_util.IsLoginName(loginName) && validator_util.IsPassword(password)) {
 		log.Infoln("user loginName or password format error.")
-		return errs.ErrParam.NewWithMsg("user login name or password format error")
+		return errs.ErrParam.NewWithMsg("user login name or password format error 密码至少8位")
 	}
 	//插入用户数据
 	var user model.User
