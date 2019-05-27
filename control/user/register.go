@@ -26,7 +26,7 @@ func (UserCtrl) Register(c *gin.Context) {
 		return
 	}
 	//开始注册
-	err := apiUser.Register(ctx, req.LoginName, req.Password)
+	err := appUser.Register(ctx, req.LoginName, req.Password)
 	if err != nil {
 		utils.ReturnWithErr(ctx, c, err)
 		return

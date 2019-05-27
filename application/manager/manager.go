@@ -7,5 +7,6 @@ import (
 
 type AppManager struct {
 	auth.UserAuth
+	auth.UserManage
 	service.FileOp
 }

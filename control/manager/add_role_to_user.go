@@ -26,7 +26,7 @@ func (ManagerCtrl) AddRoleToUser(c *gin.Context) {
 		utils.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg(err.Error()))
 		return
 	}
-	err = apiManagerUser.AddRoleToUser(ctx, req.UserId, req.RoleId)
+	err = appManage.AddRoleToUser(ctx, req.UserId, req.RoleId)
 	if err != nil {
 		utils.ReturnWithErr(ctx, c, err)
 		return

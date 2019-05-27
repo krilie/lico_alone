@@ -19,7 +19,7 @@ func (UserCtrl) Valid(c *gin.Context) {
 		utils.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("no find token param in form"))
 		return
 	}
-	claims, e := apiUser.Validate(ctx, token)
+	claims, e := appUser.Validate(ctx, token)
 	if e != nil {
 		utils.ReturnWithErr(ctx, c, e)
 		return

@@ -26,7 +26,7 @@ func (ManagerCtrl) CreateNewRole(c *gin.Context) {
 		utils.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg(e.Error()))
 		return
 	}
-	role, e := apiManagerUser.NewRole(ctx, req.Name, req.Description)
+	role, e := appManage.NewRole(ctx, req.Name, req.Description)
 	if e != nil {
 		utils.ReturnWithErr(ctx, c, e)
 		return

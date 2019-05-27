@@ -25,7 +25,7 @@ func (UserCtrl) Login(c *gin.Context) {
 		return
 	}
 	//login
-	jwtString, err := apiUser.Login(ctx, req.LoginName, req.Password)
+	jwtString, err := appUser.Login(ctx, req.LoginName, req.Password)
 	if err != nil {
 		utils.ReturnWithErr(ctx, c, err)
 		return

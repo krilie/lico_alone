@@ -14,7 +14,7 @@ func (UserCtrl) Logout(c *gin.Context) {
 	if ctx == nil {
 		return
 	}
-	logout := apiUser.Logout(ctx, ctx.GetNowUserTokenOrEmpty())
+	logout := appUser.Logout(ctx, ctx.GetNowUserTokenOrEmpty())
 	if logout != nil {
 		utils.ReturnWithErr(ctx, c, logout)
 		return

@@ -21,7 +21,7 @@ func (ManagerCtrl) AddPermissionToRole(c *gin.Context) {
 	if roleId == "" || permissionID == "" {
 		utils.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("role_id or permission_id must exists"))
 	}
-	err := apiManagerUser.AddPermissionToRole(ctx, roleId, permissionID)
+	err := appManage.AddPermissionToRole(ctx, roleId, permissionID)
 	if err != nil {
 		utils.ReturnWithErr(ctx, c, err)
 		return

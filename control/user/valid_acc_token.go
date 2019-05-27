@@ -19,7 +19,7 @@ func (UserCtrl) ValidClientAccToken(c *gin.Context) {
 		utils.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("no find token param in form"))
 		return
 	}
-	key, err := apiUser.ValidateClientAccToken(ctx, token)
+	key, err := appUser.ValidateClientAccToken(ctx, token)
 	if err != nil {
 		utils.ReturnWithErr(ctx, c, err)
 		return

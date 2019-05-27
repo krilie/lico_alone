@@ -18,7 +18,7 @@ func (UserCtrl) GetInfo(c *gin.Context) {
 		utils.ReturnWithAppErr(ctx, c, errs.UnAuthorized.NewWithMsg("can not take login user id"))
 		return
 	}
-	info, err := apiUser.GetInfo(ctx, userId)
+	info, err := appUser.GetInfo(ctx, userId)
 	if err != nil {
 		utils.ReturnWithErr(ctx, c, err)
 		return

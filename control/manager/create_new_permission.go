@@ -21,7 +21,7 @@ func (ManagerCtrl) CreateNewPermission(c *gin.Context) {
 		utils.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("name or description mast not empty"))
 		return
 	}
-	permission, err := apiManagerUser.NewPermission(ctx, name, description)
+	permission, err := appManage.NewPermission(ctx, name, description)
 	if err != nil {
 		c.JSON(200, permission)
 		return
