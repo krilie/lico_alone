@@ -11,7 +11,7 @@ import (
 )
 
 //给系统添加新的permission permission项,默认权限检查已经通过
-func (Manage) NewPermission(ctx *context_util.Context, pName string, pDescription string) (p *model.Permission, err error) {
+func (UserManage) NewPermission(ctx *context_util.Context, pName string, pDescription string) (p *model.Permission, err error) {
 	//检查参数
 	if !govalidator.IsAlpha(pName) || len(pDescription) == 0 {
 		log.Infoln("", "param error:", pName, pDescription)

@@ -6,4 +6,6 @@ import (
 )
 
 var user apiUser.User
-var auth apiAuth.Manage
+var auth apiAuth.UserManage
+
+type AppUser struct{}

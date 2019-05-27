@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type Manager interface {
+type UserManager interface {
 	NewClientAccToken(ctx *context_util.Context, userId, keyDescription string, Exp time.Time) (key *model.ClientUserAccessToken, err error)
 	NewPermission(ctx *context_util.Context, pName string, pDescription string) (p *model.Permission, err error)
 	AddPermissionToRole(ctx *context_util.Context, roleId string, permissionId string) error
@@ -14,4 +14,6 @@ type Manager interface {
 	AddRoleToUser(ctx *context_util.Context, roleId string, userId string) error
 }
 
-type Manage struct{}
+type UserManage struct{}
+
+var User UserAuth

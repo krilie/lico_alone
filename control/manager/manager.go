@@ -6,7 +6,7 @@ import (
 	"github.com/krilie/lico_alone/module/userbase/auth"
 )
 
-var apiManagerUser auth.Manage
+var apiManagerUser auth.UserManage
 
 func Init(group *gin.RouterGroup) {
 	//管理组

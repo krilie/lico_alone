@@ -12,7 +12,7 @@ import (
 
 // 给app用户添加新的key 访问key
 // admin 和cleint，如果没有admin而只有cleint权限，则检查登录者与userId是否一致
-func (Manage) NewClientAccToken(ctx *context_util.Context, userId, keyDescription string, Exp time.Time) (key *model.ClientUserAccessToken, err error) {
+func (UserManage) NewClientAccToken(ctx *context_util.Context, userId, keyDescription string, Exp time.Time) (key *model.ClientUserAccessToken, err error) {
 	//参数检查
 	if !validator_util.IsIdStr(userId) || len(keyDescription) == 0 {
 		log.Infoln("", "param error:", userId, keyDescription)

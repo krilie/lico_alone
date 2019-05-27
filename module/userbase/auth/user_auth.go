@@ -15,5 +15,3 @@ type UserAuther interface {
 	GetRoles(ctx *context_util.Context, userId string) (roles mapset.Set, err error)
 }
 type UserAuth struct{}
-
-var User UserAuth
