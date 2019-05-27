@@ -6,6 +6,6 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-func (Account) AddBill(ctx *context.Context, userId, note, image string, amount decimal.Decimal, detail []model.BillDetail) {
-
+func (Account) AddBill(ctx *context.Context, userId, note, image string, amount decimal.Decimal, detail []model.BillDetail) (string, error) {
+	return "", nil
 }
