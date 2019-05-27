@@ -25,6 +25,7 @@ create table tb_bill_detail(
     user_id varchar(32) not null comment '用户的id',
     bill_id varchar(32) not null comment '交易id',
     account_id varchar(32) not null comment '帐户id',
+    account_num varchar(50) not null comment '帐户号',
     account_name varchar(50) not null comment '帐户名称',
     note varchar(100) default null comment '',
     debit decimal(10,2) not null default 0 comment '借 数量',

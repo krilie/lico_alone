@@ -37,6 +37,7 @@ type BillDetail struct {
 	UserId      string          `gorm:"type:varchar(32);not null" json:"user_id"`
 	BillId      string          `gorm:"type:varchar(32);not null" json:"bill_id"`
 	AccountId   string          `gorm:"type:varchar(32);not null" json:"account_id"`
+	AccountNum  string          `gorm:"type:varchar(50);not null" json:"account_num"`
 	AccountName string          `gorm:"type:varchar(50);not null" json:"account_name"`
 	Note        string          `gorm:"type:varchar(100);default null" json:"note"`
 	Debit       decimal.Decimal `gorm:"type:decimal(10,2);not null;default 0" json:"debit"`

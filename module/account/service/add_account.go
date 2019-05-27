@@ -10,14 +10,14 @@ import (
 	"time"
 )
 
-func (Account) AddAccount(ctx *context.Context, userId, name, description, image string, balance decimal.Decimal) (string, error) {
+func (Account) AddAccount(ctx *context.Context, userId, name, num, description, image string, balance decimal.Decimal) (string, error) {
 	var account model.Account
 	account.Id = id_util.NextSnowflakeId().String()
 	account.UserId = userId
 	account.Name = name
 	account.CreateTime = time.Now()
 	account.UpdateTime = account.CreateTime
-	account.Num = account.Id
+	account.Num = num
 	account.Balance = balance
 	account.Description = description
 	account.Image = image
