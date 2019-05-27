@@ -2,6 +2,7 @@ package control
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/krilie/lico_alone/control/common"
 	"github.com/krilie/lico_alone/control/health"
 	"github.com/krilie/lico_alone/control/manager"
 	"github.com/krilie/lico_alone/control/middleware"
@@ -26,4 +27,5 @@ func init() {
 	manager.Init(NeedLogin)
 	user.Init(ApiGroup)
 	health.Init(LocalRouter)
+	common.Init(NeedLogin)
 }
