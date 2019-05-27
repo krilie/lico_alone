@@ -15,8 +15,7 @@ create table tb_bill(
     id varchar(32) primary key comment '主键',
     user_id varchar(32) not null comment '用户的id',
     create_time datetime not null comment '',
-    title varchar(100) not null comment '',
-    description varchar(200) not null comment '',
+    note varchar(100) not null comment '',
     amount decimal(10,2) not null default 0 comment '',
     image varchar(500) default null comment ''
 )engine = innodb DEFAULT CHARSET=utf8mb4 comment = '一笔帐';
@@ -27,7 +26,7 @@ create table tb_bill_detail(
     bill_id varchar(32) not null comment '交易id',
     account_id varchar(32) not null comment '帐户id',
     account_name varchar(50) not null comment '帐户名称',
-    summary varchar(100) default null comment '',
+    note varchar(100) default null comment '',
     debit decimal(10,2) not null default 0 comment '借 数量',
     credit decimal(10,2) not null default 0 comment '贷 数量',
     balance decimal(10,2) not null default 0 comment '之后的余额'
