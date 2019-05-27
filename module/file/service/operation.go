@@ -33,6 +33,7 @@ func (FileOp) UploadFile(ctx *context_util.Context, userId, fileName string, fil
 	fileS.ID = uuid_util.GetUuid()
 	fileS.CreateTime = time.Now()
 	fileS.ObjKey = objName
+	fileS.UserId = userId
 	fileS.ContentType = contentType
 	//fileS.BizType = ""
 	fileS.Size = int(size)

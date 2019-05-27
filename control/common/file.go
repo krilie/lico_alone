@@ -32,5 +32,9 @@ func (CtlCommon) uploadFile(c *gin.Context) {
 }
 
 func (CtlCommon) deleteFile(c *gin.Context) {
+	ctx := utils.GetApplicationContextOrReturn(c)
+	if ctx == nil {
+		return
+	}
 
 }
