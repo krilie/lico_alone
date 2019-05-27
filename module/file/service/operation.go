@@ -3,7 +3,7 @@ package service
 import (
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/uuid_util"
+	"github.com/krilie/lico_alone/common/id_util"
 	"github.com/krilie/lico_alone/module/file/model"
 	"github.com/minio/minio-go"
 	"io"
@@ -25,12 +25,12 @@ func (FileOp) UploadFile(ctx *context.Context, userId, fileName string, file mul
 		return "", errs.ErrInternal.NewWithMsg(e.Error())
 	}
 	contentType := http.DetectContentType(decByte)
-	objName := uuid_util.GetUuid() + fileName
+	objName := id_util.GetUuid() + fileName
 	userMate := make(map[string]string)
 	userMate["user_id"] = userId
 	tx := model.Db.Begin()
 	fileS := model.File{}
-	fileS.ID = uuid_util.GetUuid()
+	fileS.ID = id_util.GetUuid()
 	fileS.CreateTime = time.Now()
 	fileS.ObjKey = objName
 	fileS.UserId = userId

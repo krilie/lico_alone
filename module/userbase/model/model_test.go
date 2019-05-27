@@ -3,8 +3,8 @@ package model
 import (
 	"database/sql"
 	"fmt"
+	"github.com/krilie/lico_alone/common/id_util"
 	"github.com/krilie/lico_alone/common/pswd_md5"
-	"github.com/krilie/lico_alone/common/uuid_util"
 	"net/url"
 	"testing"
 	"time"
@@ -12,7 +12,7 @@ import (
 
 func TestCreate(t *testing.T) {
 	var user User
-	user.ID = uuid_util.GetUuid()
+	user.ID = id_util.GetUuid()
 	user.CreateTime = time.Now()
 	user.Salt = "123"
 	user.Password = pswd_md5.GetMd5Password("12345678", user.Salt)

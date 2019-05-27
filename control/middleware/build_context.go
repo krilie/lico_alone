@@ -3,8 +3,8 @@ package middleware
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/common/id_util"
 	"github.com/krilie/lico_alone/common/string_util"
-	"github.com/krilie/lico_alone/common/uuid_util"
 	"github.com/krilie/lico_alone/control/utils"
 	"time"
 )
@@ -14,7 +14,7 @@ import (
 func BuildContext() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		context := &context.Context{}
-		context.TraceId = string_util.EmptyOrDefault(c.GetHeader(utils.HeaderTraceId), uuid_util.GetUuid())
+		context.TraceId = string_util.EmptyOrDefault(c.GetHeader(utils.HeaderTraceId), id_util.GetUuid())
 		context.StartTime = time.Now()
 		c.Set(utils.GinKeyAppContext, context)
 		c.Next()

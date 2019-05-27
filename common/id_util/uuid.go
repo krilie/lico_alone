@@ -1,4 +1,4 @@
-package uuid_util
+package id_util
 
 import (
 	"encoding/hex"

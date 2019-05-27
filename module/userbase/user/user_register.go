@@ -5,9 +5,9 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/common/id_util"
 	"github.com/krilie/lico_alone/common/log"
 	"github.com/krilie/lico_alone/common/pswd_md5"
-	"github.com/krilie/lico_alone/common/uuid_util"
 	"github.com/krilie/lico_alone/common/validator"
 	"github.com/krilie/lico_alone/module/userbase/model"
 	"time"
@@ -28,7 +28,7 @@ func (User) Register(ctx *context.Context, loginName string, password string) er
 		return e
 	}
 	// 插入用户数据
-	user.ID = uuid_util.GetUuid()
+	user.ID = id_util.GetUuid()
 	user.LoginName = loginName
 	user.NickName = loginName
 	user.Salt = pswd_md5.GetSalt(5)

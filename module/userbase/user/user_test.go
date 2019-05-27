@@ -3,9 +3,9 @@ package user
 import (
 	"fmt"
 	"github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/common/id_util"
 	"github.com/krilie/lico_alone/common/jwt"
 	"github.com/krilie/lico_alone/common/random"
-	"github.com/krilie/lico_alone/common/uuid_util"
 	"testing"
 )
 
@@ -15,7 +15,7 @@ func TestUserLogin(t *testing.T) {
 
 	//上下文对象
 	var ctx context.Context
-	ctx.TraceId = uuid_util.GetUuid()
+	ctx.TraceId = id_util.GetUuid()
 	ctx.UserClaims = new(jwt.UserClaims)
 	ctx.UserClaims.ClientId = "123"
 	//测试数据

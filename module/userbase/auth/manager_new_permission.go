@@ -4,8 +4,8 @@ import (
 	"github.com/asaskevich/govalidator"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/common/id_util"
 	"github.com/krilie/lico_alone/common/log"
-	"github.com/krilie/lico_alone/common/uuid_util"
 	"github.com/krilie/lico_alone/module/userbase/model"
 	"time"
 )
@@ -19,7 +19,7 @@ func (UserManage) NewPermission(ctx *context.Context, pName string, pDescription
 	}
 	//添加一个
 	p = new(model.Permission)
-	p.ID = uuid_util.GetUuid()
+	p.ID = id_util.GetUuid()
 	p.CreateTime = time.Now()
 	p.Description = pDescription
 	p.Name = pName

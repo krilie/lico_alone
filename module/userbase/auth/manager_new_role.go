@@ -4,8 +4,8 @@ import (
 	"github.com/asaskevich/govalidator"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/common/id_util"
 	"github.com/krilie/lico_alone/common/log"
-	"github.com/krilie/lico_alone/common/uuid_util"
 	"github.com/krilie/lico_alone/module/userbase/model"
 	"time"
 )
@@ -19,7 +19,7 @@ func (UserManage) NewRole(ctx *context.Context, roleName string, roleDescription
 	}
 	//生成新角色并添加
 	role = new(model.Role)
-	role.ID = uuid_util.GetUuid()
+	role.ID = id_util.GetUuid()
 	role.Name = roleName
 	role.Description = roleDescription
 	role.CreateTime = time.Now()
