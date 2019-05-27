@@ -18,7 +18,7 @@ func (User) GetInfo(ctx *context_util.Context, userId string) (map[string]string
 		if err == gorm.ErrRecordNotFound {
 			return nil, errs.ErrNotFound.NewWithMsg("no this user:" + userId)
 		} else {
-			return nil, err
+			return nil, errs.ErrInternal.NewWithMsg(err.Error())
 		}
 	} else {
 		mUser := make(map[string]string, 4)
