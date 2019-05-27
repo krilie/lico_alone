@@ -8,4 +8,7 @@ import (
 var user apiUser.User
 var auth apiAuth.UserManage
 
-type AppUser struct{}
+type AppUser struct {
+	apiAuth.UserAuth
+	apiAuth.UserManage
+}
