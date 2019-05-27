@@ -1,4 +1,4 @@
-package context_util
+package context
 
 import (
 	"github.com/krilie/lico_alone/common/jwt"

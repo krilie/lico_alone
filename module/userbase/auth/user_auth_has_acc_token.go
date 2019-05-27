@@ -4,15 +4,15 @@ import (
 	"github.com/asaskevich/govalidator"
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
-	"github.com/krilie/lico_alone/common/context_util"
+	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/log"
-	"github.com/krilie/lico_alone/common/validator_util"
+	"github.com/krilie/lico_alone/common/validator"
 	"github.com/krilie/lico_alone/module/userbase/model"
 )
 
 //查看client是否有acc token
-func (UserAuth) HasClientAccToken(ctx *context_util.Context, userId, accTokenStr string) (token *model.ClientUserAccessToken, err error) {
-	if len(accTokenStr) == 0 || !govalidator.IsASCII(accTokenStr) || !validator_util.IsIdStr(userId) {
+func (UserAuth) HasClientAccToken(ctx *context.Context, userId, accTokenStr string) (token *model.ClientUserAccessToken, err error) {
+	if len(accTokenStr) == 0 || !govalidator.IsASCII(accTokenStr) || !validator.IsIdStr(userId) {
 		log.Infoln("userAuthClientHasAccToken", "acc token error:", accTokenStr, userId)
 		return nil, errs.ErrParam
 	}

@@ -3,12 +3,12 @@ package user
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
-	"github.com/krilie/lico_alone/common/context_util"
+	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/module/userbase/model"
 	"time"
 )
 
-func (User) ValidateClientAccToken(ctx *context_util.Context, clientAccKey string) (key *model.ClientUserAccessToken, err error) {
+func (User) ValidateClientAccToken(ctx *context.Context, clientAccKey string) (key *model.ClientUserAccessToken, err error) {
 	key = new(model.ClientUserAccessToken)
 	err = model.Db.Find(key, "token=?", clientAccKey).Error
 	if err != nil && err == gorm.ErrRecordNotFound {

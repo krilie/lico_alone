@@ -3,14 +3,14 @@ package user
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
-	"github.com/krilie/lico_alone/common/context_util"
+	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/string_util"
 	"github.com/krilie/lico_alone/module/userbase/model"
 )
 
 //由token取得用户基本信息
 
-func (User) GetInfo(ctx *context_util.Context, userId string) (map[string]string, error) {
+func (User) GetInfo(ctx *context.Context, userId string) (map[string]string, error) {
 	//已经登录了
 	var user model.User
 	err := model.Db.First(&user, "id = ?", userId).Error

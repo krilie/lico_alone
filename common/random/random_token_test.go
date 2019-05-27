@@ -1,4 +1,4 @@
-package random_token
+package random
 
 import "testing"
 

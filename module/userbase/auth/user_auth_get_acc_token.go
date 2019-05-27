@@ -2,16 +2,16 @@ package auth
 
 import (
 	"github.com/krilie/lico_alone/common/comstruct/errs"
-	"github.com/krilie/lico_alone/common/context_util"
+	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/log"
-	"github.com/krilie/lico_alone/common/validator_util"
+	"github.com/krilie/lico_alone/common/validator"
 	"github.com/krilie/lico_alone/module/userbase/model"
 )
 
 //取到app角色用户的所有keys
-func (ua UserAuth) GetClientAccToken(ctx *context_util.Context, appUserId string) (list []model.ClientUserAccessToken, err error) {
+func (ua UserAuth) GetClientAccToken(ctx *context.Context, appUserId string) (list []model.ClientUserAccessToken, err error) {
 	//校验参数
-	if !validator_util.IsIdStr(appUserId) {
+	if !validator.IsIdStr(appUserId) {
 		log.Infoln("UserAuthAppKeys", "err param:", appUserId)
 		return nil, errs.ErrParam
 	}

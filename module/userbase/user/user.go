@@ -4,7 +4,7 @@ import (
 	"github.com/asaskevich/govalidator"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/krilie/lico_alone/common/config"
-	"github.com/krilie/lico_alone/common/context_util"
+	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/module/userbase/model"
 )
 
@@ -19,11 +19,11 @@ func init() {
 }
 
 type IUser interface {
-	Login(ctx *context_util.Context, loginName, password string) (jwtString string, err error)
-	Validate(ctx *context_util.Context, jwtToken string) (jwt.Claims, error)
-	Register(ctx *context_util.Context, loginName string, password string) error
-	Logout(ctx *context_util.Context, jwtToken string) error
-	ValidateClientAccToken(ctx *context_util.Context, clientAccKey string) (key *model.ClientUserAccessToken, err error)
-	GetInfo(ctx *context_util.Context, userId string) (map[string]string, error)
+	Login(ctx *context.Context, loginName, password string) (jwtString string, err error)
+	Validate(ctx *context.Context, jwtToken string) (jwt.Claims, error)
+	Register(ctx *context.Context, loginName string, password string) error
+	Logout(ctx *context.Context, jwtToken string) error
+	ValidateClientAccToken(ctx *context.Context, clientAccKey string) (key *model.ClientUserAccessToken, err error)
+	GetInfo(ctx *context.Context, userId string) (map[string]string, error)
 }
 type User struct{}

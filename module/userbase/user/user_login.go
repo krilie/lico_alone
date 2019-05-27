@@ -3,21 +3,21 @@ package user
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
-	"github.com/krilie/lico_alone/common/context_util"
+	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/jwt"
 	"github.com/krilie/lico_alone/common/log"
 	"github.com/krilie/lico_alone/common/pswd_md5"
 	"github.com/krilie/lico_alone/common/string_util"
 	"github.com/krilie/lico_alone/common/uuid_util"
-	"github.com/krilie/lico_alone/common/validator_util"
+	"github.com/krilie/lico_alone/common/validator"
 	"github.com/krilie/lico_alone/module/userbase/model"
 	"time"
 )
 
 // 用户登录,到这里说明参数有可能还是不正确的。检查参数,放到上层
-func (User) Login(ctx *context_util.Context, loginName, password string) (jwtString string, err error) {
+func (User) Login(ctx *context.Context, loginName, password string) (jwtString string, err error) {
 	//检查密码与用户名
-	if !(validator_util.IsLoginName(loginName) && validator_util.IsPassword(password)) {
+	if !(validator.IsLoginName(loginName) && validator.IsPassword(password)) {
 		log.Infoln("user loginName or password format error.")
 		return "", errs.ErrParam.NewWithMsg("login name or password format error")
 	}

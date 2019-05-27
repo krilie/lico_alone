@@ -4,19 +4,19 @@ import (
 	"database/sql"
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
-	"github.com/krilie/lico_alone/common/context_util"
+	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/log"
 	"github.com/krilie/lico_alone/common/pswd_md5"
 	"github.com/krilie/lico_alone/common/uuid_util"
-	"github.com/krilie/lico_alone/common/validator_util"
+	"github.com/krilie/lico_alone/common/validator"
 	"github.com/krilie/lico_alone/module/userbase/model"
 	"time"
 )
 
 //用户注册，注册，normal用户注册
-func (User) Register(ctx *context_util.Context, loginName string, password string) error {
+func (User) Register(ctx *context.Context, loginName string, password string) error {
 	// 检查密码与用户名格式
-	if !(validator_util.IsLoginName(loginName) && validator_util.IsPassword(password)) {
+	if !(validator.IsLoginName(loginName) && validator.IsPassword(password)) {
 		log.Infoln("user loginName or password format error.")
 		return errs.ErrParam.NewWithMsg("用户名不能以数字开头&密码至少8位")
 	}

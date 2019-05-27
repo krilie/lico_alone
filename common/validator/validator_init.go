@@ -1,4 +1,4 @@
-package validator_util
+package validator
 
 import "github.com/asaskevich/govalidator"
 

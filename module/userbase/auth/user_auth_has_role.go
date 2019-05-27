@@ -3,18 +3,18 @@ package auth
 import (
 	"github.com/asaskevich/govalidator"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
-	"github.com/krilie/lico_alone/common/context_util"
+	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/log"
-	"github.com/krilie/lico_alone/common/validator_util"
+	"github.com/krilie/lico_alone/common/validator"
 	"github.com/krilie/lico_alone/module/userbase/model"
 )
 
 //用户是否有这个角色,有app权限才能调用这个接口
-func (UserAuth) HasRole(ctx *context_util.Context, userId, roleName string) (bool, error) {
+func (UserAuth) HasRole(ctx *context.Context, userId, roleName string) (bool, error) {
 	//参数检查
 	if len(roleName) == 0 ||
 		(!govalidator.IsAlpha(roleName)) ||
-		!(validator_util.IsIdStr(userId)) {
+		!(validator.IsIdStr(userId)) {
 		log.Error("HasRole", "参数格式不正确")
 		return false, errs.ErrParam
 	}

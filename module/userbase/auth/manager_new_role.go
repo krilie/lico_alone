@@ -3,7 +3,7 @@ package auth
 import (
 	"github.com/asaskevich/govalidator"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
-	"github.com/krilie/lico_alone/common/context_util"
+	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/log"
 	"github.com/krilie/lico_alone/common/uuid_util"
 	"github.com/krilie/lico_alone/module/userbase/model"
@@ -11,7 +11,7 @@ import (
 )
 
 //给系统添加新的角色
-func (UserManage) NewRole(ctx *context_util.Context, roleName string, roleDescription string) (role *model.Role, err error) {
+func (UserManage) NewRole(ctx *context.Context, roleName string, roleDescription string) (role *model.Role, err error) {
 	//检查参数
 	if !govalidator.IsAlpha(roleName) || len(roleDescription) == 0 {
 		log.Infoln("CreateNewRole", "param err:", roleName, roleDescription)
