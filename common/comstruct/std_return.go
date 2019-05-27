@@ -1,4 +1,4 @@
-package common_struct
+package comstruct
 
 //标准返回不引用error类型
 //常规返回类型

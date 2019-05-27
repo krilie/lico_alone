@@ -3,7 +3,7 @@ package user
 import (
 	"database/sql"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/common_struct/errs"
+	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/context_util"
 	"github.com/krilie/lico_alone/common/log"
 	"github.com/krilie/lico_alone/common/pswd_md5"

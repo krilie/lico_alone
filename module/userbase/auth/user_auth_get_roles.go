@@ -2,7 +2,7 @@ package auth
 
 import (
 	"github.com/deckarep/golang-set"
-	"github.com/krilie/lico_alone/common/common_struct/errs"
+	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/context_util"
 	"github.com/krilie/lico_alone/common/validator_util"
 	"github.com/krilie/lico_alone/module/userbase/model"

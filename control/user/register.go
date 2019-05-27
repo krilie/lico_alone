@@ -3,8 +3,8 @@ package user
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/krilie/lico_alone/common/common_struct"
-	"github.com/krilie/lico_alone/common/common_struct/errs"
+	"github.com/krilie/lico_alone/common/comstruct"
+	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/control/utils"
 )
 
@@ -33,7 +33,7 @@ func (UserCtrl) Register(c *gin.Context) {
 	} else {
 		// 可以带一次登录过程
 		// jwtString, err := user_base.Login(ctx, req.LoginName, req.Password)
-		c.JSON(200, common_struct.StdSuccess)
+		c.JSON(200, comstruct.StdSuccess)
 		return
 	}
 }

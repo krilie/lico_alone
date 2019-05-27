@@ -1,7 +1,7 @@
 package common
 
 import (
-	"github.com/krilie/lico_alone/common/common_struct/errs"
+	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/context_util"
 	"github.com/krilie/lico_alone/module/file/service"
 	user2 "github.com/krilie/lico_alone/module/userbase/user"

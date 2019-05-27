@@ -2,7 +2,8 @@ package common
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/common/common_struct/errs"
+	"github.com/krilie/lico_alone/common/comstruct"
+	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/control/utils"
 )
 
@@ -36,5 +37,10 @@ func (CtlCommon) deleteFile(c *gin.Context) {
 	if ctx == nil {
 		return
 	}
-
+	err := appCommon.DeleteFile(ctx, ctx.UserClaims.UserId, c.PostForm("file_path"))
+	if err != nil {
+		utils.ReturnWithErr(ctx, c, err)
+	} else {
+		c.JSON(200, comstruct.StdSuccess)
+	}
 }

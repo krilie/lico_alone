@@ -1,4 +1,4 @@
-package common_struct
+package comstruct
 
 import "time"
 

@@ -2,7 +2,7 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/common/common_struct"
+	"github.com/krilie/lico_alone/common/comstruct"
 	"github.com/krilie/lico_alone/control/utils"
 )
 
@@ -19,7 +19,7 @@ func (UserCtrl) Logout(c *gin.Context) {
 		utils.ReturnWithErr(ctx, c, logout)
 		return
 	} else {
-		c.JSON(200, common_struct.StdSuccess)
+		c.JSON(200, comstruct.StdSuccess)
 		return
 	}
 }

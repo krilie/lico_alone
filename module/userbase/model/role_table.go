@@ -3,12 +3,12 @@ package model
 import (
 	"database/sql"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/common_struct"
-	"github.com/krilie/lico_alone/common/common_struct/errs"
+	"github.com/krilie/lico_alone/common/comstruct"
+	"github.com/krilie/lico_alone/common/comstruct/errs"
 )
 
 type Role struct {
-	common_struct.DbHandler
+	comstruct.DbHandler
 	Name        string `gorm:"type:varchar(50);unique_index;not null" json:"name"`
 	Description string `gorm:"type:varchar(100);not null" json:"description"`
 }

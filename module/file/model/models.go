@@ -1,10 +1,10 @@
 package model
 
-import "github.com/krilie/lico_alone/common/common_struct"
+import "github.com/krilie/lico_alone/common/comstruct"
 
 // 上传的文件的内容
 type File struct {
-	common_struct.DbHandler
+	comstruct.DbHandler
 	ObjKey      string `gorm:"type:varchar(200);unique_index;not null"`
 	UserId      string `gorm:"type:varchar(32);not null"`
 	ContentType string `gorm:"type:varchar(50)"`

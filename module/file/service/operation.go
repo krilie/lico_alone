@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/krilie/lico_alone/common/common_struct/errs"
+	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/context_util"
 	"github.com/krilie/lico_alone/common/uuid_util"
 	"github.com/krilie/lico_alone/module/file/model"

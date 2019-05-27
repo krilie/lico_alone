@@ -2,7 +2,7 @@ package errs
 
 import (
 	"fmt"
-	"github.com/krilie/lico_alone/common/common_struct"
+	"github.com/krilie/lico_alone/common/comstruct"
 )
 
 //业务上的错误
@@ -36,12 +36,12 @@ func (e *Error) NewAppendMsg(msg string) *Error {
 	return &Error{HttpStatus: e.HttpStatus, Code: e.Code, Message: e.Message + ":" + msg}
 }
 
-func (e *Error) ToStdReturn() *common_struct.StdReturn {
-	return &common_struct.StdReturn{Code: e.Code, Message: e.Message}
+func (e *Error) ToStdReturn() *comstruct.StdReturn {
+	return &comstruct.StdReturn{Code: e.Code, Message: e.Message}
 }
-func (e *Error) ToStdWithMsg(msg string) *common_struct.StdReturn {
-	return &common_struct.StdReturn{Code: e.Code, Message: msg}
+func (e *Error) ToStdWithMsg(msg string) *comstruct.StdReturn {
+	return &comstruct.StdReturn{Code: e.Code, Message: msg}
 }
-func (e *Error) ToStdAppendMsg(msg string) *common_struct.StdReturn {
-	return &common_struct.StdReturn{Code: e.Code, Message: e.Message + ":" + msg}
+func (e *Error) ToStdAppendMsg(msg string) *comstruct.StdReturn {
+	return &comstruct.StdReturn{Code: e.Code, Message: e.Message + ":" + msg}
 }
