@@ -30,3 +30,7 @@ func (CtlCommon) uploadFile(c *gin.Context) {
 		c.JSON(200, gin.H{"path": s})
 	}
 }
+
+func (CtlCommon) deleteFile(c *gin.Context) {
+
+}
