@@ -2,7 +2,7 @@ package control
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/control/health_check"
+	"github.com/krilie/lico_alone/control/health"
 	"github.com/krilie/lico_alone/control/manager"
 	"github.com/krilie/lico_alone/control/middleware"
 	"github.com/krilie/lico_alone/control/user"
@@ -25,5 +25,5 @@ func init() {
 	// init
 	manager.Init(NeedLogin)
 	user.Init(ApiGroup)
-	health_check.Init(LocalRouter)
+	health.Init(LocalRouter)
 }
