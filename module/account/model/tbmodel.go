@@ -10,6 +10,8 @@ type Account struct {
 	CreateTime  time.Time       `gorm:"type:DATETIME;not null" json:"create_time"`
 	UpdateTime  time.Time       `gorm:"type:DATETIME;not null" json:"update_time"`
 	Num         string          `gorm:"type:varchar(50);not null" json:"num"`
+	Debit       decimal.Decimal `gorm:"type:decimal(10,2);not null;default 0" json:"debit"`
+	Credit      decimal.Decimal `gorm:"type:decimal(10,2);not null;default 0" json:"credit"`
 	Balance     decimal.Decimal `gorm:"type:decimal(10,2);not null;default 0" json:"balance"`
 	Description string          `gorm:"type:varchar(100);default null" json:"description"`
 	Image       string          `gorm:"type:varchar(200);not null" json:"image"`

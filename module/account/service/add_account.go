@@ -18,6 +18,8 @@ func (Account) AddAccount(ctx *context.Context, userId, name, num, description, 
 	account.CreateTime = time.Now()
 	account.UpdateTime = account.CreateTime
 	account.Num = num
+	account.Credit = decimal.Zero
+	account.Debit = decimal.Zero
 	account.Balance = balance
 	account.Description = description
 	account.Image = image

@@ -6,6 +6,8 @@ create table tb_account (
     create_time datetime not null comment '存北京时间，取北京时间',
     update_time datetime not null comment '存北京时间，取北京时间',
     num varchar(50) not null comment '编号',
+    debit decimal(10,2) not null default 0 comment '借 数量',
+    credit decimal(10,2) not null default 0 comment '贷 数量',
     balance decimal(10,2) not null default 0 comment '金钱 余额 单位 元',
     description varchar(100) not null comment '账户描述',
     image varchar(200) default null comment '帐户图像一张'
