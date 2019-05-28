@@ -34,7 +34,7 @@ func (Account) AddBill(ctx *context.Context, userId, note, image string, amount 
 	bill.IsValid = true
 	// 插入到数据库中 事务开始
 	tx := model.Db.Begin()
-	if e := tx.Create(bill).Error; e != nil {
+	if e := tx.Create(&bill).Error; e != nil {
 		tx.Rollback()
 		return "", errs.ErrInternal.NewWithMsg(e.Error())
 	}
@@ -48,7 +48,7 @@ func (Account) AddBill(ctx *context.Context, userId, note, image string, amount 
 		detail.Note = v.Note
 		// 查询account值
 		var account model.Account
-		if e := tx.Find(account, "id=?", v.AccountId).Error; e != nil {
+		if e := tx.Find(&account, "id=?", v.AccountId).Error; e != nil {
 			tx.Rollback()
 			if e == gorm.ErrRecordNotFound {
 				return "", errs.ErrParam.NewWithMsg("no such account id:" + v.AccountId)
@@ -59,7 +59,7 @@ func (Account) AddBill(ctx *context.Context, userId, note, image string, amount 
 		account.Credit = account.Credit.Add(v.Credit)
 		account.Debit = account.Debit.Add(v.Debit)
 		account.Balance = account.Balance.Add(v.Credit).Sub(v.Debit)
-		if e := tx.Update(account).Error; e != nil {
+		if e := tx.Update(&account).Error; e != nil {
 			tx.Rollback()
 			return "", errs.ErrInternal.NewWithMsg(e.Error())
 		}
@@ -68,7 +68,7 @@ func (Account) AddBill(ctx *context.Context, userId, note, image string, amount 
 		detail.AccountId = v.AccountId
 		detail.AccountNum = account.Num
 		detail.AccountName = account.Name
-		if e := tx.Create(detail).Error; e != nil {
+		if e := tx.Create(&detail).Error; e != nil {
 			tx.Rollback()
 			return "", errs.ErrInternal.NewWithMsg(e.Error())
 		}

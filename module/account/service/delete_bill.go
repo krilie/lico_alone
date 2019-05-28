@@ -21,7 +21,7 @@ func (Account) DeleteBill(ctx *context.Context, billId string) error {
 		return errs.ErrParam.NewWithMsg("bill is deleted")
 	}
 	bill.IsValid = false
-	if e := model.Db.Update(bill).Error; e != nil {
+	if e := model.Db.Update(&bill).Error; e != nil {
 		return errs.ErrInternal.NewWithMsg(e.Error())
 	}
 	return nil
