@@ -31,6 +31,7 @@ func (Account) AddBill(ctx *context.Context, userId, note, image string, amount 
 	bill.UserId = userId
 	bill.Amount = amount
 	bill.Note = note
+	bill.IsValid = true
 	// 插入到数据库中 事务开始
 	tx := model.Db.Begin()
 	if e := tx.Create(bill).Error; e != nil {

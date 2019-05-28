@@ -28,6 +28,7 @@ type Bill struct {
 	Note       string          `gorm:"type:varchar(100);default null" json:"note"`
 	Amount     decimal.Decimal `gorm:"type:decimal(10,2);not null;default 0"json:"amount"`
 	Image      string          `gorm:"type:varchar(500);not null" json:"image"`
+	IsValid    bool            `gorm:"type:boolean;not null" json:"is_valid"`
 }
 
 func (Bill) TableName() string {

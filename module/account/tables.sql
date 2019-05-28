@@ -19,7 +19,8 @@ create table tb_bill(
     create_time datetime not null comment '',
     note varchar(100) not null comment '',
     amount decimal(10,2) not null default 0 comment '',
-    image varchar(500) default null comment ''
+    image varchar(500) default null comment '',
+    is_valid boolean default true comment '是否有效'
 )engine = innodb DEFAULT CHARSET=utf8mb4 comment = '一笔帐';
 
 create table tb_bill_detail(

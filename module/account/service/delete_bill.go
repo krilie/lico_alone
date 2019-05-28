@@ -5,5 +5,6 @@ import (
 )
 
 func (Account) DeleteBill(ctx *context.Context, billId string) error {
+	// 标记删除
 	return nil
 }
