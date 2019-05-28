@@ -73,5 +73,5 @@ func (Account) AddBill(ctx *context.Context, userId, note, image string, amount 
 		}
 	}
 	tx.Commit()
-	return "", nil
+	return bill.Id, nil
 }
