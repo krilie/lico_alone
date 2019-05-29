@@ -9,8 +9,10 @@ import (
 
 func (Account) DeleteBill(ctx *context.Context, billId string) error {
 	// 标记删除
+	tx := model.Db.Begin()
 	var bill model.Bill
-	if e := model.Db.Find(&bill, "id=?", billId).Error; e != nil {
+	if e := tx.Find(&bill, "id=?", billId).Error; e != nil {
+		tx.Rollback()
 		if e == gorm.ErrRecordNotFound {
 			return errs.ErrNotFound.NewWithMsg("not find this bill")
 		} else {
@@ -18,11 +20,17 @@ func (Account) DeleteBill(ctx *context.Context, billId string) error {
 		}
 	}
 	if !bill.IsValid {
+		tx.Rollback()
 		return errs.ErrParam.NewWithMsg("bill is deleted")
 	}
 	bill.IsValid = false
-	if e := model.Db.Update(&bill).Error; e != nil {
+	if e := tx.Update(&bill).Error; e != nil {
+		tx.Rollback()
 		return errs.ErrInternal.NewWithMsg(e.Error())
 	}
+	// todo: update bill detail
+	tx.Where("")
+
+	tx.Commit()
 	return nil
 }

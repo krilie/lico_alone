@@ -46,6 +46,7 @@ type BillDetail struct {
 	Debit       decimal.Decimal `gorm:"type:decimal(10,2);not null;default 0" json:"debit"`
 	Credit      decimal.Decimal `gorm:"type:decimal(10,2);not null;default 0" json:"credit"`
 	Balance     decimal.Decimal `gorm:"type:decimal(10,2);not null;default 0" json:"balance"`
+	IsValid     bool            `gorm:"type:boolean;not null" json:"is_valid"`
 }
 
 func (BillDetail) TableName() string {

@@ -42,6 +42,7 @@ func (Account) AddBill(ctx *context.Context, userId, note, image string, amount 
 		var detail model.BillDetail
 		detail.Id = id_util.GetUuid()
 		detail.BillId = bill.Id
+		detail.IsValid = true
 		detail.UserId = userId
 		detail.Debit = v.Debit
 		detail.Credit = v.Credit
