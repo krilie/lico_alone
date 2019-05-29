@@ -10,6 +10,6 @@ import "testing"
 //}
 
 func TestGetNowTimeString(t *testing.T) {
-	t.Log(GetNowTimeString())
-	t.Log(GetNowTimeStringFormat("ABCDefg"))
+	//t.Log(GetNowTimeString())
+	//t.Log(GetNowTimeStringFormat("ABCDefg"))
 }
