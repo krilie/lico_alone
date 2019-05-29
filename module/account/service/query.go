@@ -17,7 +17,7 @@ func (Account) GetAccountHistory(ctx *context.Context, start, end time.Time, use
 	return billDetails, nil
 }
 
-func (Account) GetAccountSummaryInfo(ctx *context.Context, userId string) ([]*pojo.AccountInfo, error) {
+func (Account) GetAccountInfo(ctx *context.Context, userId string) ([]*pojo.AccountInfo, error) {
 	infos := make([]model.Account, 0, 4)
 	if e := model.Db.Where("user_id=?", userId).Find(infos).Error; e != nil {
 		return nil, errs.ErrInternal.NewWithMsg(e.Error())
