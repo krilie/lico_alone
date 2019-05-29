@@ -30,5 +30,11 @@ func (Account) GetTimeZoneSummary(ctx *context.Context, userId string, timeStart
 		return "", errs.ErrInternal.NewWithMsg(e.Error())
 	}
 	// 帐户统计
-
+	for _, _ = range accounts {
+		details := make([]model.BillDetail, 0, 4)
+		if e := model.Db.Where("create_time between ? and ? and is_valid=true", timeStart, timeEnd).Find(details).Error; e != nil {
+			return "", errs.ErrInternal.NewWithMsg(e.Error())
+		}
+	}
+	panic("not implement")
 }

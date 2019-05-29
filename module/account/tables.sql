@@ -27,6 +27,7 @@ create table tb_bill_detail(
     id varchar(32) primary key comment '主键',
     user_id varchar(32) not null comment '用户的id',
     bill_id varchar(32) not null comment '交易id',
+    create_time datetime not null comment '',
     is_valid boolean default true comment '是否有效',
     account_id varchar(32) not null comment '帐户id',
     account_num varchar(50) not null comment '帐户号',
