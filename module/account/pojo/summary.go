@@ -21,7 +21,7 @@ type AccountItem struct {
 	Num        string          `json:"num"`
 	Credit     decimal.Decimal `json:"credit"`
 	Debit      decimal.Decimal `json:"debit"`
-	Amount     decimal.Decimal `json:"amount"`
+	Amount     decimal.Decimal `json:"amount"` // 发生额 花了多少钱 一个账号的借贷额
 	NowBalance decimal.Decimal `json:"now_balance"`
 }
 
