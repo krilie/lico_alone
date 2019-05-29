@@ -28,9 +28,10 @@ func (Account) DeleteBill(ctx *context.Context, billId string) error {
 		tx.Rollback()
 		return errs.ErrInternal.NewWithMsg(e.Error())
 	}
-	// todo: update bill detail
-	tx.Where("")
-
+	if e := tx.Model(&model.BillDetail{}).Where("bill_id=?", bill.Id).Update("is_valid", false).Error; e != nil {
+		tx.Rollback()
+		return errs.ErrInternal.NewWithMsg(e.Error())
+	}
 	tx.Commit()
 	return nil
 }
