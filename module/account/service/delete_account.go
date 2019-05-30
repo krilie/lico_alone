@@ -6,7 +6,7 @@ import (
 	"github.com/krilie/lico_alone/module/account/model"
 )
 
-func (Account) DeleteAccount(ctx *context.Context, accountId string) error {
+func (Account) DeleteAccount(ctx *context.Context, accountId string, userId string) error {
 	// 查看是否已经使用
 	var count int
 	model.Db.Table("tb_bill_detail").Where("account_id = ?", accountId).Count(&count)
