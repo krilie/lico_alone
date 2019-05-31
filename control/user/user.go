@@ -9,6 +9,7 @@ import (
 var appUser user.AppUser
 
 type UserCtrl struct{}
+
 type UserCtrler interface {
 	Login(c *gin.Context)
 	GetInfo(c *gin.Context)
@@ -16,6 +17,18 @@ type UserCtrler interface {
 	ValidClientAccToken(c *gin.Context)
 	Valid(c *gin.Context)
 	Register(c *gin.Context)
+	UserCtrlAccounter
+}
+
+type UserCtrlAccounter interface {
+	DeleteBill(c *gin.Context)
+	GetAccountHistory(c *gin.Context)
+	GetAccountInfo(c *gin.Context)
+	AddBill(c *gin.Context)
+	AddAccount(c *gin.Context)
+	DeleteAccount(c *gin.Context)
+	GetMonthSummary(c *gin.Context)
+	GetTimeZoneSummary(c *gin.Context)
 }
 
 func Init(group *gin.RouterGroup) {
