@@ -9,4 +9,5 @@ type AppUser struct {
 	apiAuth.UserAuth
 	apiAuth.UserManage
 	user.User
+	Account
 }
