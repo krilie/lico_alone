@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/id_util"
-	"github.com/krilie/lico_alone/common/string_util"
+	"github.com/krilie/lico_alone/common/str_util"
 	"github.com/krilie/lico_alone/control/utils"
 	"time"
 )
@@ -14,7 +14,7 @@ import (
 func BuildContext() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ctx := &context.Context{}
-		ctx.TraceId = string_util.EmptyOrDefault(c.GetHeader(utils.HeaderTraceId), id_util.GetUuid())
+		ctx.TraceId = str_util.EmptyOrDefault(c.GetHeader(utils.HeaderTraceId), id_util.GetUuid())
 		ctx.StartTime = time.Now()
 		c.Set(utils.GinKeyAppContext, ctx)
 		c.Next()

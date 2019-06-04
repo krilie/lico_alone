@@ -1,4 +1,4 @@
-package pswd_md5
+package pswd_util
 
 import (
 	"fmt"

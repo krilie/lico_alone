@@ -7,7 +7,7 @@ import (
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/id_util"
 	"github.com/krilie/lico_alone/common/log"
-	"github.com/krilie/lico_alone/common/pswd_md5"
+	"github.com/krilie/lico_alone/common/pswd_util"
 	"github.com/krilie/lico_alone/common/validator"
 	"github.com/krilie/lico_alone/module/userbase/model"
 	"time"
@@ -31,8 +31,8 @@ func (User) Register(ctx *context.Context, loginName string, password string) er
 	user.ID = id_util.GetUuid()
 	user.LoginName = loginName
 	user.NickName = loginName
-	user.Salt = pswd_md5.GetSalt(5)
-	user.Password = pswd_md5.GetMd5Password(password, user.Salt)
+	user.Salt = pswd_util.GetSalt(5)
+	user.Password = pswd_util.GetMd5Password(password, user.Salt)
 	user.CreateTime = time.Now()
 	user.Phone = sql.NullString{Valid: false}
 	user.Email = sql.NullString{Valid: false}

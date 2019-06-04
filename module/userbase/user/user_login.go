@@ -7,8 +7,8 @@ import (
 	"github.com/krilie/lico_alone/common/id_util"
 	"github.com/krilie/lico_alone/common/jwt"
 	"github.com/krilie/lico_alone/common/log"
-	"github.com/krilie/lico_alone/common/pswd_md5"
-	"github.com/krilie/lico_alone/common/string_util"
+	"github.com/krilie/lico_alone/common/pswd_util"
+	"github.com/krilie/lico_alone/common/str_util"
 	"github.com/krilie/lico_alone/common/validator"
 	"github.com/krilie/lico_alone/module/userbase/model"
 	"time"
@@ -32,7 +32,7 @@ func (User) Login(ctx *context.Context, loginName, password string) (jwtString s
 		return "", err
 	}
 
-	if pswd_md5.IsPasswordOk(password, user.Password, user.Salt) {
+	if pswd_util.IsPasswordOk(password, user.Password, user.Salt) {
 		var userClaims jwt.UserClaims
 		userClaims.NickName = user.NickName
 		userClaims.LoginName = user.LoginName
@@ -42,13 +42,13 @@ func (User) Login(ctx *context.Context, loginName, password string) (jwtString s
 			log.Error("get roles err:", err)
 			return "", err
 		}
-		userClaims.UserRoles = string_util.JoinWith(roles, ",")
+		userClaims.UserRoles = str_util.JoinWith(roles, ",")
 		userClaims.ClientId = ctx.GetClientIdOrEmpty()
 		userClaims.Iss = "sys-user-module"
 		userClaims.UserId = user.ID
 		userClaims.Jti = id_util.GetUuid()
 		userClaims.Iat = time.Now().Unix()
-		userClaims.Picture = string_util.SqlStringOrEmpty(user.Picture)
+		userClaims.Picture = str_util.SqlStringOrEmpty(user.Picture)
 		//userClaims.Exp = time.Now().Add(time.Hour).Unix()
 		userClaims.Exp = time.Now().Add(time.Duration(jwtExpDuration) * time.Second).Unix()
 		jwtToken, err := jwt.GetNewJwtToken(&userClaims)

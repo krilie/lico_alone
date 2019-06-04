@@ -1,4 +1,4 @@
-package string_util
+package str_util
 
 import (
 	"database/sql"

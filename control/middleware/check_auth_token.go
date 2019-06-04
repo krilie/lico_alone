@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/jwt"
-	"github.com/krilie/lico_alone/common/string_util"
+	"github.com/krilie/lico_alone/common/str_util"
 	"github.com/krilie/lico_alone/control/utils"
 )
 
@@ -31,7 +31,7 @@ func CheckAuthToken() gin.HandlerFunc {
 				return
 			}
 		} else {
-			ctx.NowUserToken = string_util.NewString(headerAuth)
+			ctx.NowUserToken = str_util.NewString(headerAuth)
 			ctx.UserClaims = claims.(*jwt.UserClaims)
 			c.Next()
 			return

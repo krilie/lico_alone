@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/log"
-	"github.com/krilie/lico_alone/common/string_util"
+	"github.com/krilie/lico_alone/common/str_util"
 	"github.com/krilie/lico_alone/control/utils"
 )
 
@@ -32,8 +32,8 @@ func CheckClientToken() gin.HandlerFunc {
 				c.AbortWithStatusJSON(401, errs.UnAuthorized.ToStdWithMsg("client acc key not valid"))
 				return
 			} else {
-				context.ClientId = string_util.NewString(key.UserId)
-				context.ClientAccToken = string_util.NewString(key.Token)
+				context.ClientId = str_util.NewString(key.UserId)
+				context.ClientAccToken = str_util.NewString(key.Token)
 				c.Next()
 				return
 			}

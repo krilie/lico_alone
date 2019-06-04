@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin/binding"
 	"github.com/krilie/lico_alone/common/comstruct"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
-	"github.com/krilie/lico_alone/common/string_util"
+	"github.com/krilie/lico_alone/common/str_util"
 	"github.com/krilie/lico_alone/control/utils"
 	"time"
 )
@@ -80,7 +80,7 @@ func (ManagerCtrl) CreateNewAccToken(c *gin.Context) {
 	if exp == "" {
 		utils.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("exp must exists"))
 		return
-	} else if num, err := string_util.GetInt64(exp); err != nil {
+	} else if num, err := str_util.GetInt64(exp); err != nil {
 		utils.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("exp must a utx num"))
 		return
 	} else {

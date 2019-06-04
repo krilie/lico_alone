@@ -4,7 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/string_util"
+	"github.com/krilie/lico_alone/common/str_util"
 	"github.com/krilie/lico_alone/module/userbase/model"
 )
 
@@ -25,9 +25,9 @@ func (User) GetInfo(ctx *context.Context, userId string) (map[string]string, err
 		mUser["id"] = user.ID
 		mUser["login_name"] = user.LoginName
 		mUser["nick_name"] = user.NickName
-		mUser["phone"] = string_util.SqlStringOrEmpty(user.Phone)
-		mUser["email"] = string_util.SqlStringOrEmpty(user.Email)
-		mUser["picture"] = string_util.SqlStringOrEmpty(user.Picture)
+		mUser["phone"] = str_util.SqlStringOrEmpty(user.Phone)
+		mUser["email"] = str_util.SqlStringOrEmpty(user.Email)
+		mUser["picture"] = str_util.SqlStringOrEmpty(user.Picture)
 		return mUser, nil
 	}
 }
