@@ -2,6 +2,7 @@ package utils
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/krilie/lico_alone/common/comstruct"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/log"
@@ -28,8 +29,40 @@ func MustGetAppCtx(c *gin.Context) *context.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
 		log.Panic("GetAppCtxOrReturn", "can not get application context for next step")
+		return nil
 	}
 	return context.MustGetContext(value)
+}
+
+func MustGetUserId(c *gin.Context) string {
+	ctx := MustGetAppCtx(c)
+	if ctx.UserClaims != nil && ctx.UserClaims.UserId != "" {
+		return ctx.UserClaims.UserId
+	} else {
+		log.Panic("must get user id can not get user id.")
+		return ""
+	}
+}
+
+// 处理错误，如果有错误返回真 无错误返回假
+func HandlerError(ctx *context.Context, c *gin.Context, err error) bool {
+	if err == nil {
+		return false
+	} else {
+		ReturnWithErr(ctx, c, err)
+		return true
+	}
+}
+
+// 处理错误 如果没有返回通用成功
+func HandlerErrorOrReturnSuccess(ctx *context.Context, c *gin.Context, err error) {
+	if err == nil {
+		c.JSON(200, comstruct.StdSuccess)
+		return
+	} else {
+		ReturnWithErr(ctx, c, err)
+		return
+	}
 }
 
 // abort with err use err's default http status

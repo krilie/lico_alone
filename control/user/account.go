@@ -2,7 +2,6 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/common/comstruct"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/control/utils"
 )
@@ -15,13 +14,8 @@ func (UserCtrl) DeleteBill(c *gin.Context) {
 		utils.ReturnWithErr(ctx, c, errs.ErrParam.NewWithMsg("not find bill id."))
 		return
 	}
-	err := appUser.DeleteBill(ctx, billId, ctx.UserClaims.UserId)
-	if err != nil {
-		utils.ReturnWithErr(ctx, c, err)
-		return
-	} else {
-		c.JSON(200, comstruct.StdSuccess)
-	}
+	err := appUser.DeleteBill(ctx, billId, utils.MustGetUserId(c))
+	utils.HandlerErrorOrReturnSuccess(ctx, c, err)
 }
 
 func (UserCtrl) GetAccountHistory(c *gin.Context) {
