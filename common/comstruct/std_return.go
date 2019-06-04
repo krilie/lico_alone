@@ -13,10 +13,12 @@ type StdReturn struct {
 	Message string `json:"message"`
 }
 
-func (s *StdReturn) WithCode(code string) {
+func (s *StdReturn) WithCode(code string) *StdReturn {
 	s.Code = code
+	return s
 }
 
-func (s *StdReturn) WithMessage(msg string) {
+func (s *StdReturn) WithMessage(msg string) *StdReturn {
 	s.Message = msg
+	return s
 }
