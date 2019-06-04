@@ -8,20 +8,28 @@ import (
 )
 
 // get app context or nil
-func GetApplicationContextOrReturn(c *gin.Context) *context.Context {
+func GetAppCtxOrReturn(c *gin.Context) *context.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
-		log.Error("GetApplicationContextOrReturn", "can not get application context for next step")
+		log.Error("GetAppCtxOrReturn", "can not get application context for next step")
 		c.JSON(500, errs.ErrInternal.ToStdReturn())
 		return nil
 	}
 	contextOrNil := context.GetContextOrNil(value)
 	if contextOrNil == nil {
-		log.Error("GetApplicationContextOrReturn", "internal err on cast context to app context")
+		log.Error("GetAppCtxOrReturn", "internal err on cast context to app context")
 		c.JSON(500, errs.ErrInternal.ToStdReturn())
 		return nil
 	}
 	return contextOrNil
+}
+
+func MustGetAppCtx(c *gin.Context) *context.Context {
+	value, exists := c.Get(GinKeyAppContext)
+	if !exists {
+		log.Panic("GetAppCtxOrReturn", "can not get application context for next step")
+	}
+	return context.MustGetContext(value)
 }
 
 // abort with err use err's default http status

@@ -8,10 +8,7 @@ import (
 )
 
 func (CtlCommon) uploadFile(c *gin.Context) {
-	ctx := utils.GetApplicationContextOrReturn(c)
-	if ctx == nil {
-		return
-	}
+	ctx := utils.MustGetAppCtx(c)
 	fileName := c.PostForm("name")
 	file, err := c.FormFile("file")
 	if err != nil {
@@ -33,10 +30,7 @@ func (CtlCommon) uploadFile(c *gin.Context) {
 }
 
 func (CtlCommon) deleteFile(c *gin.Context) {
-	ctx := utils.GetApplicationContextOrReturn(c)
-	if ctx == nil {
-		return
-	}
+	ctx := utils.MustGetAppCtx(c)
 	err := appCommon.DeleteFile(ctx, ctx.UserClaims.UserId, c.PostForm("file_path"))
 	if err != nil {
 		utils.ReturnWithErr(ctx, c, err)

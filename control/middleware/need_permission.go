@@ -15,7 +15,7 @@ func NeedPermission(perms ...interface{}) gin.HandlerFunc {
 	}
 	return func(c *gin.Context) {
 		// check user get context
-		ctx := utils.GetApplicationContextOrAbort(c)
+		ctx := utils.GetAppCtxOrAbort(c)
 		if ctx == nil {
 			return
 		}

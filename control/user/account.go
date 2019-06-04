@@ -9,10 +9,7 @@ import (
 
 // userId billId
 func (UserCtrl) DeleteBill(c *gin.Context) {
-	ctx := utils.GetApplicationContextOrReturn(c)
-	if ctx == nil {
-		return
-	}
+	ctx := utils.MustGetAppCtx(c)
 	billId := c.PostForm("bill_id")
 	if billId == "" {
 		utils.ReturnWithErr(ctx, c, errs.ErrParam.NewWithMsg("not find bill id."))

@@ -15,10 +15,7 @@ import (
 // role_id role的id
 // permission_id permission的id
 func (ManagerCtrl) AddPermissionToRole(c *gin.Context) {
-	ctx := utils.GetApplicationContextOrReturn(c)
-	if ctx == nil {
-		return
-	}
+	ctx := utils.MustGetAppCtx(c)
 	roleId := c.PostForm("role_id")
 	permissionID := c.PostForm("permission_id")
 	if roleId == "" || permissionID == "" {
@@ -39,10 +36,7 @@ func (ManagerCtrl) AddPermissionToRole(c *gin.Context) {
 // role_id 角色的id
 // user_id 用户的id
 func (ManagerCtrl) AddRoleToUser(c *gin.Context) {
-	ctx := utils.GetApplicationContextOrReturn(c)
-	if ctx == nil {
-		return
-	}
+	ctx := utils.MustGetAppCtx(c)
 	req := struct {
 		RoleId string `form:"role_id" binding:"required"`
 		UserId string `form:"user_id" binding:"required"`
@@ -69,10 +63,7 @@ func (ManagerCtrl) AddRoleToUser(c *gin.Context) {
 // exp time.Time 这个key的过期时间,utx时间戳
 // 逻辑层做了参数检查，不用在这里检查参数，一些非空检查是必要的
 func (ManagerCtrl) CreateNewAccToken(c *gin.Context) {
-	ctx := utils.GetApplicationContextOrReturn(c)
-	if ctx == nil {
-		return
-	}
+	ctx := utils.MustGetAppCtx(c)
 	//取参数
 	targetUserId := c.PostForm("target_user_id")
 	if targetUserId == "" {
@@ -112,10 +103,7 @@ func (ManagerCtrl) CreateNewAccToken(c *gin.Context) {
 // name		permission的名称
 // description description的描述
 func (ManagerCtrl) CreateNewPermission(c *gin.Context) {
-	ctx := utils.GetApplicationContextOrReturn(c)
-	if ctx == nil {
-		return
-	}
+	ctx := utils.MustGetAppCtx(c)
 	name := c.PostForm("name")
 	description := c.PostForm("description")
 	if name == "" || description == "" {
@@ -137,10 +125,7 @@ func (ManagerCtrl) CreateNewPermission(c *gin.Context) {
 // name	名称
 // description 描述
 func (ManagerCtrl) CreateNewRole(c *gin.Context) {
-	ctx := utils.GetApplicationContextOrReturn(c)
-	if ctx == nil {
-		return
-	}
+	ctx := utils.MustGetAppCtx(c)
 	//匿名结构体，参数
 	req := &struct {
 		Name        string `binding:"required" form:"name"`

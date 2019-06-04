@@ -26,7 +26,7 @@ func ParamLoginIdMatch() gin.HandlerFunc {
 			return
 		}
 		//取认证信息
-		ctx := utils.GetApplicationContextOrAbort(c)
+		ctx := utils.GetAppCtxOrAbort(c)
 		if ctx == nil {
 			return
 		} else if ctx.GetUserIdOrEmpty() != userId {

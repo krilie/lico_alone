@@ -7,17 +7,18 @@ import (
 	"github.com/krilie/lico_alone/common/log"
 )
 
+// 给中间件使用
 // get app context or nil
-func GetApplicationContextOrAbort(c *gin.Context) *context.Context {
+func GetAppCtxOrAbort(c *gin.Context) *context.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
-		log.Error("GetApplicationContextOrAbort", "can not get application context for next step")
+		log.Error("GetAppCtxOrAbort", "can not get application context for next step")
 		c.AbortWithStatusJSON(500, errs.ErrInternal.ToStdReturn())
 		return nil
 	}
 	contextOrNil := context.GetContextOrNil(value)
 	if contextOrNil == nil {
-		log.Error("GetApplicationContextOrAbort", "internal err on cast context to app context")
+		log.Error("GetAppCtxOrAbort", "internal err on cast context to app context")
 		c.AbortWithStatusJSON(500, errs.ErrInternal.ToStdReturn())
 		return nil
 	}

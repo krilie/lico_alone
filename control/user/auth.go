@@ -11,10 +11,7 @@ import (
 // /user/base/info get
 // get info
 func (UserCtrl) GetInfo(c *gin.Context) {
-	ctx := utils.GetApplicationContextOrReturn(c)
-	if ctx == nil {
-		return
-	}
+	ctx := utils.MustGetAppCtx(c)
 	userId := ctx.GetUserIdOrEmpty()
 	if userId == "" {
 		utils.ReturnWithAppErr(ctx, c, errs.UnAuthorized.NewWithMsg("can not take login user id"))
@@ -35,10 +32,7 @@ func (UserCtrl) GetInfo(c *gin.Context) {
 // login_name 登录名
 // password 密码
 func (UserCtrl) Login(c *gin.Context) {
-	ctx := utils.GetApplicationContextOrReturn(c)
-	if ctx == nil {
-		return
-	}
+	ctx := utils.MustGetAppCtx(c)
 	req := struct {
 		LoginName string `form:"login_name" binding:"required"`
 		Password  string `form:"password" binding:"required"`
@@ -62,10 +56,7 @@ func (UserCtrl) Login(c *gin.Context) {
 // jwtToken string
 // 从登录信息中取jwttoken
 func (UserCtrl) Logout(c *gin.Context) {
-	ctx := utils.GetApplicationContextOrReturn(c)
-	if ctx == nil {
-		return
-	}
+	ctx := utils.MustGetAppCtx(c)
 	logout := appUser.Logout(ctx, ctx.GetNowUserTokenOrEmpty())
 	if logout != nil {
 		utils.ReturnWithErr(ctx, c, logout)
@@ -81,10 +72,7 @@ func (UserCtrl) Logout(c *gin.Context) {
 // login_name 登录名
 // password 密码
 func (UserCtrl) Register(c *gin.Context) {
-	ctx := utils.GetApplicationContextOrReturn(c)
-	if ctx == nil {
-		return
-	}
+	ctx := utils.MustGetAppCtx(c)
 	req := struct {
 		LoginName string `form:"login_name" binding:"required"`
 		Password  string `form:"password" binding:"required"`
@@ -110,10 +98,7 @@ func (UserCtrl) Register(c *gin.Context) {
 // token 用户的jwttoken
 // 检查这个jwtToken是否有效，并返回有效载荷
 func (UserCtrl) Valid(c *gin.Context) {
-	ctx := utils.GetApplicationContextOrReturn(c)
-	if ctx == nil {
-		return
-	}
+	ctx := utils.MustGetAppCtx(c)
 	token := c.PostForm("token")
 	if token == "" {
 		utils.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("no find token param in form"))
@@ -133,10 +118,7 @@ func (UserCtrl) Valid(c *gin.Context) {
 // token
 // 无权限
 func (UserCtrl) ValidClientAccToken(c *gin.Context) {
-	ctx := utils.GetApplicationContextOrReturn(c)
-	if ctx == nil {
-		return
-	}
+	ctx := utils.MustGetAppCtx(c)
 	token := c.PostForm("token")
 	if token == "" {
 		utils.ReturnWithAppErr(ctx, c, errs.ErrParam.NewWithMsg("no find token param in form"))

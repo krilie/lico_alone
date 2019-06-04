@@ -13,7 +13,7 @@ import (
 func CheckClientToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// take application context
-		context := utils.GetApplicationContextOrAbort(c)
+		context := utils.GetAppCtxOrAbort(c)
 		if context == nil {
 			return
 		}

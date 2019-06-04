@@ -12,7 +12,7 @@ import (
 func CheckAuthToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// get context
-		ctx := utils.GetApplicationContextOrAbort(c)
+		ctx := utils.GetAppCtxOrAbort(c)
 		if ctx == nil {
 			return
 		}
