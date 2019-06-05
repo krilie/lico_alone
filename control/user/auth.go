@@ -34,7 +34,7 @@ func (UserCtrl) GetInfo(c *gin.Context) {
 func (UserCtrl) Login(c *gin.Context) {
 	ctx := utils.MustGetAppCtx(c)
 	req := struct {
-		LoginName string `form:"login_name" binding:"required"`
+		LoginName string `form:"login_name" binding:"required,user_id"`
 		Password  string `form:"password" binding:"required"`
 	}{}
 	if e := c.ShouldBindWith(&req, binding.FormPost); e != nil {

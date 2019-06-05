@@ -5,12 +5,12 @@ import (
 	"reflect"
 )
 
-func PageValid(
+func UserIdValid(
 	v *validator.Validate, topStruct reflect.Value, currentStructOrField reflect.Value,
 	field reflect.Value, fieldType reflect.Type, fieldKind reflect.Kind, param string,
 ) bool {
-	if num, ok := field.Interface().(int); ok {
-		if num <= 0 {
+	if str, ok := field.Interface().(string); ok {
+		if !IsIdStr(str) {
 			return false
 		}
 	}
