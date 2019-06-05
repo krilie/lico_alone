@@ -5,10 +5,10 @@ import (
 )
 
 type BillDetail struct {
-	AccountId string          `json:"account_id"`
-	Debit     decimal.Decimal `json:"debit"`
-	Credit    decimal.Decimal `json:"credit"`
-	Note      string          `json:"note"`
+	AccountId string          `json:"account_id" form:"account_id" binding:"required"`
+	Debit     decimal.Decimal `json:"debit" form:"debit" binding:"required"`
+	Credit    decimal.Decimal `json:"credit" form:"credit" binding:"required"`
+	Note      string          `json:"note" form:"note" binding:"-"`
 }
 
 type AccountInfo struct {

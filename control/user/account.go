@@ -4,8 +4,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/time_util"
 	"github.com/krilie/lico_alone/common/validator"
 	"github.com/krilie/lico_alone/control/utils"
+	"github.com/krilie/lico_alone/module/account/pojo"
+	"github.com/shopspring/decimal"
 	"time"
 )
 
@@ -49,21 +52,69 @@ func (UserCtrl) GetAccountInfo(c *gin.Context) {
 }
 
 func (UserCtrl) AddBill(c *gin.Context) {
-	panic("implement me")
+	ctx := utils.MustGetAppCtx(c)
+	req := struct {
+		Note   string            `form:"note" binding:"required"`
+		Image  string            `form:"image" binding:"-"`
+		Amount decimal.Decimal   `form:"amount" binding:"required"`
+		Detail []pojo.BillDetail `form:"detail" binding:"required"`
+	}{}
+	e := c.ShouldBindJSON(&req)
+	if utils.HandlerError(ctx, c, e) {
+		return
+	}
+	s, e := appUser.AddBill(ctx, utils.MustGetUserId(c), req.Note, req.Image, req.Amount, req.Detail)
+	utils.HandlerErrorOrReturnJson(ctx, c, e, s)
 }
 
 func (UserCtrl) AddAccount(c *gin.Context) {
-	panic("implement me")
+	ctx := utils.MustGetAppCtx(c)
+	req := struct {
+		Name        string          `form:"name" binding:"required"`
+		Num         string          `form:"num" binding:"required"`
+		Description string          `form:"description" binding:"required"`
+		Image       string          `form:"image" binding:"required"`
+		Balance     decimal.Decimal `form:"balance" binding:"required"`
+	}{}
+	e := c.ShouldBindWith(&req, binding.Form)
+	if utils.HandlerError(ctx, c, e) {
+		return
+	}
+	s, e := appUser.AddAccount(ctx, utils.MustGetUserId(c), req.Name, req.Num, req.Description, req.Image, req.Balance)
+	utils.HandlerErrorOrReturnJson(ctx, c, e, s)
 }
 
 func (UserCtrl) DeleteAccount(c *gin.Context) {
-	panic("implement me")
+	ctx := utils.MustGetAppCtx(c)
+	accountId := c.PostForm("account_id")
+	if accountId == "" {
+		utils.ReturnWithErr(ctx, c, errs.ErrParam.NewWithMsg("not find account id in form."))
+		return
+	}
+	e := appUser.DeleteAccount(ctx, accountId, utils.MustGetUserId(c))
+	utils.HandlerErrorOrReturnSuccess(ctx, c, e)
 }
 
 func (UserCtrl) GetMonthSummary(c *gin.Context) {
-	panic("implement me")
+	ctx := utils.MustGetAppCtx(c)
+	beijingTime, e := time_util.ParseBeijingTime(c.Query("time"), time_util.DefaultFormat)
+	if utils.HandlerError(ctx, c, e) {
+		return
+	}
+	summary, e := appUser.GetMonthSummary(ctx, utils.MustGetUserId(c), beijingTime)
+	utils.HandlerErrorOrReturnJson(ctx, c, e, summary)
 }
 
 func (UserCtrl) GetTimeZoneSummary(c *gin.Context) {
-	panic("implement me")
+	ctx := utils.MustGetAppCtx(c)
+	req := struct {
+		TimeStart time.Time `form:"time_start" binding:"required" time_format:"2006-01-02 15:04:05"`
+		TimeEnd   time.Time `form:"time_end" binding:"required" time_format:"2006-01-02 15:04:05"`
+	}{}
+	e := c.ShouldBindQuery(&req)
+	if utils.HandlerError(ctx, c, e) {
+		return
+	}
+	accountSummary, e := appUser.GetTimeZoneSummary(ctx, utils.MustGetUserId(c), req.TimeStart, req.TimeEnd)
+	utils.HandlerErrorOrReturnJson(ctx, c, e, accountSummary)
 }

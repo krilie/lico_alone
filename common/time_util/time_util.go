@@ -30,3 +30,7 @@ func GetBeijingTimeString(unix int64) string {
 func GetNowUtcTimeString() string {
 	return time.Now().In(time.UTC).Format("2006-01-02 15:04:05")
 }
+
+func ParseBeijingTime(str, format string) (time.Time, error) {
+	return time.ParseInLocation(format, str, BeijingZone)
+}
