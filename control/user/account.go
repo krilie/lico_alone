@@ -23,8 +23,8 @@ func (UserCtrl) DeleteBill(c *gin.Context) {
 func (UserCtrl) GetAccountHistory(c *gin.Context) {
 	ctx := utils.MustGetAppCtx(c)
 	req := struct {
-		Start     time.Time `form:"start" binding:"required"`
-		End       time.Time `form:"end" binding:"required"`
+		Start     time.Time `form:"start" binding:"required" time_format:"2006-01-02 15:04:05"`
+		End       time.Time `form:"end" binding:"required" time_format:"2006-01-02 15:04:05"`
 		AccountId string    `form:"account_id" binding:"required"`
 		Note      string    `form:"note" binding:"required"`
 	}{}
