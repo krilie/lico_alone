@@ -23,24 +23,23 @@ func (UserCtrl) DeleteBill(c *gin.Context) {
 func (UserCtrl) GetAccountHistory(c *gin.Context) {
 	ctx := utils.MustGetAppCtx(c)
 	req := struct {
-		Start     time.Time
-		End       time.Time
-		AccountId string
-		Note      string
+		Start     time.Time `form:"start" binding:"required"`
+		End       time.Time `form:"end" binding:"required"`
+		AccountId string    `form:"account_id" binding:"required"`
+		Note      string    `form:"note" binding:"required"`
 	}{}
 	err := c.ShouldBindWith(&req, binding.Form)
 	if utils.HandlerError(ctx, c, err) {
 		return
 	}
 	v, e := appUser.GetAccountHistory(ctx, req.Start, req.End, utils.MustGetUserId(c), req.AccountId, req.Note)
-	if !utils.HandlerError(ctx, c, e) {
-		c.JSON(200, v)
-		return
-	}
+	utils.HandlerErrorOrReturnJson(ctx, c, e, v)
 }
 
 func (UserCtrl) GetAccountInfo(c *gin.Context) {
-	panic("implement me")
+	ctx := utils.MustGetAppCtx(c)
+	infos, e := appUser.GetAccountInfo(ctx, c.Query("user_id"))
+	utils.HandlerErrorOrReturnJson(ctx, c, e, infos)
 }
 
 func (UserCtrl) AddBill(c *gin.Context) {

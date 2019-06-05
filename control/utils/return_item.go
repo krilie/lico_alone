@@ -65,6 +65,17 @@ func HandlerErrorOrReturnSuccess(ctx *context.Context, c *gin.Context, err error
 	}
 }
 
+// 处理错误 如果没有返回通用成功
+func HandlerErrorOrReturnJson(ctx *context.Context, c *gin.Context, err error, ret interface{}) {
+	if err == nil {
+		c.JSON(200, ret)
+		return
+	} else {
+		ReturnWithErr(ctx, c, err)
+		return
+	}
+}
+
 // abort with err use err's default http status
 func ReturnWithErr(ctx *context.Context, c *gin.Context, err error) {
 	if errLocal, ok := err.(*errs.Error); ok {
