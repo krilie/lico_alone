@@ -40,4 +40,15 @@ func Init(group *gin.RouterGroup) {
 	userBase.POST("/register", userCtrl.Register)
 	userBase.GET("/valid", userCtrl.Valid)                                // 不要登录，要有客户端的key
 	userBase.GET("/valid_client_acc_token", userCtrl.ValidClientAccToken) //不要权限的
+	// account
+	accountGp := group.Group("/account")
+	accountGp.Use(middleware.CheckAuthToken())
+	accountGp.POST("/delete_bill", userCtrl.DeleteBill)
+	accountGp.GET("/account_history", userCtrl.GetAccountHistory)
+	accountGp.GET("/account_info", userCtrl.GetAccountInfo)
+	accountGp.POST("/add_bill", userCtrl.AddBill)
+	accountGp.POST("/add_account", userCtrl.AddAccount)
+	accountGp.POST("/delete_account", userCtrl.DeleteAccount)
+	accountGp.GET("/month_summary", userCtrl.GetMonthSummary)
+	accountGp.GET("/time_zone_summary", userCtrl.GetTimeZoneSummary)
 }
