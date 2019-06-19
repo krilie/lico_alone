@@ -3,8 +3,8 @@ package middleware
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/id_util"
-	"github.com/krilie/lico_alone/common/str_util"
+	"github.com/krilie/lico_alone/common/utils/id_util"
+	"github.com/krilie/lico_alone/common/utils/str_util"
 	"github.com/krilie/lico_alone/control/utils"
 	"time"
 )

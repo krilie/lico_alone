@@ -3,14 +3,14 @@ package control
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/krilie/lico_alone/common/log"
-	myvalid "github.com/krilie/lico_alone/common/validator"
+	myvalid "github.com/krilie/lico_alone/common/utils/validator"
 	"github.com/krilie/lico_alone/control/common"
 	"github.com/krilie/lico_alone/control/health"
 	"github.com/krilie/lico_alone/control/manager"
 	"github.com/krilie/lico_alone/control/middleware"
 	"github.com/krilie/lico_alone/control/user"
 	"gopkg.in/go-playground/validator.v8"
+	"log"
 )
 
 var LocalRouter *gin.Engine

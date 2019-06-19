@@ -3,7 +3,6 @@ package middleware
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
-	"github.com/krilie/lico_alone/common/log"
 	"github.com/krilie/lico_alone/control/utils"
 )
 

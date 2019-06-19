@@ -1,7 +1,5 @@
 package config
 
-import "github.com/krilie/lico_alone/common/log"
-
 func GetInt(key string) int {
 	ok := Conf.v.IsSet(key)
 	if !ok {

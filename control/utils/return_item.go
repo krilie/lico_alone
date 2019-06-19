@@ -5,7 +5,6 @@ import (
 	"github.com/krilie/lico_alone/common/comstruct"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/log"
 )
 
 // get app context or nil

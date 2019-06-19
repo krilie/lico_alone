@@ -2,8 +2,6 @@ package auth
 
 import (
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/log"
-	"github.com/krilie/lico_alone/common/validator"
 	"github.com/krilie/lico_alone/module/userbase/model"
 )
 

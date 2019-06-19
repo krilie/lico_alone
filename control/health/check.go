@@ -3,7 +3,7 @@ package health
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/config"
-	"github.com/krilie/lico_alone/common/time_util"
+	"github.com/krilie/lico_alone/common/utils/time_util"
 	"net/http"
 )
 

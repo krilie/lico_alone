@@ -3,8 +3,8 @@ package model
 import (
 	"database/sql"
 	"fmt"
-	"github.com/krilie/lico_alone/common/id_util"
-	"github.com/krilie/lico_alone/common/pswd_util"
+	"github.com/krilie/lico_alone/common/utils/id_util"
+	"github.com/krilie/lico_alone/common/utils/pswd_util"
 	"net/url"
 	"testing"
 	"time"

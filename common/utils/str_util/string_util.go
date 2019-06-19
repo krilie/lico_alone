@@ -2,6 +2,7 @@ package str_util
 
 import (
 	"database/sql"
+	"encoding/json"
 	"github.com/deckarep/golang-set"
 	"strconv"
 	"strings"
@@ -62,4 +63,21 @@ func GetInt64(ori string) (int64, error) {
 }
 func GetFloat64(ori string) (float64, error) {
 	return strconv.ParseFloat(ori, 64)
+}
+
+func ToJson(o interface{}) string {
+	jsonBytes, err := json.Marshal(o)
+	if err != nil {
+		return ""
+	} else {
+		return string(jsonBytes)
+	}
+}
+func ToJsonPretty(o interface{}) string {
+	jsonBytes, err := json.MarshalIndent(o, "", "  ")
+	if err != nil {
+		return ""
+	} else {
+		return string(jsonBytes)
+	}
 }

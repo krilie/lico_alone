@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/config"
-	"github.com/krilie/lico_alone/common/log"
 	"time"
 )
 import _ "github.com/jinzhu/gorm/dialects/mysql"

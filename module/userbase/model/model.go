@@ -5,7 +5,6 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/krilie/lico_alone/common/config"
-	"github.com/krilie/lico_alone/common/log"
 	"time"
 )
 

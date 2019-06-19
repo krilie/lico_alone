@@ -1,8 +1,10 @@
 package config
 
 import (
-	"github.com/krilie/lico_alone/common/log"
-	"github.com/krilie/lico_alone/common/time_util"
+	"github.com/krilie/lico_alone/common/comlog"
+	"github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/common/utils/time_util"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"strings"
 )
@@ -12,12 +14,15 @@ type config struct {
 }
 
 var Conf = &config{}
+var log *logrus.Entry
 
 func init() {
+	log = comlog.NewLog(context.NewContext(), "br_go.common.config")
+
 	Conf.v = viper.New()
 
 	//读取环境变量值
-	Conf.v.SetEnvPrefix("LICO")
+	Conf.v.SetEnvPrefix("BR")
 	Conf.v.AutomaticEnv()
 	replacer := strings.NewReplacer(".", "_")
 	Conf.v.SetEnvKeyReplacer(replacer)
@@ -35,7 +40,7 @@ func init() {
 	Conf.v.SetDefault("db.port", 3306)
 	Conf.v.SetDefault("db.user", "root")
 	Conf.v.SetDefault("db.password", "123456")
-	Conf.v.SetDefault("db.database", "lico")
+	Conf.v.SetDefault("db.database", "br")
 	Conf.v.SetDefault("db.max_open_conn", 1)
 	Conf.v.SetDefault("db.max_idle_conn", 1)
 	Conf.v.SetDefault("db.conn_max_left_time", 3600*7)
@@ -55,7 +60,7 @@ func init() {
 			//log.Log.Infoln("create a new config file config.yaml at pwd path. any err:", err)
 			log.Infoln("no config file use default:", err)
 		default:
-			log.Log.Warnln(err)
+			log.Warnln(err)
 		}
 	}
 }

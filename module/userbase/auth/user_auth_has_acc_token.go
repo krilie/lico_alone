@@ -5,8 +5,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/log"
-	"github.com/krilie/lico_alone/common/validator"
+	"github.com/krilie/lico_alone/common/utils/validator"
 	"github.com/krilie/lico_alone/module/userbase/model"
 )
 

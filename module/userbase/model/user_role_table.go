@@ -4,7 +4,6 @@ import (
 	"github.com/deckarep/golang-set"
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
-	"github.com/krilie/lico_alone/common/log"
 )
 
 type UserRole struct {

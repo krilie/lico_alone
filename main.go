@@ -1,8 +1,9 @@
 package main
 
 import (
+	"github.com/krilie/lico_alone/common/comlog"
 	"github.com/krilie/lico_alone/common/config"
-	"github.com/krilie/lico_alone/common/log"
+	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/control"
 	"golang.org/x/net/context"
 	"net/http"
@@ -10,6 +11,8 @@ import (
 	"os/signal"
 	"syscall"
 )
+
+var log = comlog.NewLog(context2.NewContext(), "lico.main")
 
 func main() {
 	// 开始
