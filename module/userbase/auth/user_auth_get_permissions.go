@@ -9,7 +9,7 @@ import (
 )
 
 //获取用户的 permission 列表,连表查询
-func (UserAuth) GetPermissions(ctx *context.Context, userId string) (set mapset.Set, err error) {
+func (UserAuth) GetPermissions(ctx context.Context, userId string) (set mapset.Set, err error) {
 	if !validator.IsIdStr(userId) {
 		log.Infoln("GetPermissions", "user id format error:", userId)
 		return nil, errs.ErrParam

@@ -8,14 +8,14 @@ import (
 )
 
 //取到app角色用户的所有keys
-func (ua UserAuth) GetClientAccToken(ctx *context.Context, appUserId string) (list []model.ClientUserAccessToken, err error) {
+func (ua UserAuth) GetClientAccToken(ctx context.Context, appUserId string) (list []model.ClientUserAccessToken, err error) {
 	//校验参数
 	if !validator.IsIdStr(appUserId) {
 		log.Infoln("UserAuthAppKeys", "err param:", appUserId)
 		return nil, errs.ErrParam
 	}
 	//判断是不是有client权限
-	loginUserId := ctx.GetUserIdOrEmpty()
+	loginUserId := ctx.GetUserId()
 	if loginUserId == "" {
 		return nil, errs.UnAuthorized
 	}
@@ -29,7 +29,7 @@ func (ua UserAuth) GetClientAccToken(ctx *context.Context, appUserId string) (li
 			return nil, err
 		} else if hasRoleClient {
 			//没有admin只有client权限,检查登录者是否与target一致
-			if ctx.GetUserIdOrEmpty() != loginUserId {
+			if ctx.GetUserId() != loginUserId {
 				return nil, errs.ErrNoPermission.NewWithMsg("只能查询自已的acc_token")
 			}
 		} else {

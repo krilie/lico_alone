@@ -14,7 +14,7 @@ import (
 )
 
 // 用户登录,到这里说明参数有可能还是不正确的。检查参数,放到上层
-func (User) Login(ctx *context.Context, loginName, password string) (jwtString string, err error) {
+func (User) Login(ctx context.Context, loginName, password string) (jwtString string, err error) {
 	//检查密码与用户名
 	if !(validator.IsLoginName(loginName) && validator.IsPassword(password)) {
 		log.Infoln("user loginName or password format error.")
@@ -42,7 +42,7 @@ func (User) Login(ctx *context.Context, loginName, password string) (jwtString s
 			return "", err
 		}
 		userClaims.UserRoles = str_util.JoinWith(roles, ",")
-		userClaims.ClientId = ctx.GetClientIdOrEmpty()
+		userClaims.ClientId = ctx.GetClientId()
 		userClaims.Iss = "sys-user-module"
 		userClaims.UserId = user.ID
 		userClaims.Jti = id_util.GetUuid()

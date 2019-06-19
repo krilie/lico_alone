@@ -7,7 +7,7 @@ import (
 )
 
 //给角色 添加新的permission
-func (UserManage) AddPermissionToRole(ctx *context.Context, roleId string, permissionId string) error {
+func (UserManage) AddPermissionToRole(ctx context.Context, roleId string, permissionId string) error {
 	//检查参数
 	if !(validator.IsIdStr(roleId) && validator.IsIdStr(permissionId)) {
 		log.Infoln("AddPermissionToRole", "param error:", roleId, permissionId)

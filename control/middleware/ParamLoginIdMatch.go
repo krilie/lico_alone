@@ -28,7 +28,7 @@ func ParamLoginIdMatch() gin.HandlerFunc {
 		ctx := utils.GetAppCtxOrAbort(c)
 		if ctx == nil {
 			return
-		} else if ctx.GetUserIdOrEmpty() != userId {
+		} else if ctx.GetUserId() != userId {
 			log.Errorln("ParamLoginIdMatch", "user id and login user id not match.")
 			c.AbortWithStatusJSON(400, errs.ErrParam.ToStdWithMsg("user id and login user id not match."))
 			return

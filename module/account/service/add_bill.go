@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func (Account) AddBill(ctx *context.Context, userId, note, image string, amount decimal.Decimal, detail []pojo.BillDetail) (string, error) {
+func (Account) AddBill(ctx context.Context, userId, note, image string, amount decimal.Decimal, detail []pojo.BillDetail) (string, error) {
 	// 贷  借 借贷平衡
 	credit, debit := decimal.Zero, decimal.Zero
 	for _, v := range detail {

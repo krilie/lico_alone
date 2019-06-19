@@ -8,7 +8,7 @@ import (
 )
 
 // get app context or nil
-func GetAppCtxOrReturn(c *gin.Context) *context.Context {
+func GetAppCtxOrReturn(c *gin.Context) context.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
 		log.Error("GetAppCtxOrReturn", "can not get application context for next step")
@@ -24,7 +24,7 @@ func GetAppCtxOrReturn(c *gin.Context) *context.Context {
 	return contextOrNil
 }
 
-func MustGetAppCtx(c *gin.Context) *context.Context {
+func MustGetAppCtx(c *gin.Context) context.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
 		log.Panic("GetAppCtxOrReturn", "can not get application context for next step")
@@ -35,8 +35,8 @@ func MustGetAppCtx(c *gin.Context) *context.Context {
 
 func MustGetUserId(c *gin.Context) string {
 	ctx := MustGetAppCtx(c)
-	if ctx.UserClaims != nil && ctx.UserClaims.UserId != "" {
-		return ctx.UserClaims.UserId
+	if ctx.GetUserId() != "" {
+		return ctx.GetUserId()
 	} else {
 		log.Panic("must get user id can not get user id.")
 		return ""
@@ -44,7 +44,7 @@ func MustGetUserId(c *gin.Context) string {
 }
 
 // 处理错误，如果有错误返回真 无错误返回假
-func HandlerError(ctx *context.Context, c *gin.Context, err error) bool {
+func HandlerError(ctx context.Context, c *gin.Context, err error) bool {
 	if err == nil {
 		return false
 	} else {
@@ -54,7 +54,7 @@ func HandlerError(ctx *context.Context, c *gin.Context, err error) bool {
 }
 
 // 处理错误 如果没有返回通用成功
-func HandlerErrorOrReturnSuccess(ctx *context.Context, c *gin.Context, err error) {
+func HandlerErrorOrReturnSuccess(ctx context.Context, c *gin.Context, err error) {
 	if err == nil {
 		c.JSON(200, comstruct.StdSuccess)
 		return
@@ -65,7 +65,7 @@ func HandlerErrorOrReturnSuccess(ctx *context.Context, c *gin.Context, err error
 }
 
 // 处理错误 如果没有返回通用成功
-func HandlerErrorOrReturnJson(ctx *context.Context, c *gin.Context, err error, ret interface{}) {
+func HandlerErrorOrReturnJson(ctx context.Context, c *gin.Context, err error, ret interface{}) {
 	if err == nil {
 		c.JSON(200, ret)
 		return
@@ -76,7 +76,7 @@ func HandlerErrorOrReturnJson(ctx *context.Context, c *gin.Context, err error, r
 }
 
 // abort with err use err's default http status
-func ReturnWithErr(ctx *context.Context, c *gin.Context, err error) {
+func ReturnWithErr(ctx context.Context, c *gin.Context, err error) {
 	if errLocal, ok := err.(*errs.Error); ok {
 		c.JSON(errLocal.HttpStatus, errLocal.ToStdReturn())
 	} else {
@@ -84,6 +84,6 @@ func ReturnWithErr(ctx *context.Context, c *gin.Context, err error) {
 	}
 }
 
-func ReturnWithAppErr(ctx *context.Context, c *gin.Context, err *errs.Error) {
+func ReturnWithAppErr(ctx context.Context, c *gin.Context, err *errs.Error) {
 	c.JSON(err.HttpStatus, err.ToStdReturn())
 }

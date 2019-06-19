@@ -11,14 +11,14 @@ import (
 
 // 给app用户添加新的key 访问key
 // admin 和cleint，如果没有admin而只有cleint权限，则检查登录者与userId是否一致
-func (UserManage) NewClientAccToken(ctx *context.Context, userId, keyDescription string, Exp time.Time) (key *model.ClientUserAccessToken, err error) {
+func (UserManage) NewClientAccToken(ctx context.Context, userId, keyDescription string, Exp time.Time) (key *model.ClientUserAccessToken, err error) {
 	//参数检查
 	if !validator.IsIdStr(userId) || len(keyDescription) == 0 {
 		log.Infoln("", "param error:", userId, keyDescription)
 		return nil, errs.ErrParam
 	}
 	//判断是不是有client权限
-	loginUserId := ctx.GetUserIdOrEmpty()
+	loginUserId := ctx.GetUserId()
 	if loginUserId == "" {
 		return nil, errs.UnAuthorized
 	}
@@ -32,7 +32,7 @@ func (UserManage) NewClientAccToken(ctx *context.Context, userId, keyDescription
 			return nil, err
 		} else if hasRoleClient {
 			//没有admin只有client权限,检查登录者是否与target一致
-			if ctx.GetUserIdOrEmpty() != loginUserId {
+			if ctx.GetUserId() != loginUserId {
 				return nil, errs.ErrNoPermission.NewWithMsg("只能给自已添加cleint acc key")
 			}
 		} else {
@@ -43,7 +43,7 @@ func (UserManage) NewClientAccToken(ctx *context.Context, userId, keyDescription
 	key = new(model.ClientUserAccessToken)
 	key.CreateTime = time.Now()
 	key.UserId = userId
-	key.CreateBy = ctx.GetUserIdOrDefault(userId)
+	key.CreateBy = ctx.GetUserId()
 	key.Description = keyDescription
 	key.IsValid = true
 	key.ExpirationTime = Exp

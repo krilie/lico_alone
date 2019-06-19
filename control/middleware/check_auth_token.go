@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/jwt"
-	"github.com/krilie/lico_alone/common/utils/str_util"
 	"github.com/krilie/lico_alone/control/utils"
 )
 
@@ -31,8 +30,11 @@ func CheckAuthToken() gin.HandlerFunc {
 				return
 			}
 		} else {
-			ctx.NowUserToken = str_util.NewString(headerAuth)
-			ctx.UserClaims = claims.(*jwt.UserClaims)
+			ctx.SetUserToken(headerAuth)
+			claim := claims.(*jwt.UserClaims)
+			ctx.SetUserId(claim.UserId)
+			ctx.SetUserLoginName(claim.LoginName)
+			ctx.SetUserNickName(claim.NickName)
 			c.Next()
 			return
 		}

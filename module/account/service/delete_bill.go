@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (Account) DeleteBill(ctx *context.Context, billId string, userId string) error {
+func (Account) DeleteBill(ctx context.Context, billId string, userId string) error {
 	// 标记删除
 	tx := model.Db.Begin()
 	var bill model.Bill

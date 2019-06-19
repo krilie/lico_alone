@@ -20,7 +20,7 @@ func (CtlCommon) uploadFile(c *gin.Context) {
 		utils.ReturnWithAppErr(ctx, c, errs.ErrInternal.NewWithMsg(err.Error()))
 		return
 	}
-	s, err := appCommon.UploadFile(ctx, ctx.UserClaims.UserId, fileName, mfile, file.Size)
+	s, err := appCommon.UploadFile(ctx, ctx.GetUserId(), fileName, mfile, file.Size)
 	if err != nil {
 		utils.ReturnWithAppErr(ctx, c, errs.ErrInternal.NewWithMsg(err.Error()))
 		return
@@ -31,7 +31,7 @@ func (CtlCommon) uploadFile(c *gin.Context) {
 
 func (CtlCommon) deleteFile(c *gin.Context) {
 	ctx := utils.MustGetAppCtx(c)
-	err := appCommon.DeleteFile(ctx, ctx.UserClaims.UserId, c.PostForm("file_path"))
+	err := appCommon.DeleteFile(ctx, ctx.GetUserId(), c.PostForm("file_path"))
 	if err != nil {
 		utils.ReturnWithErr(ctx, c, err)
 	} else {

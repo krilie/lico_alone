@@ -13,11 +13,11 @@ import (
 // 从请中中构建context上下文的中间件
 func BuildContext() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		ctx := &context.Context{}
-		ctx.TraceId = str_util.EmptyOrDefault(c.GetHeader(utils.HeaderTraceId), id_util.GetUuid())
-		ctx.StartTime = time.Now()
+		ctx := context.NewContext()
+		ctx.SetTraceId(str_util.EmptyOrDefault(c.GetHeader(utils.HeaderTraceId), id_util.GetUuid()))
+		ctx.SetStartTime(time.Now())
 		c.Set(utils.GinKeyAppContext, ctx)
 		c.Next()
-		ctx.LastTime = time.Now()
+		ctx.SetLastTime(time.Now())
 	}
 }

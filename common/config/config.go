@@ -57,7 +57,7 @@ func init() {
 		switch err.(type) {
 		case viper.ConfigFileNotFoundError:
 			//err = Conf.v.WriteConfigAs("config.yaml") //new config file and ignore err
-			//log.Log.Infoln("create a new config file config.yaml at pwd path. any err:", err)
+			//log.Infoln("create a new config file config.yaml at pwd path. any err:", err)
 			log.Infoln("no config file use default:", err)
 		default:
 			log.Warnln(err)

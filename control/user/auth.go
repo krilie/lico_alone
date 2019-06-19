@@ -12,7 +12,7 @@ import (
 // get info
 func (UserCtrl) GetInfo(c *gin.Context) {
 	ctx := utils.MustGetAppCtx(c)
-	userId := ctx.GetUserIdOrEmpty()
+	userId := ctx.GetUserId()
 	if userId == "" {
 		utils.ReturnWithAppErr(ctx, c, errs.UnAuthorized.NewWithMsg("can not take login user id"))
 		return
@@ -57,7 +57,7 @@ func (UserCtrl) Login(c *gin.Context) {
 // 从登录信息中取jwttoken
 func (UserCtrl) Logout(c *gin.Context) {
 	ctx := utils.MustGetAppCtx(c)
-	logout := appUser.Logout(ctx, ctx.GetNowUserTokenOrEmpty())
+	logout := appUser.Logout(ctx, ctx.GetUserToken())
 	if logout != nil {
 		utils.ReturnWithErr(ctx, c, logout)
 		return

@@ -9,7 +9,7 @@ import (
 )
 
 //判断用户是否有这个权限，联合查询
-func (UserAuth) HasPermission(ctx *context.Context, userId, permissionName string) (bool, error) {
+func (UserAuth) HasPermission(ctx context.Context, userId, permissionName string) (bool, error) {
 	if !(validator.IsIdStr(userId) && govalidator.IsAlpha(permissionName)) {
 		log.Infoln("HasPermission", "param error:", userId, permissionName)
 		return false, errs.ErrParam

@@ -10,7 +10,7 @@ import (
 )
 
 // 获取一个账户的account信息
-func (Account) GetAccountHistory(ctx *context.Context, start, end time.Time, userId, AccountId, note string) ([]model.BillDetail, error) {
+func (Account) GetAccountHistory(ctx context.Context, start, end time.Time, userId, AccountId, note string) ([]model.BillDetail, error) {
 	billDetails := make([]model.BillDetail, 0, 4)
 	if e := model.Db.Where("create_time between ? and ? and account_id=?", start, end, AccountId).Find(billDetails).Error; e != nil {
 		return nil, errs.ErrInternal.NewWithMsg(e.Error())
@@ -18,7 +18,7 @@ func (Account) GetAccountHistory(ctx *context.Context, start, end time.Time, use
 	return billDetails, nil
 }
 
-func (Account) GetAccountInfo(ctx *context.Context, userId string) ([]*pojo.AccountInfo, error) {
+func (Account) GetAccountInfo(ctx context.Context, userId string) ([]*pojo.AccountInfo, error) {
 	if !validator.IsIdStr(userId) {
 		return nil, errs.ErrParam.NewWithMsg("user_id 格式不正确")
 	}

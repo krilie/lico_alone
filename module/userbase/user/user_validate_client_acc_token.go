@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (User) ValidateClientAccToken(ctx *context.Context, clientAccKey string) (key *model.ClientUserAccessToken, err error) {
+func (User) ValidateClientAccToken(ctx context.Context, clientAccKey string) (key *model.ClientUserAccessToken, err error) {
 	key = new(model.ClientUserAccessToken)
 	err = model.Db.Find(key, "token=?", clientAccKey).Error
 	if err != nil && err == gorm.ErrRecordNotFound {

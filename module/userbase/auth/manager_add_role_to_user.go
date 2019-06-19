@@ -2,11 +2,12 @@ package auth
 
 import (
 	"github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/common/utils/validator"
 	"github.com/krilie/lico_alone/module/userbase/model"
 )
 
 //给用户添加新角色
-func (UserManage) AddRoleToUser(ctx *context.Context, roleId string, userId string) error {
+func (UserManage) AddRoleToUser(ctx context.Context, roleId string, userId string) error {
 	//检查参数
 	if !(validator.IsIdStr(roleId) && validator.IsIdStr(userId)) {
 		log.Infoln("AddPermissionToRole", "param error:", roleId, userId)

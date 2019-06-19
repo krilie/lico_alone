@@ -10,7 +10,7 @@ import (
 )
 
 //查看client是否有acc token
-func (UserAuth) HasClientAccToken(ctx *context.Context, userId, accTokenStr string) (token *model.ClientUserAccessToken, err error) {
+func (UserAuth) HasClientAccToken(ctx context.Context, userId, accTokenStr string) (token *model.ClientUserAccessToken, err error) {
 	if len(accTokenStr) == 0 || !govalidator.IsASCII(accTokenStr) || !validator.IsIdStr(userId) {
 		log.Infoln("userAuthClientHasAccToken", "acc token error:", accTokenStr, userId)
 		return nil, errs.ErrParam

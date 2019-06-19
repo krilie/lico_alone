@@ -20,7 +20,7 @@ func NeedPermission(perms ...interface{}) gin.HandlerFunc {
 			return
 		}
 		//get user id from context
-		userId := ctx.GetUserIdOrEmpty()
+		userId := ctx.GetUserId()
 		if userId == "" {
 			c.AbortWithStatusJSON(errs.UnAuthorized.HttpStatus, errs.UnAuthorized.ToStdWithMsg("can not get user id from app context,check login status"))
 			return

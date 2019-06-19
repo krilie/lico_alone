@@ -7,7 +7,7 @@ import (
 )
 
 //验证用户是否有效
-func (User) Validate(ctx *context.Context, jwtToken string) (jwt2.Claims, error) {
+func (User) Validate(ctx context.Context, jwtToken string) (jwt2.Claims, error) {
 	claims, err := jwt.CheckJwtToken(jwtToken)
 	if err != nil {
 		return nil, err

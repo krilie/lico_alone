@@ -30,8 +30,8 @@ func CheckClientToken() gin.HandlerFunc {
 				c.AbortWithStatusJSON(401, errs.UnAuthorized.ToStdWithMsg("client acc key not valid"))
 				return
 			} else {
-				context.ClientId = str_util.NewString(key.UserId)
-				context.ClientAccToken = str_util.NewString(key.Token)
+				context.SetClientId(key.UserId)
+				context.SetClientToken(key.Token)
 				c.Next()
 				return
 			}

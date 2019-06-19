@@ -14,7 +14,7 @@ import (
 // 总结 统计
 
 // 统计此用户月份的信息
-func (a Account) GetMonthSummary(ctx *context.Context, userId string, time time.Time) (*pojo.AccountSummary, error) {
+func (a Account) GetMonthSummary(ctx context.Context, userId string, time time.Time) (*pojo.AccountSummary, error) {
 	// 月份的开始与结束
 	monStart := time_util.GetBeijingMonthStartTime(time)
 	monEnd := time_util.GetBeijingLastDateOfMonth(time)
@@ -22,7 +22,7 @@ func (a Account) GetMonthSummary(ctx *context.Context, userId string, time time.
 }
 
 // 统计一个时区的信息
-func (Account) GetTimeZoneSummary(ctx *context.Context, userId string, timeStart, timeEnd time.Time) (*pojo.AccountSummary, error) {
+func (Account) GetTimeZoneSummary(ctx context.Context, userId string, timeStart, timeEnd time.Time) (*pojo.AccountSummary, error) {
 	// 参数格式检查
 	if !validator.IsIdStr(userId) {
 		return nil, errs.ErrParam.NewWithMsg("user id in err format")

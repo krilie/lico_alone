@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-func (FileOp) UploadFile(ctx *context.Context, userId, fileName string, file multipart.File, size int64) (string, error) {
+func (FileOp) UploadFile(ctx context.Context, userId, fileName string, file multipart.File, size int64) (string, error) {
 	minioClient, err := minio.New(ossEndPoint, ossKey, ossSecret, true)
 	if err != nil {
 		return "", errs.ErrInternal.NewWithMsg(err.Error())
@@ -57,7 +57,7 @@ func (FileOp) UploadFile(ctx *context.Context, userId, fileName string, file mul
 	}
 }
 
-func (FileOp) DeleteFile(ctx *context.Context, userId, filePath string) error {
+func (FileOp) DeleteFile(ctx context.Context, userId, filePath string) error {
 	tx := model.Db.Begin()
 	e := tx.Delete(model.File{}, model.File{ObjKey: filePath}).Error
 	if e != nil {

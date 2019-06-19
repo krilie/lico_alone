@@ -6,7 +6,7 @@ import (
 )
 
 //用户登出，只判断是否jwtToken有效并返回
-func (User) Logout(ctx *context.Context, jwtToken string) error {
+func (User) Logout(ctx context.Context, jwtToken string) error {
 	_, err := jwt.CheckJwtToken(jwtToken)
 	if err != nil {
 		return nil

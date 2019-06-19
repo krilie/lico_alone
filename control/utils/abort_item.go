@@ -8,7 +8,7 @@ import (
 
 // 给中间件使用
 // get app context or nil
-func GetAppCtxOrAbort(c *gin.Context) *context.Context {
+func GetAppCtxOrAbort(c *gin.Context) context.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
 		log.Error("GetAppCtxOrAbort", "can not get application context for next step")
@@ -25,7 +25,7 @@ func GetAppCtxOrAbort(c *gin.Context) *context.Context {
 }
 
 // abort with err use err's default http status
-func AbortWithErr(ctx *context.Context, c *gin.Context, err error) {
+func AbortWithErr(ctx context.Context, c *gin.Context, err error) {
 	if errLocal, ok := err.(*errs.Error); ok {
 		c.AbortWithStatusJSON(errLocal.HttpStatus, errLocal.ToStdReturn())
 	} else {
@@ -33,6 +33,6 @@ func AbortWithErr(ctx *context.Context, c *gin.Context, err error) {
 	}
 }
 
-func AbortWithAppErr(ctx *context.Context, c *gin.Context, err *errs.Error) {
+func AbortWithAppErr(ctx context.Context, c *gin.Context, err *errs.Error) {
 	c.AbortWithStatusJSON(err.HttpStatus, err.ToStdReturn())
 }

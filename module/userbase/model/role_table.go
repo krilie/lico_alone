@@ -3,14 +3,15 @@ package model
 import (
 	"database/sql"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/comstruct"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"time"
 )
 
 type Role struct {
-	comstruct.DbHandler
-	Name        string `gorm:"type:varchar(50);unique_index;not null" json:"name"`
-	Description string `gorm:"type:varchar(100);not null" json:"description"`
+	ID          string    `gorm:"primary_key;type:varchar(32)" json:"id"` // 用户id uuid
+	CreateTime  time.Time `gorm:"type:DATETIME;not null" json:"create_time"`
+	Name        string    `gorm:"type:varchar(50);unique_index;not null" json:"name"`
+	Description string    `gorm:"type:varchar(100);not null" json:"description"`
 }
 
 func (Role) TableName() string {
