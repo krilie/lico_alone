@@ -22,16 +22,16 @@ func init() {
 	// 数据校验
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		if e := v.RegisterValidation("id_str", myvalid.IdStrValid); e != nil {
-			log.Panicln("valid error:", e)
+			log.Fatal("valid error:", e)
 		}
 		if e := v.RegisterValidation("password", myvalid.PasswordValid); e != nil {
-			log.Panicln("valid error:", e)
+			log.Fatal("valid error:", e)
 		}
 		if e := v.RegisterValidation("phone_num", myvalid.PhoneNumValid); e != nil {
-			log.Panicln("valid error:", e)
+			log.Fatal("valid error:", e)
 		}
 		if e := v.RegisterValidation("login_name", myvalid.LoginNameValid); e != nil {
-			log.Panicln("valid error:", e)
+			log.Fatal("valid error:", e)
 		}
 	}
 
