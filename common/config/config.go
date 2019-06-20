@@ -22,7 +22,7 @@ func init() {
 	Conf.v = viper.New()
 
 	//读取环境变量值
-	Conf.v.SetEnvPrefix("BR")
+	Conf.v.SetEnvPrefix("LICO")
 	Conf.v.AutomaticEnv()
 	replacer := strings.NewReplacer(".", "_")
 	Conf.v.SetEnvKeyReplacer(replacer)
