@@ -3,6 +3,7 @@ package utils
 import (
 	"context"
 	"github.com/gin-gonic/gin"
+	"github.com/krilie/lico_alone/common/comlog"
 	"github.com/krilie/lico_alone/common/comstruct"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	lcontext "github.com/krilie/lico_alone/common/context"
@@ -10,6 +11,7 @@ import (
 
 // get app context or nil
 func GetAppCtxOrReturn(c *gin.Context) *lcontext.Context {
+	log = log.WithField(comlog.Function, "GetAppCtxOrReturn")
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
 		log.Error("GetAppCtxOrReturn", "can not get application context for next step")

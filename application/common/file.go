@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/module/file/service"
-	user2 "github.com/krilie/lico_alone/module/userbase/user"
+	user2 "github.com/krilie/lico_alone/module/user/info"
 	"mime/multipart"
 )
 

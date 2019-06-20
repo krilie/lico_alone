@@ -16,7 +16,7 @@ var Db *gorm.DB
 var log *logrus.Entry
 
 func init() {
-	log = comlog.NewLog(context.NewContext(), "br_go.common.db")
+	log = comlog.NewLog(context.NewContext(), "br_go.common.db", "init")
 
 	connStr := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True",
 		config.GetString("db.user"),

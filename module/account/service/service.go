@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-var log = comlog.NewLog(context.NewContext(), "alone.module.account.service")
+var log = comlog.NewLog(context.NewContext(), "alone.module.account.service", "init")
 
 type Account struct{}
 

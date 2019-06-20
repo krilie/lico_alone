@@ -1,11 +1,11 @@
-package user
+package info
 
 import (
 	"context"
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/utils/str_util"
-	"github.com/krilie/lico_alone/module/userbase/model"
+	"github.com/krilie/lico_alone/module/user/model"
 )
 
 //由token取得用户基本信息

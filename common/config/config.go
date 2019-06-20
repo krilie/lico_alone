@@ -17,7 +17,7 @@ var Conf = &config{}
 var log *logrus.Entry
 
 func init() {
-	log = comlog.NewLog(context.NewContext(), "br_go.common.config")
+	log = comlog.NewLog(context.NewContext(), "br_go.common.config", "init")
 
 	Conf.v = viper.New()
 

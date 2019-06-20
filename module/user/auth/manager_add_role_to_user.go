@@ -3,7 +3,7 @@ package auth
 import (
 	"context"
 	"github.com/krilie/lico_alone/common/utils/validator"
-	"github.com/krilie/lico_alone/module/userbase/model"
+	"github.com/krilie/lico_alone/module/user/model"
 )
 
 //给用户添加新角色

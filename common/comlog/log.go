@@ -1,4 +1,4 @@
-package brlog
+package comlog
 
 import (
 	"context"
@@ -7,16 +7,16 @@ import (
 	"os"
 )
 
-var (
-	app_name    = "app_name"
-	app_version = "app_version"
-	app_host    = "app_host"
-	trace_id    = "trace_id"
-	client_id   = "client_id"
-	user_id     = "user_id"
-	module      = "module"
-	function    = "function"
-	stack       = "stack"
+const (
+	AppName    = "app_name"
+	AppVersion = "app_version"
+	AppHost    = "app_host"
+	TraceId    = "trace_id"
+	ClientId   = "client_id"
+	UserId     = "user_id"
+	Module     = "module"
+	Function   = "function"
+	Stack      = "stack"
 )
 
 var Log = logrus.NewEntry(logrus.New())
@@ -32,9 +32,9 @@ func init() {
 	//}
 	Log.Logger.SetOutput(os.Stdout)
 	Log = Log.
-		WithField(app_name, os.Getenv("BR_APP_NAME")).
-		WithField(app_version, os.Getenv("BR_APP_VERSION")).
-		WithField(app_host, os.Getenv("HOST_NAME"))
+		WithField(AppName, os.Getenv("BR_APP_NAME")).
+		WithField(AppVersion, os.Getenv("BR_APP_VERSION")).
+		WithField(AppHost, os.Getenv("HOST_NAME"))
 	Log.Infoln("log init ok")
 }
 
@@ -42,9 +42,9 @@ func init() {
 func NewLog(ctx context.Context, moduleName string, functionName string) *logrus.Entry {
 	bctx := ctx.(*context2.Context)
 	return Log.WithFields(logrus.Fields{
-		trace_id:  bctx.GetTraceId(),
-		client_id: bctx.GetClientId(),
-		user_id:   bctx.GetUserId(),
-		module:    moduleName,
-		function:  functionName})
+		TraceId:  bctx.GetTraceId(),
+		ClientId: bctx.GetClientId(),
+		UserId:   bctx.GetUserId(),
+		Module:   moduleName,
+		Function: functionName})
 }

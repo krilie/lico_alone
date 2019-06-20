@@ -3,7 +3,7 @@ package auth
 import (
 	"github.com/krilie/lico_alone/common/comlog"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/module/userbase/model"
+	"github.com/krilie/lico_alone/module/user/model"
 	"time"
 )
 
@@ -19,4 +19,4 @@ type UserManage struct{}
 
 var User UserAuth
 
-var log = comlog.NewLog(context.NewContext(), "alone.module.userbase.auth")
+var log = comlog.NewLog(context.NewContext(), "alone.module.userbase.auth", "init")

@@ -1,4 +1,4 @@
-package brlog
+package comlog
 
 import (
 	c2 "github.com/krilie/lico_alone/common/context"

@@ -5,7 +5,7 @@ import (
 	"github.com/asaskevich/govalidator"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/utils/validator"
-	"github.com/krilie/lico_alone/module/userbase/model"
+	"github.com/krilie/lico_alone/module/user/model"
 )
 
 //用户是否有这个角色,有app权限才能调用这个接口

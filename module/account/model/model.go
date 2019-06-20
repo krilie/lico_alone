@@ -11,7 +11,7 @@ import (
 import _ "github.com/jinzhu/gorm/dialects/mysql"
 
 var Db *gorm.DB
-var log = comlog.NewLog(context.NewContext(), "alone.module.account.model")
+var log = comlog.NewLog(context.NewContext(), "alone.module.account.model", "init")
 
 func init() {
 	connStr := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True",
