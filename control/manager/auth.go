@@ -87,7 +87,7 @@ func (ManagerCtrl) CreateNewAccToken(c *gin.Context) {
 		expNum = num //默认中国上海时区
 	}
 	//添加新的token
-	token, err := appManage.NewClientAccToken(ctx, targetUserId, description, time.Unix(expNum, 0))
+	token, err := appManage.NewClientAccToken(ctx, ctx.UserId, targetUserId, description, time.Unix(expNum, 0))
 	if err != nil {
 		utils.ReturnWithErr(ctx, c, err)
 		return

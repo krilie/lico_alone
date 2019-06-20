@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"github.com/krilie/lico_alone/common/context"
+	"context"
 	"github.com/krilie/lico_alone/common/utils/validator"
 	"github.com/krilie/lico_alone/module/userbase/model"
 )

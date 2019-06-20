@@ -1,12 +1,14 @@
 package context
 
 import (
+	"context"
 	"time"
 )
 
 // 运行上下文对象
 // 可记录来自那个ip 用户的信息等
-type context struct {
+type Context struct {
+	context.Context
 	TraceId       string    //微服务调用栈分析追踪
 	StartTime     time.Time //开始调用时间
 	LastTime      time.Time //调用结束时间
@@ -18,74 +20,74 @@ type context struct {
 	UserLoginName string
 }
 
-func (c *context) GetTraceId() string {
+func (c *Context) GetTraceId() string {
 	return c.TraceId
 }
 
-func (c *context) GetStartTime() time.Time {
+func (c *Context) GetStartTime() time.Time {
 	return c.StartTime
 }
 
-func (c *context) GetLastTime() time.Time {
+func (c *Context) GetLastTime() time.Time {
 	return c.LastTime
 }
 
-func (c *context) GetClientId() string {
+func (c *Context) GetClientId() string {
 	return c.ClientId
 }
 
-func (c *context) GetClientToken() string {
+func (c *Context) GetClientToken() string {
 	return c.ClientToken
 }
 
-func (c *context) GetUserId() string {
+func (c *Context) GetUserId() string {
 	return c.UserId
 }
 
-func (c *context) GetUserToken() string {
+func (c *Context) GetUserToken() string {
 	return c.UserToken
 }
 
-func (c *context) GetUserNickName() string {
+func (c *Context) GetUserNickName() string {
 	return c.UserNickName
 }
 
-func (c *context) GetUserLoginName() string {
+func (c *Context) GetUserLoginName() string {
 	return c.UserLoginName
 }
 
-func (c *context) SetTraceId(staceId string) {
+func (c *Context) SetTraceId(staceId string) {
 	c.TraceId = staceId
 }
 
-func (c *context) SetStartTime(start time.Time) {
+func (c *Context) SetStartTime(start time.Time) {
 	c.StartTime = start
 }
 
-func (c *context) SetLastTime(last time.Time) {
+func (c *Context) SetLastTime(last time.Time) {
 	c.LastTime = last
 }
 
-func (c *context) SetClientId(clientId string) {
+func (c *Context) SetClientId(clientId string) {
 	c.ClientId = clientId
 }
 
-func (c *context) SetClientToken(clientToken string) {
+func (c *Context) SetClientToken(clientToken string) {
 	c.ClientToken = clientToken
 }
 
-func (c *context) SetUserId(userId string) {
+func (c *Context) SetUserId(userId string) {
 	c.UserId = userId
 }
 
-func (c *context) SetUserToken(userToken string) {
+func (c *Context) SetUserToken(userToken string) {
 	c.UserToken = userToken
 }
 
-func (c *context) SetUserNickName(nickName string) {
+func (c *Context) SetUserNickName(nickName string) {
 	c.UserNickName = nickName
 }
 
-func (c *context) SetUserLoginName(loginName string) {
+func (c *Context) SetUserLoginName(loginName string) {
 	c.UserLoginName = loginName
 }

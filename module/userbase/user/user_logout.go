@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/krilie/lico_alone/common/context"
+	"context"
 	"github.com/krilie/lico_alone/common/jwt"
 )
 

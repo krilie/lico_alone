@@ -1,21 +1,22 @@
 package utils
 
 import (
+	"context"
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/comstruct"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
-	"github.com/krilie/lico_alone/common/context"
+	lcontext "github.com/krilie/lico_alone/common/context"
 )
 
 // get app context or nil
-func GetAppCtxOrReturn(c *gin.Context) context.Context {
+func GetAppCtxOrReturn(c *gin.Context) *lcontext.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
 		log.Error("GetAppCtxOrReturn", "can not get application context for next step")
 		c.JSON(500, errs.ErrInternal.ToStdReturn())
 		return nil
 	}
-	contextOrNil := context.GetContextOrNil(value)
+	contextOrNil := lcontext.GetContextOrNil(value)
 	if contextOrNil == nil {
 		log.Error("GetAppCtxOrReturn", "internal err on cast context to app context")
 		c.JSON(500, errs.ErrInternal.ToStdReturn())
@@ -24,13 +25,13 @@ func GetAppCtxOrReturn(c *gin.Context) context.Context {
 	return contextOrNil
 }
 
-func MustGetAppCtx(c *gin.Context) context.Context {
+func MustGetAppCtx(c *gin.Context) *lcontext.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
 		log.Panic("GetAppCtxOrReturn", "can not get application context for next step")
 		return nil
 	}
-	return context.MustGetContext(value)
+	return lcontext.MustGetContext(value)
 }
 
 func MustGetUserId(c *gin.Context) string {

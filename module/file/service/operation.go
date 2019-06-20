@@ -1,8 +1,8 @@
 package service
 
 import (
+	"context"
 	"github.com/krilie/lico_alone/common/comstruct/errs"
-	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/file/model"
 	"github.com/minio/minio-go"
