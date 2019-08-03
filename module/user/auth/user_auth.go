@@ -3,7 +3,7 @@ package auth
 import (
 	mapset "github.com/deckarep/golang-set"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/module/userbase/model"
+	"github.com/krilie/lico_alone/module/user/model"
 )
 
 type UserAuther interface {

@@ -13,7 +13,7 @@ import (
 	"syscall"
 )
 
-var log = comlog.NewLog(context2.NewContext(), "lico.main")
+var log = comlog.NewLog(context2.NewContext(), "lico.main", "main")
 
 func main() {
 	defer db.Close()

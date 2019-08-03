@@ -11,7 +11,7 @@ import (
 )
 
 var Db *gorm.DB
-var log = comlog.NewLog(context.NewContext(), "alone.module.userbase.model")
+var log = comlog.NewLog(context.NewContext(), "alone.module.userbase.model", "init")
 
 func init() {
 	connStr := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True",

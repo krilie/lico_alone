@@ -5,7 +5,7 @@ import (
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/utils/validator"
-	"github.com/krilie/lico_alone/module/userbase/model"
+	"github.com/krilie/lico_alone/module/user/model"
 )
 
 //判断用户是否有这个权限，联合查询

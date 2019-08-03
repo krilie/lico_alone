@@ -1,7 +1,7 @@
 package comlog
 
 import (
-	"github.com/krilie/lico_alone/common/context"
+	c2 "github.com/krilie/lico_alone/common/context"
 	"github.com/sirupsen/logrus"
 	"testing"
 )
@@ -13,6 +13,7 @@ func TestLog(T *testing.T) {
 }
 
 func TestLogNewLog(T *testing.T) {
-	log := NewLog(context.NewContext(), "ok")
+	log := NewLog(c2.NewContext(), "ok", "")
 	log.Info("info info")
+	log.WithField("function", "testlognewlog").Info("ok info info 2")
 }

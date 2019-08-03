@@ -17,12 +17,12 @@ var Conf = &config{}
 var log *logrus.Entry
 
 func init() {
-	log = comlog.NewLog(context.NewContext(), "br_go.common.config")
+	log = comlog.NewLog(context.NewContext(), "br_go.common.config", "init")
 
 	Conf.v = viper.New()
 
 	//读取环境变量值
-	Conf.v.SetEnvPrefix("BR")
+	Conf.v.SetEnvPrefix("LICO")
 	Conf.v.AutomaticEnv()
 	replacer := strings.NewReplacer(".", "_")
 	Conf.v.SetEnvKeyReplacer(replacer)

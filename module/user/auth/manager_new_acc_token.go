@@ -5,7 +5,7 @@ import (
 	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/utils/random"
 	"github.com/krilie/lico_alone/common/utils/validator"
-	"github.com/krilie/lico_alone/module/userbase/model"
+	"github.com/krilie/lico_alone/module/user/model"
 	"time"
 )
 
