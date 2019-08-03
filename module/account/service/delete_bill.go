@@ -3,14 +3,15 @@ package service
 import (
 	"context"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/model/errs"
+	"github.com/krilie/lico_alone/module/account/dao"
 	"github.com/krilie/lico_alone/module/account/model"
 	"time"
 )
 
 func (Account) DeleteBill(ctx context.Context, billId string, userId string) error {
 	// 标记删除
-	tx := model.Db.Begin()
+	tx := dao.Db.Begin()
 	var bill model.Bill
 	if e := tx.Find(&bill, "id=?", billId).Error; e != nil {
 		tx.Rollback()

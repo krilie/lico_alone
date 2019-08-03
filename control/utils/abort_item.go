@@ -3,8 +3,8 @@ package utils
 import (
 	"context"
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
 	lcontext "github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/common/model/errs"
 )
 
 // 给中间件使用

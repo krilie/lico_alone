@@ -4,10 +4,11 @@ import (
 	"context"
 	"database/sql"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/model/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
 	"github.com/krilie/lico_alone/common/utils/validator"
+	"github.com/krilie/lico_alone/module/user/dao"
 	"github.com/krilie/lico_alone/module/user/model"
 	"time"
 )
@@ -21,7 +22,7 @@ func (User) Register(ctx context.Context, loginName string, password string) err
 	}
 	// 检查密码与用户名的存在
 	var user model.User
-	if e := model.Db.Find(&user, "login_name = ?", loginName).Error; e == nil {
+	if e := dao.Db.Find(&user, "login_name = ?", loginName).Error; e == nil {
 		return errs.ErrParam.NewWithMsg("此名称已被使用")
 	} else if e != gorm.ErrRecordNotFound {
 		return e
@@ -37,7 +38,7 @@ func (User) Register(ctx context.Context, loginName string, password string) err
 	user.Email = sql.NullString{Valid: false}
 	user.Picture = sql.NullString{Valid: false}
 
-	err := model.Db.Create(&user).Error
+	err := dao.Db.Create(&user).Error
 	if err != nil {
 		log.Infoln("database error:", err)
 		return err

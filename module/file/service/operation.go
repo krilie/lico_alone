@@ -2,8 +2,9 @@ package service
 
 import (
 	"context"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/model/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
+	"github.com/krilie/lico_alone/module/file/dao"
 	"github.com/krilie/lico_alone/module/file/model"
 	"github.com/minio/minio-go"
 	"io"
@@ -28,7 +29,7 @@ func (FileOp) UploadFile(ctx context.Context, userId, fileName string, file mult
 	objName := id_util.GetUuid() + fileName
 	userMate := make(map[string]string)
 	userMate["user_id"] = userId
-	tx := model.Db.Begin()
+	tx := dao.Db.Begin()
 	fileS := model.File{}
 	fileS.ID = id_util.GetUuid()
 	fileS.CreateTime = time.Now()
@@ -58,7 +59,7 @@ func (FileOp) UploadFile(ctx context.Context, userId, fileName string, file mult
 }
 
 func (FileOp) DeleteFile(ctx context.Context, userId, filePath string) error {
-	tx := model.Db.Begin()
+	tx := dao.Db.Begin()
 	e := tx.Delete(model.File{}, model.File{ObjKey: filePath}).Error
 	if e != nil {
 		tx.Rollback()

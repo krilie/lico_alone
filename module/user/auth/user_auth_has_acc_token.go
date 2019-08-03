@@ -3,9 +3,10 @@ package auth
 import (
 	"github.com/asaskevich/govalidator"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/common/model/errs"
 	"github.com/krilie/lico_alone/common/utils/validator"
+	"github.com/krilie/lico_alone/module/user/dao"
 	"github.com/krilie/lico_alone/module/user/model"
 )
 
@@ -16,7 +17,7 @@ func (UserAuth) HasClientAccToken(ctx context.Context, userId, accTokenStr strin
 		return nil, errs.ErrParam
 	}
 	token = new(model.ClientUserAccessToken)
-	err = model.Db.Where(&model.ClientUserAccessToken{UserId: userId, Token: accTokenStr}).Find(token).Error
+	err = dao.Db.Where(&model.ClientUserAccessToken{UserId: userId, Token: accTokenStr}).Find(token).Error
 	if err != nil && err == gorm.ErrRecordNotFound {
 		return nil, nil
 	} else if err != nil {

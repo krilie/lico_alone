@@ -3,8 +3,9 @@ package auth
 import (
 	"context"
 	"github.com/deckarep/golang-set"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/model/errs"
 	"github.com/krilie/lico_alone/common/utils/validator"
+	"github.com/krilie/lico_alone/module/user/dao"
 	"github.com/krilie/lico_alone/module/user/model"
 )
 
@@ -14,5 +15,5 @@ func (UserAuth) GetPermissions(ctx context.Context, userId string) (set mapset.S
 		log.Infoln("GetPermissions", "user id format error:", userId)
 		return nil, errs.ErrParam
 	}
-	return model.GetAllPermissionByUserId(model.Db, userId)
+	return model.GetAllPermissionByUserId(dao.Db, userId)
 }

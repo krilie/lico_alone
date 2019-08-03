@@ -3,8 +3,9 @@ package auth
 import (
 	"context"
 	"github.com/asaskevich/govalidator"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/model/errs"
 	"github.com/krilie/lico_alone/common/utils/validator"
+	"github.com/krilie/lico_alone/module/user/dao"
 	"github.com/krilie/lico_alone/module/user/model"
 )
 
@@ -18,12 +19,12 @@ func (UserAuth) HasRole(ctx context.Context, userId, roleName string) (bool, err
 		return false, errs.ErrParam
 	}
 	//直接取到role id
-	roleId, err := model.GetRoleIdByName(model.Db, roleName)
+	roleId, err := model.GetRoleIdByName(dao.Db, roleName)
 	if err != nil {
 		return false, err
 	}
 	//检查是否存在对应关系
-	exist, err := model.IsUserRoleRelationExist(model.Db, userId, roleId)
+	exist, err := model.IsUserRoleRelationExist(dao.Db, userId, roleId)
 	if err != nil {
 		return false, err
 	}

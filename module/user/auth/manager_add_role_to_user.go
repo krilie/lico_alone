@@ -3,6 +3,7 @@ package auth
 import (
 	"context"
 	"github.com/krilie/lico_alone/common/utils/validator"
+	"github.com/krilie/lico_alone/module/user/dao"
 	"github.com/krilie/lico_alone/module/user/model"
 )
 
@@ -16,7 +17,7 @@ func (UserManage) AddRoleToUser(ctx context.Context, roleId string, userId strin
 	var relation model.UserRole
 	relation.RoleID = roleId
 	relation.UserID = userId
-	err := model.Db.Create(&relation).Error
+	err := dao.Db.Create(&relation).Error
 	if err != nil {
 		return err
 	} else {

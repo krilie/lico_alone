@@ -3,15 +3,15 @@ package service
 import (
 	"context"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/model/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
+	"github.com/krilie/lico_alone/module/account/dao"
 	"github.com/krilie/lico_alone/module/account/model"
-	"github.com/krilie/lico_alone/module/account/pojo"
 	"github.com/shopspring/decimal"
 	"time"
 )
 
-func (Account) AddBill(ctx context.Context, userId, note, image string, amount decimal.Decimal, detail []pojo.BillDetail) (string, error) {
+func (Account) AddBill(ctx context.Context, userId, note, image string, amount decimal.Decimal, detail []model.BillDetail) (string, error) {
 	// 贷  借 借贷平衡
 	credit, debit := decimal.Zero, decimal.Zero
 	for _, v := range detail {
@@ -33,7 +33,7 @@ func (Account) AddBill(ctx context.Context, userId, note, image string, amount d
 	bill.Note = note
 	bill.IsValid = true
 	// 插入到数据库中 事务开始
-	tx := model.Db.Begin()
+	tx := dao.Db.Begin()
 	if e := tx.Create(&bill).Error; e != nil {
 		tx.Rollback()
 		return "", errs.ErrInternal.NewWithMsg(e.Error())

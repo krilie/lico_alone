@@ -3,7 +3,6 @@ package user
 import (
 	"context"
 	"github.com/krilie/lico_alone/module/account/model"
-	"github.com/krilie/lico_alone/module/account/pojo"
 	"github.com/krilie/lico_alone/module/account/service"
 	"github.com/shopspring/decimal"
 	"time"
@@ -21,11 +20,11 @@ func (a Account) GetAccountHistory(ctx context.Context, start, end time.Time, us
 	return account.GetAccountHistory(ctx, start, end, userId, AccountId, note)
 }
 
-func (a Account) GetAccountInfo(ctx context.Context, userId string) ([]*pojo.AccountInfo, error) {
+func (a Account) GetAccountInfo(ctx context.Context, userId string) ([]*model.AccountInfo, error) {
 	return account.GetAccountInfo(ctx, userId)
 }
 
-func (a Account) AddBill(ctx context.Context, userId, note, image string, amount decimal.Decimal, detail []pojo.BillDetail) (string, error) {
+func (a Account) AddBill(ctx context.Context, userId, note, image string, amount decimal.Decimal, detail []model.BillDetail) (string, error) {
 	return account.AddBill(ctx, userId, note, image, amount, detail)
 }
 
@@ -37,10 +36,10 @@ func (a Account) DeleteAccount(ctx context.Context, accountId string, userId str
 	return account.DeleteAccount(ctx, accountId, userId)
 }
 
-func (a Account) GetMonthSummary(ctx context.Context, userId string, time time.Time) (*pojo.AccountSummary, error) {
+func (a Account) GetMonthSummary(ctx context.Context, userId string, time time.Time) (*model.AccountSummary, error) {
 	return account.GetMonthSummary(ctx, userId, time)
 }
 
-func (a Account) GetTimeZoneSummary(ctx context.Context, userId string, timeStart, timeEnd time.Time) (*pojo.AccountSummary, error) {
+func (a Account) GetTimeZoneSummary(ctx context.Context, userId string, timeStart, timeEnd time.Time) (*model.AccountSummary, error) {
 	return account.GetTimeZoneSummary(ctx, userId, timeStart, timeEnd)
 }

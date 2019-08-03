@@ -3,8 +3,9 @@ package auth
 import (
 	"context"
 	"github.com/asaskevich/govalidator"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/model/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
+	"github.com/krilie/lico_alone/module/user/dao"
 	"github.com/krilie/lico_alone/module/user/model"
 	"time"
 )
@@ -22,7 +23,7 @@ func (UserManage) NewPermission(ctx context.Context, pName string, pDescription 
 	p.CreateTime = time.Now()
 	p.Description = pDescription
 	p.Name = pName
-	err = model.Db.Create(p).Error
+	err = dao.Db.Create(p).Error
 	if err != nil {
 		return nil, err
 	} else {

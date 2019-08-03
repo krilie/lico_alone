@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
+	"github.com/krilie/lico_alone/module/user/dao"
 	"net/url"
 	"testing"
 	"time"
@@ -19,10 +20,10 @@ func TestCreate(t *testing.T) {
 	user.Email = sql.NullString{String: "me@example.com", Valid: true}
 	user.NickName = "ii"
 	user.Phone = sql.NullString{String: "12323232323", Valid: true}
-	if e := Db.Create(&user).Error; e != nil {
+	if e := dao.Db.Create(&user).Error; e != nil {
 		t.Error(e)
 	}
-	Db.Begin()
+	dao.Db.Begin()
 }
 
 func TestFunc(t *testing.T) {
@@ -30,6 +31,6 @@ func TestFunc(t *testing.T) {
 }
 
 func TestFuncGetRoleIdByName(t *testing.T) {
-	id, err := GetRoleIdByName(Db, "123")
+	id, err := GetRoleIdByName(dao.Db, "123")
 	fmt.Println(id, err)
 }

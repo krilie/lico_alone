@@ -3,7 +3,8 @@ package model
 import (
 	"github.com/deckarep/golang-set"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/model/errs"
+	"github.com/krilie/lico_alone/module/user/dao"
 )
 
 type UserRole struct {
@@ -25,7 +26,7 @@ func GetAllRolesByUserId(db *gorm.DB, userId string) (roles mapset.Set, err erro
 	}
 	defer func() {
 		if e := rows.Close(); e != nil {
-			log.Error(e)
+			dao.log.Error(e)
 		}
 	}()
 	//取字符串
@@ -36,7 +37,7 @@ func GetAllRolesByUserId(db *gorm.DB, userId string) (roles mapset.Set, err erro
 			return nil, err
 		}
 		if !nameMap.Add(name) {
-			log.Infoln("GetAllRolesByUserId", "roles duplicate:", name)
+			dao.log.Infoln("GetAllRolesByUserId", "roles duplicate:", name)
 		}
 	}
 	return nameMap, nil

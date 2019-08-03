@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/krilie/lico_alone/common/comlog"
+	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/config"
 	context2 "github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/db"
+	"github.com/krilie/lico_alone/common/cdb"
 	"github.com/krilie/lico_alone/control"
 	"golang.org/x/net/context"
 	"net/http"
@@ -13,10 +13,10 @@ import (
 	"syscall"
 )
 
-var log = comlog.NewLog(context2.NewContext(), "lico.main", "main")
+var log = clog.NewLog(context2.NewContext(), "lico.main", "main")
 
 func main() {
-	defer db.Close()
+	defer cdb.Close()
 	// 开始
 	srv := &http.Server{
 		Addr:    ":" + config.GetString("service.port"),

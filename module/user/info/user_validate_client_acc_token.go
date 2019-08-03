@@ -3,14 +3,15 @@ package info
 import (
 	"context"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/model/errs"
+	"github.com/krilie/lico_alone/module/user/dao"
 	"github.com/krilie/lico_alone/module/user/model"
 	"time"
 )
 
 func (User) ValidateClientAccToken(ctx context.Context, clientAccKey string) (key *model.ClientUserAccessToken, err error) {
 	key = new(model.ClientUserAccessToken)
-	err = model.Db.Find(key, "token=?", clientAccKey).Error
+	err = dao.Db.Find(key, "token=?", clientAccKey).Error
 	if err != nil && err == gorm.ErrRecordNotFound {
 		return nil, nil
 	} else if err != nil {

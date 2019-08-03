@@ -2,8 +2,9 @@ package service
 
 import (
 	"context"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/model/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
+	"github.com/krilie/lico_alone/module/account/dao"
 	"github.com/krilie/lico_alone/module/account/model"
 	"github.com/shopspring/decimal"
 	"time"
@@ -22,7 +23,7 @@ func (Account) AddAccount(ctx context.Context, userId, name, num, description, i
 	account.Balance = balance
 	account.Description = description
 	account.Image = image
-	if e := model.Db.Create(&account).Error; e != nil {
+	if e := dao.Db.Create(&account).Error; e != nil {
 		log.Error("add account ", e)
 		return "", errs.ErrInternal.NewWithMsg(e.Error())
 	}

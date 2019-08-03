@@ -3,15 +3,15 @@ package utils
 import (
 	"context"
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/common/comlog"
-	"github.com/krilie/lico_alone/common/comstruct"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/clog"
 	lcontext "github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/common/model"
+	"github.com/krilie/lico_alone/common/model/errs"
 )
 
 // get app context or nil
 func GetAppCtxOrReturn(c *gin.Context) *lcontext.Context {
-	log = log.WithField(comlog.Function, "GetAppCtxOrReturn")
+	log = log.WithField(clog.Function, "GetAppCtxOrReturn")
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
 		log.Error("GetAppCtxOrReturn", "can not get application context for next step")
@@ -59,7 +59,7 @@ func HandlerError(ctx context.Context, c *gin.Context, err error) bool {
 // 处理错误 如果没有返回通用成功
 func HandlerErrorOrReturnSuccess(ctx context.Context, c *gin.Context, err error) {
 	if err == nil {
-		c.JSON(200, comstruct.StdSuccess)
+		c.JSON(200, model.StdSuccess)
 		return
 	} else {
 		ReturnWithErr(ctx, c, err)

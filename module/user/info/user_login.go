@@ -3,12 +3,13 @@ package info
 import (
 	"context"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/jwt"
+	"github.com/krilie/lico_alone/common/model/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
 	"github.com/krilie/lico_alone/common/utils/str_util"
 	"github.com/krilie/lico_alone/common/utils/validator"
+	"github.com/krilie/lico_alone/module/user/dao"
 	"github.com/krilie/lico_alone/module/user/model"
 	"time"
 )
@@ -22,7 +23,7 @@ func (User) Login(ctx context.Context, clientId, loginName, password string) (jw
 	}
 	//取到用户的值
 	user := new(model.User)
-	err = model.Db.First(user, "login_name = ?", loginName).Error
+	err = dao.Db.First(user, "login_name = ?", loginName).Error
 	if err != nil && err == gorm.ErrRecordNotFound {
 		log.Errorln(err)
 		return "", errs.ErrNoSuchUser
@@ -36,7 +37,7 @@ func (User) Login(ctx context.Context, clientId, loginName, password string) (jw
 		userClaims.NickName = user.NickName
 		userClaims.LoginName = user.LoginName
 		// 把所有角色查出放在这里
-		roles, err := model.GetAllRolesByUserId(model.Db, user.ID)
+		roles, err := model.GetAllRolesByUserId(dao.Db, user.ID)
 		if err != nil {
 			log.Error("get roles err:", err)
 			return "", err

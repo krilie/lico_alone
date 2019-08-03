@@ -3,8 +3,9 @@ package info
 import (
 	"context"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/model/errs"
 	"github.com/krilie/lico_alone/common/utils/str_util"
+	"github.com/krilie/lico_alone/module/user/dao"
 	"github.com/krilie/lico_alone/module/user/model"
 )
 
@@ -13,7 +14,7 @@ import (
 func (User) GetInfo(ctx context.Context, userId string) (map[string]string, error) {
 	//已经登录了
 	var user model.User
-	err := model.Db.First(&user, "id = ?", userId).Error
+	err := dao.Db.First(&user, "id = ?", userId).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return nil, errs.ErrNotFound.NewWithMsg("no this user:" + userId)

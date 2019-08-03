@@ -13,6 +13,7 @@ replace golang.org/x/crypto => github.com/golang/crypto v0.0.0-20181203042331-50
 require (
 	cloud.google.com/go v0.39.0 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20180720115003-f9ffefc3facf
+	github.com/bluele/gcache v0.0.0-20190518031135-bc40bd653833
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/deckarep/golang-set v1.7.1
 	github.com/denisenkom/go-mssqldb v0.0.0-20190204142019-df6d76eb9289 // indirect
@@ -34,6 +35,8 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
+	github.com/pkg/errors v0.8.1
+	github.com/robfig/cron/v3 v3.0.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/shopspring/decimal v0.0.0-20180709203117-cd690d0c9e24
 	github.com/sirupsen/logrus v1.3.0

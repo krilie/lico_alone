@@ -2,9 +2,10 @@ package auth
 
 import (
 	"context"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/model/errs"
 	"github.com/krilie/lico_alone/common/utils/random"
 	"github.com/krilie/lico_alone/common/utils/validator"
+	"github.com/krilie/lico_alone/module/user/dao"
 	"github.com/krilie/lico_alone/module/user/model"
 	"time"
 )
@@ -26,7 +27,7 @@ func (UserManage) NewClientAccToken(ctx context.Context, loginUserId, userId, ke
 	key.IsValid = true
 	key.ExpirationTime = Exp
 	key.Token = random.GetAToken()
-	err = model.Db.Create(key).Error
+	err = dao.Db.Create(key).Error
 	if err != nil {
 		return nil, err
 	} else {

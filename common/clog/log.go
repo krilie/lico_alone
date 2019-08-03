@@ -1,4 +1,4 @@
-package comlog
+package clog
 
 import (
 	"context"

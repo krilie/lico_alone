@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/krilie/lico_alone/common/comlog"
+	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/utils/time_util"
 	"github.com/sirupsen/logrus"
@@ -17,7 +17,7 @@ var Conf = &config{}
 var log *logrus.Entry
 
 func init() {
-	log = comlog.NewLog(context.NewContext(), "br_go.common.config", "init")
+	log = clog.NewLog(context.NewContext(), "br_go.common.config", "init")
 
 	Conf.v = viper.New()
 

@@ -1,9 +1,10 @@
 package auth
 
 import (
-	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/common/model/errs"
 	"github.com/krilie/lico_alone/common/utils/validator"
+	"github.com/krilie/lico_alone/module/user/dao"
 	"github.com/krilie/lico_alone/module/user/model"
 )
 
@@ -38,7 +39,7 @@ func (ua UserAuth) GetClientAccToken(ctx context.Context, appUserId string) (lis
 	}
 	//根据用户id 查询到 该用户的下的所有key 这个用户可能是android app//ios app//doc service 等
 	list = make([]model.ClientUserAccessToken, 4)
-	err = model.Db.Where("user_id=?", appUserId).Find(list).Error
+	err = dao.Db.Where("user_id=?", appUserId).Find(list).Error
 	if err != nil {
 		return nil, err
 	} else {

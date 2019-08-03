@@ -3,7 +3,7 @@ package info
 import (
 	"github.com/asaskevich/govalidator"
 	"github.com/dgrijalva/jwt-go"
-	"github.com/krilie/lico_alone/common/comlog"
+	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/module/user/model"
@@ -14,7 +14,7 @@ import (
 // jwt过期时间，从配置文件中取
 var jwtExpDuration int64
 
-var log = comlog.NewLog(context.NewContext(), "alone.module.userbase.user", "init")
+var log = clog.NewLog(context.NewContext(), "alone.module.userbase.user", "init")
 
 func init() {
 	jwtExpDuration = int64(config.GetInt("jwt.normal_exp_duration"))

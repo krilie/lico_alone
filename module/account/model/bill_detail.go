@@ -1,4 +1,4 @@
-package pojo
+package model
 
 import (
 	"github.com/shopspring/decimal"

@@ -1,4 +1,4 @@
-package comstruct
+package model
 
 //标准返回不引用error类型
 //常规返回类型

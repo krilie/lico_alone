@@ -2,9 +2,10 @@ package auth
 
 import (
 	"github.com/asaskevich/govalidator"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
 	"github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/common/model/errs"
 	"github.com/krilie/lico_alone/common/utils/validator"
+	"github.com/krilie/lico_alone/module/user/dao"
 	"github.com/krilie/lico_alone/module/user/model"
 )
 
@@ -14,5 +15,5 @@ func (UserAuth) HasPermission(ctx context.Context, userId, permissionName string
 		log.Infoln("HasPermission", "param error:", userId, permissionName)
 		return false, errs.ErrParam
 	}
-	return model.IsPermissionExistsWithUser(model.Db, userId, permissionName)
+	return model.IsPermissionExistsWithUser(dao.Db, userId, permissionName)
 }

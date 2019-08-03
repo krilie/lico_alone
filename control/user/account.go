@@ -3,11 +3,11 @@ package user
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/model/errs"
 	"github.com/krilie/lico_alone/common/utils/time_util"
 	"github.com/krilie/lico_alone/common/utils/validator"
 	"github.com/krilie/lico_alone/control/utils"
-	"github.com/krilie/lico_alone/module/account/pojo"
+	"github.com/krilie/lico_alone/module/account/model"
 	"github.com/shopspring/decimal"
 	"time"
 )
@@ -54,10 +54,10 @@ func (UserCtrl) GetAccountInfo(c *gin.Context) {
 func (UserCtrl) AddBill(c *gin.Context) {
 	ctx := utils.MustGetAppCtx(c)
 	req := struct {
-		Note   string            `form:"note" binding:"required"`
-		Image  string            `form:"image" binding:"-"`
-		Amount decimal.Decimal   `form:"amount" binding:"required"`
-		Detail []pojo.BillDetail `form:"detail" binding:"required"`
+		Note   string             `form:"note" binding:"required"`
+		Image  string             `form:"image" binding:"-"`
+		Amount decimal.Decimal    `form:"amount" binding:"required"`
+		Detail []model.BillDetail `form:"detail" binding:"required"`
 	}{}
 	e := c.ShouldBindJSON(&req)
 	if utils.HandlerError(ctx, c, e) {

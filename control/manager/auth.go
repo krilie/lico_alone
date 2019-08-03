@@ -3,8 +3,8 @@ package manager
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/krilie/lico_alone/common/comstruct"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/model"
+	"github.com/krilie/lico_alone/common/model/errs"
 	"github.com/krilie/lico_alone/common/utils/str_util"
 	"github.com/krilie/lico_alone/control/utils"
 	"time"
@@ -26,7 +26,7 @@ func (ManagerCtrl) AddPermissionToRole(c *gin.Context) {
 		utils.ReturnWithErr(ctx, c, err)
 		return
 	} else {
-		c.JSON(200, comstruct.StdSuccess)
+		c.JSON(200, model.StdSuccess)
 		return
 	}
 }
@@ -51,7 +51,7 @@ func (ManagerCtrl) AddRoleToUser(c *gin.Context) {
 		utils.ReturnWithErr(ctx, c, err)
 		return
 	} else {
-		c.JSON(200, comstruct.StdSuccess)
+		c.JSON(200, model.StdSuccess)
 		return
 	}
 }

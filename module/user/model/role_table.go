@@ -3,7 +3,7 @@ package model
 import (
 	"database/sql"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/model/errs"
 	"time"
 )
 

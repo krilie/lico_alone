@@ -1,17 +1,18 @@
-package model
+package dao
 
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/comlog"
+	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/module/account/model"
 	"time"
 )
 import _ "github.com/jinzhu/gorm/dialects/mysql"
 
 var Db *gorm.DB
-var log = comlog.NewLog(context.NewContext(), "alone.module.account.model", "init")
+var log = clog.NewLog(context.NewContext(), "alone.module.account.model", "init")
 
 func init() {
 	connStr := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True",
@@ -26,18 +27,18 @@ func init() {
 		log.Panicln(err)
 		return
 	} else {
-		if !Db.HasTable(&Account{}) {
-			if err := Db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").CreateTable(&Account{}).Error; err != nil {
+		if !Db.HasTable(&model.Account{}) {
+			if err := Db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").CreateTable(&model.Account{}).Error; err != nil {
 				log.Panicln(err)
 			}
 		}
-		if !Db.HasTable(&Bill{}) {
-			if err := Db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").CreateTable(&Bill{}).Error; err != nil {
+		if !Db.HasTable(&model.Bill{}) {
+			if err := Db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").CreateTable(&model.Bill{}).Error; err != nil {
 				log.Panicln(err)
 			}
 		}
-		if !Db.HasTable(&BillDetail{}) {
-			if err := Db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").CreateTable(&BillDetail{}).Error; err != nil {
+		if !Db.HasTable(&model.BillDetail{}) {
+			if err := Db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4").CreateTable(&model.BillDetail{}).Error; err != nil {
 				log.Panicln(err)
 			}
 		}

@@ -3,7 +3,8 @@ package model
 import (
 	"github.com/deckarep/golang-set"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/comstruct/errs"
+	"github.com/krilie/lico_alone/common/model/errs"
+	"github.com/krilie/lico_alone/module/user/dao"
 )
 
 type RolePermission struct {
@@ -18,7 +19,7 @@ func (RolePermission) TableName() string {
 // 获取用户所有的权限
 func GetAllPermissionByUserId(db *gorm.DB, userId string) (set mapset.Set, err error) {
 
-	roles, err := GetAllRolesByUserId(Db, userId)
+	roles, err := GetAllRolesByUserId(dao.Db, userId)
 	if err != nil {
 		return nil, err
 	}
@@ -29,7 +30,7 @@ func GetAllPermissionByUserId(db *gorm.DB, userId string) (set mapset.Set, err e
 	}
 	defer func() {
 		if e := rows.Close(); e != nil {
-			log.Error("GetAllPermissionByUserId", e)
+			dao.log.Error("GetAllPermissionByUserId", e)
 		}
 	}()
 	//todo 可能有问题 temp name new
@@ -40,7 +41,7 @@ func GetAllPermissionByUserId(db *gorm.DB, userId string) (set mapset.Set, err e
 			return nil, err
 		}
 		if !set.Add(tempName) {
-			log.Infoln("GetAllPermissionByUserId", "name duplicate:", tempName)
+			dao.log.Infoln("GetAllPermissionByUserId", "name duplicate:", tempName)
 		}
 	}
 	return set, nil
