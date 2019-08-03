@@ -16,7 +16,7 @@ func TestNewJwtToken(t *testing.T) {
 	userClaims.Jti = "45"
 	userClaims.Iat = time.Now().Unix()
 	//userClaims.Exp = time.Now().Add(time.Hour).Unix()
-	userClaims.Exp = time.Now().Unix() + 10
+	userClaims.Exp = time.Now().Unix() + -1
 	jwtToken, e := GetNewJwtToken(&userClaims)
 	if e != nil {
 		t.Error(e)
