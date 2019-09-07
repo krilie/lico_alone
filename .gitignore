@@ -14,5 +14,6 @@
 *.out
 
 .idea/
+vendor/
 lico_user.iml
 lico_user

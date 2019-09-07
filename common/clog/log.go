@@ -2,7 +2,7 @@ package clog
 
 import (
 	"context"
-	context2 "github.com/krilie/lico_alone/common/context"
+	context2 "github.com/krilie/lico_alone/common/ccontext"
 	"github.com/sirupsen/logrus"
 	"os"
 )
@@ -22,7 +22,8 @@ const (
 var Log = logrus.NewEntry(logrus.New())
 
 func init() {
-	Log.Logger.SetFormatter(&logrus.JSONFormatter{TimestampFormat: "2006-01-02T15:04:05.000Z07:00"})
+	//Log.Logger.SetFormatter(&logrus.JSONFormatter{TimestampFormat: "2006-01-02T15:04:05.000Z07:00"})
+	Log.Logger.SetFormatter(&logrus.TextFormatter{})
 	Log.Logger.SetLevel(logrus.DebugLevel)
 	//
 	//file, e := os.OpenFile("./log.txt", os.O_CREATE|os.O_APPEND, os.ModeAppend)
@@ -40,7 +41,7 @@ func init() {
 
 // trace_id
 func NewLog(ctx context.Context, moduleName string, functionName string) *logrus.Entry {
-	bctx := ctx.(*context2.Context)
+	bctx := context2.GetContextOrNew(ctx)
 	return Log.WithFields(logrus.Fields{
 		TraceId:  bctx.GetTraceId(),
 		ClientId: bctx.GetClientId(),

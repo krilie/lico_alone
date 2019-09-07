@@ -1,22 +1,21 @@
 package model
 
 import (
-	"database/sql"
+	"github.com/krilie/lico_alone/common/cmodel"
 	"time"
 )
 
-type User struct {
-	ID         string         `gorm:"primary_key;type:varchar(32)" json:"id"` // 用户id uuid
-	CreateTime time.Time      `gorm:"type:DATETIME;not null" json:"create_time"`
-	LoginName  string         `gorm:"type:varchar(50);unique_index;not null"`
-	NickName   string         `gorm:"type:varchar(50)"`               // 呢称
-	Phone      sql.NullString `gorm:"type:varchar(20);unique_index"`  // 电话
-	Email      sql.NullString `gorm:"type:varchar(100);unique_index"` // email
-	Password   string         `gorm:"type:varchar(64);not null"`      // 密码md5
-	Picture    sql.NullString `gorm:"type:varchar(500)"`              //用户头像
-	Salt       string         `gorm:"type:varchar(8);not null"`       // 盐值
+type UserMaster struct {
+	cmodel.Model
+	UpdateTime time.Time `gorm:"column:update_time;type:DATETIME;not null" json:"create_time"` // 创建时间
+	LoginName  string    `gorm:"column:login_name;type:varchar(50)"`                           // 呢称
+	PhoneNum   *string   `gorm:"column:phone_num;type:varchar(20);unique_index"`               // 电话
+	Email      *string   `gorm:"column:email;type:varchar(100);unique_index"`                  // email
+	Password   string    `gorm:"column:password;type:varchar(64);not null"`                    // 密码md5
+	Picture    *string   `gorm:"column:picture;type:varchar(500)"`                             // 用户头像
+	Salt       string    `gorm:"column:salt;type:varchar(8);not null"`                         // 盐值
 }
 
-func (User) TableName() string {
-	return "tb_user"
+func (user UserMaster) TableName() string {
+	return "tb_user_master"
 }
