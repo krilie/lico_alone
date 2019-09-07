@@ -23,8 +23,5 @@ func TestNewStartedBroker(t *testing.T) {
 	})
 	brokerTest.Send("assssss")
 	brokerTest.Stop()
-	err := brokerTest.Send("123")
-	if err != nil {
-		t.Log(err)
-	}
+	brokerTest.Send("123")
 }

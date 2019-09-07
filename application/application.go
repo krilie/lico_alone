@@ -5,6 +5,7 @@ import (
 	"github.com/krilie/lico_alone/application/cron-job"
 	"github.com/krilie/lico_alone/application/init-data"
 	"github.com/krilie/lico_alone/application/user-api"
+	"github.com/krilie/lico_alone/common/config"
 )
 
 type App struct {
@@ -14,7 +15,8 @@ type App struct {
 	All     *all_service.AllService
 }
 
-func NewApp(allSrv *all_service.AllService) *App {
+func NewApp(cfg config.Config) *App {
+	allSrv := all_service.NewAllService(cfg)
 	return &App{
 		User:    user_api.NewAppUser(allSrv),
 		Init:    init_data.NewInit(allSrv),

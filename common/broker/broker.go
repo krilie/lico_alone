@@ -2,10 +2,8 @@ package broker
 
 import (
 	"context"
-	"fmt"
 	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/utils/str_util"
-	"github.com/sirupsen/logrus"
 	"sync"
 )
 
@@ -38,14 +36,14 @@ func NewStartedBroker(name string, chanBuf int) *Broker {
 }
 
 // 注册事件
-func (b *Broker) Send(o interface{}) (err error) {
+func (b *Broker) Send(o interface{}) {
 	defer func() {
 		if errs := recover(); errs != nil {
-			err = fmt.Errorf("%v", errs)
+			log.Errorf("broker send msg err: %v", errs)
 		}
 	}()
 	b.event <- o
-	return nil
+	return
 }
 
 // 注册事件
@@ -55,7 +53,7 @@ func (b *Broker) Register(f func(interface{})) {
 	b.funcs = append(b.funcs, func(o interface{}) {
 		defer func() {
 			if err := recover(); err != nil {
-				logrus.Error(err)
+				log.Error(err)
 			}
 		}()
 		f(o)

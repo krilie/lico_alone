@@ -1,8 +1,12 @@
 package service
 
-import "context"
+import (
+	"context"
+	"github.com/krilie/lico_alone/common/clog"
+)
 
 // 注册处理事件 有错误panic
 func (s *Service) RegisterBroker(ctx context.Context) {
-	panic("implement me")
+	log := clog.NewLog(ctx, "module/user/service/service_broker.go", "RegisterBroker")
+	log.Infoln("not implement")
 }

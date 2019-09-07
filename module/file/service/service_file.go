@@ -28,7 +28,7 @@ func (a *Service) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName 
 			BucketName:  fileService.Oss.GetBucketName(),
 			UserId:      userId,
 			ContentType: content,
-			BizType:     nil,
+			BizType:     "",
 			Size:        size,
 		}
 		err = fileService.Dao.Db.Model(&model.FileMaster{}).Create(&item).Error
