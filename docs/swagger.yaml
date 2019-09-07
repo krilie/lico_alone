@@ -1,0 +1,112 @@
+basePath: http:127.0.0.1
+definitions:
+  cmodel.ErrorReturn:
+    properties:
+      code:
+        example: 400
+        type: integer
+      detail:
+        description: 可由运行模式控制是否显示
+        example: 错误的详细信息，用于排查错误
+        type: string
+      message:
+        example: 错误信息
+        type: string
+    type: object
+  cmodel.StdReturn:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+    type: object
+host: '{{.Host}}'
+info:
+  contact: {}
+  description: This is a sample server Petstore server.
+  license: {}
+  title: Swagger Example API
+  version: 0.0.1
+paths:
+  /v1/user/login:
+    post:
+      description: 用户用密码登录
+      operationId: 用户登录
+      parameters:
+      - description: 用户手机号
+        in: formData
+        name: phone
+        required: true
+        type: string
+      - description: 用户密码
+        in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{jwt:"asb"}'
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/cmodel.ErrorReturn'
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/cmodel.ErrorReturn'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/cmodel.ErrorReturn'
+            type: object
+      summary: 用户登录
+      tags:
+      - user_account
+  /v1/user/register:
+    post:
+      description: 用户注册
+      operationId: 用户注册
+      parameters:
+      - description: 用户手机号
+        in: formData
+        name: phone
+        required: true
+        type: string
+      - description: 用户密码
+        in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/cmodel.StdReturn'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/cmodel.ErrorReturn'
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/cmodel.ErrorReturn'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/cmodel.ErrorReturn'
+            type: object
+      summary: 用户注册
+      tags:
+      - user_account
+swagger: "2.0"

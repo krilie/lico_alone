@@ -1,13 +1,18 @@
 package broker
 
 import (
+	"context"
 	"fmt"
+	"github.com/krilie/lico_alone/common/clog"
+	"github.com/krilie/lico_alone/common/utils/str_util"
 	"github.com/sirupsen/logrus"
 	"sync"
 )
 
 // broker 生产者 消费者
 // 简单模拟消息队列
+
+var log = clog.NewLog(context.Background(), "lico_alone.common.broker", "brokers")
 
 type Broker struct {
 	event     chan interface{}
@@ -28,6 +33,7 @@ func NewStartedBroker(name string, chanBuf int) *Broker {
 		wait:  &sync.WaitGroup{},
 	}
 	b.Start()
+	log.Infof("broker %v created and started", b.Name)
 	return b
 }
 
@@ -67,6 +73,7 @@ func (b *Broker) Stop() {
 	b.onceStop.Do(func() {
 		close(b.event)
 		b.wait.Wait()
+		log.Infof("broker %v has stop success", b.Name)
 	})
 }
 
@@ -82,6 +89,9 @@ func (b *Broker) Start() {
 					for _, v := range b.funcs {
 						v(event) // 有recover
 					}
+					if len(b.funcs) == 0 {
+						log.Infof("broker %v no events %v", b.Name, str_util.ToJson(event))
+					}
 					b.muFuncs.RUnlock()
 				} else {
 					// 通道已经关闭
@@ -90,5 +100,6 @@ func (b *Broker) Start() {
 				}
 			}
 		}()
+		log.Infof("broker %v init success", b.Name)
 	})
 }

@@ -28,7 +28,7 @@ func TestErr3(t *testing.T) {
 	if caser := errors.Cause(err); caser != nil {
 		t.Log(caser.Error())
 	}
-	getErr := GetErr(err)
+	getErr := GetInnerErr(err)
 	if getErr != nil {
 		t.Log(getErr.GetCode())
 		t.Log(getErr.Message)
@@ -37,13 +37,13 @@ func TestErr3(t *testing.T) {
 
 func TestUse1(t *testing.T) {
 	// 构建错误对象
-	err := Internal().WithMsg("这是个内部错误").WithError(errors.New("这是最内层的causer"))
+	err := NewInternal().WithMsg("这是个内部错误").WithError(errors.New("这是最内层的causer"))
 	// 取到最内层错误
 	if caser := errors.Cause(err); caser != nil {
 		t.Log(caser.Error()) // 这是最内层的causer
 	}
 	// 取到自定义数据类型
-	getErr := GetErr(err)
+	getErr := GetInnerErr(err)
 	if getErr != nil {
 		t.Log(getErr.GetCode()) // 500
 		t.Log(getErr.Message)   // 这是个内部错误
@@ -52,7 +52,7 @@ func TestUse1(t *testing.T) {
 
 func TestUse2(t *testing.T) {
 	// 构建错误对象
-	err := Internal().WithMsg("这是个内部错误").WithError(errors.New("这是最内层的causer"))
+	err := NewInternal().WithMsg("这是个内部错误").WithError(errors.New("这是最内层的causer"))
 	err2 := errors.Wrap(err, "这是个wrap")
 	err2 = errors.WithMessage(err2, "这是个wrap")
 	t.Logf("%v", err2)
@@ -61,7 +61,7 @@ func TestUse2(t *testing.T) {
 		t.Log(caser.Error()) // 这是最内层的causer
 	}
 	// 取到自定义数据类型
-	getErr := GetErr(err2)
+	getErr := GetInnerErr(err2)
 	if getErr != nil {
 		t.Log(getErr.GetCode()) // 500
 		t.Log(getErr.Message)   // 这是个内部错误

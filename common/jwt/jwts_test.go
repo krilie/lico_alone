@@ -8,8 +8,6 @@ import (
 
 func TestNewJwtToken(t *testing.T) {
 	var userClaims UserClaims
-	userClaims.NickName = "ii"
-	userClaims.UserRoles = "normal"
 	userClaims.ClientId = "123"
 	userClaims.Iss = "sys"
 	userClaims.UserId = "34"

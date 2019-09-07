@@ -1,8 +1,8 @@
-package dbutil
+package cdb
 
 import (
 	"github.com/jinzhu/gorm"
-	"stone-men/stone/common/cmodel"
+	"github.com/krilie/lico_alone/common/cmodel"
 )
 
 // FindPage 查询分页数据
@@ -30,19 +30,20 @@ func FindPage(db *gorm.DB, pageIndex, pageSize int, out interface{}) (total int,
 	if err := result.Error; err != nil {
 		return 0, err
 	}
-
 	return count, nil
 }
 
 // WrapPageQuery 包装带有分页的查询
-func WrapPageQuery(db *gorm.DB, pp *cmodel.PaginationParam, out interface{}) (*cmodel.PaginationResult, error) {
+func WrapPageQuery(db *gorm.DB, pp *cmodel.PageParams, out interface{}) (*cmodel.PageInfo, error) {
 	if pp != nil {
-		total, err := FindPage(db, pp.PageIndex, pp.PageSize, out)
+		total, err := FindPage(db, pp.Index, pp.Size, out)
 		if err != nil {
 			return nil, err
 		}
-		return &cmodel.PaginationResult{
-			Total: total,
+		return &cmodel.PageInfo{
+			TotalCount: total,
+			NowIndex:   pp.Index,
+			PageSize:   pp.Size,
 		}, nil
 	}
 
