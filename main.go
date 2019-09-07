@@ -1,63 +1,60 @@
 package main
 
 import (
+	"github.com/krilie/lico_alone/application"
+	"github.com/krilie/lico_alone/common/broker"
+	"github.com/krilie/lico_alone/common/ccontext"
+	"github.com/krilie/lico_alone/common/cdb"
 	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/config"
-	context2 "github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/cdb"
-	"github.com/krilie/lico_alone/control"
-	"golang.org/x/net/context"
-	"net/http"
+	broker2 "github.com/krilie/lico_alone/server/broker"
+	"github.com/krilie/lico_alone/server/cron"
+	"github.com/krilie/lico_alone/server/http"
 	"os"
 	"os/signal"
 	"syscall"
 )
 
-var log = clog.NewLog(context2.NewContext(), "lico.main", "main")
-
+// @title Swagger Example API
+// @version 0.0.1
+// @description  This is a sample server Petstore server.
+// @BasePath http:127.0.0.1
 func main() {
-	defer cdb.Close()
-	// 开始
-	srv := &http.Server{
-		Addr:    ":" + config.GetString("service.port"),
-		Handler: control.LocalRouter,
-	}
-	//是否有ssl.public_key ssl.private_key
-	pubKey := config.GetString("ssl.public_key")
-	priKey := config.GetString("ssl.private_key")
-	if pubKey == "" || priKey == "" {
-		go func() {
-			if err := srv.ListenAndServe(); err != nil {
-				log.Warningln(err)
-				return
-			}
-		}()
-	} else {
-		go func() {
-			if err := srv.ListenAndServeTLS(pubKey, priKey); err != nil {
-				log.Warningln(err)
-				return
-			}
-		}()
-	}
-	// 关闭服务器
-	c := make(chan os.Signal, 0)
-	signal.Notify(c)
-	for {
-		// Block until a signal is received.
-		s := <-c
+	ctx := ccontext.NewContext()
+	var log = clog.NewLog(ctx, "lico.main", "main")
+	defer cdb.Close()                                          // 最后关闭数据库
+	defer func() { broker.Smq.Close(); log.Infof("消息队列退出") }() // 关闭消息队列
+	app := application.NewApp(config.Cfg)
+	// 初始化数据 权限账号等
+	app.Init.InitData(ctx)
+	// 加载所有权限
+	app.User.UserService.AuthCacheLoadAll(ctx)
+	// 注册所有消息处理句柄
+	broker2.RegisterHandler(ctx, app)
+	// 初始化定时任务
+	cronStop := cron.InitAndStartCorn(app)
+	// 最后初始化为开启http服务
+	shutDown := http.InitAndStartHttpServer(app)
+	// 收到信号并关闭服务器
+	c := make(chan os.Signal)
+	signal.Notify(c, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
+	select {
+	// Block until a signal is received.
+	case s := <-c:
 		log.Info("Got signal:", s) //Got signal: terminated
-		if s == syscall.SIGINT || s == syscall.SIGTERM || s == syscall.SIGKILL {
+		if s == syscall.SIGINT || s == syscall.SIGTERM || s == syscall.SIGKILL || s == syscall.SIGHUP || s == syscall.SIGQUIT {
 			// shutdown
-			shutdown := srv.Shutdown(context.Background())
-			if shutdown != nil {
-				log.Error(shutdown)
-				return
+			err := shutDown(30)
+			if err != nil {
+				log.Errorln(err)
 			} else {
-				log.Info("end of service...")
-				return
+				log.Infoln("service is closed normally")
 			}
+			// 关闭定时任务
+			cronStop()
+			log.Infoln("cron job end.")
+			log.Infoln("service is done.")
+			return
 		}
 	}
-
 }

@@ -1,24 +1,37 @@
 package service
 
 import (
+	"context"
+	"github.com/jinzhu/gorm"
+	"github.com/krilie/lico_alone/common/cdb"
 	"github.com/krilie/lico_alone/common/clog"
-	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/module/account/model"
-	"github.com/shopspring/decimal"
-	"time"
+	"github.com/krilie/lico_alone/common/config"
+	"github.com/krilie/lico_alone/module/user/dao"
 )
 
-var log = clog.NewLog(context.NewContext(), "alone.module.account.service", "init")
+type Service struct {
+	Dao *dao.Dao
+}
 
-type Account struct{}
+func (s *Service) SetTx(ctx context.Context, tx *gorm.DB) (cdb.Service, error) {
+	var log = clog.NewLog(ctx, "module.account.service.service.go.Service", "WithTx")
+	log.Debug("new tx")
+	txDao, err := s.Dao.Begin(tx)
+	if err != nil {
+		log.Error(err)
+		return nil, err
+	}
+	return &Service{
+		Dao: &dao.Dao{Dao: txDao},
+	}, err
+}
 
-type Accounter interface {
-	DeleteBill(ctx context.Context, billId string, userId string) error
-	GetAccountHistory(ctx context.Context, start, end time.Time, userId, AccountId, note string) ([]model.BillDetail, error)
-	GetAccountInfo(ctx context.Context, userId string) ([]*model.AccountInfo, error)
-	AddBill(ctx context.Context, userId, note, image string, amount decimal.Decimal, detail []model.BillDetail) (string, error)
-	AddAccount(ctx context.Context, userId, name, num, description, image string, balance decimal.Decimal) (string, error)
-	DeleteAccount(ctx context.Context, accountId string, userId string) error
-	GetMonthSummary(ctx context.Context, userId string, time time.Time) (*model.AccountSummary, error)
-	GetTimeZoneSummary(ctx context.Context, userId string, timeStart, timeEnd time.Time) (*model.AccountSummary, error)
+func (s *Service) GetDb(ctx context.Context) *gorm.DB {
+	return s.Dao.Db
+}
+
+func NewService(cfg config.Config) *Service {
+	return &Service{
+		Dao: dao.NewDao(&cfg),
+	}
 }

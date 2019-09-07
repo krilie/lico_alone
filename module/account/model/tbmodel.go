@@ -34,22 +34,3 @@ type Bill struct {
 func (Bill) TableName() string {
 	return "tb_bill"
 }
-
-type BillDetail struct {
-	Id          string          `gorm:"type:varchar(32);primary_key" json:"id"`
-	UserId      string          `gorm:"type:varchar(32);not null" json:"user_id"`
-	BillId      string          `gorm:"type:varchar(32);not null" json:"bill_id"`
-	CreateTime  time.Time       `gorm:"type:DATETIME;not null" json:"create_time"`
-	AccountId   string          `gorm:"type:varchar(32);not null" json:"account_id"`
-	AccountNum  string          `gorm:"type:varchar(50);not null" json:"account_num"`
-	AccountName string          `gorm:"type:varchar(50);not null" json:"account_name"`
-	Note        string          `gorm:"type:varchar(100);default null" json:"note"`
-	Debit       decimal.Decimal `gorm:"type:decimal(10,2);not null;default 0" json:"debit"`
-	Credit      decimal.Decimal `gorm:"type:decimal(10,2);not null;default 0" json:"credit"`
-	Balance     decimal.Decimal `gorm:"type:decimal(10,2);not null;default 0" json:"balance"`
-	IsValid     bool            `gorm:"type:boolean;not null" json:"is_valid"`
-}
-
-func (BillDetail) TableName() string {
-	return "tb_bill_detail"
-}

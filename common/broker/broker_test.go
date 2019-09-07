@@ -1,30 +1,18 @@
 package broker
 
 import (
-	"fmt"
+	"context"
 	"testing"
 	"time"
 )
 
-func TestNewStartedBroker(t *testing.T) {
-	brokerTest := NewStartedBroker("test", 3) // 0 相当于同步调用
-	brokerTest.Register(func(i interface{}) {
-		fmt.Println(i)
-		j := 0
-		m := 6 / j
-		fmt.Print(m)
+func TestFunc(t *testing.T) {
+	err := Smq.Get("tt").Register(context.Background(), func(i interface{}) {
+		t.Log(i)
 	})
-	brokerTest.Register(func(i interface{}) {
-		fmt.Println("seconed", i)
-	})
-	brokerTest.Register(func(i interface{}) {
-		fmt.Println("seconedseconedseconedseconedseconed", i)
-		time.Sleep(time.Second * 2)
-	})
-	brokerTest.Send("assssss")
-	brokerTest.Stop()
-	err := brokerTest.Send("123")
-	if err != nil {
-		t.Log(err)
-	}
+	t.Log(err)
+	err = Smq.Get("tt").Send(context.Background(), "asd")
+	t.Log(err)
+	time.Sleep(time.Second * 2)
+	Smq.Close()
 }
