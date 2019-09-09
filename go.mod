@@ -12,7 +12,7 @@ require (
 	github.com/gin-gonic/gin v1.4.0
 	github.com/go-ini/ini v1.46.0 // indirect
 	github.com/jinzhu/gorm v1.9.10
-	github.com/krilie/go-smq v1.0.0
+	github.com/krilie/go-smq v1.0.1
 	github.com/krilie/s-file v0.0.0-20190906025558-22dc46235d3b
 	github.com/mikespook/gorbac v2.1.0+incompatible
 	github.com/minio/minio-go v6.0.14+incompatible
