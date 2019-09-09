@@ -31,11 +31,16 @@ func (a *Service) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName 
 			BizType:     "",
 			Size:        size,
 		}
-		err = fileService.Dao.Db.Model(&model.FileMaster{}).Create(&item).Error
+		err = fileService.Dao.CreateFile(ctx, &item)
 		if err != nil {
 			return errs.NewErrDbCreate().WithError(err)
 		}
 		name, err := fileService.Oss.UploadFile(ctx, userId, fileName, content, file, int64(size))
+		if err != nil {
+			return err
+		}
+		item.KeyName = name
+		err = fileService.Dao.SaveFile(ctx, &item)
 		if err != nil {
 			return err
 		}
@@ -54,6 +59,7 @@ func (a *Service) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName 
 func (a *Service) DeleteFile(ctx context.Context, bucket, key string) (err error) {
 	err = cdb.WithTrans(ctx, a, func(s cdb.Service) error {
 		srv := s.(*Service)
+		srv.Oss.del
 		srv.Dao.DeleteFile()
 	})
 	return err
