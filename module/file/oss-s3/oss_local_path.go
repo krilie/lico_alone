@@ -25,5 +25,5 @@ func (o *OssLocal) DeleteFile(ctx context.Context, userId, objKey string) error 
 }
 
 func (o *OssLocal) GetBucketName() string {
-	return o.File.Dir
+	return ""
 }
