@@ -49,3 +49,12 @@ func (a *Service) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName 
 		return objName, contentType, nil
 	}
 }
+
+// 内部有事务的存在
+func (a *Service) DeleteFile(ctx context.Context, bucket,key string) ( err error) {
+	err = cdb.WithTrans(ctx, a, func(s cdb.Service) error {
+		srv:=s.(*Service)
+		srv.Dao.
+	})
+	return err
+}
