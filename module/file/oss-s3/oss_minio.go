@@ -4,9 +4,10 @@ import (
 	"context"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/errs"
+	"github.com/krilie/lico_alone/common/utils/file_util"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/minio/minio-go"
-	"mime/multipart"
+	"io"
 )
 
 type OssClient struct {
@@ -26,24 +27,28 @@ func (f *OssClient) GetBucketName() string {
 	return f.BucketName
 }
 
-func (f *OssClient) UploadFile(ctx context.Context, userId, fileName, contentType string, file multipart.File, size int64) (objName string, err error) {
-	objName = id_util.GetUuid() + fileName
+func (f *OssClient) UploadFile(ctx context.Context, userId, name string, file io.ReadSeeker, size int64) (content string, bucket string, key string, err error) {
+	content, err = file_util.GetContentType(file)
+	if err != nil {
+		return "", "", "", err
+	}
+	key = id_util.GetUuid() + name
 	userMate := make(map[string]string)
 	userMate["user_id"] = userId
-	n, err := f.Client.PutObject(f.BucketName, objName, file, size, minio.PutObjectOptions{ContentType: contentType, UserMetadata: userMate})
+	n, err := f.Client.PutObject(f.BucketName, key, file, size, minio.PutObjectOptions{ContentType: content, UserMetadata: userMate})
 	if err != nil {
-		_ = f.Client.RemoveIncompleteUpload(f.BucketName, objName) // 删除可能存在的不完整文件
-		return "", errs.NewInternal().WithError(err)
+		_ = f.Client.RemoveIncompleteUpload(f.BucketName, key) // 删除可能存在的不完整文件
+		return content, f.BucketName, key, errs.NewInternal().WithError(err)
 	} else if n != size {
-		_ = f.Client.RemoveIncompleteUpload(f.BucketName, objName) // 删除可能存在的不完整文件
-		return "", errs.NewInternal().WithMsg("un completed upload please check")
+		_ = f.Client.RemoveIncompleteUpload(f.BucketName, key) // 删除可能存在的不完整文件
+		return content, f.BucketName, key, errs.NewInternal().WithMsg("un completed upload please check")
 	} else {
-		return objName, nil
+		return content, f.BucketName, key, nil
 	}
 }
 
-func (f *OssClient) DeleteFile(ctx context.Context, userId, objKey string) error {
-	err := f.Client.RemoveObject(f.BucketName, objKey)
+func (f *OssClient) DeleteFile(ctx context.Context, userId, bucket, key string) error {
+	err := f.Client.RemoveObject(bucket, key)
 	if err != nil {
 		return errs.NewInternal().WithError(err)
 	}

@@ -2,11 +2,11 @@ package oss_s3
 
 import (
 	"context"
-	"mime/multipart"
+	"io"
 )
 
 type FileOperator interface {
-	UploadFile(ctx context.Context, userId, fileName, contentType string, file multipart.File, size int64) (objName string, err error)
-	DeleteFile(ctx context.Context, userId, objKey string) error
+	UploadFile(ctx context.Context, userId, name string, file io.ReadSeeker, size int64) (content, bucket, key string, err error)
+	DeleteFile(ctx context.Context, userId, bucket, key string) error
 	GetBucketName() string
 }

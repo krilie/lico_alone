@@ -37,3 +37,11 @@ func (a *Dao) DeleteFile(ctx context.Context, id string) error {
 	}
 	return nil
 }
+
+func (a *Dao) DeleteFileByBucketKey(ctx context.Context, bucket, key string) error {
+	err := a.Db.Where("bucket_name=? and key_name=?", bucket, key).Delete(&model.FileMaster{}).Error
+	if err != nil {
+		return errs.ErrDbDelete.WithError(err)
+	}
+	return nil
+}

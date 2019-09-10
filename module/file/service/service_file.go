@@ -5,7 +5,6 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/cdb"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/common/utils/file_util"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/file/model"
 	"mime/multipart"
@@ -13,21 +12,16 @@ import (
 )
 
 // 内部有事务的存在
-func (a *Service) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName string, file multipart.File, size int) (objName, contentType string, err error) {
+func (a *Service) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName string, file multipart.File, size int) (content, bucket, key string, err error) {
 	err = cdb.WithTrans(ctx, a, func(s cdb.Service) error {
 		fileService := s.(*Service)
-		// 生成文件记录
-		content, err := file_util.GetContentType(file)
-		if err != nil {
-			return errs.NewInternal().WithError(err)
-		}
 		item := model.FileMaster{
 			Id:          id_util.GetUuid(),
 			CreateTime:  time.Now(),
-			KeyName:     id_util.GetUuid(),
-			BucketName:  fileService.Oss.GetBucketName(),
+			KeyName:     "",
+			BucketName:  "",
 			UserId:      userId,
-			ContentType: content,
+			ContentType: "",
 			BizType:     "",
 			Size:        size,
 		}
@@ -35,32 +29,35 @@ func (a *Service) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName 
 		if err != nil {
 			return errs.NewErrDbCreate().WithError(err)
 		}
-		name, err := fileService.Oss.UploadFile(ctx, userId, fileName, content, file, int64(size))
+		content, bucket, key, err = fileService.Oss.UploadFile(ctx, userId, fileName, file, int64(size))
 		if err != nil {
 			return err
 		}
-		item.KeyName = name
+		item.KeyName = key
+		item.BucketName = bucket
+		item.ContentType = content
 		err = fileService.Dao.SaveFile(ctx, &item)
 		if err != nil {
 			return err
 		}
-		contentType = content
-		objName = name
 		return nil
 	})
-	if err != nil {
-		return "", "", err
-	} else {
-		return objName, contentType, nil
-	}
+	return content, bucket, key, err
 }
 
 // 内部有事务的存在
 func (a *Service) DeleteFile(ctx context.Context, bucket, key string) (err error) {
 	err = cdb.WithTrans(ctx, a, func(s cdb.Service) error {
 		srv := s.(*Service)
-		srv.Oss.del
-		srv.Dao.DeleteFile()
+		err := srv.Dao.DeleteFileByBucketKey(ctx, bucket, key)
+		if err != nil {
+			return errs.NewErrDbDelete().WithError(err)
+		}
+		err = srv.Oss.DeleteFile(ctx, "", key, "")
+		if err != nil {
+			return err
+		}
+		return nil
 	})
 	return err
 }
