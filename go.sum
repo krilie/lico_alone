@@ -132,8 +132,6 @@ github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORN
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0 h1:45sCR5RtlFHMR4UwH9sdQ5TC8v0qDQCHnXt+kaKSTVE=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
-github.com/krilie/go-smq v1.0.0 h1:5J4J9DjYWTEeUX1mfGVIn6Rzmg6xsm2O+VNAKxqK4wQ=
-github.com/krilie/go-smq v1.0.0/go.mod h1:y7mkYr33UdJpoOtKmDtHx9EZAu9T34l/n92ibcYcxDI=
 github.com/krilie/go-smq v1.0.1 h1:lFTmSeWkIpkmy309Q1hZBdiyzFGRnYZtKz9TcYild8U=
 github.com/krilie/go-smq v1.0.1/go.mod h1:y7mkYr33UdJpoOtKmDtHx9EZAu9T34l/n92ibcYcxDI=
 github.com/krilie/s-file v0.0.0-20190906025558-22dc46235d3b h1:U5tgvrpg1ICWcLz3upiX3AEi7nDij94cFPoa81m2TKM=
