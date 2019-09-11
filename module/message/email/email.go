@@ -16,10 +16,10 @@ var password = "asdfa1321321EERWE"
 var host = "smtpdm.aliyun.com"
 
 // SendServiceUpEmail 发送服务启动消息
-func SendEmail(ctx context.Context, subject, msg string) error {
+func SendEmail(ctx context.Context, to, subject, msg string) error {
 	m := gomail.NewMessage()
 	m.SetHeader("From", address)
-	m.SetHeader("To", "776334655@qq.com")
+	m.SetHeader("To", to)
 	m.SetHeader("Subject", subject)
 	m.SetBody("text/plain", msg)
 	d := gomail.NewDialer(host, 465, name, password)
