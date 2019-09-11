@@ -14,6 +14,7 @@ var address = "livo@amail.lizo.top"
 var name = "livo@amail.lizo.top"
 var password = "asdfa1321321EERWE"
 var host = "smtpdm.aliyun.com"
+var port = 465
 
 // SendServiceUpEmail 发送服务启动消息
 func SendEmail(ctx context.Context, to, subject, msg string) error {
@@ -22,8 +23,7 @@ func SendEmail(ctx context.Context, to, subject, msg string) error {
 	m.SetHeader("To", to)
 	m.SetHeader("Subject", subject)
 	m.SetBody("text/plain", msg)
-	d := gomail.NewDialer(host, 465, name, password)
-	// Send the email to Bob, Cora and Dan.
+	d := gomail.NewDialer(host, port, name, password)
 	if err := d.DialAndSend(m); err != nil {
 		return err
 	}
