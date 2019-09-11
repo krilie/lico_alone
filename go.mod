@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
+	github.com/aliyun/alibaba-cloud-sdk-go v0.0.0-20190909094631-44ff19b8cdcb
 	github.com/asaskevich/govalidator v0.0.0-20190424111038-f61b66f89f4a
 	github.com/bluele/gcache v0.0.0-20190518031135-bc40bd653833
 	github.com/bwmarrin/snowflake v0.3.0
@@ -12,6 +13,7 @@ require (
 	github.com/gin-gonic/gin v1.4.0
 	github.com/go-ini/ini v1.46.0 // indirect
 	github.com/jinzhu/gorm v1.9.10
+	github.com/json-iterator/go v1.1.7 // indirect
 	github.com/krilie/go-smq v1.0.1
 	github.com/krilie/s-file v0.0.0-20190906025558-22dc46235d3b
 	github.com/mikespook/gorbac v2.1.0+incompatible
