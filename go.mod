@@ -26,6 +26,8 @@ require (
 	github.com/spf13/viper v1.4.0
 	github.com/swaggo/gin-swagger v1.2.0
 	github.com/swaggo/swag v1.6.2
+	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/go-playground/validator.v8 v8.18.2
+	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 	gopkg.in/ini.v1 v1.46.0 // indirect
 )
