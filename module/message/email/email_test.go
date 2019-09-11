@@ -6,6 +6,6 @@ import (
 )
 
 func TestSendEmail(t *testing.T) {
-	err := SendServiceUpEmail(context.Background(), "测试消息")
+	err := SendEmail(context.Background(), "aa", "测试消息")
 	t.Log(err)
 }

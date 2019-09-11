@@ -13,15 +13,16 @@ import (
 var address = "livo@amail.lizo.top"
 var name = "livo@amail.lizo.top"
 var password = "asdfa1321321EERWE"
+var host = "smtpdm.aliyun.com"
 
 // SendServiceUpEmail 发送服务启动消息
-func SendServiceUpEmail(ctx context.Context, msg string) error {
+func SendEmail(ctx context.Context, subject, msg string) error {
 	m := gomail.NewMessage()
 	m.SetHeader("From", address)
 	m.SetHeader("To", "776334655@qq.com")
-	m.SetHeader("Subject", "服务启动")
+	m.SetHeader("Subject", subject)
 	m.SetBody("text/plain", msg)
-	d := gomail.NewDialer("smtpdm.aliyun.com", 465, name, password)
+	d := gomail.NewDialer(host, 465, name, password)
 	// Send the email to Bob, Cora and Dan.
 	if err := d.DialAndSend(m); err != nil {
 		return err
