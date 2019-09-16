@@ -5,10 +5,12 @@ import (
 )
 
 type Permission struct {
-	ID          string    `gorm:"primary_key;type:varchar(32)" json:"id"` // 用户id uuid
-	CreateTime  time.Time `gorm:"type:DATETIME;not null" json:"create_time"`
-	Name        string    `gorm:"type:varchar(50);unique_index;not null"`
-	Description string    `gorm:"type:varchar(100);not null"`
+	Name        string    `gorm:"column:name;primary_key;type:varchar(32)" json:"name"`
+	CreateTime  time.Time `gorm:"column:create_time;type:datetime;not null" json:"create_time"`
+	Description string    `gorm:"column:description;type:varchar(100);not null" json:"description"`
+	RefMethod   string    `gorm:"column:ref_method;" json:"ref_method"`
+	RefPath     string    `gorm:"column:ref_path;" json:"ref_path"`
+	Sort        int       `gorm:"column:sort;" json:"sort"`
 }
 
 func (Permission) TableName() string {

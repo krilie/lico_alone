@@ -1,7 +1,7 @@
 package clog
 
 import (
-	c2 "github.com/krilie/lico_alone/common/context"
+	c2 "github.com/krilie/lico_alone/common/ccontext"
 	"github.com/sirupsen/logrus"
 	"testing"
 )

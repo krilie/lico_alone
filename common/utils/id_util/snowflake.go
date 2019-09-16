@@ -19,3 +19,6 @@ func init() {
 func NextSnowflakeId() snowflake.ID {
 	return node.Generate()
 }
+func NextSnowflake() string {
+	return node.Generate().String()
+}

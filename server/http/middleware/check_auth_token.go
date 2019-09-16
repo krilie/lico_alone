@@ -1,0 +1,48 @@
+package middleware
+
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/krilie/lico_alone/common/cmodel"
+	"github.com/krilie/lico_alone/common/errs"
+	"github.com/krilie/lico_alone/common/jwt"
+	"github.com/krilie/lico_alone/server/http/ginutil"
+)
+
+// check user is login and auth token validation
+func CheckAuthToken(auth IAuth) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// get context
+		ctx := ginutil.GetAppCtxOrAbort(c)
+		if ctx == nil {
+			return
+		}
+		headerAuth := c.GetHeader(ginutil.HeaderAuthorization)
+
+		var claims, err = jwt.CheckJwtToken(headerAuth)
+		if err != nil {
+			if err == jwt.ErrIatTime {
+				ginutil.AbortWithErr(c, errs.NewUnauthorized().WithMsg("token format error"))
+				return
+			} else if err == jwt.ErrTimeExp {
+				c.AbortWithStatusJSON(401, cmodel.RetFromErr(errs.NewUnauthorized().WithMsg("token expired")))
+				return
+			} else {
+				c.AbortWithStatusJSON(500, cmodel.RetFromErr(errs.NewInternal().WithMsg(err.Error())))
+				return
+			}
+		} else {
+			b, err := auth.HasUser(claims.UserId)
+			if err != nil {
+				ginutil.AbortWithErr(c, err)
+				return
+			}
+			if !b {
+				ginutil.AbortWithAppErr(c, errs.NewUnauthorized())
+				return
+			}
+			ctx.SetUserId(claims.UserId)
+			c.Next()
+			return
+		}
+	}
+}
