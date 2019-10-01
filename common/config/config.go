@@ -49,7 +49,9 @@ func init() {
 	v.SetDefault("oss_s3.secret", "123")
 	v.SetDefault("oss_s3.endpoint", "123")
 	v.SetDefault("oss_s3.bucket", "123")
-	v.SetDefault("file_save_path", "static_files")
+	v.SetDefault("file_save.local_file_save_dir", "static_files")
+	v.SetDefault("file_save.local_file_save_url", "http://localhost/static_files")
+	v.SetDefault("file_save.save_type", "local")
 
 	if err := v.ReadInConfig(); err != nil {
 		switch err.(type) {
