@@ -1,22 +1,26 @@
-service:
-  port: 81
+http_port: 80
+gin_mode: debug
+ssl_pri: ""
+ssl_pub: ""
+
 db:
-  ip: 192.168.31.238
+  conn_max_left_time: 25200
+  db_name: lico
+  host: rpi.lizo.top
+  max_idle_conn: 1
+  max_open_conn: 1
+  password: "123456"
   port: 3306
   user: root
-  password: 123456
-  database: user
-  max_open_conn: 1
-  max_idle_conn: 1
-  conn_max_left_time:  3600*7 #in second
-
-jwt: #用于生成jwt
-  public_key: ""
-  private_key: ""
-  hs256_key: "E5Vsfs#$afasdrtfawe*^&%("
-  #app_exp_duration: 23 #app角色用戶的過期時間 app再算
-  normal_exp_duration: 345 #其他用戶的過期時間
-
-ssl:
-  public_key: ""
-  private_key: ""
+file_save:
+  local_file_save_dir: static_files
+  local_file_save_url: http://localhost/static_files
+  oss_bucket: local
+  oss_end_point: local
+  oss_key: local
+  oss_secret: local
+  save_type: local
+jwt:
+  hs256_key: E5Vsfs#$afasdrtfawe*^&%(
+  normal_exp_duration: 2592000
+  private_key_path: E5Vsfs#$afasdrtfawe*^&%(

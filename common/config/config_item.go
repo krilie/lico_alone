@@ -1,23 +1,26 @@
 package config
 
 type Config struct {
-	GinMode  GinMode  `mapstructure:"gin_mode" json:"gin_mode" toml:"gin_mode"`
+	GinMode  string   `mapstructure:"gin_mode" json:"gin_mode" toml:"gin_mode"`
+	HttpPort int      `mapstructure:"http_port" json:"http_port" toml:"http_port"`
+	SslPri   string   `mapstructure:"ssl_pri" json:"ssl_pri" toml:"ssl_pri"`
+	SslPub   string   `mapstructure:"ssl_pub" json:"ssl_pub" toml:"ssl_pub"`
 	DB       DB       `mapstructure:"db" json:"db" toml:"db"`
 	JWT      JWT      `mapstructure:"jwt" json:"jwt" toml:"jwt"`
 	FileSave FileSave `mapstructure:"file_save" json:"file_save" toml:"file_save"`
 }
 
-type GinMode struct {
-	Mode string `json:"mode" toml:"mode"` // "debug" "release"
+type DB struct {
+	Host            string `mapstructure:"host" json:"host" toml:"host"`
+	Port            int    `mapstructure:"port" json:"port" toml:"port"`
+	DbName          string `mapstructure:"db_name" json:"db_name" toml:"db_name"`
+	User            string `mapstructure:"user" json:"user" toml:"user"`
+	Password        string `mapstructure:"password" json:"password" toml:"password"`
+	MaxOpenConn     int    `mapstructure:"max_open_conn" json:"max_open_conn" toml:"max_open_conn"`
+	MaxIdleConn     int    `mapstructure:"max_idle_conn" json:"max_idle_conn" toml:"max_idle_conn"`
+	ConnMaxLeftTime int    `mapstructure:"conn_max_left_time" json:"conn_max_left_time" toml:"conn_max_left_time"`
 }
 
-type DB struct {
-	Host     string `mapstructure:"host" json:"host" toml:"host"`
-	Port     string `mapstructure:"port" json:"port" toml:"port"`
-	DbName   string `mapstructure:"db_name" json:"db_name" toml:"db_name"`
-	User     string `mapstructure:"user" json:"user" toml:"user"`
-	Password string `mapstructure:"password" json:"password" toml:"password"`
-}
 type FileSave struct {
 	OssKey           string `mapstructure:"oss_key" json:"oss_key" toml:"oss_key"`
 	OssSecret        string `mapstructure:"oss_secret" json:"oss_secret" toml:"oss_secret"`
