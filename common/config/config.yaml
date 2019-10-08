@@ -2,6 +2,7 @@ http_port: 80
 gin_mode: debug
 ssl_pri: ""
 ssl_pub: ""
+enable_swagger: true
 
 db:
   conn_max_left_time: 25200

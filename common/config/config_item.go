@@ -1,13 +1,14 @@
 package config
 
 type Config struct {
-	GinMode  string   `mapstructure:"gin_mode" json:"gin_mode" toml:"gin_mode"`
-	HttpPort int      `mapstructure:"http_port" json:"http_port" toml:"http_port"`
-	SslPri   string   `mapstructure:"ssl_pri" json:"ssl_pri" toml:"ssl_pri"`
-	SslPub   string   `mapstructure:"ssl_pub" json:"ssl_pub" toml:"ssl_pub"`
-	DB       DB       `mapstructure:"db" json:"db" toml:"db"`
-	JWT      JWT      `mapstructure:"jwt" json:"jwt" toml:"jwt"`
-	FileSave FileSave `mapstructure:"file_save" json:"file_save" toml:"file_save"`
+	GinMode       string   `mapstructure:"gin_mode" json:"gin_mode" toml:"gin_mode"`
+	HttpPort      int      `mapstructure:"http_port" json:"http_port" toml:"http_port"`
+	SslPri        string   `mapstructure:"ssl_pri" json:"ssl_pri" toml:"ssl_pri"`
+	SslPub        string   `mapstructure:"ssl_pub" json:"ssl_pub" toml:"ssl_pub"`
+	EnableSwagger bool     `mapstructure:"enable_swagger" json:"enable_swagger" toml:"enable_swagger"`
+	DB            DB       `mapstructure:"db" json:"db" toml:"db"`
+	JWT           JWT      `mapstructure:"jwt" json:"jwt" toml:"jwt"`
+	FileSave      FileSave `mapstructure:"file_save" json:"file_save" toml:"file_save"`
 }
 
 type DB struct {

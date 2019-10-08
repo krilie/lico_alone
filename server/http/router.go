@@ -27,7 +27,9 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 	// 静态文件
 	RootRouter.StaticFile("/static", config.Cfg.FileSave.LocalFileSaveDir)
 	// swagger
-	RootRouter.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	if config.Cfg.EnableSwagger {
+		RootRouter.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	}
 	// 全局中间件
 	RootRouter.Use(middleware.BuildContext())
 	RootRouter.Use(middleware.CheckAuthToken(app.User))

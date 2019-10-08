@@ -32,6 +32,7 @@ func init() {
 
 	v.SetDefault("gin_mode", "debug") //时间戳
 	v.SetDefault("http_port", 80)
+	v.SetDefault("enable_swagger", true)
 	v.SetDefault("ssl_pri", "")
 	v.SetDefault("ssl_pub", "")
 	v.SetDefault("db.host", "rpi.lizo.top")
