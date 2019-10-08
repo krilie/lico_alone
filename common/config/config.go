@@ -35,7 +35,7 @@ func init() {
 	v.SetDefault("enable_swagger", true)
 	v.SetDefault("ssl_pri", "")
 	v.SetDefault("ssl_pub", "")
-	v.SetDefault("db.host", "rpi.lizo.top")
+	v.SetDefault("db.host", "localhost")
 	v.SetDefault("db.port", 3306)
 	v.SetDefault("db.user", "root")
 	v.SetDefault("db.password", "123456")

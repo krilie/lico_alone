@@ -23,7 +23,7 @@ func init() {
 		config.GetString("db.password"),
 		config.GetString("db.host"),
 		config.GetInt("db.port"),
-		config.GetString("db.database"),
+		config.GetString("db.db_name"),
 	)
 	var err error
 	if Db, err = gorm.Open("mysql", connStr+"&loc=Asia%2FShanghai"); err != nil {
