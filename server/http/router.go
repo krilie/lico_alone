@@ -36,6 +36,7 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 
 	userCtrl := user.NewUserCtrl(app)
 	RootRouter.POST("/v1/user/login", userCtrl.UserLogin)
+	RootRouter.POST("/v1/user/register", userCtrl.UserRegister)
 
 	// 开始服务
 	srv := &http.Server{
