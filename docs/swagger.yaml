@@ -1,10 +1,13 @@
 basePath: '{{.BasePath}}'
 definitions:
-  cmodel.ErrorReturn:
+  cmodel.CommonReturn:
     properties:
       code:
         example: 400
         type: integer
+      data:
+        description: 数据值
+        type: object
       detail:
         description: 可由运行模式控制是否显示
         example: 错误的详细信息，用于排查错误
@@ -12,13 +15,22 @@ definitions:
       message:
         example: 错误信息
         type: string
+      page_info:
+        $ref: '#/definitions/cmodel.PageInfo'
+        description: 分页信息
+        type: object
     type: object
-  cmodel.StdReturn:
+  cmodel.PageInfo:
     properties:
-      code:
-        type: string
-      message:
-        type: string
+      current:
+        type: integer
+      page_size:
+        type: integer
+      total:
+        description: 总数据条数
+        type: integer
+      total_page:
+        type: integer
     type: object
 host: '{{.Host}}'
 info:
@@ -53,17 +65,17 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/cmodel.ErrorReturn'
+            $ref: '#/definitions/cmodel.CommonReturn'
             type: object
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/cmodel.ErrorReturn'
+            $ref: '#/definitions/cmodel.CommonReturn'
             type: object
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/cmodel.ErrorReturn'
+            $ref: '#/definitions/cmodel.CommonReturn'
             type: object
       summary: 用户登录
       tags:
@@ -89,22 +101,22 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/cmodel.StdReturn'
+            $ref: '#/definitions/cmodel.CommonReturn'
             type: object
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/cmodel.ErrorReturn'
+            $ref: '#/definitions/cmodel.CommonReturn'
             type: object
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/cmodel.ErrorReturn'
+            $ref: '#/definitions/cmodel.CommonReturn'
             type: object
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/cmodel.ErrorReturn'
+            $ref: '#/definitions/cmodel.CommonReturn'
             type: object
       summary: 用户注册
       tags:
