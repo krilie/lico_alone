@@ -8,7 +8,7 @@ import (
 // UserLogin 用户注册
 // @Summary 用户注册
 // @Description 用户注册
-// @Tags user_account
+// @Tags 用户账号
 // @ID 用户注册
 // @Produce  json
 // @Param phone formData string true "用户手机号"

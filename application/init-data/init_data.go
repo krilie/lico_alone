@@ -64,10 +64,10 @@ func (a *Init) InitData(ctx context.Context) {
 			Model:      cmodel.Model{Id: adminId, CreateTime: time.Now()},
 			UpdateTime: time.Now(),
 			LoginName:  "admin",
-			PhoneNum:   nil,
+			PhoneNum:   "",
 			Email:      nil,
 			Password:   pswd_util.GetMd5Password("admin", salt),
-			Picture:    nil,
+			Picture:    "",
 			Salt:       salt,
 		}
 		err = a.UserService.Dao.CreateUserMaster(ctx, &user)

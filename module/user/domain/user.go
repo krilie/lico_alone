@@ -83,10 +83,10 @@ func (a *user) GetEntity(ctx context.Context) *model.UserMaster {
 }
 
 func (a *user) UpdatePicture(ctx context.Context, newPic string) (oldPic string, err error) {
-	if a.userMaster.Picture != nil && *a.userMaster.Picture != "" {
-		oldPic = *a.userMaster.Picture
+	if a.userMaster.Picture != "" {
+		oldPic = a.userMaster.Picture
 	}
-	a.userMaster.Picture = &newPic
+	a.userMaster.Picture = newPic
 	err = a.dao.UpdateUserMaster(ctx, a.userMaster)
 	return oldPic, err
 }

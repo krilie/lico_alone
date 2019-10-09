@@ -20,7 +20,6 @@ import (
 // @title Swagger Example API
 // @version 0.0.1
 // @description  This is a sample server Petstore server.
-// @BasePath http:127.0.0.1
 func main() {
 	ctx := ccontext.NewContext()
 	var log = clog.NewLog(ctx, "lico.main", "main")

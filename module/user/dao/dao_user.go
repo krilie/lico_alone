@@ -32,7 +32,7 @@ func (d *Dao) GetUserMasterById(ctx context.Context, userId string) (*model.User
 
 func (d *Dao) GetUserMasterByPhoneNum(ctx context.Context, phoneNum string) (*model.UserMaster, error) {
 	var user model.UserMaster
-	err := d.Db.Model(new(model.UserMaster)).Where(&model.UserMaster{PhoneNum: &phoneNum}).Find(&user).Error
+	err := d.Db.Where("phone_num=?", phoneNum).Find(&user).Error
 	if err != nil {
 		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil
@@ -76,7 +76,7 @@ func (d *Dao) UpdateUserMaster(ctx context.Context, user *model.UserMaster) erro
 
 func (d *Dao) PhoneNumExists(ctx context.Context, phoneNum string) (bool, error) {
 	count := 0
-	err := d.Db.Model(&model.UserMaster{}).Where(&model.UserMaster{PhoneNum: &phoneNum}).Count(&count).Error
+	err := d.Db.Model(&model.UserMaster{}).Where(&model.UserMaster{PhoneNum: phoneNum}).Count(&count).Error
 	if err != nil {
 		return false, errs.NewErrDbQuery().WithError(err)
 	}
