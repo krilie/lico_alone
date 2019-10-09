@@ -14,19 +14,25 @@ import (
 //LTAI4FcUBH2hxNLHaJ6JVZXm
 //yMlaDzBBb6ImpwTBidoVjz2B1EA4N6
 
-var client *dysmsapi.Client
-
-func init() {
-	var err error
-	client, err = dysmsapi.NewClientWithAccessKey("cn-hangzhou", "LTAI4FcUBH2hxNLHaJ6JVZXm", "yMlaDzBBb6ImpwTBidoVjz2B1EA4N6")
-	if err != nil {
-		panic(err)
-		return
-	}
-	return
+type AliSms struct {
+	Key    string
+	Secret string
+	client *dysmsapi.Client
 }
 
-func SendSms(ctx context.Context, msg string) error {
+func NewAliSms(key, secret string) *AliSms {
+	client, err := dysmsapi.NewClientWithAccessKey("cn-hangzhou", key, secret)
+	if err != nil {
+		panic(err)
+	}
+	return &AliSms{
+		Key:    key,
+		Secret: secret,
+		client: client,
+	}
+}
+
+func (a *AliSms) SendRegisterSms(ctx context.Context, msg string) error {
 	request := dysmsapi.CreateSendSmsRequest()
 	request.Scheme = "https"
 
@@ -35,7 +41,7 @@ func SendSms(ctx context.Context, msg string) error {
 	request.TemplateCode = "SMS_173946021"
 	request.TemplateParam = str_util.ToJson(map[string]string{"code": "12321"})
 
-	response, err := client.SendSms(request)
+	response, err := a.client.SendSms(request)
 	if err != nil {
 		return err
 	}
