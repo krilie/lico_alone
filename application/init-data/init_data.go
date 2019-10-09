@@ -3,7 +3,9 @@ package init_data
 import (
 	"context"
 	"github.com/krilie/lico_alone/common/cdb"
+	"github.com/krilie/lico_alone/common/cmodel"
 	"github.com/krilie/lico_alone/common/errs"
+	"github.com/krilie/lico_alone/common/utils/pswd_util"
 	"github.com/krilie/lico_alone/module/config/model"
 	model2 "github.com/krilie/lico_alone/module/user/model"
 	"time"
@@ -56,19 +58,24 @@ func (a *Init) InitData(ctx context.Context) {
 			}
 		}
 		// 初始化第一个用户
-		err = a.UserService.RegisterNewUser(ctx, "admin", "admin")
+		adminId := "00001"
+		salt := pswd_util.GetSalt(6)
+		user := model2.UserMaster{
+			Model:      cmodel.Model{Id: adminId, CreateTime: time.Now()},
+			UpdateTime: time.Now(),
+			LoginName:  "admin",
+			PhoneNum:   nil,
+			Email:      nil,
+			Password:   pswd_util.GetMd5Password("admin", salt),
+			Picture:    nil,
+			Salt:       salt,
+		}
+		err = a.UserService.Dao.CreateUserMaster(ctx, &user)
 		if err != nil {
 			return err
-		}
-		master, err := a.UserService.Dao.GetUserMasterByLoginName(ctx, "admin")
-		if err != nil {
-			return err
-		}
-		if master == nil {
-			return errs.NewInternal().WithMsg("can not take registered admin user on init data func")
 		}
 		// 关联权限用户
-		err = a.UserService.Dao.CreateUserRole(master.Id, "root")
+		err = a.UserService.Dao.CreateUserRole(adminId, "root")
 		if err != nil {
 			return err
 		}

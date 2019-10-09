@@ -12,7 +12,7 @@ import (
 )
 
 // 内部有事务的存在
-func (a *Service) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName string, file multipart.File, size int) (content, bucket, key string, err error) {
+func (a *Service) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName string, file multipart.File, size int) (url, bucket, key string, err error) {
 	err = cdb.WithTrans(ctx, a, func(s cdb.Service) error {
 		fileService := s.(*Service)
 		item := model.FileMaster{
@@ -29,7 +29,8 @@ func (a *Service) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName 
 		if err != nil {
 			return errs.NewErrDbCreate().WithError(err)
 		}
-		content, bucket, key, err = fileService.Oss.UploadFile(ctx, userId, fileName, file, int64(size))
+		var content string
+		content, bucket, key, err = fileService.FileSaver.UploadFile(ctx, userId, fileName, file, int64(size))
 		if err != nil {
 			return err
 		}
@@ -40,9 +41,10 @@ func (a *Service) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName 
 		if err != nil {
 			return err
 		}
+		url = fileService.FileSaver.GetFullUrl(ctx, true, key)
 		return nil
 	})
-	return content, bucket, key, err
+	return url, bucket, key, err
 }
 
 // 内部有事务的存在
@@ -53,7 +55,7 @@ func (a *Service) DeleteFile(ctx context.Context, bucket, key string) (err error
 		if err != nil {
 			return errs.NewErrDbDelete().WithError(err)
 		}
-		err = srv.Oss.DeleteFile(ctx, "", key, "")
+		err = srv.FileSaver.DeleteFile(ctx, "", "")
 		if err != nil {
 			return err
 		}

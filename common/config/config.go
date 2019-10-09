@@ -5,7 +5,6 @@ import (
 	"github.com/krilie/lico_alone/common/clog"
 	"github.com/spf13/viper"
 	"strings"
-	"time"
 )
 
 var (
@@ -31,25 +30,29 @@ func init() {
 	//设置配置文件类型
 	v.SetConfigType("yml")
 
-	v.SetDefault("info.update_time", time.Now().Unix()) //时间戳
-	v.SetDefault("service.port", 80)
-	v.SetDefault("db.host", "127.0.0.1")
+	v.SetDefault("gin_mode", "debug") //时间戳
+	v.SetDefault("http_port", 80)
+	v.SetDefault("enable_swagger", true)
+	v.SetDefault("ssl_pri", "")
+	v.SetDefault("ssl_pub", "")
+	v.SetDefault("db.host", "localhost")
 	v.SetDefault("db.port", 3306)
 	v.SetDefault("db.user", "root")
 	v.SetDefault("db.password", "123456")
-	v.SetDefault("db.database", "lico")
+	v.SetDefault("db.db_name", "lico")
 	v.SetDefault("db.max_open_conn", 1)
 	v.SetDefault("db.max_idle_conn", 1)
 	v.SetDefault("db.conn_max_left_time", 3600*7)
-	v.SetDefault("ssl.public_key", "")
-	v.SetDefault("ssl.private_key", "")
 	v.SetDefault("jwt.normal_exp_duration", 3600*24*30)
 	v.SetDefault("jwt.hs256_key", "E5Vsfs#$afasdrtfawe*^&%(")
-	v.SetDefault("oss_s3.key", "123")
-	v.SetDefault("oss_s3.secret", "123")
-	v.SetDefault("oss_s3.endpoint", "123")
-	v.SetDefault("oss_s3.bucket", "123")
-	v.SetDefault("file_save_path", "static_files")
+	v.SetDefault("jwt.private_key_path", "E5Vsfs#$afasdrtfawe*^&%(")
+	v.SetDefault("file_save.local_file_save_dir", "static_files")
+	v.SetDefault("file_save.local_file_save_url", "http://localhost/static_files")
+	v.SetDefault("file_save.save_type", "local")
+	v.SetDefault("file_save.oss_key", "local")
+	v.SetDefault("file_save.oss_secret", "local")
+	v.SetDefault("file_save.oss_end_point", "local")
+	v.SetDefault("file_save.oss_bucket", "local")
 
 	if err := v.ReadInConfig(); err != nil {
 		switch err.(type) {

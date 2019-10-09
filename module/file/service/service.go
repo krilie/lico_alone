@@ -11,8 +11,8 @@ import (
 )
 
 type Service struct {
-	Dao *dao.Dao
-	Oss oss_s3.FileOperator
+	Dao       *dao.Dao
+	FileSaver oss_s3.FileOperator
 }
 
 func (a *Service) SetTx(ctx context.Context, tx *gorm.DB) (service cdb.Service, err error) {
@@ -24,8 +24,8 @@ func (a *Service) SetTx(ctx context.Context, tx *gorm.DB) (service cdb.Service, 
 		return nil, err
 	}
 	return &Service{
-		Dao: &dao.Dao{Dao: txDao},
-		Oss: a.Oss,
+		Dao:       &dao.Dao{Dao: txDao},
+		FileSaver: a.FileSaver,
 	}, err
 }
 
@@ -35,8 +35,7 @@ func (a *Service) GetDb(ctx context.Context) *gorm.DB {
 
 func NewService(cfg config.Config) *Service {
 	return &Service{
-		Dao: dao.NewDao(&cfg),
-		//Oss: oss_s3.NewOssClient(cfg),
-		Oss: oss_s3.NewOssLocal(cfg),
+		Dao:       dao.NewDao(&cfg),
+		FileSaver: oss_s3.NewOssLocal(cfg),
 	}
 }

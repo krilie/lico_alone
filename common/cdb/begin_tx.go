@@ -31,6 +31,7 @@ func WithTrans(ctx context.Context, oriService Service, txFunc func(service Serv
 			log.Errorln("事务开启失败:", err.Error())
 			return err
 		}
+		log.Errorln("事务开启成功")
 		// 新开事务要set tx 转化
 		service, _ = oriService.SetTx(ctx, tx)
 	}

@@ -7,4 +7,6 @@ import (
 func TestGetString(t *testing.T) {
 	t.Log(Cfg)
 	t.Log(v.GetStringSlice("cors.allow_methods"))
+	str := v.WriteConfig()
+	t.Log(str)
 }

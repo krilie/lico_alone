@@ -2,6 +2,7 @@ package oss_s3
 
 import (
 	"context"
+	"fmt"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/file_util"
@@ -13,14 +14,19 @@ import (
 type OssClient struct {
 	Client     *minio.Client
 	BucketName string
+	Url        string
+}
+
+func (f *OssClient) GetFullUrl(ctx context.Context, isPub bool, key string) string {
+	return fmt.Sprintf("%v/%v/%v", f.Url, f.BucketName, key)
 }
 
 func NewOssClient(cfg config.Config) *OssClient {
-	minioClient, err := minio.New(cfg.OssS3.OssEndPoint, cfg.OssS3.OssKey, cfg.OssS3.OssSecret, true) //endpoint, accessKeyID, secretAccessKey string, secure bool
+	minioClient, err := minio.New(cfg.FileSave.OssEndPoint, cfg.FileSave.OssKey, cfg.FileSave.OssSecret, true) //endpoint, accessKeyID, secretAccessKey string, secure bool
 	if err != nil {
 		panic(errs.NewInternal().WithError(err))
 	}
-	return &OssClient{Client: minioClient, BucketName: cfg.OssS3.OssBucket}
+	return &OssClient{Client: minioClient, BucketName: cfg.FileSave.OssBucket}
 }
 
 func (f *OssClient) GetBucketName() string {
@@ -47,8 +53,8 @@ func (f *OssClient) UploadFile(ctx context.Context, userId, name string, file io
 	}
 }
 
-func (f *OssClient) DeleteFile(ctx context.Context, userId, bucket, key string) error {
-	err := f.Client.RemoveObject(bucket, key)
+func (f *OssClient) DeleteFile(ctx context.Context, userId, key string) error {
+	err := f.Client.RemoveObject(f.BucketName, key)
 	if err != nil {
 		return errs.NewInternal().WithError(err)
 	}
