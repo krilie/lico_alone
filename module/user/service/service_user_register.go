@@ -10,8 +10,11 @@ import (
 	"time"
 )
 
-func (s *Service) RegisterNewUser(ctx context.Context, loginName, password string) error {
-	master, err := s.Dao.GetUserMasterByLoginName(ctx, loginName)
+func (s *Service) RegisterNewUser(ctx context.Context, phoneNum, password string) error {
+	if phoneNum == "" || password == "" {
+		return errs.NewBadRequest().WithMsg("参数错误")
+	}
+	master, err := s.Dao.GetUserMasterByPhoneNum(ctx, phoneNum)
 	if err != nil {
 		return err
 	}
@@ -25,11 +28,11 @@ func (s *Service) RegisterNewUser(ctx context.Context, loginName, password strin
 			CreateTime: time.Now(),
 		},
 		UpdateTime: time.Now(),
-		LoginName:  loginName,
-		PhoneNum:   nil,
+		LoginName:  phoneNum,
+		PhoneNum:   phoneNum,
 		Email:      nil,
 		Password:   pswd_util.GetMd5Password(password, salt),
-		Picture:    nil,
+		Picture:    "",
 		Salt:       salt,
 	}
 	err = s.Dao.CreateUserMaster(ctx, &user)

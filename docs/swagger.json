@@ -8,7 +8,7 @@
         "version": "0.0.1"
     },
     "host": "{{.Host}}",
-    "basePath": "http:127.0.0.1",
+    "basePath": "{{.BasePath}}",
     "paths": {
         "/v1/user/login": {
             "post": {
@@ -17,7 +17,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "user_account"
+                    "用户账号"
                 ],
                 "summary": "用户登录",
                 "operationId": "用户登录",
@@ -75,7 +75,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "user_account"
+                    "用户账号"
                 ],
                 "summary": "用户注册",
                 "operationId": "用户注册",

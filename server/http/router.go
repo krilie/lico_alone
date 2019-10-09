@@ -32,15 +32,17 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 	}
 	// 全局中间件
 	RootRouter.Use(middleware.BuildContext())
-	RootRouter.Use(middleware.CheckAuthToken(app.User))
+
+	noCheckToken := RootRouter.Group("")
+	//checkToken :=RootRouter.Group("").Use(middleware.CheckAuthToken(app.User))
 
 	userCtrl := user.NewUserCtrl(app)
-	RootRouter.POST("/v1/user/login", userCtrl.UserLogin)
-	RootRouter.POST("/v1/user/register", userCtrl.UserRegister)
+	noCheckToken.POST("/v1/user/login", userCtrl.UserLogin)
+	noCheckToken.POST("/v1/user/register", userCtrl.UserRegister)
 
 	// 开始服务
 	srv := &http.Server{
-		Addr:    ":" + config.GetString("service.port"),
+		Addr:    ":" + config.GetString("http_port"),
 		Handler: RootRouter,
 	}
 	//是否有ssl.public_key ssl.private_key

@@ -1,4 +1,4 @@
-basePath: http:127.0.0.1
+basePath: '{{.BasePath}}'
 definitions:
   cmodel.ErrorReturn:
     properties:
@@ -67,7 +67,7 @@ paths:
             type: object
       summary: 用户登录
       tags:
-      - user_account
+      - 用户账号
   /v1/user/register:
     post:
       description: 用户注册
@@ -108,5 +108,5 @@ paths:
             type: object
       summary: 用户注册
       tags:
-      - user_account
+      - 用户账号
 swagger: "2.0"
