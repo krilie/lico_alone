@@ -32,14 +32,14 @@ func NewAliSms(key, secret string) *AliSms {
 	}
 }
 
-func (a *AliSms) SendRegisterSms(ctx context.Context, msg string) error {
+func (a *AliSms) SendRegisterSms(ctx context.Context, code string) error {
 	request := dysmsapi.CreateSendSmsRequest()
 	request.Scheme = "https"
 
 	request.PhoneNumbers = "18761438228"
 	request.SignName = "迅如雨"
 	request.TemplateCode = "SMS_173946021"
-	request.TemplateParam = str_util.ToJson(map[string]string{"code": "12321"})
+	request.TemplateParam = str_util.ToJson(map[string]string{"code": code})
 
 	response, err := a.client.SendSms(request)
 	if err != nil {
