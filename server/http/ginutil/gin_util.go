@@ -22,13 +22,13 @@ func GetAppCtxOrAbort(c *gin.Context) *ccontext.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
 		log.Error("GetAppCtxOrAbort", "can not get application context for next step")
-		c.AbortWithStatusJSON(500, cmodel.RetFromErr(errs.NewInternal()))
+		c.AbortWithStatusJSON(500, cmodel.NewRetFromErr(errs.NewInternal()))
 		return nil
 	}
 	contextOrNil := ccontext.GetContextOrNil(value)
 	if contextOrNil == nil {
 		log.Error("GetAppCtxOrAbort", "internal err on cast context to app context")
-		c.AbortWithStatusJSON(500, cmodel.RetFromErr(errs.NewInternal()))
+		c.AbortWithStatusJSON(500, cmodel.NewRetFromErr(errs.NewInternal()))
 		return nil
 	}
 	return contextOrNil

@@ -43,7 +43,7 @@ func ReturnWithErr(c *gin.Context, err error) {
 	if lerr := errs.ToErrOrNil(err); lerr != nil {
 		c.JSON(lerr.Code, cmodel.NewRet(lerr))
 	} else {
-		c.JSON(500, cmodel.RetFromErr(err))
+		c.JSON(500, cmodel.NewRetFromErr(err))
 	}
 }
 
@@ -55,5 +55,5 @@ func ReturnOk(c *gin.Context) {
 	c.JSON(200, cmodel.StdSuccess)
 }
 func ReturnFailure(code int, c *gin.Context) {
-	c.JSON(code, cmodel.StdFailure)
+	c.JSON(code, cmodel.NewFailure(code, ""))
 }

@@ -11,10 +11,10 @@ func AbortWithErr(c *gin.Context, err error) {
 	if lerr := errs.ToErrOrNil(err); lerr != nil {
 		c.AbortWithStatusJSON(lerr.Code, cmodel.NewRet(lerr))
 	} else {
-		c.AbortWithStatusJSON(500, cmodel.RetFromErr(err))
+		c.AbortWithStatusJSON(500, cmodel.NewRetFromErr(err))
 	}
 }
 
 func AbortWithAppErr(c *gin.Context, err *errs.Err) {
-	c.AbortWithStatusJSON(err.Code, cmodel.RetFromErr(err))
+	c.AbortWithStatusJSON(err.Code, cmodel.NewRetFromErr(err))
 }

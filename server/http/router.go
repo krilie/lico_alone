@@ -51,14 +51,14 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 	if pubKey == "" || priKey == "" {
 		go func() {
 			if err := srv.ListenAndServe(); err != nil {
-				log.Warningln(err)
+				log.Panicln(err)
 				return
 			}
 		}()
 	} else {
 		go func() {
 			if err := srv.ListenAndServeTLS(pubKey, priKey); err != nil {
-				log.Warningln(err)
+				log.Panicln(err)
 				return
 			}
 		}()

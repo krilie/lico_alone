@@ -14,9 +14,9 @@ import (
 // @Param phone formData string true "用户手机号"
 // @Param password formData string true "用户密码"
 // @Success 200 {string} string "{jwt:"asb"}"
-// @Failure 400 {object} cmodel.ErrorReturn
-// @Failure 404 {object} cmodel.ErrorReturn
-// @Failure 500 {object} cmodel.ErrorReturn
+// @Failure 400 {object} cmodel.CommonReturn
+// @Failure 404 {object} cmodel.CommonReturn
+// @Failure 500 {object} cmodel.CommonReturn
 // @Router /v1/user/login [post]
 func (a *UserCtrl) UserLogin(c *gin.Context) {
 	jwt, err := a.AppUser.UserLogin(ginutil.MustGetAppCtx(c), c.PostForm("phone"), c.PostForm("password"), "")
