@@ -40,7 +40,7 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 
 	// 开始服务
 	srv := &http.Server{
-		Addr:    ":" + config.GetString("service.port"),
+		Addr:    ":" + config.GetString("http_port"),
 		Handler: RootRouter,
 	}
 	//是否有ssl.public_key ssl.private_key
