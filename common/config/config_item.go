@@ -9,6 +9,7 @@ type Config struct {
 	DB            DB       `mapstructure:"db" json:"db" toml:"db"`
 	JWT           JWT      `mapstructure:"jwt" json:"jwt" toml:"jwt"`
 	FileSave      FileSave `mapstructure:"file_save" json:"file_save" toml:"file_save"`
+	Email         Email    `mapstructure:"email" json:"email" toml:"email"`
 }
 
 type DB struct {
@@ -35,4 +36,12 @@ type JWT struct {
 	NormalExpDuration string `mapstructure:"normal_exp_duration" json:"normal_exp_duration" toml:"normal_exp_duration"`
 	HS256key          string `mapstructure:"hs_256_key" json:"hs_256_key" toml:"hs256_key"`
 	PrivateKeyPath    string `mapstructure:"private_key_path" json:"private_key_path" toml:"private_key_path"`
+}
+
+type Email struct {
+	Address  string `mapstructure:"address" json:"address" toml:"address"`
+	Host     string `mapstructure:"host" json:"host" toml:"host"`
+	Port     int    `mapstructure:"port" json:"port" toml:"port"`
+	UserName string `mapstructure:"user_name" json:"user_name" toml:"user_name"`
+	Password string `mapstructure:"password" json:"password" toml:"password"`
 }

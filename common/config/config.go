@@ -16,8 +16,8 @@ var (
 func init() {
 	log := clog.NewLog(context.Background(), "lico_alone.common.config", "init")
 
-	var configFilePath string
-	flag.StringVar(&configFilePath, "c", "./config.yml", "config file path")
+	var ConfigFilePath string
+	flag.StringVar(&ConfigFilePath, "c", "./config.yml", "config file path")
 	flag.Parse()
 
 	v = viper.New()
@@ -34,7 +34,7 @@ func init() {
 	//v.AddConfigPath("./")
 	//设置配置文件类型
 	v.SetConfigType("yml")
-	v.SetConfigFile(configFilePath) // 默认./config.yml
+	v.SetConfigFile(ConfigFilePath) // 默认./config.yml
 
 	v.SetDefault("gin_mode", "debug") //时间戳
 	v.SetDefault("http_port", 80)
