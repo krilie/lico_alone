@@ -21,7 +21,7 @@ type Dao struct {
 	*cdb.Dao
 }
 
-func NewDao(cfg *config.Config) *Dao {
+func NewDao(cfg config.DB) *Dao {
 	return &Dao{
 		Dao: cdb.NewDao(cfg),
 	}

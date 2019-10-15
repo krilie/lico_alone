@@ -9,8 +9,8 @@ type Dao struct {
 	Db *gorm.DB
 }
 
-func NewDao(cfg *config.Config) *Dao {
-	return &Dao{Db: Db}
+func NewDao(cfg config.DB) *Dao {
+	return &Dao{Db: GetDbByConfig(cfg)}
 }
 
 func (d *Dao) Begin(db *gorm.DB) (*Dao, error) {

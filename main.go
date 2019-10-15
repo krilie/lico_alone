@@ -23,7 +23,7 @@ import (
 func main() {
 	ctx := ccontext.NewContext()
 	var log = clog.NewLog(ctx, "lico.main", "main")
-	defer cdb.Close()                                          // 最后关闭数据库
+	defer cdb.CloseDb()                                        // 最后关闭数据库
 	defer func() { broker.Smq.Close(); log.Infof("消息队列退出") }() // 关闭消息队列
 	app := application.NewApp(config.Cfg)
 	// 初始化数据 权限账号等

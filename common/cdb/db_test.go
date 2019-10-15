@@ -5,7 +5,7 @@ import (
 )
 
 func TestDb(T *testing.T) {
-	defer Close()
+	defer CloseDb()
 	db := Db.New()
 	T.Log(db)
 	_ = db.Close()
