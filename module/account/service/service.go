@@ -30,8 +30,8 @@ func (s *Service) GetDb(ctx context.Context) *gorm.DB {
 	return s.Dao.Db
 }
 
-func NewService(cfg config.Config) *Service {
+func NewService(cfg config.DB) *Service {
 	return &Service{
-		Dao: dao.NewDao(&cfg),
+		Dao: dao.NewDao(cfg),
 	}
 }
