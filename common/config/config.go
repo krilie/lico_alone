@@ -3,6 +3,7 @@ package config
 import (
 	"context"
 	"github.com/krilie/lico_alone/common/clog"
+	"github.com/prometheus/common/log"
 	"github.com/spf13/viper"
 	"strings"
 )
@@ -27,13 +28,6 @@ func init() {
 	replacer := strings.NewReplacer(".", "_")
 	v.SetEnvKeyReplacer(replacer)
 
-	////设置配置文件的名字
-	//v.SetConfigName("config")
-	////添加配置文件所在的路径,注意在Linux环境下%GOPATH要替换为$GOPATH
-	//v.AddConfigPath("./")
-	//设置配置文件类型
-	v.SetConfigType("yaml")
-	v.SetConfigFile("./config.yaml") // 默认./config.yml
 	// 共同配置
 	v.SetDefault("gin_mode", "debug") //时间戳
 	v.SetDefault("http_port", 80)
@@ -68,11 +62,18 @@ func init() {
 	v.SetDefault("email.password", "aaa")
 	v.SetDefault("email.address", "aaa")
 
+	if err := LoadConfigByFile("./config.yaml"); err != nil {
+		log.Error(err.Error())
+		return
+	}
+}
+
+func LoadConfigByFile(name string) error {
+	v.SetConfigFile(name)
 	if err := v.ReadInConfig(); err != nil {
 		switch err.(type) {
 		case viper.ConfigFileNotFoundError:
 			//err = Conf.v.WriteConfigAs("config.yaml") //new config file and ignore err
-			//log.Infoln("create a new config file config.yaml at pwd path. any err:", err)
 			log.Infoln("no config file use default:", err)
 		default:
 			log.Warnln(err)
@@ -81,7 +82,7 @@ func init() {
 
 	err := v.Unmarshal(&Cfg)
 	if err != nil {
-		log.Panic(err)
+		return err
 	}
-
+	return nil
 }

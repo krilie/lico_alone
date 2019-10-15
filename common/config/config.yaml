@@ -7,6 +7,12 @@ db:
   password: "123456"
   port: 3306
   user: root
+email:
+  address: aaa
+  host: aaa
+  password: aaa
+  port: 32
+  user_name: aaa
 enable_swagger: true
 file_save:
   local_file_save_dir: static_files
