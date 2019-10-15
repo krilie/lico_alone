@@ -8,9 +8,9 @@ import (
 	"github.com/krilie/lico_alone/module/config/model"
 )
 
-func init() {
+func AutoMigrate(d *Dao) {
 	var log = clog.NewLog(ccontext.NewContext(), "alone.module.user.model", "init")
-	err := cdb.Db.AutoMigrate(new(model.Config)).Error
+	err := d.Db.AutoMigrate(new(model.Config)).Error
 	if err != nil {
 		panic(err)
 	}
@@ -22,7 +22,9 @@ type Dao struct {
 }
 
 func NewDao(cfg config.DB) *Dao {
-	return &Dao{
+	d := &Dao{
 		Dao: cdb.NewDao(cfg),
 	}
+	AutoMigrate(d)
+	return d
 }
