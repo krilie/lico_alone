@@ -1,29 +1,33 @@
 package email
 
-import "gopkg.in/gomail.v2"
+import (
+	"context"
+	"gopkg.in/gomail.v2"
+)
 
 type Email struct {
+	Dialer *gomail.Dialer
+
 	Address  string
 	Host     string
 	Port     int
 	UserName string
 	Password string
-	Dialer   *gomail.Dialer
 }
 
 func NewEmail(addr, host string, port int, name, password string) *Email {
 	return &Email{
+		Dialer:   gomail.NewDialer(host, port, name, password),
 		Address:  addr,
 		Host:     host,
 		Port:     port,
 		UserName: name,
 		Password: password,
-		Dialer:   gomail.NewDialer(host, port, name, password),
 	}
 }
 
 // SendServiceUpEmail 发送服务启动消息
-func (e *Email) SendEmail(to, subject, msg string) error {
+func (e *Email) SendEmail(ctx context.Context, to, subject, msg string) error {
 	m := gomail.NewMessage()
 	m.SetHeader("From", e.Address)
 	m.SetHeader("To", to)
