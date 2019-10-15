@@ -2,6 +2,7 @@ package config
 
 import (
 	"context"
+	"flag"
 	"github.com/krilie/lico_alone/common/clog"
 	"github.com/spf13/viper"
 	"strings"
@@ -15,6 +16,10 @@ var (
 func init() {
 	log := clog.NewLog(context.Background(), "lico_alone.common.config", "init")
 
+	var configFilePath string
+	flag.StringVar(&configFilePath, "c", "./config.yml", "config file path")
+	flag.Parse()
+
 	v = viper.New()
 
 	//读取环境变量值
@@ -23,12 +28,13 @@ func init() {
 	replacer := strings.NewReplacer(".", "_")
 	v.SetEnvKeyReplacer(replacer)
 
-	//设置配置文件的名字
-	v.SetConfigName("config")
-	//添加配置文件所在的路径,注意在Linux环境下%GOPATH要替换为$GOPATH
-	v.AddConfigPath("./")
+	////设置配置文件的名字
+	//v.SetConfigName("config")
+	////添加配置文件所在的路径,注意在Linux环境下%GOPATH要替换为$GOPATH
+	//v.AddConfigPath("./")
 	//设置配置文件类型
 	v.SetConfigType("yml")
+	v.SetConfigFile(configFilePath) // 默认./config.yml
 
 	v.SetDefault("gin_mode", "debug") //时间戳
 	v.SetDefault("http_port", 80)
