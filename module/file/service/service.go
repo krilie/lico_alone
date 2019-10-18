@@ -35,7 +35,7 @@ func (a *Service) GetDb(ctx context.Context) *gorm.DB {
 
 func NewService(cfg config.Config) *Service {
 	return &Service{
-		Dao:       dao.NewDao(&cfg),
+		Dao:       dao.NewDao(cfg.DB),
 		FileSaver: oss_s3.NewOssLocal(cfg),
 	}
 }
