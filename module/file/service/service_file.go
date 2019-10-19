@@ -59,3 +59,7 @@ func (a *Service) DeleteFile(ctx context.Context, bucket, key string) (err error
 	})
 	return err
 }
+
+func (a *Service) GetBaseUrl(ctx context.Context) string {
+	return a.FileSaver.GetBaseUrl(ctx)
+}
