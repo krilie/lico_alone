@@ -9,6 +9,7 @@ import (
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/minio/minio-go"
 	"io"
+	"os"
 )
 
 type OssClient struct {
@@ -26,7 +27,8 @@ func NewOssClient(cfg config.Config) *OssClient {
 	if err != nil {
 		panic(errs.NewInternal().WithError(err))
 	}
-	return &OssClient{Client: minioClient, BucketName: cfg.FileSave.OssBucket}
+	url := fmt.Sprintf("%v%v%v", cfg.FileSave.OssEndPoint, os.PathSeparator, cfg.FileSave.OssBucket)
+	return &OssClient{Client: minioClient, BucketName: cfg.FileSave.OssBucket, Url: url}
 }
 
 func (f *OssClient) GetBucketName() string {
@@ -59,4 +61,8 @@ func (f *OssClient) DeleteFile(ctx context.Context, userId, key string) error {
 		return errs.NewInternal().WithError(err)
 	}
 	return nil
+}
+
+func (o *OssClient) GetBaseUrl(ctx context.Context) string {
+	return o.Url
 }
