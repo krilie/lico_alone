@@ -9,11 +9,11 @@ import (
 
 // 健康检查 ping
 func Init(engine *gin.Engine) {
-	engine.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "hello lico")
+	engine.GET("health/", func(c *gin.Context) {
+		c.String(http.StatusOK, "hello")
 	})
 
-	engine.GET("/ping", func(c *gin.Context) {
+	engine.GET("health/ping", func(c *gin.Context) {
 		c.String(http.StatusOK, "pong last update time "+time_util.GetBeijingTimeString(int64(config.GetInt("info.update_time"))))
 	})
 }
