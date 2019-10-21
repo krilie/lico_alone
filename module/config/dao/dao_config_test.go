@@ -10,13 +10,13 @@ import (
 )
 
 func TestDao_GetConfigByName(t *testing.T) {
-	dao := NewDao(&config.Cfg)
+	dao := NewDao(config.Cfg.DB)
 	name, err := dao.GetConfigByName(context.Background(), model.CommonIsInitData)
 	t.Log(name, err)
 }
 
 func TestDao_CreateConfig(t *testing.T) {
-	dao := NewDao(&config.Cfg)
+	dao := NewDao(config.Cfg.DB)
 	err := dao.CreateConfig(context.Background(), &model.Config{
 		Model: cmodel.Model{
 			Id:         "123",
@@ -28,7 +28,7 @@ func TestDao_CreateConfig(t *testing.T) {
 	t.Log(err)
 }
 func TestNewDao(t *testing.T) {
-	dao := NewDao(&config.Cfg)
+	dao := NewDao(config.Cfg.DB)
 	err := dao.UpdateConfig(context.Background(), &model.Config{
 		Model: cmodel.Model{
 			Id:         "123",
@@ -40,7 +40,7 @@ func TestNewDao(t *testing.T) {
 	t.Log(err)
 }
 func TestDao_DeleteConfig(t *testing.T) {
-	dao := NewDao(&config.Cfg)
+	dao := NewDao(config.Cfg.DB)
 	err := dao.DeleteConfig(context.Background(), "1111111111")
 	t.Log(err)
 }

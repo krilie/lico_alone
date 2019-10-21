@@ -33,3 +33,7 @@ func (o *OssLocal) DeleteFile(ctx context.Context, userId, key string) error {
 func (o *OssLocal) GetBucketName() string {
 	return ""
 }
+
+func (o *OssLocal) GetBaseUrl(ctx context.Context) string {
+	return o.Url
+}

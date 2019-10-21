@@ -86,3 +86,41 @@ func LoadConfigByFile(name string) error {
 	}
 	return nil
 }
+
+/**
+
+db:
+  conn_max_left_time: 25200
+  db_name: lico
+  host: rpi.lizo.top
+  max_idle_conn: 1
+  max_open_conn: 1
+  password: "123456"
+  port: 3306
+  user: root
+email:
+  address: aaa
+  host: aaa
+  password: aaa
+  port: 32
+  user_name: aaa
+enable_swagger: true
+file_save:
+  local_file_save_dir: static_files
+  local_file_save_url: http://localhost/static_files
+  oss_bucket: local
+  oss_end_point: local
+  oss_key: local
+  oss_secret: local
+  save_type: local
+gin_mode: debug
+http_port: 80
+jwt:
+  hs256_key: E5Vsfs#$afasdrtfawe*^&%(
+  normal_exp_duration: 2592000
+  private_key_path: E5Vsfs#$afasdrtfawe*^&%(
+ssl_pri: ""
+ssl_pub: ""
+
+
+*/

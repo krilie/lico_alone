@@ -9,5 +9,6 @@ type FileOperator interface {
 	UploadFile(ctx context.Context, userId, name string, file io.ReadSeeker, size int64) (content, bucket, key string, err error)
 	DeleteFile(ctx context.Context, userId, key string) error
 	GetFullUrl(ctx context.Context, isPub bool, key string) (url string)
+	GetBaseUrl(ctx context.Context) string
 	GetBucketName() string
 }

@@ -30,7 +30,7 @@ func main() {
 	// 初始化数据 权限账号等
 	app.Init.InitData(ctx)
 	// 加载所有权限
-	app.User.UserService.AuthCacheLoadAll(ctx)
+	app.User.UserService.MustAuthCacheLoadAll(ctx)
 	// 注册所有消息处理句柄
 	broker2.RegisterHandler(ctx, app)
 	// 初始化定时任务
