@@ -7,7 +7,7 @@ import (
 )
 
 func TestService_ChangeUserPassword(t *testing.T) {
-	srv := NewService(config.Cfg)
+	srv := NewService(config.Cfg.DB)
 	err := srv.ChangeUserPassword(context.Background(), "1162588057191321600", "123", "11234")
 	t.Log(err)
 }

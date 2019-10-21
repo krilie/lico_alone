@@ -7,7 +7,7 @@ import (
 )
 
 func TestService_RegisterNewUser(t *testing.T) {
-	srv := NewService(config.Cfg)
+	srv := NewService(config.Cfg.DB)
 	err := srv.RegisterNewUser(context.Background(), "123", "123")
 	t.Log(err)
 }
