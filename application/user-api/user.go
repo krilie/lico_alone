@@ -1,6 +1,7 @@
 package user_api
 
 import (
+	"errors"
 	all_service "github.com/krilie/lico_alone/application/all-service"
 	"github.com/krilie/lico_alone/module/user/service"
 	"github.com/mikespook/gorbac"
@@ -11,7 +12,15 @@ type AppUser struct {
 }
 
 func (a *AppUser) HasUser(id string) (bool, error) {
-	return a.UserService.AuthRBAC.HasRole(id)
+	_, _, err := a.UserService.AuthRBAC.Get(id)
+	if err != nil {
+		if errors.Is(err, gorbac.ErrRoleNotExist) {
+			return false, nil
+		} else {
+			return false, err
+		}
+	}
+	return true, nil
 }
 
 func (a *AppUser) HasPermission(id, permission string) (bool, error) {

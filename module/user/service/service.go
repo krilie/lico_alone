@@ -7,12 +7,12 @@ import (
 	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/module/user/dao"
-	"github.com/krilie/lico_alone/module/user/rbac"
+	"github.com/mikespook/gorbac"
 )
 
 type Service struct {
 	Dao      *dao.Dao
-	AuthRBAC *rbac.RBAC
+	AuthRBAC *gorbac.RBAC
 }
 
 func (s *Service) SetTx(ctx context.Context, tx *gorm.DB) (cdb.Service, error) {
@@ -36,6 +36,6 @@ func (s *Service) GetDb(ctx context.Context) *gorm.DB {
 func NewService(cfg config.DB) *Service {
 	return &Service{
 		Dao:      dao.NewDao(cfg),
-		AuthRBAC: rbac.NewRBAC(),
+		AuthRBAC: gorbac.New(),
 	}
 }
