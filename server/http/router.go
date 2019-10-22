@@ -8,6 +8,7 @@ import (
 	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/config"
 	_ "github.com/krilie/lico_alone/docs"
+	"github.com/krilie/lico_alone/server/http/health"
 	"github.com/krilie/lico_alone/server/http/middleware"
 	"github.com/krilie/lico_alone/server/http/user"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -30,6 +31,8 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 	if config.Cfg.EnableSwagger {
 		RootRouter.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
+	// 健康检查
+	health.Init(RootRouter)
 	// 全局中间件
 	RootRouter.Use(middleware.BuildContext())
 

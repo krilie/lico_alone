@@ -2,9 +2,11 @@ package config
 
 import (
 	"context"
+	"flag"
 	"github.com/krilie/lico_alone/common/clog"
 	"github.com/prometheus/common/log"
 	"github.com/spf13/viper"
+	"os"
 	"strings"
 )
 
@@ -61,8 +63,16 @@ func init() {
 	v.SetDefault("email.user_name", "aaa")
 	v.SetDefault("email.password", "aaa")
 	v.SetDefault("email.address", "aaa")
-
-	if err := LoadConfigByFile("./config.yaml"); err != nil {
+	// 从命令行 读取默认配置
+	var defFile = ""
+	set := flag.NewFlagSet("config", flag.ContinueOnError)
+	set.StringVar(&defFile, "c", "./config.yaml", "config file")
+	if err := set.Parse(os.Args[1:]); err != nil {
+		log.Error(err)
+		return
+	}
+	// 加载配置文件
+	if err := LoadConfigByFile(defFile); err != nil {
 		log.Error(err.Error())
 		return
 	}
