@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/cmodel"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
@@ -11,11 +12,13 @@ import (
 )
 
 func (s *Service) RegisterNewUser(ctx context.Context, phoneNum, password string) error {
+	log := clog.NewLog(ctx, "module/user/service/service_user_register.go:14", "RegisterNewUser")
 	if phoneNum == "" || password == "" {
 		return errs.NewBadRequest().WithMsg("参数错误")
 	}
 	master, err := s.Dao.GetUserMasterByPhoneNum(ctx, phoneNum)
 	if err != nil {
+		log.Errorf("register new user err:%v", err)
 		return err
 	}
 	if master != nil {
