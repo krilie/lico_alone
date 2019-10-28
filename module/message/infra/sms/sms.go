@@ -50,3 +50,7 @@ func (a *AliSms) SendRegisterSms(ctx context.Context, code string) error {
 	}
 	return nil
 }
+
+type IAliSms interface {
+	SendRegisterSms(ctx context.Context, code string) error
+}

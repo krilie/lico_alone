@@ -12,9 +12,9 @@ import (
 )
 
 type Service struct {
-	Dao *dao.Dao
-	email *email.Email
-	sms *sms.AliSms
+	Dao   *dao.Dao
+	email email.IEmail
+	sms   sms.IAliSms
 }
 
 func (a *Service) SetTx(ctx context.Context, tx *gorm.DB) (service cdb.Service, err error) {
@@ -26,7 +26,9 @@ func (a *Service) SetTx(ctx context.Context, tx *gorm.DB) (service cdb.Service, 
 		return nil, err
 	}
 	return &Service{
-		Dao: &dao.Dao{Dao: txDao},
+		Dao:   &dao.Dao{Dao: txDao},
+		email: a.email,
+		sms:   a.sms,
 	}, err
 }
 
@@ -36,8 +38,8 @@ func (a *Service) GetDb(ctx context.Context) *gorm.DB {
 
 func NewService(cfg config.Config) *Service {
 	return &Service{
-		Dao: dao.NewDao(cfg.DB),
-		email:email.NewEmail(cfg.Email.Address,cfg.Email.Host,cfg.Email.Port,cfg.Email.UserName,cfg.Email.Password),
-		sms:sms.NewAliSms()
+		Dao:   dao.NewDao(cfg.DB),
+		email: email.NewEmail(cfg.Email.Address, cfg.Email.Host, cfg.Email.Port, cfg.Email.UserName, cfg.Email.Password),
+		sms:   sms.NewAliSms(cfg.AliSms.Key, cfg.AliSms.Secret),
 	}
 }

@@ -10,6 +10,7 @@ type Config struct {
 	JWT           JWT      `mapstructure:"jwt" json:"jwt" toml:"jwt"`
 	FileSave      FileSave `mapstructure:"file_save" json:"file_save" toml:"file_save"`
 	Email         Email    `mapstructure:"email" json:"email" toml:"email"`
+	AliSms        AliSms   `mapstructure:"ali_sms" json:"ali_sms" toml:"ali_sms"`
 }
 
 type DB struct {
@@ -44,4 +45,9 @@ type Email struct {
 	Port     int    `mapstructure:"port" json:"port" toml:"port"`
 	UserName string `mapstructure:"user_name" json:"user_name" toml:"user_name"`
 	Password string `mapstructure:"password" json:"password" toml:"password"`
+}
+
+type AliSms struct {
+	Key    string `mapstructure:"key" json:"key" toml:"key"`
+	Secret string `mapstructure:"secret" json:"secret" toml:"secret"`
 }

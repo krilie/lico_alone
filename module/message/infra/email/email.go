@@ -38,3 +38,7 @@ func (e *Email) SendEmail(ctx context.Context, to, subject, msg string) error {
 	}
 	return nil
 }
+
+type IEmail interface {
+	SendEmail(ctx context.Context, to, subject, msg string) error
+}
