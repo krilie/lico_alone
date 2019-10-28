@@ -32,7 +32,7 @@ func NewAliSms(key, secret string) *AliSms {
 	}
 }
 
-func (a *AliSms) SendRegisterSms(ctx context.Context, code string) error {
+func (a *AliSms) SendRegisterSms(ctx context.Context, phone, code string) error {
 	request := dysmsapi.CreateSendSmsRequest()
 	request.Scheme = "https"
 
@@ -52,5 +52,5 @@ func (a *AliSms) SendRegisterSms(ctx context.Context, code string) error {
 }
 
 type IAliSms interface {
-	SendRegisterSms(ctx context.Context, code string) error
+	SendRegisterSms(ctx context.Context, phone, code string) error
 }
