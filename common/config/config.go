@@ -65,6 +65,11 @@ func init() {
 	v.SetDefault("email.address", "aaa")
 	v.SetDefault("ali_sms.key", "1")
 	v.SetDefault("ali_sms.secret", "1")
+	err := v.Unmarshal(&Cfg)
+	if err != nil {
+		log.Error(err)
+		return
+	}
 	// 从命令行 读取默认配置
 	var defFile = ""
 	set := flag.NewFlagSet("config", flag.ContinueOnError)
@@ -91,7 +96,6 @@ func LoadConfigByFile(name string) error {
 			log.Warnln(err)
 		}
 	}
-
 	err := v.Unmarshal(&Cfg)
 	if err != nil {
 		return err
