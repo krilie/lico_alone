@@ -17,21 +17,18 @@ func (s *Service) SendEmail(ctx context.Context, to, subject, content string) er
 		log.Error(err)
 		return errs.NewInternal().WithError(err)
 	}
-	err = s.Dao.Db.Create(model.MessageSms{
-		Model: cmodel.Model{
-			Id:         id_util.GetUuid(),
-			CreateTime: time.Now(),
-		},
+	err = s.Dao.CreateMessageSms(ctx, &model.MessageSms{
+		Model:     cmodel.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
 		SendTime:  time.Now(),
 		Name:      "",
 		To:        to,
 		Message:   subject + ":" + content,
 		IsSuccess: true,
 		Other:     "自由邮件",
-	}).Error
+	})
 	if err != nil {
 		log.Error(err)
-		return errs.ErrDbCreate.WithError(err)
+		return err
 	}
 	return nil
 }

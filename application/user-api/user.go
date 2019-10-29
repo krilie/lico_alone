@@ -3,12 +3,14 @@ package user_api
 import (
 	"errors"
 	all_service "github.com/krilie/lico_alone/application/all-service"
+	service2 "github.com/krilie/lico_alone/module/message/service"
 	"github.com/krilie/lico_alone/module/user/service"
 	"github.com/mikespook/gorbac"
 )
 
 type AppUser struct {
 	UserService *service.Service
+	Message     *service2.Service
 }
 
 func (a *AppUser) HasUser(id string) (bool, error) {
@@ -42,5 +44,5 @@ func (a *AppUser) HasRole(userId, roleId string) (bool, error) {
 }
 
 func NewAppUser(allSrv *all_service.AllService) *AppUser {
-	return &AppUser{UserService: allSrv.UserService}
+	return &AppUser{UserService: allSrv.UserService, Message: allSrv.Message}
 }

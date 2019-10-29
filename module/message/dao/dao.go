@@ -17,14 +17,14 @@ func AutoMigrate(d *Dao) {
 	log.Info("user dao init done")
 }
 
-type Dao struct {
-	*cdb.Dao
-}
-
 func NewDao(cfg config.DB) *Dao {
 	d := &Dao{
 		Dao: cdb.NewDao(cfg),
 	}
 	AutoMigrate(d)
 	return d
+}
+
+type Dao struct {
+	*cdb.Dao
 }

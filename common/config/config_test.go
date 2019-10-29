@@ -18,3 +18,9 @@ func TestGetInt(t *testing.T) {
 	t.Log(str_util.ToJsonPretty(Cfg))
 	t.Log(str_util.ToJsonPretty(os.Environ()))
 }
+
+func TestSaveToFile(t *testing.T) {
+	v.SetConfigFile("./config.yml")
+	err := v.WriteConfig()
+	t.Log(err)
+}
