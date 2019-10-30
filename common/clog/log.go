@@ -49,3 +49,20 @@ func NewLog(ctx context.Context, moduleName string, functionName string) *logrus
 		Module:   moduleName,
 		Function: functionName})
 }
+
+func With(ctx context.Context, location ...string) *logrus.Entry {
+	var module, funcName string
+	if len(location) > 0 {
+		module = location[0]
+	}
+	if len(location) > 1 {
+		funcName = location[1]
+	}
+	c := context2.GetContextOrNew(ctx)
+	return Log.WithFields(logrus.Fields{
+		TraceId:  c.GetTraceId(),
+		ClientId: c.GetClientId(),
+		UserId:   c.GetUserId(),
+		Module:   module,
+		Function: funcName})
+}
