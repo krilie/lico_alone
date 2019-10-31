@@ -18,18 +18,14 @@ func GetAToken() string {
 }
 
 //获取盐值
-func GetRandomNum(num uint) string {
-	if num <= 5 {
-		rnd := rand.New(rand.NewSource(time.Now().UnixNano()))
-		vcode := fmt.Sprintf("%v", rnd.Int31n(1000000))
-		return vcode[:num]
-	} else {
-		bytes := make([]byte, 0, num)
-		for i := uint(0); i < num; i++ {
-			rnd := rand.New(rand.NewSource(time.Now().UnixNano()))
-			b := rnd.Intn(9) + int(byte('0'))
-			bytes = append(bytes, byte(b))
-		}
-		return string(bytes)
+func GetRandomNum(size int) string {
+	numeric := [10]byte{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	r := len(numeric)
+	rand.Seed(time.Now().UnixNano())
+
+	var sb strings.Builder
+	for i := 0; i < size; i++ {
+		_, _ = fmt.Fprintf(&sb, "%d", numeric[rand.Intn(r)])
 	}
+	return sb.String()
 }
