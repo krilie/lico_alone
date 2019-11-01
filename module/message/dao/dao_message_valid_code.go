@@ -14,7 +14,7 @@ type IMessageValidCode interface {
 	UpdateMessageValidCode(ctx context.Context, item *model.MessageValidCode) error
 	DeleteMessageValidCode(ctx context.Context, id string) error
 	GetMessageValidCodeById(ctx context.Context, id string) (*model.MessageValidCode, error)
-	GetLastMessageValidCodeByPhoneNum(ctx context.Context, phoneNum string) (*model.MessageValidCode, error)
+	GetLastMessageValidCodeByPhoneNum(ctx context.Context, phoneNum string, validType int) (*model.MessageValidCode, error)
 }
 
 func (d *Dao) CreateMessageValidCode(ctx context.Context, item *model.MessageValidCode) error {
@@ -61,10 +61,10 @@ func (d *Dao) GetMessageValidCodeById(ctx context.Context, id string) (*model.Me
 	return item, nil
 }
 
-func (d *Dao) GetLastMessageValidCodeByPhoneNum(ctx context.Context, phoneNum string) (*model.MessageValidCode, error) {
+func (d *Dao) GetLastMessageValidCodeByPhoneNum(ctx context.Context, phoneNum string, validType int) (*model.MessageValidCode, error) {
 	log := clog.NewLog(ctx, "module/message/dao/dao_message_valid_code.go:50", "GetMessageValidCodeById")
 	item := &model.MessageValidCode{}
-	err := d.Dao.Db.Where("phone_num=?", phoneNum).Order("create_time desc").First(item).Error
+	err := d.Dao.Db.Where("phone_num=? and type=?", phoneNum, validType).Order("create_time desc").First(item).Error
 	if err != nil {
 		log.Error(err)
 		if errors.Is(err, gorm.ErrRecordNotFound) {

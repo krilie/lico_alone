@@ -8,7 +8,7 @@ import (
 )
 
 func TestDao_GetAllValidUserId(t *testing.T) {
-	dao := NewDao(&config.Cfg)
+	dao := NewDao(config.Cfg.DB)
 	strings, err := dao.GetAllValidUserId(context.Background())
 	t.Log(str_util.ToJsonPretty(strings), err)
 }

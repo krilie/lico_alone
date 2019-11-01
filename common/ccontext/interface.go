@@ -1,14 +1,12 @@
 package ccontext
 
 import (
-	"context"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"time"
 )
 
 func NewContext() *Context {
 	ctx := &Context{}
-	ctx.Context = context.Background()
 	ctx.TraceId = id_util.GetUuid()
 	ctx.StartTime = time.Now()
 	return ctx

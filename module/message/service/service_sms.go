@@ -38,7 +38,7 @@ func (s *Service) SendRegisterSms(ctx context.Context, phone, code string) error
 		SendTime: time.Now(),
 		PhoneNum: phone,
 		Code:     code,
-		Type:     2,
+		Type:     model.MessageValidCodeTypeRegister,
 	})
 	if err != nil {
 		log.Error(err)
