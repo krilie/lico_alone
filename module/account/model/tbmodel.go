@@ -8,6 +8,7 @@ import "github.com/shopspring/decimal"
 
 type AccountItem struct {
 	cmodel.Model
+	Version     int64
 	UpdateTime  time.Time       `gorm:"type:datetime;not null" json:"update_time"`
 	UserId      string          `gorm:"type:varchar(32);not null" json:"user_id"`
 	Name        string          `gorm:"type:varchar(50);not null" json:"name"`
@@ -25,6 +26,7 @@ func (AccountItem) TableName() string {
 
 type AccountBill struct {
 	cmodel.Model
+	Version       int64
 	PreOpLogIndex int64           `json:"pre_op_log_index" gorm:"column:pre_op_log_index"`
 	UserId        string          `gorm:"type:varchar(32);not null" json:"user_id"`
 	Amount        decimal.Decimal `gorm:"type:decimal(14,2);not null;default 0"json:"amount"` // 发生额
@@ -39,6 +41,7 @@ func (AccountBill) TableName() string {
 
 type AccountBillDetail struct {
 	cmodel.Model
+	Version       int64
 	BillId        string          `gorm:"type:varchar(32);not null" json:"bill_id"`
 	AccountItemId string          `gorm:"type:varchar(32);not null" json:"account_item_id"`
 	Amount        decimal.Decimal `gorm:"type:decimal(14,2);not null;default 0"json:"amount"` // 值 可正可负 负借 正贷
@@ -51,6 +54,7 @@ func (AccountBillDetail) TableName() string {
 // 操作记录 可撤销最后一次记录不留痕迹
 type AccountOperatorLog struct {
 	cmodel.Model
+	Version       int64
 	OpIndex       int64           `json:"op_index" gorm:"column:op_index"` // 操作序号
 	BillId        string          `gorm:"type:varchar(32);not null" json:"bill_id"`
 	AccountItemId string          `gorm:"type:varchar(32);not null" json:"account_item_id"`
