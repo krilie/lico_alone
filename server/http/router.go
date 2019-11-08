@@ -49,8 +49,8 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 		Handler: RootRouter,
 	}
 	//是否有ssl.public_key ssl.private_key
-	pubKey := config.GetString("ssl.public_key")
-	priKey := config.GetString("ssl.private_key")
+	pubKey := config.Cfg.SslPub
+	priKey := config.Cfg.SslPri
 	if pubKey == "" || priKey == "" {
 		go func() {
 			if err := srv.ListenAndServe(); err != nil {

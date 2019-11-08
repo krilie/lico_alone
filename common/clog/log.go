@@ -25,18 +25,25 @@ func init() {
 	//Log.Logger.SetFormatter(&logrus.JSONFormatter{TimestampFormat: "2006-01-02T15:04:05.000Z07:00"})
 	Log.Logger.SetFormatter(&logrus.TextFormatter{})
 	Log.Logger.SetLevel(logrus.DebugLevel)
-	//
-	//file, e := os.OpenFile("./log.txt", os.O_CREATE|os.O_APPEND, os.ModeAppend)
-	//if e != nil {
-	//	panic(e)
-	//	return
-	//}
 	Log.Logger.SetOutput(os.Stdout)
 	Log = Log.
 		WithField(AppName, os.Getenv("BR_APP_NAME")).
 		WithField(AppVersion, os.Getenv("BR_APP_VERSION")).
 		WithField(AppHost, os.Getenv("HOST_NAME"))
 	Log.Infoln("log init ok")
+}
+
+func SetUpLogFile(f string) {
+	if f == "" {
+		Log.Logger.SetOutput(os.Stdout)
+		return
+	}
+	file, e := os.OpenFile(f, os.O_CREATE|os.O_APPEND, os.ModeAppend)
+	if e != nil {
+		panic(e)
+		return
+	}
+	Log.Logger.SetOutput(file)
 }
 
 // trace_id
