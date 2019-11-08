@@ -14,6 +14,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -45,7 +46,7 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 
 	// 开始服务
 	srv := &http.Server{
-		Addr:    ":" + config.GetString("http_port"),
+		Addr:    ":" + strconv.Itoa(config.Cfg.HttpPort),
 		Handler: RootRouter,
 	}
 	//是否有ssl.public_key ssl.private_key
