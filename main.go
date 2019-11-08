@@ -22,6 +22,7 @@ import (
 // @description  This is a sample server Petstore server.
 func main() {
 	ctx := ccontext.NewContext()
+	clog.SetUpLogFile(config.Cfg.LogFile)
 	var log = clog.NewLog(ctx, "lico.main", "main")
 	cdb.StartDb(config.Cfg.DB)
 	defer cdb.CloseDb()                                        // 最后关闭数据库
