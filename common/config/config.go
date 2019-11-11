@@ -36,12 +36,13 @@ func init() {
 	v.SetDefault("enable_swagger", true)
 	v.SetDefault("ssl_pri", "")
 	v.SetDefault("ssl_pub", "")
+	v.SetDefault("log_file", "")
 	// db 配置
 	v.SetDefault("db.host", "localhost")
 	v.SetDefault("db.port", 3306)
 	v.SetDefault("db.user", "root")
 	v.SetDefault("db.password", "123456")
-	v.SetDefault("db.db_name", "lico")
+	v.SetDefault("db.db_name", "app_server")
 	v.SetDefault("db.max_open_conn", 1)
 	v.SetDefault("db.max_idle_conn", 1)
 	v.SetDefault("db.conn_max_left_time", 3600*7)
@@ -53,18 +54,18 @@ func init() {
 	v.SetDefault("file_save.local_file_save_dir", "static_files")
 	v.SetDefault("file_save.local_file_save_url", "http://localhost/static_files")
 	v.SetDefault("file_save.save_type", "local")
-	v.SetDefault("file_save.oss_key", "local")
-	v.SetDefault("file_save.oss_secret", "local")
-	v.SetDefault("file_save.oss_end_point", "local")
-	v.SetDefault("file_save.oss_bucket", "local")
-	// email 配置
-	v.SetDefault("email.host", "aaa")
-	v.SetDefault("email.port", 32)
-	v.SetDefault("email.user_name", "aaa")
-	v.SetDefault("email.password", "aaa")
-	v.SetDefault("email.address", "aaa")
-	v.SetDefault("ali_sms.key", "1")
-	v.SetDefault("ali_sms.secret", "1")
+	v.SetDefault("file_save.oss_key", "")
+	v.SetDefault("file_save.oss_secret", "")
+	v.SetDefault("file_save.oss_end_point", "")
+	v.SetDefault("file_save.oss_bucket", "")
+	// email ali_sms 配置
+	v.SetDefault("email.host", "")
+	v.SetDefault("email.port", 465)
+	v.SetDefault("email.user_name", "")
+	v.SetDefault("email.password", "")
+	v.SetDefault("email.address", "")
+	v.SetDefault("ali_sms.key", "")
+	v.SetDefault("ali_sms.secret", "")
 	err := v.Unmarshal(&Cfg)
 	if err != nil {
 		log.Error(err)
@@ -78,6 +79,11 @@ func init() {
 		log.Error(err)
 		return
 	}
+
+	if defFile == "" {
+		// 从环境变量取配置文件路径
+	}
+
 	// 加载配置文件
 	if err := LoadConfigByFile(defFile); err != nil {
 		log.Error(err.Error())
