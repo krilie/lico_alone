@@ -18,21 +18,31 @@ func (s *Service) SendRegisterSms(ctx context.Context, phone, code string) error
 		log.Error(err)
 		return errs.NewInternal().WithMsg("短信发送失败").WithError(err)
 	}
-	err = s.Dao.Db.Create(model.MessageSms{
-		Model: cmodel.Model{
-			Id:         id_util.GetUuid(),
-			CreateTime: time.Now(),
-		},
+	// 记录发送记录
+	err = s.Dao.CreateMessageSms(ctx, &model.MessageSms{
+		Model:     cmodel.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
 		SendTime:  time.Now(),
 		Name:      "",
 		To:        phone,
 		Message:   code,
 		IsSuccess: true,
 		Other:     "注册短信",
-	}).Error
+	})
 	if err != nil {
 		log.Error(err)
-		return errs.NewErrDbCreate().WithError(err)
+		return err
+	}
+	// 记录注册短信
+	err = s.Dao.CreateMessageValidCode(ctx, &model.MessageValidCode{
+		Model:    cmodel.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
+		SendTime: time.Now(),
+		PhoneNum: phone,
+		Code:     code,
+		Type:     model.MessageValidCodeTypeRegister,
+	})
+	if err != nil {
+		log.Error(err)
+		return err
 	}
 	return nil
 }

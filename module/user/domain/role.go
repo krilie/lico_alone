@@ -2,7 +2,6 @@ package domain
 
 import (
 	"context"
-	"github.com/krilie/lico_alone/common/ccontext"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/module/user/dao"
 	"github.com/krilie/lico_alone/module/user/model"
@@ -24,7 +23,7 @@ func NewRole(dao *dao.Dao, roleName string) (*Role, error) {
 	}, nil
 }
 
-func (a *Role) HasPermission(ctx ccontext.Context, permName string) (bool, error) {
+func (a *Role) HasPermission(ctx context.Context, permName string) (bool, error) {
 	has, err := a.dao.HasRolePerm(ctx, a.role.Name, permName)
 	if err != nil {
 		return false, err

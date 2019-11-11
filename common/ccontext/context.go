@@ -1,19 +1,33 @@
 package ccontext
 
 import (
-	"context"
 	"time"
 )
 
 // 运行上下文对象
 // 可记录来自那个ip 用户的信息等
 type Context struct {
-	context.Context
 	TraceId   string    //微服务调用栈分析追踪
 	StartTime time.Time //开始调用时间
 	LastTime  time.Time //调用结束时间
 	ClientId  string    //client的id号
 	UserId    string
+}
+
+func (c *Context) Deadline() (deadline time.Time, ok bool) {
+	return
+}
+
+func (c *Context) Done() <-chan struct{} {
+	return nil
+}
+
+func (c *Context) Err() error {
+	return nil
+}
+
+func (c *Context) Value(key interface{}) interface{} {
+	return nil
 }
 
 func (c *Context) GetTraceId() string {

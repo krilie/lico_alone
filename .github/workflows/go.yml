@@ -2,7 +2,7 @@ name: Go
 on:
   push:
     branches:
-      - develop
+      - master
 jobs:
 
   build:
@@ -28,4 +28,19 @@ jobs:
           fi
 
       - name: Build
-        run: go build -v .
+        run: |
+          go build -v .
+          pwd
+
+      - name: copy-file-to-docker
+        run: |
+          cp ./lico_alone ./docker/lico_alone
+
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: ${{ secrets.DOCKER_IMAGE_NAME }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: ${{ secrets.DOCKER_REGISTRY }}
+          workdir: ./docker
