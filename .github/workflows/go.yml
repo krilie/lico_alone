@@ -54,5 +54,5 @@ jobs:
             pwd
             docker-compose down
             echo ${IMAGE}
-            docker rmi ${IMAGE}
+            docker rmi registry.cn-qingdao.aliyuncs.com/lizo/app-server:latest
             docker-compose up -d
