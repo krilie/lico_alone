@@ -44,3 +44,18 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
           workdir: ./docker
+
+      - name: apply app server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /opt/app-server
+            pwd
+            docker-compose down
+            docker rmi ${{ secrets.DOCKER_IMAGE_NAME }}
+            docker pull ${{ secrets.DOCKER_IMAGE_NAME }}
+            docker-compose up -d
