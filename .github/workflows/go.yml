@@ -42,6 +42,8 @@ jobs:
 
       - name: apply app server
         uses: appleboy/ssh-action@master
+        env:
+          IMAGE: ${{ secrets.DOCKER_IMAGE_NAME }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
@@ -51,5 +53,5 @@ jobs:
             cd /opt/app-server
             pwd
             docker-compose down
-            docker rmi ${{ secrets.DOCKER_IMAGE_NAME }}
+            docker rmi $IMAGE
             docker-compose up -d
