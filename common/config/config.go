@@ -71,21 +71,27 @@ func init() {
 		log.Error(err)
 		return
 	}
-	// 从命令行 读取默认配置
-	var defFile = ""
+	// 命令行 > 环境变量 > 默认位置
+	// 读环境变量值
+	defFileEnv := os.Getenv("CONFIG_FILE")
+	// 没有环境变量则读取命令行
+	var defFile string
 	set := flag.NewFlagSet("config", flag.ContinueOnError)
-	set.StringVar(&defFile, "c", "./config.yaml", "config file")
+	set.StringVar(&defFile, "c", "", "config file")
 	if err := set.Parse(os.Args[1:]); err != nil {
 		log.Error(err)
 		return
 	}
-
-	if defFile == "" {
-		// 从环境变量取配置文件路径
+	var configFile string
+	if defFile == "" && defFileEnv != "" {
+		configFile = defFileEnv
+	} else if defFile == "" && defFileEnv == "" {
+		configFile = "./config.yaml"
+	} else if defFile != "" {
+		configFile = defFile
 	}
-
 	// 加载配置文件
-	if err := LoadConfigByFile(defFile); err != nil {
+	if err := LoadConfigByFile(configFile); err != nil {
 		log.Error(err.Error())
 		return
 	}
