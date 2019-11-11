@@ -29,3 +29,16 @@ jobs:
 
       - name: Build
         run: go build -v .
+
+      - name: copy-file-to-docker
+        run: cp ./lico_alone ./docker/lico_alone
+
+      - name: build-push-docker-image
+        uses: opspresso/action-docker@master
+        env:
+          USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
+          IMAGE_NAME: ${{ secrets.DOCKER_IMAGE_NAME }}
+          TAG_NAME: "v0.0.1"
+#          LATEST: "true"
