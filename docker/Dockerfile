@@ -6,7 +6,7 @@ ENV  GIN_MODE=release
 COPY lico_alone enterpoint.sh /opt/
 
 RUN chmod u+x /opt/enterpoint.sh \
-    && chmod u+x /opt/lico_alone
+    && chmod u+x /opt/lico_alone \
     && ls -h
 
 EXPOSE 80
