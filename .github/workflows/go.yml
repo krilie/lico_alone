@@ -53,5 +53,6 @@ jobs:
             cd /opt/app-server
             pwd
             docker-compose down
-            docker rmi $IMAGE
+            echo ${IMAGE}
+            docker rmi ${IMAGE}
             docker-compose up -d
