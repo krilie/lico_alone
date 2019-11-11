@@ -11,4 +11,4 @@ RUN chmod u+x /opt/enterpoint.sh \
 
 EXPOSE 80
 
-ENTRYPOINT ["/opt/enterpoint.sh"]
+ENTRYPOINT ["/bin/sh"]
