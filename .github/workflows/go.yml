@@ -28,17 +28,19 @@ jobs:
           fi
 
       - name: Build
-        run: go build -v .
+        run: |
+          go build -v .
+          pwd
 
       - name: copy-file-to-docker
-        run: cp ./lico_alone ./docker/lico_alone
+        run: |
+          cp ./lico_alone ./docker/lico_alone
 
-      - name: build-push-docker-image
-        uses: opspresso/action-docker@master
-        env:
-          USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
-          IMAGE_NAME: ${{ secrets.DOCKER_IMAGE_NAME }}
-          TAG_NAME: "v0.0.1"
-#          LATEST: "true"
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: ${{ secrets.DOCKER_IMAGE_NAME }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: ${{ secrets.DOCKER_REGISTRY }}
+          workdir: ./docker
