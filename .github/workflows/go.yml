@@ -49,6 +49,5 @@ jobs:
             cd /opt/app-server
             pwd
             docker-compose down
-            docker rmi ${{ secrets.DOCKER_IMAGE_NAME }}
-            docker pull ${{ secrets.DOCKER_IMAGE_NAME }}
+            docker rmi ${{ secrets.DOCKER_IMAGE_NAME }}:latest
             docker-compose up -d
