@@ -20,8 +20,9 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Build
+        env:
+          CGO_ENABLED: 0
         run: |
-          export CGO_ENABLED=0
           go build -v .
           pwd
           ls -h
