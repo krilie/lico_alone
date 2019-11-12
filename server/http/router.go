@@ -28,6 +28,8 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 	RootRouter = gin.Default() // logger recover
 	// 静态文件
 	RootRouter.StaticFile("/static", config.Cfg.FileSave.LocalFileSaveDir)
+	// web 站点
+	RootRouter.Static("/web", "./www")
 	// swagger
 	if config.Cfg.EnableSwagger {
 		RootRouter.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
