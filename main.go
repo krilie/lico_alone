@@ -7,12 +7,14 @@ import (
 	"github.com/krilie/lico_alone/common/cdb"
 	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/config"
+	"github.com/krilie/lico_alone/common/utils/time_util"
 	broker2 "github.com/krilie/lico_alone/server/broker"
 	"github.com/krilie/lico_alone/server/cron"
 	"github.com/krilie/lico_alone/server/http"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 )
 
 //go:generate swag init -g ./main.go
@@ -35,9 +37,14 @@ func main() {
 	// 注册所有消息处理句柄
 	broker2.RegisterHandler(ctx, app)
 	// 初始化定时任务
-	cronStop := cron.InitAndStartCorn(app)
+	cronStop := cron.InitAndStartCorn(ctx, app)
 	// 最后初始化为开启http服务
 	shutDown := http.InitAndStartHttpServer(app)
+	// 发送上线邮件
+	err := app.All.Message.SendEmail(ctx, "1197829331@qq.com", "app-server", "启动成功"+time.Now().Format(time_util.DefaultFormat))
+	if err != nil {
+		log.Error(err)
+	}
 	// 收到信号并关闭服务器
 	c := make(chan os.Signal)
 	signal.Notify(c, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
