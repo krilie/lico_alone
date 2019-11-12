@@ -38,7 +38,7 @@ func SetUpLogFile(f string) {
 		Log.Logger.SetOutput(os.Stdout)
 		return
 	}
-	file, e := os.OpenFile(f, os.O_CREATE|os.O_APPEND, os.ModeAppend)
+	file, e := os.OpenFile(f, os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	if e != nil {
 		panic(e)
 		return
