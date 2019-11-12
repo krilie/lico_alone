@@ -30,6 +30,7 @@ jobs:
       - name: copy-file-to-docker
         run: |
           cp ./lico_alone ./docker/lico_alone
+          cp -rf ./www ./docker/www
 
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
