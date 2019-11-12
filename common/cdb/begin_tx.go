@@ -31,7 +31,7 @@ func WithTrans(ctx context.Context, oriService Service, txFunc func(service Serv
 			log.Errorln("事务开启失败:", err.Error())
 			return err
 		}
-		log.Errorln("事务开启成功")
+		log.Debugln("事务开启成功")
 		// 新开事务要set tx 转化
 		service, _ = oriService.SetTx(ctx, tx)
 	}
@@ -47,12 +47,12 @@ func WithTrans(ctx context.Context, oriService Service, txFunc func(service Serv
 	}()
 	err = txFunc(service)
 	if err != nil {
-		log.Infoln("事务回滚")
+		log.Debugln("事务回滚")
 		if needRollBackCommit {
 			tx.Rollback()
 		}
 	} else {
-		log.Infoln("事务提交")
+		log.Debugln("事务提交")
 		if needRollBackCommit {
 			tx.Commit()
 		}
