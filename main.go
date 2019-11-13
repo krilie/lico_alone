@@ -64,6 +64,10 @@ func main() {
 			cronStop()
 			log.Infoln("cron job end.")
 			log.Infoln("service is done.")
+			err = app.All.Message.SendEmail(ctx, "1197829331@qq.com", "app-server", "服务关闭"+time.Now().Format(time_util.DefaultFormat))
+			if err != nil {
+				log.Error(err)
+			}
 			return
 		}
 	}
