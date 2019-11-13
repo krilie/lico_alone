@@ -45,14 +45,20 @@ func main() {
 	if err != nil {
 		log.Error(err)
 	}
-	// 收到信号并关闭服务器
-	c := make(chan os.Signal)
-	signal.Notify(c, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
-	select {
-	// Block until a signal is received.
-	case s := <-c:
-		log.Info("Got signal:", s) //Got signal: terminated
-		if s == syscall.SIGINT || s == syscall.SIGTERM || s == syscall.SIGKILL || s == syscall.SIGHUP || s == syscall.SIGQUIT {
+	defer func() {
+		err = app.All.Message.SendEmail(ctx, "1197829331@qq.com", "app-server", "服务关闭"+time.Now().Format(time_util.DefaultFormat))
+		if err != nil {
+			log.Error(err)
+		}
+	}()
+	// 收尾工作
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL)
+	for {
+		s := <-c
+		log.Info("get a signal %s", s.String())
+		switch s {
+		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL:
 			// shutdown
 			err := shutDown(30)
 			if err != nil {
@@ -64,10 +70,9 @@ func main() {
 			cronStop()
 			log.Infoln("cron job end.")
 			log.Infoln("service is done.")
-			err = app.All.Message.SendEmail(ctx, "1197829331@qq.com", "app-server", "服务关闭"+time.Now().Format(time_util.DefaultFormat))
-			if err != nil {
-				log.Error(err)
-			}
+			return
+		case syscall.SIGHUP:
+		default:
 			return
 		}
 	}
