@@ -3,9 +3,7 @@ package service
 import (
 	"context"
 	"encoding/json"
-	"github.com/krilie/lico_alone/common/cmodel"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/common/utils/str_util"
 	"github.com/krilie/lico_alone/module/config/model"
 	"time"
@@ -32,12 +30,9 @@ func (a *Service) SetJsonValue(ctx context.Context, name string, value interface
 	}
 	if config == nil {
 		return a.Dao.CreateConfig(ctx, &model.Config{
-			Model: cmodel.Model{
-				Id:         id_util.GetUuid(),
-				CreateTime: time.Now(),
-			},
-			Name:  name,
-			Value: str_util.ToJson(value),
+			CreateTime: time.Now(),
+			Name:       name,
+			Value:      str_util.ToJson(value),
 		})
 	} else {
 		config.Value = str_util.ToJson(value)
@@ -62,12 +57,9 @@ func (a *Service) SetValueStr(ctx context.Context, name string, value string) er
 	}
 	if config == nil {
 		return a.Dao.CreateConfig(ctx, &model.Config{
-			Model: cmodel.Model{
-				Id:         id_util.GetUuid(),
-				CreateTime: time.Now(),
-			},
-			Name:  name,
-			Value: value,
+			CreateTime: time.Now(),
+			Name:       name,
+			Value:      value,
 		})
 	} else {
 		config.Value = value
