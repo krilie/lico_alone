@@ -14,10 +14,10 @@ type Service struct {
 	Dao *dao.Dao
 }
 
-func (s *Service) SetTx(ctx context.Context, tx *gorm.DB) (cdb.Service, error) {
+func (a *Service) SetTx(ctx context.Context, tx *gorm.DB) (cdb.Service, error) {
 	var log = clog.NewLog(ctx, "module/user/service/service.go.Service", "WithTx")
 	log.Debug("new tx")
-	txDao, err := s.Dao.Begin(tx)
+	txDao, err := a.Dao.Begin(tx)
 	if err != nil {
 		log.Error(err)
 		return nil, err
@@ -27,8 +27,8 @@ func (s *Service) SetTx(ctx context.Context, tx *gorm.DB) (cdb.Service, error) {
 	}, err
 }
 
-func (s *Service) GetDb(ctx context.Context) *gorm.DB {
-	return s.Dao.Db
+func (a *Service) GetDb(ctx context.Context) *gorm.DB {
+	return a.Dao.Db
 }
 
 func NewService(cfg config.DB) *Service {

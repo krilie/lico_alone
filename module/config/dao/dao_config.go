@@ -35,7 +35,7 @@ func (a *Dao) DeleteConfig(ctx context.Context, name string) error {
 	return nil
 }
 func (a *Dao) UpdateConfig(ctx context.Context, config *model.Config) error {
-	err := a.Db.Model(config).Where("id=?", config.Id).Omit("create_time").Update(config).Error
+	err := a.Db.Model(config).Where("name=?", config.Name).Omit("create_time").Update(config).Error
 	if err != nil {
 		return errs.NewErrDbUpdate().WithError(err)
 	}
