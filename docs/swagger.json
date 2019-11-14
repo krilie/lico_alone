@@ -93,6 +93,72 @@
                         "name": "password",
                         "in": "formData",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "验证码",
+                        "name": "valid_code",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/cmodel.CommonReturn"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/cmodel.CommonReturn"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/cmodel.CommonReturn"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/cmodel.CommonReturn"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/send_sms": {
+            "post": {
+                "description": "用户发短信",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户发短信"
+                ],
+                "summary": "用户发短信",
+                "operationId": "用户发短信",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户手机号",
+                        "name": "phone",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "register login change_password",
+                        "name": "send_type",
+                        "in": "formData",
+                        "required": true
                     }
                 ],
                 "responses": {

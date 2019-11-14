@@ -8,6 +8,9 @@ import (
 )
 
 func (a *AppUser) SendRegisterSms(ctx context.Context, phoneNum string) error {
+	if phoneNum == "" {
+		return errs.NewBadRequest().WithMsg("手机号格式不正确")
+	}
 	master, err := a.UserService.Dao.GetUserMasterByPhoneNum(ctx, phoneNum)
 	if err != nil {
 		clog.With(ctx).Error(err)
