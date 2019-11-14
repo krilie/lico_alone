@@ -13,8 +13,11 @@ import (
 
 func (s *Service) RegisterNewUser(ctx context.Context, phoneNum, password string) error {
 	log := clog.NewLog(ctx, "module/user/service/service_user_register.go:14", "RegisterNewUser")
-	if phoneNum == "" || password == "" {
-		return errs.NewBadRequest().WithMsg("参数错误")
+	if phoneNum == "" {
+		return errs.NewBadRequest().WithMsg("手机号不能为空")
+	}
+	if password == "" {
+		password = id_util.GetUuid()
 	}
 	master, err := s.Dao.GetUserMasterByPhoneNum(ctx, phoneNum)
 	if err != nil {

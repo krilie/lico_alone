@@ -95,6 +95,11 @@ paths:
         name: password
         required: true
         type: string
+      - description: 验证码
+        in: formData
+        name: valid_code
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -121,4 +126,45 @@ paths:
       summary: 用户注册
       tags:
       - 用户账号
+  /v1/user/send_sms:
+    post:
+      description: 用户发短信
+      operationId: 用户发短信
+      parameters:
+      - description: 用户手机号
+        in: formData
+        name: phone
+        required: true
+        type: string
+      - description: register login change_password
+        in: formData
+        name: send_type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/cmodel.CommonReturn'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/cmodel.CommonReturn'
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/cmodel.CommonReturn'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/cmodel.CommonReturn'
+            type: object
+      summary: 用户发短信
+      tags:
+      - 用户发短信
 swagger: "2.0"

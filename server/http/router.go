@@ -45,6 +45,7 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 	userCtrl := user.NewUserCtrl(app)
 	noCheckToken.POST("/v1/user/login", userCtrl.UserLogin)
 	noCheckToken.POST("/v1/user/register", userCtrl.UserRegister)
+	noCheckToken.POST("/v1/user/send_sms", userCtrl.UserSendSms)
 
 	// 开始服务
 	srv := &http.Server{
