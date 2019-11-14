@@ -12,7 +12,7 @@ import (
 
 func TestAppUser_UserRegister(t *testing.T) {
 	user := NewAppUser(all_service.NewAllService(config.Cfg))
-	err := user.UserRegister(context.Background(), "sss", "sss", "")
+	err := user.UserRegister(context.Background(), "sss", "sss", "", "")
 	t.Log(err)
 }
 
@@ -21,7 +21,7 @@ func BenchmarkAppUser_UserRegister(b *testing.B) {
 	user := NewAppUser(all_service.NewAllService(config.Cfg))
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		err := user.UserRegister(context.Background(), utils.GetUUID()[:20], "sss", "")
+		err := user.UserRegister(context.Background(), utils.GetUUID()[:20], "sss", "", "")
 		if err != nil {
 			b.Log(err)
 		}
