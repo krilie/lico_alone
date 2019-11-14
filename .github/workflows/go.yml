@@ -53,7 +53,8 @@ jobs:
           script: |
             cd /opt/app-server
             pwd
-            docker-compose down
+            docker-compose stop
+            docker-compose rm
             echo ${IMAGE}
             docker rmi registry.cn-qingdao.aliyuncs.com/lizo/app-server:latest
             docker-compose up -d
