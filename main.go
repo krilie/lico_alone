@@ -7,14 +7,12 @@ import (
 	"github.com/krilie/lico_alone/common/cdb"
 	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/config"
-	"github.com/krilie/lico_alone/common/utils/time_util"
 	broker2 "github.com/krilie/lico_alone/server/broker"
 	"github.com/krilie/lico_alone/server/cron"
 	"github.com/krilie/lico_alone/server/http"
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 )
 
 //go:generate swag init -g ./main.go
@@ -41,12 +39,12 @@ func main() {
 	// 最后初始化为开启http服务
 	shutDown := http.InitAndStartHttpServer(app)
 	// 发送上线邮件
-	err := app.All.Message.SendEmail(ctx, "1197829331@qq.com", "app-server", "启动成功"+time.Now().Format(time_util.DefaultFormat))
+	err := app.All.SendServiceUpEmail(ctx)
 	if err != nil {
 		log.Error(err)
 	}
 	defer func() {
-		err = app.All.Message.SendEmail(ctx, "1197829331@qq.com", "app-server", "服务关闭"+time.Now().Format(time_util.DefaultFormat))
+		err = app.All.SendServiceEndEmail(ctx)
 		if err != nil {
 			log.Error(err)
 		}
