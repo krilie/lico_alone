@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/common/utils/id_util"
+	"github.com/krilie/lico_alone/common/utils/random"
 )
 
 func (a *AppUser) SendRegisterSms(ctx context.Context, phoneNum string) error {
@@ -19,6 +19,6 @@ func (a *AppUser) SendRegisterSms(ctx context.Context, phoneNum string) error {
 	if master != nil {
 		return errs.NewBadRequest().WithMsg("已经注册")
 	}
-	err = a.Message.SendRegisterSms(ctx, phoneNum, id_util.NextSnowflake())
+	err = a.Message.SendRegisterSms(ctx, phoneNum, random.GetRandomNum(5))
 	return err
 }
