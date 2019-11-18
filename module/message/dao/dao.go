@@ -10,7 +10,7 @@ import (
 
 func AutoMigrate(d *Dao) {
 	var log = clog.NewLog(ccontext.NewContext(), "alone.module.user.model", "init")
-	err := d.Db.AutoMigrate(new(model.MessageEmail), new(model.MessageSms)).Error
+	err := d.Db.AutoMigrate(new(model.MessageEmail), new(model.MessageSms), new(model.MessageValidCode)).Error
 	if err != nil {
 		panic(err)
 	}
