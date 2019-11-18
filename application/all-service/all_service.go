@@ -45,7 +45,7 @@ func (a *AllService) SendServiceUpEmail(ctx context.Context) error {
 		return errs.NewBadRequest().WithMsg("no email config")
 	}
 	// 发送上线邮件
-	err = a.Message.SendEmail(ctx, *emailAddr, "app-server", "启动成功:"+time.Now().Format(time_util.DefaultFormat))
+	err = a.Message.SendEmail(ctx, *emailAddr, "app-server", "启动成功: "+time.Now().Format(time_util.DefaultFormat))
 	if err != nil {
 		log.Error(err)
 	}
@@ -63,7 +63,7 @@ func (a *AllService) SendGoodMorningEmail(ctx context.Context) error {
 	if emailAddr == nil || *emailAddr == "" {
 		return errs.NewBadRequest().WithMsg("no email config")
 	}
-	err = a.Message.SendEmail(ctx, *emailAddr, "早上好", "早上好"+time.Now().Format(time_util.DefaultFormat))
+	err = a.Message.SendEmail(ctx, *emailAddr, "早上好: ", "早上好"+time.Now().Format(time_util.DefaultFormat))
 	if err != nil {
 		log.Error(err)
 	}
@@ -81,7 +81,7 @@ func (a *AllService) SendServiceEndEmail(ctx context.Context) error {
 	if emailAddr == nil || *emailAddr == "" {
 		return errs.NewBadRequest().WithMsg("no email config")
 	}
-	err = a.Message.SendEmail(ctx, *emailAddr, "app-server", "服务关闭"+time.Now().Format(time_util.DefaultFormat))
+	err = a.Message.SendEmail(ctx, *emailAddr, "app-server", "服务关闭: "+time.Now().Format(time_util.DefaultFormat))
 	if err != nil {
 		log.Error(err)
 	}
