@@ -214,29 +214,6 @@
                 "message": {
                     "type": "string",
                     "example": "错误信息"
-                },
-                "page_info": {
-                    "description": "分页信息",
-                    "type": "object",
-                    "$ref": "#/definitions/cmodel.PageInfo"
-                }
-            }
-        },
-        "cmodel.PageInfo": {
-            "type": "object",
-            "properties": {
-                "current": {
-                    "type": "integer"
-                },
-                "page_size": {
-                    "type": "integer"
-                },
-                "total": {
-                    "description": "总数据条数",
-                    "type": "integer"
-                },
-                "total_page": {
-                    "type": "integer"
                 }
             }
         }

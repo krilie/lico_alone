@@ -15,22 +15,6 @@ definitions:
       message:
         example: 错误信息
         type: string
-      page_info:
-        $ref: '#/definitions/cmodel.PageInfo'
-        description: 分页信息
-        type: object
-    type: object
-  cmodel.PageInfo:
-    properties:
-      current:
-        type: integer
-      page_size:
-        type: integer
-      total:
-        description: 总数据条数
-        type: integer
-      total_page:
-        type: integer
     type: object
 host: '{{.Host}}'
 info:
