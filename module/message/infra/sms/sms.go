@@ -36,7 +36,7 @@ func (a *AliSms) SendRegisterSms(ctx context.Context, phone, code string) error 
 	request := dysmsapi.CreateSendSmsRequest()
 	request.Scheme = "https"
 
-	request.PhoneNumbers = "18761438228"
+	request.PhoneNumbers = phone
 	request.SignName = "迅如雨"
 	request.TemplateCode = "SMS_173946021"
 	request.TemplateParam = str_util.ToJson(map[string]string{"code": code})
