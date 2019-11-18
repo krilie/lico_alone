@@ -12,12 +12,7 @@ import (
 
 func (s *Service) SendEmail(ctx context.Context, to, subject, content string) error {
 	log := clog.NewLog(ctx, "module/message/service/service_email.go:8", "SetTx")
-	err := s.email.SendEmail(ctx, to, subject, content)
-	if err != nil {
-		log.Error(err)
-		return errs.NewInternal().WithError(err)
-	}
-	err = s.Dao.CreateMessageEmail(ctx, &model.MessageEmail{
+	email := &model.MessageEmail{
 		Model:     cmodel.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
 		SendTime:  time.Now(),
 		From:      "sys",
@@ -26,7 +21,20 @@ func (s *Service) SendEmail(ctx context.Context, to, subject, content string) er
 		Content:   content,
 		IsSuccess: true,
 		Other:     "自由邮件",
-	})
+	}
+	err := s.email.SendEmail(ctx, to, subject, content)
+	if err != nil {
+		log.Error(err)
+		email.IsSuccess = false
+		email.Other = err.Error()
+		err = s.Dao.CreateMessageEmail(ctx, email)
+		if err != nil {
+			log.Error(err)
+			return err
+		}
+		return errs.NewInternal().WithError(err)
+	}
+	err = s.Dao.CreateMessageEmail(ctx, email)
 	if err != nil {
 		log.Error(err)
 		return err
