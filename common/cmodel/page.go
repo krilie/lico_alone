@@ -13,3 +13,8 @@ type PageInfo struct {
 	NowIndex   int `json:"current" swaggo:"true,当前页码"`
 	PageSize   int `json:"page_size" swggo:"true,页大小"`
 }
+
+type PageData struct {
+	PageInfo PageInfo    `json:"page_info"` // 分页信息
+	Data     interface{} `json:"data"`      // 列表数据
+}
