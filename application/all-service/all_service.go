@@ -63,7 +63,7 @@ func (a *AllService) SendGoodMorningEmail(ctx context.Context) error {
 	if emailAddr == nil || *emailAddr == "" {
 		return errs.NewBadRequest().WithMsg("no email config")
 	}
-	err = a.Message.SendEmail(ctx, *emailAddr, "早上好: ", "早上好"+time.Now().Format(time_util.DefaultFormat))
+	err = a.Message.SendEmail(ctx, *emailAddr, "早上好", "早上好: "+time.Now().Format(time_util.DefaultFormat))
 	if err != nil {
 		log.Error(err)
 	}
