@@ -23,20 +23,20 @@ func StartDb(cfg config.DB) {
 		log = clog.NewLog(ccontext.NewContext(), "br_go.common.db", "init")
 
 		connStr := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True",
-			config.GetString("db.user"),
-			config.GetString("db.password"),
-			config.GetString("db.host"),
-			config.GetInt("db.port"),
-			config.GetString("db.db_name"),
+			cfg.User,
+			cfg.Password,
+			cfg.Host,
+			cfg.Port,
+			cfg.DbName,
 		)
 		var err error
 		if Db, err = gorm.Open("mysql", connStr+"&loc=Asia%2FShanghai"); err != nil {
 			log.Fatal(err, string(debug.Stack())) // 报错退出程序
 			return
 		} else {
-			Db.DB().SetMaxOpenConns(config.GetInt("db.max_open_conn"))
-			Db.DB().SetMaxIdleConns(config.GetInt("db.max_idle_conn"))
-			Db.DB().SetConnMaxLifetime(time.Second * time.Duration(config.GetInt("db.conn_max_left_time")))
+			Db.DB().SetMaxOpenConns(cfg.MaxOpenConn)
+			Db.DB().SetMaxIdleConns(cfg.MaxIdleConn)
+			Db.DB().SetConnMaxLifetime(time.Second * time.Duration(cfg.ConnMaxLeftTime))
 			log.Info("db init done. params:", connStr+"&loc=Asia%2FShanghai") // 数据库初始化成功
 			Db = Db.Debug()
 		}
