@@ -19,3 +19,4 @@ lico_user.iml
 lico_user
 config.yaml
 static_files/
+log.txt
