@@ -27,25 +27,38 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 	// 路径设置
 	RootRouter = gin.Default() // logger recover
 	// 静态文件
-	RootRouter.StaticFile("/static", config.Cfg.FileSave.LocalFileSaveDir)
+	RootRouter.StaticFile("/files", config.Cfg.FileSave.LocalFileSaveDir)
 	// web 站点
 	RootRouter.Static("/web", "./www")
+	RootRouter.GET("/web", func(i *gin.Context) {
+		i.Redirect(http.StatusFound, "/web/index.html")
+	})
+	RootRouter.GET("/", func(i *gin.Context) {
+		i.Redirect(http.StatusFound, "/web/index.html")
+	})
+	RootRouter.GET("/index.html", func(i *gin.Context) {
+		i.Redirect(http.StatusFound, "/web/index.html")
+	})
 	// swagger
 	if config.Cfg.EnableSwagger {
 		RootRouter.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 	// 健康检查
 	health.Init(RootRouter)
-	// 全局中间件
-	RootRouter.Use(middleware.BuildContext())
 
-	noCheckToken := RootRouter.Group("")
-	//checkToken :=RootRouter.Group("").Use(middleware.CheckAuthToken(app.User))
+	// api路由 + 中间件
+	apiGroup := RootRouter.Group("/api")
+	apiGroup.Use(middleware.BuildContext())
 
+	// 不检查权限的分组
+	noCheckToken := apiGroup.Group("")
 	userCtrl := user.NewUserCtrl(app)
 	noCheckToken.POST("/v1/user/login", userCtrl.UserLogin)
 	noCheckToken.POST("/v1/user/register", userCtrl.UserRegister)
 	noCheckToken.POST("/v1/user/send_sms", userCtrl.UserSendSms)
+
+	// 检查权限的分组
+	//checkToken :=apiGroup.Group("").Use(middleware.CheckAuthToken(app.User))
 
 	// 开始服务
 	srv := &http.Server{
