@@ -22,7 +22,7 @@ import (
 func (a *UserCtrl) UserSendSms(c *gin.Context) {
 	phone := c.PostForm("phone")
 	if phone == "" {
-		ginutil.ReturnWithErr(c, errs.ErrBadRequest.New().WithMsg("手机号不正确"))
+		ginutil.ReturnWithErr(c, errs.NewBadRequest().WithMsg("手机号不正确"))
 		return
 	}
 	switch c.PostForm("send_type") {
@@ -35,10 +35,10 @@ func (a *UserCtrl) UserSendSms(c *gin.Context) {
 		ginutil.ReturnOk(c)
 		return
 	case "login", "change_password":
-		ginutil.ReturnWithErr(c, errs.ErrBadRequest.New().WithMsg("未实现"))
+		ginutil.ReturnWithErr(c, errs.NewBadRequest().WithMsg("未实现"))
 		return
 	default:
-		ginutil.ReturnWithErr(c, errs.ErrBadRequest.New().WithMsg("未知发送类型"))
+		ginutil.ReturnWithErr(c, errs.NewBadRequest().WithMsg("未知发送类型"))
 		return
 	}
 }

@@ -22,7 +22,7 @@ func (d *Dao) CreateMessageValidCode(ctx context.Context, item *model.MessageVal
 	err := d.Dao.Db.Create(item).Error
 	if err != nil {
 		log.Error(err)
-		return errs.ErrDbCreate.WithError(err)
+		return errs.NewErrDbCreate().WithError(err)
 	}
 	return nil
 }
@@ -32,7 +32,7 @@ func (d *Dao) UpdateMessageValidCode(ctx context.Context, item *model.MessageVal
 	err := d.Dao.Db.Omit("create_time").Where("id=?", item.Id).Update(item).Error
 	if err != nil {
 		log.Error(err)
-		return errs.ErrDbCreate.WithError(err)
+		return errs.NewErrDbCreate().WithError(err)
 	}
 	return nil
 }
@@ -42,7 +42,7 @@ func (d *Dao) DeleteMessageValidCode(ctx context.Context, id string) error {
 	err := d.Dao.Db.Where("id=?", id).Delete(&model.MessageValidCode{}).Error
 	if err != nil {
 		log.Error(err)
-		return errs.ErrDbCreate.WithError(err)
+		return errs.NewErrDbCreate().WithError(err)
 	}
 	return nil
 }
@@ -56,7 +56,7 @@ func (d *Dao) GetMessageValidCodeById(ctx context.Context, id string) (*model.Me
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
-		return nil, errs.ErrDbCreate.WithError(err)
+		return nil, errs.NewErrDbQuery().WithError(err)
 	}
 	return item, nil
 }
@@ -70,7 +70,7 @@ func (d *Dao) GetLastMessageValidCodeByPhoneNum(ctx context.Context, phoneNum st
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
-		return nil, errs.ErrDbCreate.WithError(err)
+		return nil, errs.NewErrDbCreate().WithError(err)
 	}
 	return item, nil
 }

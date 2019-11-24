@@ -26,7 +26,7 @@ func (d *Dao) GetUserMasterById(ctx context.Context, userId string) (*model.User
 		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil
 		}
-		return nil, errs.ErrDbQuery.New().WithError(err)
+		return nil, errs.NewErrDbQuery().WithError(err)
 	}
 	return &user, nil
 }
@@ -38,7 +38,7 @@ func (d *Dao) GetUserMasterByPhoneNum(ctx context.Context, phoneNum string) (*mo
 		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil
 		}
-		return nil, errs.ErrDbQuery.New().WithError(err)
+		return nil, errs.NewErrDbQuery().WithError(err)
 	}
 	return &user, nil
 }
@@ -50,7 +50,7 @@ func (d *Dao) GetUserMasterByLoginName(ctx context.Context, loginName string) (*
 		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil
 		}
-		return nil, errs.ErrDbQuery.New().WithError(err)
+		return nil, errs.NewErrDbQuery().WithError(err)
 	}
 	return &user, nil
 }

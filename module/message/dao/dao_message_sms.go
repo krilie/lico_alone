@@ -19,7 +19,7 @@ func (d *Dao) CreateMessageSms(ctx context.Context, item *model.MessageSms) erro
 	err := d.Dao.Db.Create(item).Error
 	if err != nil {
 		log.Error(err)
-		return errs.ErrDbCreate.WithError(err)
+		return errs.NewErrDbCreate().WithError(err)
 	}
 	return nil
 }
@@ -29,7 +29,7 @@ func (d *Dao) UpdateMessageSms(ctx context.Context, item *model.MessageSms) erro
 	err := d.Dao.Db.Omit("create_time").Where("id=?", item.Id).Update(item).Error
 	if err != nil {
 		log.Error(err)
-		return errs.ErrDbCreate.WithError(err)
+		return errs.NewErrDbCreate().WithError(err)
 	}
 	return nil
 }
@@ -39,7 +39,7 @@ func (d *Dao) DeleteMessageSms(ctx context.Context, id string) error {
 	err := d.Dao.Db.Where("id=?", id).Delete(&model.MessageSms{}).Error
 	if err != nil {
 		log.Error(err)
-		return errs.ErrDbCreate.WithError(err)
+		return errs.NewErrDbCreate().WithError(err)
 	}
 	return nil
 }
