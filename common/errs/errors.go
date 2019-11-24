@@ -10,16 +10,16 @@ import (
 // 定义通用错误 pkg errors cause error
 var (
 	Error           = &Err{Code: 0, Message: ""}        // nil
-	ErrForbidden    = &Err{Code: 403, Message: "禁止访问"}  // 403
-	ErrNotFound     = &Err{Code: 404, Message: "资源不存在"} // 404
-	ErrBadRequest   = &Err{Code: 400, Message: "请求无效"}  // 400
-	ErrUnauthorized = &Err{Code: 401, Message: "未授权"}   // 401
-	ErrInternal     = &Err{Code: 500, Message: "服务器错误"} // 500
+	errForbidden    = &Err{Code: 403, Message: "禁止访问"}  // 403
+	errNotFound     = &Err{Code: 404, Message: "资源不存在"} // 404
+	errBadRequest   = &Err{Code: 400, Message: "请求无效"}  // 400
+	errUnauthorized = &Err{Code: 401, Message: "未授权"}   // 401
+	errInternal     = &Err{Code: 500, Message: "服务器错误"} // 500
 	// 其它错误
-	ErrDbCreate = &Err{Code: 500, Message: "数据库创建错误"}
-	ErrDbUpdate = &Err{Code: 500, Message: "数据库更新错误"}
-	ErrDbDelete = &Err{Code: 500, Message: "数据库删除错误"}
-	ErrDbQuery  = &Err{Code: 500, Message: "数据库查询错误"}
+	errDbCreate = &Err{Code: 500, Message: "数据库创建错误"}
+	errDbUpdate = &Err{Code: 500, Message: "数据库更新错误"}
+	errDbDelete = &Err{Code: 500, Message: "数据库删除错误"}
+	errDbQuery  = &Err{Code: 500, Message: "数据库查询错误"}
 )
 
 type Err struct {
@@ -59,17 +59,17 @@ func (w *Err) GetFullMsg() string {
 }
 
 func New() *Err             { return &Err{} }
-func NewForbidden() *Err    { return ErrForbidden.New() }
-func NewNotFound() *Err     { return ErrNotFound.New() }
-func NewBadRequest() *Err   { return ErrBadRequest.New() }
-func NewUnauthorized() *Err { return ErrUnauthorized.New() }
-func NewInternal() *Err     { return ErrInternal.New() }
+func NewForbidden() *Err    { return errForbidden.New() }
+func NewNotFound() *Err     { return errNotFound.New() }
+func NewBadRequest() *Err   { return errBadRequest.New() }
+func NewUnauthorized() *Err { return errUnauthorized.New() }
+func NewInternal() *Err     { return errInternal.New() }
 
 // 其它错误
-func NewErrDbCreate() *Err { return ErrDbCreate.New() }
-func NewErrDbUpdate() *Err { return ErrDbUpdate.New() }
-func NewErrDbDelete() *Err { return ErrDbDelete.New() }
-func NewErrDbQuery() *Err  { return ErrDbQuery.New() }
+func NewErrDbCreate() *Err { return errDbCreate.New() }
+func NewErrDbUpdate() *Err { return errDbUpdate.New() }
+func NewErrDbDelete() *Err { return errDbDelete.New() }
+func NewErrDbQuery() *Err  { return errDbQuery.New() }
 
 // 取到最内层的Err 如是没有返回nil
 func GetInnerErr(err error) *Err {

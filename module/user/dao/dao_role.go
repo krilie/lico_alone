@@ -50,7 +50,7 @@ func (d *Dao) GetAllRole(ctx context.Context, parents ...string) ([]*model.Role,
 	var list []*model.Role
 	err := d.Db.Model(&model.Role{}).Where("parent_name in (?)", parents).Find(&list).Error
 	if err != nil {
-		return nil, errs.ErrDbQuery.WithError(err)
+		return nil, errs.NewErrDbQuery().WithError(err)
 	}
 	return list, nil
 }

@@ -21,7 +21,7 @@ func (d *Dao) CreateMessageEmail(ctx context.Context, item *model.MessageEmail) 
 	err := d.Dao.Db.Create(item).Error
 	if err != nil {
 		log.Error(err)
-		return errs.ErrDbCreate.WithError(err)
+		return errs.NewErrDbCreate().WithError(err)
 	}
 	return nil
 }
@@ -31,7 +31,7 @@ func (d *Dao) UpdateMessageEmail(ctx context.Context, item *model.MessageEmail) 
 	err := d.Dao.Db.Omit("create_time").Where("id=?", item.Id).Update(item).Error
 	if err != nil {
 		log.Error(err)
-		return errs.ErrDbCreate.WithError(err)
+		return errs.NewErrDbCreate().WithError(err)
 	}
 	return nil
 }
@@ -41,7 +41,7 @@ func (d *Dao) DeleteMessageEmail(ctx context.Context, id string) error {
 	err := d.Dao.Db.Where("id=?", id).Delete(&model.MessageEmail{}).Error
 	if err != nil {
 		log.Error(err)
-		return errs.ErrDbCreate.WithError(err)
+		return errs.NewErrDbCreate().WithError(err)
 	}
 	return nil
 }
@@ -55,7 +55,7 @@ func (d *Dao) GetMessageEmailById(ctx context.Context, id string) (*model.Messag
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
-		return nil, errs.ErrDbCreate.WithError(err)
+		return nil, errs.NewErrDbCreate().WithError(err)
 	}
 	return item, nil
 }

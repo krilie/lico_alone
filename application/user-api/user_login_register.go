@@ -17,13 +17,13 @@ func (a *AppUser) UserRegister(ctx context.Context, phone, password, validCode, 
 		return err
 	}
 	if code == nil {
-		return errs.ErrBadRequest.WithMsg("验证码无效")
+		return errs.NewBadRequest().WithMsg("验证码无效")
 	}
 	if code.Code != validCode {
-		return errs.ErrBadRequest.WithMsg("验证码错误")
+		return errs.NewBadRequest().WithMsg("验证码错误")
 	}
 	if time.Now().Sub(code.SendTime) > 5*time.Minute {
-		return errs.ErrBadRequest.WithMsg("验证码过期")
+		return errs.NewBadRequest().WithMsg("验证码过期")
 	}
 	return a.UserService.RegisterNewUser(ctx, phone, password)
 }

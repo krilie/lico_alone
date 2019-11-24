@@ -6,15 +6,15 @@ import (
 )
 
 func TestErr(t *testing.T) {
-	err := errors.WithMessage(ErrInternal, "数据库插入错误")
-	if ErrInternal == errors.Cause(err) {
+	err := errors.WithMessage(errInternal, "数据库插入错误")
+	if errInternal == errors.Cause(err) {
 		t.Log("ok")
 	}
 }
 
 func TestErr2(t *testing.T) {
-	err := errors.WithMessage(ErrBadRequest, "数据库插入错误")
-	if ErrInternal == errors.Cause(err) {
+	err := errors.WithMessage(errBadRequest, "数据库插入错误")
+	if errInternal == errors.Cause(err) {
 		t.Log("ok")
 	}
 }
