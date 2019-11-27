@@ -13,7 +13,6 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 )
 
 //go:generate swag init -g ./main.go
@@ -67,7 +66,6 @@ func main() {
 			if err != nil {
 				log.Error(err)
 			}
-			time.Sleep(time.Second * 3)
 			log.Infoln("service is done.")
 			return
 		case syscall.SIGHUP:
