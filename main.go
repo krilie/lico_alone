@@ -13,6 +13,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 )
 
 //go:generate swag init -g ./main.go
@@ -61,12 +62,13 @@ func main() {
 			// 关闭定时任务
 			cronStop()
 			log.Infoln("cron job end.")
-			log.Infoln("service is done.")
 			// 发送结束邮件
 			err = app.All.SendServiceEndEmail(ctx)
 			if err != nil {
 				log.Error(err)
 			}
+			time.Sleep(time.Second * 2)
+			log.Infoln("service is done.")
 			return
 		case syscall.SIGHUP:
 		default:
