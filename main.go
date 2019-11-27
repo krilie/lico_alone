@@ -67,7 +67,7 @@ func main() {
 			if err != nil {
 				log.Error(err)
 			}
-			time.Sleep(time.Second * 2)
+			time.Sleep(time.Second * 3)
 			log.Infoln("service is done.")
 			return
 		case syscall.SIGHUP:

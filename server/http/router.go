@@ -78,7 +78,7 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 	} else {
 		go func() {
 			if err := srv.ListenAndServeTLS(pubKey, priKey); err != nil {
-				log.Panicln(err)
+				log.Warnln(err)
 				return
 			}
 		}()
