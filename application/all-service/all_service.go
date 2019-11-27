@@ -6,7 +6,7 @@ import (
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/time_util"
-	AccountService "github.com/krilie/lico_alone/module/account/service"
+	AccountService "github.com/krilie/lico_alone/module/bookkeeping/service"
 	"github.com/krilie/lico_alone/module/config/model"
 	ConfigService "github.com/krilie/lico_alone/module/config/service"
 	FileService "github.com/krilie/lico_alone/module/file/service"
