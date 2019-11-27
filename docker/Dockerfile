@@ -7,12 +7,11 @@ RUN apk update && apk add curl bash tree tzdata \
 
 ENV  GIN_MODE=release
 
-COPY lico_alone enterpoint.sh /opt/
-COPY www/ /opt/www
+COPY lico_alone /
+COPY www/ /www
 
-RUN chmod u+x /opt/enterpoint.sh \
-    && chmod u+x /opt/lico_alone
+RUN chmod u+x /lico_alone
 
 EXPOSE 80
 
-CMD ["/opt/enterpoint.sh"]
+CMD ["/lico_alone"]
