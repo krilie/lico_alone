@@ -99,6 +99,6 @@ func initPermissionData() []*model2.Permission {
 		}
 	}
 	return []*model2.Permission{
-		newPerm("user.update_info", "更新信息", "POST", "/api/user/update_info", 1),
+		newPerm("user.update_info", "更新信息", "POST", "/api/v1/user/update_info", 1),
 	}
 }
