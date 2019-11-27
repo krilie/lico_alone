@@ -43,12 +43,6 @@ func main() {
 	if err != nil {
 		log.Error(err)
 	}
-	defer func() {
-		err = app.All.SendServiceEndEmail(ctx)
-		if err != nil {
-			log.Error(err)
-		}
-	}()
 	// 收尾工作
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL)
@@ -68,6 +62,11 @@ func main() {
 			cronStop()
 			log.Infoln("cron job end.")
 			log.Infoln("service is done.")
+			// 发送结束邮件
+			err = app.All.SendServiceEndEmail(ctx)
+			if err != nil {
+				log.Error(err)
+			}
 			return
 		case syscall.SIGHUP:
 		default:
