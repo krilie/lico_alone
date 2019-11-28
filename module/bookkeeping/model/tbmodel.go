@@ -26,13 +26,12 @@ func (AccountItem) TableName() string {
 
 type AccountBill struct {
 	cmodel.Model
-	Version       int64
-	PreOpLogIndex int64           `json:"pre_op_log_index" gorm:"column:pre_op_log_index"`
-	UserId        string          `gorm:"type:varchar(32);not null" json:"user_id"`
-	Amount        decimal.Decimal `gorm:"type:decimal(14,2);not null;default 0"json:"amount"` // 发生额
-	IsValid       bool            `gorm:"type:boolean;not null" json:"is_valid"`
-	Image         string          `gorm:"type:varchar(500);not null" json:"image"`
-	Note          string          `gorm:"type:varchar(100);default null" json:"note"`
+	Version int64
+	UserId  string          `gorm:"type:varchar(32);not null" json:"user_id"`
+	Amount  decimal.Decimal `gorm:"type:decimal(14,2);not null;default 0"json:"amount"` // 发生额
+	IsValid bool            `gorm:"type:boolean;not null" json:"is_valid"`
+	Image   string          `gorm:"type:varchar(500);not null" json:"image"`
+	Note    string          `gorm:"type:varchar(100);default null" json:"note"`
 }
 
 func (AccountBill) TableName() string {
@@ -42,6 +41,7 @@ func (AccountBill) TableName() string {
 type AccountBillDetail struct {
 	cmodel.Model
 	Version       int64
+	UserId        string          `gorm:"type:varchar(32);not null" json:"user_id"`
 	BillId        string          `gorm:"type:varchar(32);not null" json:"bill_id"`
 	AccountItemId string          `gorm:"type:varchar(32);not null" json:"account_item_id"`
 	Amount        decimal.Decimal `gorm:"type:decimal(14,2);not null;default 0"json:"amount"` // 值 可正可负 负借 正贷
@@ -55,7 +55,7 @@ func (AccountBillDetail) TableName() string {
 type AccountOperatorLog struct {
 	cmodel.Model
 	Version       int64
-	OpIndex       int64           `json:"op_index" gorm:"column:op_index"` // 操作序号
+	UserId        string          `gorm:"type:varchar(32);not null" json:"user_id"`
 	BillId        string          `gorm:"type:varchar(32);not null" json:"bill_id"`
 	AccountItemId string          `gorm:"type:varchar(32);not null" json:"account_item_id"`
 	Amount        decimal.Decimal `gorm:"type:decimal(14,2);not null;default 0"json:"amount"` // 值 可正可负 负借 正贷
