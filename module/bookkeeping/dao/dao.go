@@ -6,12 +6,12 @@ import (
 	"github.com/krilie/lico_alone/common/cdb"
 	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/config"
-	"github.com/krilie/lico_alone/module/user/model"
+	"github.com/krilie/lico_alone/module/bookkeeping/model"
 )
 
 func Migrate(d *Dao) {
 	var log = clog.NewLog(ccontext.NewContext(), "alone.module.account.dao", "init")
-	err := d.Db.AutoMigrate(new(model.Permission), new(model.RolePermission), new(model.Role), new(model.UserRole), new(model.UserMaster)).Error
+	err := d.Db.AutoMigrate(new(model.AccountItem), new(model.AccountBill), new(model.AccountBillDetail), new(model.AccountOperatorLog)).Error
 	if err != nil {
 		panic(err)
 	}
