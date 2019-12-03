@@ -2,7 +2,6 @@
 package auth_cache
 
 import (
-	"errors"
 	"github.com/mikespook/gorbac"
 	"time"
 )
@@ -14,11 +13,19 @@ type Role struct {
 	CreateTime time.Time
 }
 
+func NewRole(name, pName string, createTime time.Time) *Role {
+	return &Role{StdRole: gorbac.NewStdRole(name), Name: name, ParentName: pName, CreateTime: createTime}
+}
+
 type Permission struct {
 	Name       string
 	CreateTime time.Time
 	RefMethod  string
 	RefPath    string
+}
+
+func NewPermission(name, refMethod, refPath string, createTime time.Time) *Permission {
+	return &Permission{Name: name, CreateTime: createTime, RefMethod: refMethod, RefPath: refPath}
 }
 
 func (p *Permission) ID() string {
@@ -35,35 +42,4 @@ type AuthCache struct {
 
 func NewAuthCache() *AuthCache {
 	return &AuthCache{RBAC: gorbac.New()}
-}
-
-func (a *AuthCache) AddRole(role string) error {
-	err := a.RBAC.Add(gorbac.NewStdRole(role))
-	return err
-}
-
-func (a *AuthCache) HasRole(role string) bool {
-	_, _, err := a.RBAC.Get(role)
-	if errors.Is(err, gorbac.ErrRoleNotExist) {
-		return false
-	} else {
-		return true
-	}
-}
-func (a *AuthCache) GetRole(role string) gorbac.Role {
-	stdRole, _, err := a.RBAC.Get(role)
-	if errors.Is(err, gorbac.ErrRoleNotExist) {
-		return nil
-	} else {
-		return stdRole
-	}
-}
-func (a *AuthCache) AttachPermToRole(role, perm string) {
-	stdRole := a.GetRole(role)
-	if stdRole == nil {
-		stdRole = gorbac.NewStdRole(role)
-		if err := a.RBAC.Add(stdRole.ID()); err != nil {
-			return
-		}
-	}
 }
