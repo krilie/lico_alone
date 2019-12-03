@@ -6,10 +6,10 @@ import (
 )
 
 func init() {
-	if config.GetString("jwt.hs256_key") == "" {
+	if config.Cfg.JWT.HS256key == "" {
 		SetHs256Key("fasdfasdrewq^&(*()&*(^%*&FLSJDF")
 	} else {
-		SetHs256Key(config.GetString("jwt.hs256_key"))
+		SetHs256Key(config.Cfg.JWT.HS256key)
 	}
 }
 
