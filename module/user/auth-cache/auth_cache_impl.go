@@ -20,7 +20,6 @@ func (a *AuthCache) HasRole(roleId string) bool {
 }
 
 func (a *AuthCache) GetRole(roleId string) *Role {
-	a.IsGranted()
 	stdRole, _, err := a.RBAC.Get(roleId)
 	if errors.Is(err, gorbac.ErrRoleNotExist) {
 		return nil

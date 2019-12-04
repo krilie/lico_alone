@@ -7,9 +7,25 @@ import (
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
+	"github.com/krilie/lico_alone/module/user/domain"
 	"github.com/krilie/lico_alone/module/user/model"
 	"time"
 )
+
+func (s *Service) ChangeUserPassword(ctx context.Context, userId, oldPswd, newPswd string) error {
+	log := clog.NewLog(ctx, "module/user/service/service_change_user_password.go:9", "ChangeUserPassword")
+	user, err := domain.NewUser(ctx, s.Dao, userId)
+	if err != nil {
+		log.Errorf("change user password err:%v", err)
+		return err
+	}
+	err = user.UpdatePassword(ctx, oldPswd, newPswd)
+	if err != nil {
+		log.Errorf("change user password err:%v", err)
+		return err
+	}
+	return nil
+}
 
 func (s *Service) RegisterNewUser(ctx context.Context, phoneNum, password string) error {
 	log := clog.NewLog(ctx, "module/user/service/service_user_register.go:14", "RegisterNewUser")
@@ -43,4 +59,18 @@ func (s *Service) RegisterNewUser(ctx context.Context, phoneNum, password string
 	}
 	err = s.Dao.CreateUserMaster(ctx, &user)
 	return err
+}
+
+func (s *Service) UserLogin(ctx context.Context, phoneNum, password, clientId string) (jwt string, err error) {
+	log := clog.NewLog(ctx, "module/user/service/service_login.go:10", "UserLogin")
+	user, err := domain.NewUserByPhoneNum(ctx, s.Dao, phoneNum)
+	if err != nil {
+		log.Errorf("user login err:%v", err)
+		return "", err
+	}
+	ok := user.IsPasswordOk(password)
+	if !ok {
+		return "", errs.NewBadRequest().WithMsg("密码错误")
+	}
+	return user.NewJwt(clientId)
 }
