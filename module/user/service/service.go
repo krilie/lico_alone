@@ -39,3 +39,9 @@ func NewService(cfg config.DB) *Service {
 		AuthRBAC: auth_cache.NewAuthCache(),
 	}
 }
+
+func (s *Service) WithTrans(ctx context.Context, oriService cdb.Service, txFunc func(service cdb.Service) error) (err error) {
+	return cdb.WithTrans(ctx, oriService, func(service cdb.Service) error {
+		return txFunc(service.(*Service))
+	})
+}
