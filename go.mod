@@ -10,6 +10,7 @@ require (
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/deckarep/golang-set v1.7.1
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/gin-contrib/gzip v0.0.1
 	github.com/gin-gonic/gin v1.4.0
 	github.com/go-ini/ini v1.46.0 // indirect
 	github.com/go-playground/locales v0.13.0 // indirect

@@ -33,6 +33,7 @@ func (s *Service) AuthCacheLoadAll(ctx context.Context) error {
 		}
 		for _, userRole := range roles {
 			role := gorbac.NewStdRole(userRole.RoleName)
+			// 加载所有角色 所有权限
 			perms, err := s.Dao.GetRolePermsByRoleName(ctx, userRole.RoleName)
 			if err != nil {
 				log.Error(err)
@@ -45,6 +46,7 @@ func (s *Service) AuthCacheLoadAll(ctx context.Context) error {
 					return err
 				}
 			}
+			// 添加此角色
 			_ = s.AuthRBAC.Add(role)
 			log.Infof("add role:%v for user:%v", role.ID(), authRole.ID())
 			if err := s.AuthRBAC.SetParent(role.ID(), authRole.ID()); err != nil {
