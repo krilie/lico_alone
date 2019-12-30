@@ -10,7 +10,7 @@ type AccountItem struct {
 	cmodel.Model
 	Version     int64
 	UpdateTime  time.Time       `gorm:"type:datetime;not null" json:"update_time"`
-	UserId      string          `gorm:"type:varchar(32);not null" json:"user_id"`
+	UserId      string          `gorm:"type:char(36);not null" json:"user_id"`
 	Name        string          `gorm:"type:varchar(50);not null" json:"name"`
 	Code        string          `gorm:"type:varchar(50);not null" json:"code"`
 	Debit       decimal.Decimal `gorm:"type:decimal(14,2);not null;default 0" json:"debit"`
@@ -27,7 +27,7 @@ func (AccountItem) TableName() string {
 type AccountBill struct {
 	cmodel.Model
 	Version int64
-	UserId  string          `gorm:"type:varchar(32);not null" json:"user_id"`
+	UserId  string          `gorm:"type:char(36);not null" json:"user_id"`
 	Amount  decimal.Decimal `gorm:"type:decimal(14,2);not null;default 0"json:"amount"` // 发生额
 	IsValid bool            `gorm:"type:boolean;not null" json:"is_valid"`
 	Image   string          `gorm:"type:varchar(500);not null" json:"image"`
@@ -41,9 +41,9 @@ func (AccountBill) TableName() string {
 type AccountBillDetail struct {
 	cmodel.Model
 	Version       int64
-	UserId        string          `gorm:"type:varchar(32);not null" json:"user_id"`
-	BillId        string          `gorm:"type:varchar(32);not null" json:"bill_id"`
-	AccountItemId string          `gorm:"type:varchar(32);not null" json:"account_item_id"`
+	UserId        string          `gorm:"type:char(36);not null" json:"user_id"`
+	BillId        string          `gorm:"type:char(36);not null" json:"bill_id"`
+	AccountItemId string          `gorm:"type:char(36);not null" json:"account_item_id"`
 	Amount        decimal.Decimal `gorm:"type:decimal(14,2);not null;default 0"json:"amount"` // 值 可正可负 负借 正贷
 }
 
@@ -55,9 +55,9 @@ func (AccountBillDetail) TableName() string {
 type AccountOperatorLog struct {
 	cmodel.Model
 	Version       int64
-	UserId        string          `gorm:"type:varchar(32);not null" json:"user_id"`
-	BillId        string          `gorm:"type:varchar(32);not null" json:"bill_id"`
-	AccountItemId string          `gorm:"type:varchar(32);not null" json:"account_item_id"`
+	UserId        string          `gorm:"type:char(36);not null" json:"user_id"`
+	BillId        string          `gorm:"type:char(36);not null" json:"bill_id"`
+	AccountItemId string          `gorm:"type:char(36);not null" json:"account_item_id"`
 	Amount        decimal.Decimal `gorm:"type:decimal(14,2);not null;default 0"json:"amount"` // 值 可正可负 负借 正贷
 	Message       string          `gorm:"type:varchar(500);not null" json:"message"`
 }
