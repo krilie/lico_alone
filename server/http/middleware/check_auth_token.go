@@ -8,6 +8,13 @@ import (
 	"github.com/krilie/lico_alone/server/http/ginutil"
 )
 
+// 权限接口
+type IAuth interface {
+	HasUser(id string) (bool, error)
+	HasPermission(id, permission string) (bool, error)
+	HasRole(userId, roleId string) (bool, error)
+}
+
 // check user is login and auth token validation
 func CheckAuthToken(auth IAuth) gin.HandlerFunc {
 	return func(c *gin.Context) {
