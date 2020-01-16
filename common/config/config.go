@@ -3,6 +3,7 @@ package config
 import (
 	"github.com/prometheus/common/log"
 	"github.com/spf13/viper"
+	"os"
 	"strings"
 )
 
@@ -62,8 +63,11 @@ func init() {
 		log.Error(err)
 		return
 	}
-	// 没有环境变量则读取命令行
-	var configFile = "./config.yaml"
+	// 没有环境变量
+	configFile := os.Getenv("APP_CONFIG_PATH")
+	if configFile == "" {
+		return
+	}
 	// 加载配置文件
 	if err := LoadConfigByFile(configFile); err != nil {
 		log.Error(err.Error())
