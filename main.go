@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"github.com/krilie/lico_alone/application"
 	"github.com/krilie/lico_alone/common/broker"
 	"github.com/krilie/lico_alone/common/ccontext"
@@ -22,8 +23,14 @@ import (
 // @description  This is a sample server Petstore server.
 func main() {
 	ctx := ccontext.NewContext()
+	// 初始化配置块
+	configFilePath := flag.String("config", "config.yaml", "配置文件")
+	flag.Parse()
+	_ = config.LoadConfigByFile(*configFilePath)
+	// 初始化日志文件
 	clog.SetUpLogFile(config.Cfg.LogFile)
 	var log = clog.NewLog(ctx, "lico.main", "main")
+	// 开启服务器连接
 	cdb.StartDb(config.Cfg.DB)
 	defer cdb.CloseDb()                                        // 最后关闭数据库
 	defer func() { broker.Smq.Close(); log.Infof("消息队列退出") }() // 关闭消息队列
