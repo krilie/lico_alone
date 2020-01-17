@@ -1,9 +1,6 @@
 package config
 
 import (
-	"context"
-	"flag"
-	"github.com/krilie/lico_alone/common/clog"
 	"github.com/prometheus/common/log"
 	"github.com/spf13/viper"
 	"os"
@@ -16,11 +13,6 @@ var (
 )
 
 func init() {
-	log := clog.NewLog(context.Background(), "lico_alone.common.config", "init")
-
-	//var ConfigFilePath string
-	//flag.StringVar(&ConfigFilePath, "config", "./config.yml", "config file path")
-	//flag.Parse()
 
 	v = viper.New()
 
@@ -71,24 +63,10 @@ func init() {
 		log.Error(err)
 		return
 	}
-	// 命令行 > 环境变量 > 默认位置
-	// 读环境变量值
-	defFileEnv := os.Getenv("CONFIG_FILE")
-	// 没有环境变量则读取命令行
-	var defFile string
-	set := flag.NewFlagSet("config", flag.ContinueOnError)
-	set.StringVar(&defFile, "c", "", "config file")
-	if err := set.Parse(os.Args[1:]); err != nil {
-		log.Error(err)
+	// 没有环境变量
+	configFile := os.Getenv("APP_CONFIG_PATH")
+	if configFile == "" {
 		return
-	}
-	var configFile string
-	if defFile == "" && defFileEnv != "" {
-		configFile = defFileEnv
-	} else if defFile == "" && defFileEnv == "" {
-		configFile = "./config.yaml"
-	} else if defFile != "" {
-		configFile = defFile
 	}
 	// 加载配置文件
 	if err := LoadConfigByFile(configFile); err != nil {
