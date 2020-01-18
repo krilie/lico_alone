@@ -14,5 +14,5 @@ type Permission struct {
 }
 
 func (Permission) TableName() string {
-	return "tb_permission"
+	return "tb_auth_permission"
 }
