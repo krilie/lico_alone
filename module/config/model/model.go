@@ -11,5 +11,5 @@ type Config struct {
 }
 
 func (Config) TableName() string {
-	return "tb_config"
+	return "tb_config_master"
 }
