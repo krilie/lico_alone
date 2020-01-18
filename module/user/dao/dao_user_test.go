@@ -16,6 +16,15 @@ func TestDao_GetAllValidUserId(t *testing.T) {
 	t.Log(str_util.ToJsonPretty(strings), err)
 }
 
+func BenchmarkDao_GetAllValidUserId(b *testing.B) {
+	dao := NewDao(config.Cfg.DB)
+	dao.Db.LogMode(false)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _ = dao.GetAllValidUserId(context.Background())
+	}
+}
+
 func TestGetFilename(t *testing.T) {
 	environ := os.Environ()
 	fmt.Println(str_util.ToJsonPretty(environ))
