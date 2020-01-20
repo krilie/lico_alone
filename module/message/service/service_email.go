@@ -11,7 +11,7 @@ import (
 )
 
 func (s *Service) SendEmail(ctx context.Context, to, subject, content string) error {
-	log := clog.NewLog(ctx, "module/message/service/service_email.go:8", "SetTx")
+	log := clog.NewLog(ctx, "module/message/service/service_email.go:8", "NewWithTxOrFromCtx")
 	email := &model.MessageEmail{
 		Model:     cmodel.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
 		SendTime:  time.Now(),

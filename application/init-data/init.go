@@ -15,12 +15,12 @@ type Init struct {
 	ConfigService *configService.Service
 }
 
-func (a *Init) SetTx(ctx context.Context, tx *gorm.DB) (srv cdb.Service, err error) {
-	newUserService, err := a.UserService.SetTx(ctx, tx)
+func (a *Init) NewWithTx(ctx context.Context, tx *gorm.DB) (srv cdb.Service, err error) {
+	newUserService, err := a.UserService.NewWithTx(ctx, tx)
 	if err != nil {
 		return nil, err
 	}
-	configure, err := a.ConfigService.SetTx(ctx, tx)
+	configure, err := a.ConfigService.NewWithTx(ctx, tx)
 	if err != nil {
 		return nil, err
 	}

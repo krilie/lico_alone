@@ -14,7 +14,7 @@ import (
 // InitData
 func (a *Init) InitData(ctx context.Context) {
 	// 开始事务
-	err := cdb.WithTrans(ctx, a, func(service cdb.Service) error {
+	err := cdb.WithTrans(ctx, a, func(ctx context.Context, service cdb.Service) error {
 		a := service.(*Init)
 		// 是否初始化过
 		isInit, err := a.ConfigService.GetValueBool(ctx, model.CommonIsInitData)

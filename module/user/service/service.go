@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/cdb"
-	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/config"
 	auth_cache "github.com/krilie/lico_alone/module/user/auth-cache"
 	"github.com/krilie/lico_alone/module/user/dao"
@@ -15,18 +14,11 @@ type Service struct {
 	AuthRBAC *auth_cache.AuthCache
 }
 
-func (s *Service) SetTx(ctx context.Context, tx *gorm.DB) (cdb.Service, error) {
-	var log = clog.NewLog(ctx, "module/user/service/service.go.Service", "WithTx")
-	log.Debug("new tx")
-	txDao, err := s.Dao.Begin(tx)
-	if err != nil {
-		log.Error(err)
-		return nil, err
-	}
+func (s *Service) NewWithTx(ctx context.Context, tx *gorm.DB) (cdb.Service, error) {
 	return &Service{
-		Dao:      &dao.Dao{Dao: txDao},
+		Dao:      &dao.Dao{Dao: &cdb.Dao{Db: tx}},
 		AuthRBAC: s.AuthRBAC,
-	}, err
+	}, nil
 }
 
 func (s *Service) GetDb(ctx context.Context) *gorm.DB {
@@ -40,8 +32,8 @@ func NewService(cfg config.DB) *Service {
 	}
 }
 
-func (s *Service) WithTrans(ctx context.Context, oriService cdb.Service, txFunc func(service cdb.Service) error) (err error) {
-	return cdb.WithTrans(ctx, oriService, func(service cdb.Service) error {
-		return txFunc(service.(*Service))
+func (s *Service) WithTrans(ctx context.Context, oriService cdb.Service, txFunc func(ctx context.Context, service cdb.Service) error) (err error) {
+	return cdb.WithTrans(ctx, oriService, func(ctx context.Context, service cdb.Service) error {
+		return txFunc(ctx, service.(*Service))
 	})
 }
