@@ -20,13 +20,13 @@ func (a *Init) SetTx(ctx context.Context, tx *gorm.DB) (srv cdb.Service, err err
 	if err != nil {
 		return nil, err
 	}
-	configservice, err := a.ConfigService.SetTx(ctx, tx)
+	configure, err := a.ConfigService.SetTx(ctx, tx)
 	if err != nil {
 		return nil, err
 	}
 	return &Init{
 		UserService:   newUserService.(*userService.Service),
-		ConfigService: configservice.(*configService.Service),
+		ConfigService: configure.(*configService.Service),
 	}, nil
 }
 
