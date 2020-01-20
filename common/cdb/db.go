@@ -31,6 +31,7 @@ func StartDb(cfg config.DB) {
 		)
 		var err error
 		if Db, err = gorm.Open("mysql", connStr+"&loc=Asia%2FShanghai"); err != nil {
+			fmt.Println(err.Error())
 			log.Fatal(err, string(debug.Stack())) // 报错退出程序
 			return
 		} else {
