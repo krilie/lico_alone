@@ -15,7 +15,7 @@ import (
 // 内部有事务的存在
 func (a *Service) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName string, file multipart.File, size int) (url, bucket, key string, err error) {
 	log := clog.NewLog(ctx, "module/file/service/service_broker.go:5", "RegisterBroker")
-	err = cdb.WithTrans(ctx, a, func(s cdb.Service) error {
+	err = cdb.WithTrans(ctx, a, func(ctx context.Context, s cdb.Service) error {
 		fileService := s.(*Service)
 		var content string
 		content, bucket, key, err = fileService.FileSaver.UploadFile(ctx, userId, fileName, file, int64(size))
@@ -45,7 +45,7 @@ func (a *Service) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName 
 
 // 内部有事务的存在
 func (a *Service) DeleteFile(ctx context.Context, bucket, key string) (err error) {
-	err = cdb.WithTrans(ctx, a, func(s cdb.Service) error {
+	err = cdb.WithTrans(ctx, a, func(ctx context.Context, s cdb.Service) error {
 		srv := s.(*Service)
 		err := srv.Dao.DeleteFileByBucketKey(ctx, bucket, key)
 		if err != nil {

@@ -1,6 +1,7 @@
 package ccontext
 
 import (
+	"context"
 	"time"
 )
 
@@ -12,6 +13,24 @@ type Context struct {
 	LastTime  time.Time //调用结束时间
 	ClientId  string    //client的id号
 	UserId    string
+	Db        interface{} // 数据库对象
+	Tx        interface{} // 数据库事务对象
+}
+
+func CloneContext(ctx context.Context) context.Context {
+	var c = ctx.(*Context)
+	if c == nil {
+		return nil
+	}
+	return &Context{
+		TraceId:   c.TraceId,
+		StartTime: c.StartTime,
+		LastTime:  c.LastTime,
+		ClientId:  c.ClientId,
+		UserId:    c.UserId,
+		Db:        c.Db,
+		Tx:        c.Tx,
+	}
 }
 
 func (c *Context) Deadline() (deadline time.Time, ok bool) {
@@ -59,4 +78,10 @@ func (c *Context) SetClientId(clientId string) {
 }
 func (c *Context) SetUserId(userId string) {
 	c.UserId = userId
+}
+func (c *Context) SetTx(tx interface{}) {
+	c.Tx = tx
+}
+func (c *Context) GetTx() interface{} {
+	return c.Tx
 }

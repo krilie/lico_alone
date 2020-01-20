@@ -13,7 +13,7 @@ import (
 
 // SendRegisterSms 发送注册短信
 func (s *Service) SendRegisterSms(ctx context.Context, phone, code string) error {
-	log := clog.NewLog(ctx, "module/message/service/service_sms.go:9", "SetTx")
+	log := clog.NewLog(ctx, "module/message/service/service_sms.go:9", "NewWithTxOrFromCtx")
 	sendErr := s.sms.SendRegisterSms(ctx, phone, code)
 	if sendErr != nil {
 		log.Error(sendErr)
