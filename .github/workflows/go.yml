@@ -36,7 +36,7 @@ jobs:
         uses: elgohr/Publish-Docker-Github-Action@master
         env:
           TAGS1: latest
-          TAGS2: `cat version`
+          TAGS2: $CGO_ENABLED
         with:
           name: ${{ secrets.DOCKER_IMAGE_NAME }}
           username: ${{ secrets.DOCKER_USERNAME }}
