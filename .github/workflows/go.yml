@@ -41,7 +41,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
           workdir: ./docker
-          tags: $DOCKER_IMAGE_TAGS
+          tags: ${DOCKER_IMAGE_TAGS}
 
       - name: apply app server
         uses: appleboy/ssh-action@master
@@ -54,8 +54,4 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd /opt/app-server
-            pwd
-            docker-compose down
-            echo ${IMAGE}
-            docker rmi registry.cn-qingdao.aliyuncs.com/lizo/app-server:latest
-            docker-compose up -d
+            docker-compose pull && docker-compose up --force-recreate -d
