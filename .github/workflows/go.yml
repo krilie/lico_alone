@@ -31,19 +31,17 @@ jobs:
         run: |
           cp ./lico_alone ./docker/lico_alone
           cp -rf ./www ./docker/www
+          export DOCKER_IMAGE_TAGS="latest,"`cat version`
 
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
-        env:
-          TAGS1: latest
-          TAGS2: 1.0
         with:
           name: ${{ secrets.DOCKER_IMAGE_NAME }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
           workdir: ./docker
-          tags: ${{ env.TAGS2 }}
+          tags: ${{ env.DOCKER_IMAGE_TAGS }}
 
       - name: apply app server
         uses: appleboy/ssh-action@master
