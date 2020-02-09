@@ -23,7 +23,7 @@ jobs:
         env:
           CGO_ENABLED: 0
         run: |
-          go build -v . -ldflags "-X 'main.VERSION=`cat version`' -X 'main.BUILD_TIME=`date`' -X 'main.GO_VERSION=`go version`' -X 'main.GIT_COMMIT=${{GITHUB_SHA}}'"
+          go build -v . -ldflags "-X 'main.VERSION=`cat version`' -X 'main.BUILD_TIME=`date`' -X 'main.GO_VERSION=`go version`' -X 'main.GIT_COMMIT=${GITHUB_SHA}'"
           pwd
           ls -h
 
@@ -55,6 +55,5 @@ jobs:
             pwd
             docker-compose down
             echo ${IMAGE}
-            echo ${{IMAGE}}
             docker rmi registry.cn-qingdao.aliyuncs.com/lizo/app-server:latest
             docker-compose up -d
