@@ -40,6 +40,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
           workdir: ./docker
+          tags: "latest,"+`cat version`
 
       - name: apply app server
         uses: appleboy/ssh-action@master
