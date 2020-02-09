@@ -16,6 +16,13 @@ import (
 	"syscall"
 )
 
+var (
+	VERSION    string
+	BUILD_TIME string
+	GO_VERSION string
+	GIT_COMMIT string
+)
+
 //go:generate swag init -g ./main.go
 
 // @title Swagger Example API
