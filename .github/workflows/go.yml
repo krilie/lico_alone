@@ -36,14 +36,14 @@ jobs:
         uses: elgohr/Publish-Docker-Github-Action@master
         env:
           TAGS1: latest
-          TAGS2: echo cat version
+          TAGS2: `cat version`
         with:
           name: ${{ secrets.DOCKER_IMAGE_NAME }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
           workdir: ./docker
-          tags: ${{env.TAGS}}
+          tags: ${{env.TAGS1}},${{env.TAGS2}}
 
       - name: apply app server
         uses: appleboy/ssh-action@master
