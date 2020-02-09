@@ -63,7 +63,7 @@ func main() {
 	cdb.StartDb(config.Cfg.DB)
 	defer cdb.CloseDb()                                        // 最后关闭数据库
 	defer func() { broker.Smq.Close(); log.Infof("消息队列退出") }() // 关闭消息队列
-	app := application.NewApp(ctx, VERSION, config.Cfg)
+	app := application.NewApp(ctx, config.Cfg, VERSION, BUILD_TIME, GIT_COMMIT, GO_VERSION)
 	// 初始化数据 权限账号等
 	app.Init.InitData(ctx)
 	// 加载所有权限
