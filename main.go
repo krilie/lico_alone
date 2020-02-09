@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/krilie/lico_alone/application"
 	"github.com/krilie/lico_alone/common/broker"
 	"github.com/krilie/lico_alone/common/ccontext"
@@ -29,6 +30,27 @@ var (
 // @version 0.0.1
 // @description  This is a sample server Petstore server.
 func main() {
+	// 命令行 命令
+	if len(os.Args) >= 2 {
+		cmd := os.Args[1]
+		switch cmd {
+		case "version", "--version", "-version":
+			fmt.Println(VERSION)
+			return
+		case "git-commit", "--git-commit", "-git-commit":
+			fmt.Println(GIT_COMMIT)
+			return
+		case "go-version", "-go-version", "--go-version":
+			fmt.Println(GO_VERSION)
+			return
+		case "build-time", "-build-time", "--build-time":
+			fmt.Println(BUILD_TIME)
+			return
+		default:
+			break
+		}
+	}
+	// 开始服务
 	ctx := ccontext.NewContext()
 	// 初始化配置块
 	configFilePath := flag.String("config", "config.yaml", "配置文件")
@@ -41,7 +63,7 @@ func main() {
 	cdb.StartDb(config.Cfg.DB)
 	defer cdb.CloseDb()                                        // 最后关闭数据库
 	defer func() { broker.Smq.Close(); log.Infof("消息队列退出") }() // 关闭消息队列
-	app := application.NewApp(config.Cfg)
+	app := application.NewApp(ctx, VERSION, config.Cfg)
 	// 初始化数据 权限账号等
 	app.Init.InitData(ctx)
 	// 加载所有权限

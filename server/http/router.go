@@ -48,7 +48,10 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 	}
 	// 健康检查
 	health.Init(RootRouter)
-
+	// 版本号
+	RootRouter.GET("/version", func(c *gin.Context) {
+		c.String(200, app.Version)
+	})
 	// api路由 + 中间件
 	apiGroup := RootRouter.Group("/api")
 	apiGroup.Use(middleware.BuildContext())
