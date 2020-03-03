@@ -34,8 +34,9 @@ func init() {
 }
 
 func SetUpLogFile(f string) {
-	if f == "" {
+	if f == "" || f == "stdout" {
 		Log.Logger.SetOutput(os.Stdout)
+		Log.Logger.Warnln("set log out file to stdout")
 		return
 	}
 	file, e := os.OpenFile(f, os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModeAppend)
@@ -44,6 +45,7 @@ func SetUpLogFile(f string) {
 		return
 	}
 	Log.Logger.SetOutput(file)
+	Log.Logger.Warnln("set log out file to " + f)
 }
 
 // trace_id
