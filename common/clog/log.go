@@ -29,8 +29,18 @@ func init() {
 	Log = Log.
 		WithField(AppName, os.Getenv("BR_APP_NAME")).
 		WithField(AppVersion, os.Getenv("BR_APP_VERSION")).
-		WithField(AppHost, os.Getenv("HOST_NAME"))
+		WithField(AppHost, func() string {
+			if name, err := os.Hostname(); err != nil {
+				return name
+			} else {
+				return ""
+			}
+		})
 	Log.Infoln("log init ok")
+}
+
+func SetLogField(appVersion, appName string) {
+	Log = logrus.WithField(AppName, appName).WithField(AppVersion, appVersion)
 }
 
 func SetUpLogFile(f string) {

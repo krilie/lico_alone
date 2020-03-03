@@ -57,6 +57,7 @@ func main() {
 	flag.Parse()
 	_ = config.LoadConfigByFile(*configFilePath)
 	// 初始化日志文件
+	clog.SetLogField(VERSION, "myapp")
 	clog.SetUpLogFile(config.Cfg.LogFile)
 	var log = clog.NewLog(ctx, "lico.main", "main")
 	// 开启服务器连接
