@@ -23,7 +23,7 @@ jobs:
         env:
           CGO_ENABLED: 0
         run: |
-          go build -v .
+          go build -ldflags "-X 'main.VERSION=`cat version`' -X 'main.BUILD_TIME=`date`' -X 'main.GO_VERSION=`go version`' -X 'main.GIT_COMMIT=${GITHUB_SHA}'"  -v .
           pwd
           ls -h
 
@@ -31,6 +31,7 @@ jobs:
         run: |
           cp ./lico_alone ./docker/lico_alone
           cp -rf ./www ./docker/www
+          export DOCKER_IMAGE_TAGS="latest,"`cat version`
 
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
@@ -40,6 +41,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
           workdir: ./docker
+          tags: ${{ env.DOCKER_IMAGE_TAGS }}
 
       - name: apply app server
         uses: appleboy/ssh-action@master
@@ -52,8 +54,4 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd /opt/app-server
-            pwd
-            docker-compose down
-            echo ${IMAGE}
-            docker rmi registry.cn-qingdao.aliyuncs.com/lizo/app-server:latest
-            docker-compose up -d
+            docker-compose pull && docker-compose up --force-recreate -d
