@@ -69,6 +69,7 @@ func init() {
 		return
 	}
 	// 加载配置文件
+	log.Warnln("set config file from env APP_CONFIG_PATH " + configFile)
 	if err := LoadConfigByFile(configFile); err != nil {
 		log.Error(err.Error())
 		return
