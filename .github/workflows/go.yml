@@ -43,7 +43,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
           workdir: ./docker
-          tags: $DOCKER_IMAGE_TAGS
+          tags: ${{ job.copy-file-to-docker.env.DOCKER_IMAGE_TAGS }}
           snapshot: true
 
       - name: apply app server
