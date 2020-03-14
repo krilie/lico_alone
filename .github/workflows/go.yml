@@ -38,8 +38,9 @@ jobs:
           cp ./lico_alone ./docker/lico_alone
           cp -rf ./www ./docker/www
           echo ::set-env name=GITHUB_SHA_SHORT::$(echo $GITHUB_SHA | cut -c 1-6)
-          echo ::set-env name=DOCKER_IMAGE_TAGS_LATEST::$("latest")
+          echo ::set-env name=DOCKER_IMAGE_TAGS_LATEST::"latest"
           echo ::set-env name=DOCKER_IMAGE_TAGS_VERSION::$(cat version)
+          echo ::set-env name=TZ::"Asia/Shanghai"
 
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
