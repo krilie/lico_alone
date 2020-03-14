@@ -57,3 +57,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
               ls -h
+              echo $DOCKER_IMAGE_TAGS
+              echo ${{ env.DOCKER_IMAGE_TAGS }}
+              echo ${{ job.copy-file-to-docker.env.DOCKER_IMAGE_TAGS }}
+              env
