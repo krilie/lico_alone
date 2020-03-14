@@ -30,7 +30,9 @@ jobs:
         run: |
           cp ./lico_alone ./docker/lico_alone
           cp -rf ./www ./docker/www
-          export DOCKER_IMAGE_TAGS="latest,"`cat version`
+          echo ::set-env name=GITHUB_SHA_SHORT::$(echo $GITHUB_SHA | cut -c 1-6)
+          echo ::set-env name=DOCKER_IMAGE_TAGS_LATEST::$("latest")
+          echo ::set-env name=DOCKER_IMAGE_TAGS_VERSION::$(cat version)
 
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
@@ -42,14 +44,11 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
           workdir: ./docker
-          tags: ${{ github.sha }}
-          snapshot: true
+          tags: ${{ env.DOCKER_IMAGE_TAGS_VERSION }}
+          snapshot: false
 
       - name: apply app server
         uses: appleboy/ssh-action@master
-        env:
-          IMAGE: ${{ secrets.DOCKER_IMAGE_NAME }}
-          TAG:   ${{ github.sha }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
@@ -57,4 +56,4 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             env
-            kubectl set image deployment/myapp myapp-backend=$IMAGE:$TAG
+            kubectl set image deployment/myapp myapp-backend=${{ secrets.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAGS_VERSION }}
