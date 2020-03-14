@@ -42,7 +42,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
           workdir: ./docker
-          tags: TAG
+          tags: ${{ github.sha }}
           snapshot: true
 
       - name: apply app server
