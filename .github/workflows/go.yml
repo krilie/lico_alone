@@ -52,7 +52,7 @@ jobs:
           registry: ${{ secrets.DOCKER_REGISTRY }}
           workdir: ./docker
           tags: ${{ env.DOCKER_IMAGE_TAGS_VERSION }}
-          snapshot: false
+          snapshot: true
 
       - name: apply app server
         uses: appleboy/ssh-action@master
