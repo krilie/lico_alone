@@ -9,6 +9,8 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v1
 
       - name: Set up Go 1.14
         uses: actions/setup-go@v1
@@ -16,16 +18,13 @@ jobs:
           go-version: 1.14
         id: go
 
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v1
-
       - name: Build
         env:
           CGO_ENABLED: 0
         run: |
-          go build -ldflags "-X 'main.VERSION=`cat version`' -X 'main.BUILD_TIME=`date`' -X 'main.GO_VERSION=`go version`' -X 'main.GIT_COMMIT=${GITHUB_SHA}'"  -v .
-          pwd
-          ls -h
+          TZ=Asia/Shanghai
+          ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+          go build -ldflags "-X 'main.VERSION=`cat version`' -X 'main.BUILD_TIME=`date "+%Y-%m-%d %H:%M:%S"`' -X 'main.GO_VERSION=`go version`' -X 'main.GIT_COMMIT=${GITHUB_SHA}'"  -v .
 
       - name: copy-file-to-docker
         run: |
@@ -35,13 +34,17 @@ jobs:
 
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
+        env:
+          MY_FIRST: 1111
+          MY_SECOND: 2222
         with:
           name: ${{ secrets.DOCKER_IMAGE_NAME }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
           workdir: ./docker
-          tags: ${{ env.DOCKER_IMAGE_TAGS }}
+          tags: DOCKER_IMAGE_TAGS
+          snapshot: true
 
       - name: apply app server
         uses: appleboy/ssh-action@master
@@ -53,5 +56,4 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd /opt/app-server
-            docker-compose pull && docker-compose up --force-recreate -d
+              ls -h
