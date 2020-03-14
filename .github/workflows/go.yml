@@ -36,14 +36,13 @@ jobs:
         uses: elgohr/Publish-Docker-Github-Action@master
         env:
           MY_FIRST: 1111
-          MY_SECOND: 2222
         with:
           name: ${{ secrets.DOCKER_IMAGE_NAME }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
           workdir: ./docker
-          tags: ${{ job.copy-file-to-docker.env.DOCKER_IMAGE_TAGS }}
+          tags: MY_FIRST
           snapshot: true
 
       - name: apply app server
