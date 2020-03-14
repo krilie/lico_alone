@@ -45,6 +45,7 @@ jobs:
         uses: elgohr/Publish-Docker-Github-Action@master
         env:
           TAG: ${{ github.sha }}
+          TZ:  "Asia/Shanghai"
         with:
           name: ${{ secrets.DOCKER_IMAGE_NAME }}
           username: ${{ secrets.DOCKER_USERNAME }}
