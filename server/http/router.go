@@ -24,7 +24,8 @@ var RootRouter *gin.Engine
 func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Duration) error) {
 	ctx := ccontext.NewContext()
 	log := clog.NewLog(ctx, "controller.router", "InitHttpServer")
-
+	// 设置gin mode
+	gin.SetMode(app.Cfg.GinMode)
 	// 路径设置 根路径
 	RootRouter = gin.Default() // logger recover
 	// 静态文件 图片等

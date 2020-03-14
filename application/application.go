@@ -18,6 +18,7 @@ type App struct {
 	GitCommit string
 	BuildTime string
 	GoVersion string
+	Cfg       config.Config
 }
 
 func NewApp(ctx context.Context, cfg config.Config, version string, buildTime string, gitCommit, goVersion string) *App {
@@ -31,5 +32,6 @@ func NewApp(ctx context.Context, cfg config.Config, version string, buildTime st
 		GitCommit: gitCommit,
 		BuildTime: buildTime,
 		GoVersion: goVersion,
+		Cfg:       cfg,
 	}
 }
