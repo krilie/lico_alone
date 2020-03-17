@@ -7,7 +7,6 @@ import (
 	"github.com/krilie/lico_alone/application"
 	"github.com/krilie/lico_alone/common/ccontext"
 	"github.com/krilie/lico_alone/common/clog"
-	"github.com/krilie/lico_alone/common/config"
 	_ "github.com/krilie/lico_alone/docs"
 	"github.com/krilie/lico_alone/server/http/health"
 	"github.com/krilie/lico_alone/server/http/middleware"
@@ -29,7 +28,7 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 	// 路径设置 根路径
 	RootRouter = gin.Default() // logger recover
 	// 静态文件 图片等
-	RootRouter.StaticFile("/files", config.Cfg.FileSave.LocalFileSaveDir)
+	RootRouter.StaticFile("/files", app.Cfg.FileSave.LocalFileSaveDir)
 	// web 站点
 	webRouter := RootRouter.Group("/")
 	webRouter.Use(gzip.Gzip(gzip.DefaultCompression)) // 开启gzip压缩
@@ -44,7 +43,7 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 		i.Redirect(http.StatusFound, "/web/index.html")
 	})
 	// swagger + gzip压缩
-	if config.Cfg.EnableSwagger {
+	if app.Cfg.EnableSwagger {
 		RootRouter.GET("/swagger/*any", gzip.Gzip(gzip.DefaultCompression), ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 	// 健康检查
@@ -74,12 +73,12 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 
 	// 开始服务
 	srv := &http.Server{
-		Addr:    ":" + strconv.Itoa(config.Cfg.HttpPort),
+		Addr:    ":" + strconv.Itoa(app.Cfg.HttpPort),
 		Handler: RootRouter,
 	}
 	//是否有ssl.public_key ssl.private_key
-	pubKey := config.Cfg.SslPub
-	priKey := config.Cfg.SslPri
+	pubKey := app.Cfg.SslPub
+	priKey := app.Cfg.SslPri
 	if pubKey == "" || priKey == "" {
 		go func() {
 			if err := srv.ListenAndServe(); err != nil {
