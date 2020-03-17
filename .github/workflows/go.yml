@@ -64,5 +64,4 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            env
             kubectl set image deployment/myapp myapp-backend=${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ env.GITHUB_SHA_SHORT }}
