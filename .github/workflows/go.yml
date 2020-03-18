@@ -33,10 +33,30 @@ jobs:
           export TZ='Asia/Shanghai'
           go build -ldflags "-X 'main.VERSION=`cat version`' -X 'main.BUILD_TIME=`date "+%Y-%m-%d %H:%M:%S"`' -X 'main.GO_VERSION=`go version`' -X 'main.GIT_COMMIT=${GITHUB_SHA}'"  -v .
 
+      - uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/web/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # 使用 node:10
+      - name: use Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      # npm install
+      - name: npm install and build
+        run: |
+          cd web
+          npm install
+          npm run build
+          cd ..
+
       - name: copy-file-to-docker
         run: |
           cp ./lico_alone ./docker/lico_alone
-          cp -rf ./www ./docker/www
+          cp -rf ./web/build ./docker/www
           echo ::set-env name=GITHUB_SHA_SHORT::$(echo $GITHUB_SHA | cut -c 1-6)
           echo ::set-env name=DOCKER_IMAGE_TAGS_LATEST::"latest"
           echo ::set-env name=DOCKER_IMAGE_TAGS_VERSION::$(cat version)
