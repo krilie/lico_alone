@@ -8,8 +8,10 @@ function App() {
     return (
         <div className="App">
             <Layout className="layout">
-                <Content style={{padding: '0 50px', height: '100%'}}>
-                    <div className="site-layout-content">建设中</div>
+                <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
+                    <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
+                        建设中
+                    </div>
                 </Content>
                 <Footer style={{textAlign: 'center'}}>
                     <a href="http://www.beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">皖ICP备20003857号</a>
