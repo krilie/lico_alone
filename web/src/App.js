@@ -6,10 +6,10 @@ const {Content, Footer} = Layout;
 
 function App() {
     return (
-        <div className="App">
-            <Layout className="layout">
-                <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
-                    <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
+        <div className="App" style={{height: '100%'}}>
+            <Layout className="layout" style={{height: '100%'}}>
+                <Content className="site-layout" style={{padding: '0 50px', marginTop: 64, height: '100%'}}>
+                    <div className="site-layout-background" style={{padding: 24, minHeight: 380}}>
                         建设中
                     </div>
                 </Content>
