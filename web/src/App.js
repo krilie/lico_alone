@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import Icplable from "./icp/icplable";
 import {Layout} from 'antd';
+import Row from "antd/es/descriptions/Row";
+import Col from "antd/es/grid/col";
 
 const {Header, Footer, Content} = Layout;
 
