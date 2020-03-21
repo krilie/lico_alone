@@ -8,6 +8,14 @@ const {Header, Footer, Content} = Layout;
 function App() {
     return (
         <div className="App" style={{height: '100%'}}>
+            <Row gutter={[8, 8]}>
+                <Col span={12} />
+                <Col span={12} />
+            </Row>
+            <Row gutter={[8, 8]}>
+                <Col span={12} />
+                <Col span={12} />
+            </Row>
             <Layout>
                 <Header>Header</Header>
                 <Content>Content</Content>
