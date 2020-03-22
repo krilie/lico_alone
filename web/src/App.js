@@ -16,13 +16,8 @@ function App() {
             </Row>
             <Row gutter={[8, 8]}>
                 <Col span={12} />
-                <Col span={12} />
+                <Col span={12} ><Icplable/></Col>
             </Row>
-            <Layout>
-                <Header>Header</Header>
-                <Content>Content</Content>
-                <Footer><Icplable/></Footer>
-            </Layout>
         </div>
     );
 }
