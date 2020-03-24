@@ -3,6 +3,7 @@ package config
 type Config struct {
 	GinMode       string   `mapstructure:"gin_mode" json:"gin_mode" toml:"gin_mode"`
 	HttpPort      int      `mapstructure:"http_port" json:"http_port" toml:"http_port"`
+	WebPort       int      `mapstructure:"web_port" json:"web_port" toml:"web_port"`
 	SslPri        string   `mapstructure:"ssl_pri" json:"ssl_pri" toml:"ssl_pri"`
 	SslPub        string   `mapstructure:"ssl_pub" json:"ssl_pub" toml:"ssl_pub"`
 	LogFile       string   `mapstructure:"log_file" json:"log_file" toml:"log_file"` // 配置文件 空为控制台

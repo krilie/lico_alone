@@ -1,6 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import {Provider} from "react-redux";
+import App from "./pages/App";
+import {HashRouter, Route} from 'react-router-dom'
+import store from "./redux/RuduxIndex";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render((
+    <Provider store={store}>
+        <HashRouter basename='/'>
+            <Route path={`/`} component={App}/>
+        </HashRouter>
+    </Provider>
+), document.getElementById('root'));
