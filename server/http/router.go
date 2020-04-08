@@ -7,6 +7,7 @@ import (
 	"github.com/krilie/lico_alone/application"
 	"github.com/krilie/lico_alone/common/ccontext"
 	"github.com/krilie/lico_alone/common/clog"
+	"github.com/krilie/lico_alone/common/config"
 	_ "github.com/krilie/lico_alone/docs"
 	"github.com/krilie/lico_alone/server/http/health"
 	"github.com/krilie/lico_alone/server/http/middleware"
@@ -18,30 +19,15 @@ import (
 	"time"
 )
 
-var RootRouter *gin.Engine
-
 func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Duration) error) {
 	ctx := ccontext.NewContext()
 	log := clog.NewLog(ctx, "controller.router", "InitHttpServer")
 	// 设置gin mode
 	gin.SetMode(app.Cfg.GinMode)
 	// 路径设置 根路径
-	RootRouter = gin.Default() // logger recover
+	RootRouter := gin.Default() // logger recover
 	// 静态文件 图片等
 	RootRouter.StaticFile("/files", app.Cfg.FileSave.LocalFileSaveDir)
-	// web 站点
-	webRouter := RootRouter.Group("/")
-	webRouter.Use(gzip.Gzip(gzip.DefaultCompression)) // 开启gzip压缩
-	webRouter.Static("/web", "./www")
-	webRouter.GET("/web", func(i *gin.Context) {
-		i.Redirect(http.StatusFound, "/web/index.html")
-	})
-	webRouter.GET("/", func(i *gin.Context) {
-		i.Redirect(http.StatusFound, "/web/index.html")
-	})
-	webRouter.GET("/index.html", func(i *gin.Context) {
-		i.Redirect(http.StatusFound, "/web/index.html")
-	})
 	// swagger + gzip压缩
 	if app.Cfg.EnableSwagger {
 		RootRouter.GET("/swagger/*any", gzip.Gzip(gzip.DefaultCompression), ginSwagger.WrapHandler(swaggerFiles.Handler))
@@ -107,5 +93,53 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 			return nil
 		}
 	}
+}
 
+func InitAndStartStaticWebServer(ctx context.Context, cfg config.Config) (shutDown func(waitSec time.Duration) error) {
+	log := clog.NewLog(ctx, "controller.router", "InitAndStartStaticWebServer")
+	// 设置gin mode
+	gin.SetMode(cfg.GinMode)
+	// 路径设置 根路径
+	RootRouter := gin.New()
+	RootRouter.Use(gin.Logger(), gin.Recovery())
+	// web 站点
+	webRouter := RootRouter.Group("/")
+	webRouter.Use(gzip.Gzip(gzip.DefaultCompression)) // 开启gzip压缩
+	webRouter.Static("/", "./www")
+	// 开始服务
+	srv := &http.Server{
+		Addr:    ":" + strconv.Itoa(cfg.WebPort),
+		Handler: RootRouter,
+	}
+	//是否有ssl.public_key ssl.private_key
+	pubKey := cfg.SslPub
+	priKey := cfg.SslPri
+	if pubKey == "" || priKey == "" {
+		go func() {
+			if err := srv.ListenAndServe(); err != nil {
+				log.Warnln(err)
+				return
+			}
+		}()
+	} else {
+		go func() {
+			if err := srv.ListenAndServeTLS(pubKey, priKey); err != nil {
+				log.Warnln(err)
+				return
+			}
+		}()
+	}
+	return func(waitSec time.Duration) error {
+		ctxTimeout, cancelFunc := context.WithTimeout(ctx, waitSec)
+		defer cancelFunc()
+		// shutdown
+		err := srv.Shutdown(ctxTimeout)
+		if err != nil {
+			log.Error(err)
+			return err
+		} else {
+			log.Info("end of service...")
+			return nil
+		}
+	}
 }

@@ -24,7 +24,8 @@ func init() {
 
 	// 共同配置
 	v.SetDefault("gin_mode", "debug") //时间戳
-	v.SetDefault("http_port", 80)
+	v.SetDefault("http_port", 81)
+	v.SetDefault("web_port", 80)
 	v.SetDefault("enable_swagger", true)
 	v.SetDefault("ssl_pri", "")
 	v.SetDefault("ssl_pub", "")
