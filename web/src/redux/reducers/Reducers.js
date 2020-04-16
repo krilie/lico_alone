@@ -1,26 +1,11 @@
 import initState from "./States";
-import {ADD_TODO, TOGGLE_COMPLETE} from "../actions/ActionItems";
+import {GET_DIR_FILE_ITEMS} from "../actions/ActionCreator";
 
 function reducer(state = initState, action) {
     let newState;
     switch (action.type) {
-        case ADD_TODO:
-            newState = {
-                todos: [
-                    ...state.todos,
-                    action.payload
-                ]
-            };
-            break;
-        case TOGGLE_COMPLETE:
-            newState = {
-                todos: state.todos.map(item => {
-                    if (item.id === action.payload) {
-                        item.isComplete = false;
-                    }
-                    return item;
-                })
-            };
+        case GET_DIR_FILE_ITEMS:
+            newState = {...state, fileItems: action.payload};
             break;
         default:
             newState = state;

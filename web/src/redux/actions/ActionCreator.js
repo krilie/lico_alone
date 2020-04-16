@@ -1,11 +1,9 @@
-import {ADD_TODO, TOGGLE_COMPLETE} from "./ActionItems";
+export const GET_DIR_FILE_ITEMS = 'GET_DIR_FILE_ITEMS';
 
 let actions = {
-    addTodo: function (payload) {
-        return {type: ADD_TODO, payload}
+    getDirFileItems: function (DirData) {
+        return {type: GET_DIR_FILE_ITEMS, payload: DirData}
     },
-    toggleComplete: function (payload) {
-        return {type: TOGGLE_COMPLETE, payload}
-    }
 };
+
 export default actions;
