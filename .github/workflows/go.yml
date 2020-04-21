@@ -31,8 +31,10 @@ jobs:
         env:
           CGO_ENABLED: 0
         run: |
+          cd server
           export TZ='Asia/Shanghai'
           go build -ldflags "-X 'main.VERSION=`cat version`' -X 'main.BUILD_TIME=`date "+%Y-%m-%d %H:%M:%S"`' -X 'main.GO_VERSION=`go version`' -X 'main.GIT_COMMIT=${GITHUB_SHA}'"  -v .
+          cd ..
 
       - uses: actions/cache@v1
         with:
@@ -56,7 +58,7 @@ jobs:
 
       - name: copy-file-to-docker
         run: |
-          cp ./lico_alone ./docker/lico_alone
+          cp ./server/lico_alone ./docker/lico_alone
           cp -rf ./web/build ./docker/www
           echo ::set-env name=GITHUB_SHA_SHORT::$(echo $GITHUB_SHA | cut -c 1-6)
           echo ::set-env name=DOCKER_IMAGE_TAGS_LATEST::"latest"
