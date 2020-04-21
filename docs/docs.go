@@ -25,7 +25,7 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/v1/user/login": {
+        "/api/user/login": {
             "post": {
                 "description": "用户用密码登录",
                 "produces": [
@@ -83,7 +83,7 @@ var doc = `{
                 }
             }
         },
-        "/v1/user/register": {
+        "/api/user/register": {
             "post": {
                 "description": "用户注册",
                 "produces": [
@@ -149,7 +149,7 @@ var doc = `{
                 }
             }
         },
-        "/v1/user/send_sms": {
+        "/api/user/send_sms": {
             "post": {
                 "description": "用户发短信",
                 "produces": [

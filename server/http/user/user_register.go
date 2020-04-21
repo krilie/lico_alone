@@ -18,7 +18,7 @@ import (
 // @Failure 400 {object} cmodel.CommonReturn
 // @Failure 404 {object} cmodel.CommonReturn
 // @Failure 500 {object} cmodel.CommonReturn
-// @Router /v1/user/register [post]
+// @Router /api/user/register [post]
 func (a *UserCtrl) UserRegister(c *gin.Context) {
 	err := a.AppUser.UserRegister(ginutil.MustGetAppCtx(c), c.PostForm("phone"), c.PostForm("password"), c.PostForm("valid_code"), "")
 	if err != nil {

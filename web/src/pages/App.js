@@ -7,7 +7,7 @@ import Share from "./share/Share";
 import Photos from "./photos/Photos";
 import Article from "./article/Article";
 import IcpLabel from "../components/icp/icpLabel";
-import {withRouter,Redirect} from "react-router-dom";
+import {withRouter, Redirect} from "react-router-dom";
 import "./App.less"
 import Home from "./home/Home";
 
@@ -18,7 +18,7 @@ class App extends React.Component {
     };
 
     componentWillMount() {
-        if (this.props.location.pathname === '/'){
+        if (this.props.location.pathname === '/') {
             this.props.location.pathname = "/home";
         }
         const {pathname} = this.props.location;
@@ -59,7 +59,7 @@ class App extends React.Component {
                     <Route exact path="/share" component={Share}/>
                     <Route exact path="/photos" component={Photos}/>
                     <Route exact path="/article" component={Article}/>
-                    <Redirect path="/" to={{pathname: '/home'}} />
+                    <Redirect path="/" to={{pathname: '/home'}}/>
                 </Switch>
                 <IcpLabel/>
             </div>

@@ -5,7 +5,7 @@ function reducer(state = initState, action) {
     let newState;
     switch (action.type) {
         case GET_DIR_FILE_ITEMS:
-            newState = {...state, fileItems: action.payload};
+            newState = {...state};
             break;
         default:
             newState = state;
