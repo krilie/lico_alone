@@ -11,10 +11,12 @@ class Home extends React.Component {
             return i.isComplete === false;
         }).length;
     }
+
     render() {
         return (<div>
             <div>您有{this.getUnfinishedCount()}件事未完成</div>
         </div>);
     }
 }
-export default Home = connect((state)=>({...state}))(Home);
+
+export default Home = connect((state) => ({...state}))(Home);

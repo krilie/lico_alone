@@ -3,9 +3,10 @@ import qs from 'qs'
 import {GetUserToken} from "../utils/LocalStorageUtil";
 import openNotification from "../utils/MessageBoard"
 
-const apiRequest= axios.create({
-    baseURL: 'http://localhost:81'
+const apiRequest = axios.create({
+    baseURL: 'https://api.lizo.top'
 })
+
 let base = "/api";
 // 请求拦截器
 apiRequest.interceptors.request.use(
@@ -81,8 +82,8 @@ export const getQuery = (url, query) => {
 
 export const postMultiForm = (url, params) => {
     let param = new window.FormData();
-    for(let i in params){
-        param.append(i,params[i]);
+    for (let i in params) {
+        param.append(i, params[i]);
     }
     return apiRequest({
         method: 'post',

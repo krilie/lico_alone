@@ -18,7 +18,7 @@ import (
 // @Failure 400 {object} cmodel.CommonReturn
 // @Failure 404 {object} cmodel.CommonReturn
 // @Failure 500 {object} cmodel.CommonReturn
-// @Router /v1/user/send_sms [post]
+// @Router /api/user/send_sms [post]
 func (a *UserCtrl) UserSendSms(c *gin.Context) {
 	phone := c.PostForm("phone")
 	if phone == "" {

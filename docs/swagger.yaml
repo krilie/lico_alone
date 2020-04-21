@@ -24,7 +24,7 @@ info:
   title: Swagger Example API
   version: 0.0.1
 paths:
-  /v1/user/login:
+  /api/user/login:
     post:
       description: 用户用密码登录
       operationId: 用户登录
@@ -64,7 +64,7 @@ paths:
       summary: 用户登录
       tags:
       - 用户账号
-  /v1/user/register:
+  /api/user/register:
     post:
       description: 用户注册
       operationId: 用户注册
@@ -110,7 +110,7 @@ paths:
       summary: 用户注册
       tags:
       - 用户账号
-  /v1/user/send_sms:
+  /api/user/send_sms:
     post:
       description: 用户发短信
       operationId: 用户发短信

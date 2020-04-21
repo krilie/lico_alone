@@ -50,9 +50,9 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 	// 不检查权限的分组
 	noCheckToken := apiGroup.Group("")
 	userCtrl := user.NewUserCtrl(app)
-	noCheckToken.POST("/v1/user/login", userCtrl.UserLogin)
-	noCheckToken.POST("/v1/user/register", userCtrl.UserRegister)
-	noCheckToken.POST("/v1/user/send_sms", userCtrl.UserSendSms)
+	noCheckToken.POST("/user/login", userCtrl.UserLogin)
+	noCheckToken.POST("/user/register", userCtrl.UserRegister)
+	noCheckToken.POST("/user/send_sms", userCtrl.UserSendSms)
 
 	// 检查权限的分组
 	//checkToken :=apiGroup.Group("").Use(middleware.CheckAuthToken(app.User))
