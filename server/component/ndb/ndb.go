@@ -3,6 +3,7 @@ package ndb
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/component/nlog"
 	"runtime/debug"
