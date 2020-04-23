@@ -1,8 +1,13 @@
-//+build wireinject
+//+build !wireinject
 
 package ndb
 
-func InitMission(name string) (Mission, error) {
-	wire.Build(NewMonster, NewPlayer, NewMission)
-	return Mission{}, nil
+import (
+	"github.com/google/wire"
+	"github.com/krilie/lico_alone/component/nlog"
+)
+
+func InitNDb(name string) (ndb *NDb, cleanUp func(), err error) {
+	wire.Build(nlog.NLogProviderSet)
+	return &NDb{}, nil, nil
 }
