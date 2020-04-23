@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/component/clog"
+	"github.com/krilie/lico_alone/component/nlog"
 )
 
-var log = clog.NewLog(context.NewContext(), "alone.control.middleware", "init")
+var log = log.NewLog(context.NewContext(), "alone.control.middleware", "init")

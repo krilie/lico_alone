@@ -5,7 +5,7 @@ import (
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/time_util"
-	"github.com/krilie/lico_alone/component/clog"
+	"github.com/krilie/lico_alone/component/nlog"
 	AccountService "github.com/krilie/lico_alone/module/bookkeeping/service"
 	"github.com/krilie/lico_alone/module/config/model"
 	ConfigService "github.com/krilie/lico_alone/module/config/service"
@@ -35,7 +35,7 @@ func NewAllService(cfg config.Config) *AllService {
 
 // SendRunUpEmail 发送服务启动消息
 func (a *AllService) SendServiceUpEmail(ctx context.Context) error {
-	var log = clog.NewLog(ctx, "application/all-service/all_service.go:34", "SendServiceUpEmail")
+	var log = nlog.NewLog(ctx, "application/all-service/all_service.go:34", "SendServiceUpEmail")
 	emailAddr, err := a.ConfigService.GetValueStr(ctx, model.CommonNotificationEmail)
 	if err != nil {
 		log.Error(err)
@@ -54,7 +54,7 @@ func (a *AllService) SendServiceUpEmail(ctx context.Context) error {
 
 // SendGoodMorningEmail 发送早上好消息
 func (a *AllService) SendGoodMorningEmail(ctx context.Context) error {
-	log := clog.NewLog(ctx, "application/all-service/all_service.go:45", "SendGoodMorningEmail")
+	log := nlog.NewLog(ctx, "application/all-service/all_service.go:45", "SendGoodMorningEmail")
 	emailAddr, err := a.ConfigService.GetValueStr(ctx, model.CommonNotificationEmail)
 	if err != nil {
 		log.Error(err)
@@ -72,7 +72,7 @@ func (a *AllService) SendGoodMorningEmail(ctx context.Context) error {
 
 // SendGoodMorningEmail 发送服务关闭消息
 func (a *AllService) SendServiceEndEmail(ctx context.Context) error {
-	var log = clog.NewLog(ctx, "application/all-service/all_service.go:50", "SendServiceEndEmail")
+	var log = nlog.NewLog(ctx, "application/all-service/all_service.go:50", "SendServiceEndEmail")
 	emailAddr, err := a.ConfigService.GetValueStr(ctx, model.CommonNotificationEmail)
 	if err != nil {
 		log.Error(err)

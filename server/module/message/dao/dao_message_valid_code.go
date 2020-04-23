@@ -5,7 +5,7 @@ import (
 	"errors"
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/component/clog"
+	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/message/model"
 )
 
@@ -18,7 +18,7 @@ type IMessageValidCode interface {
 }
 
 func (d *Dao) CreateMessageValidCode(ctx context.Context, item *model.MessageValidCode) error {
-	log := clog.NewLog(ctx, "module/message/dao/dao_message_valid_code.go:18", "CreateMessageValidCode")
+	log := nlog.NewLog(ctx, "module/message/dao/dao_message_valid_code.go:18", "CreateMessageValidCode")
 	err := d.Dao.Db.Create(item).Error
 	if err != nil {
 		log.Error(err)
@@ -28,7 +28,7 @@ func (d *Dao) CreateMessageValidCode(ctx context.Context, item *model.MessageVal
 }
 
 func (d *Dao) UpdateMessageValidCode(ctx context.Context, item *model.MessageValidCode) error {
-	log := clog.NewLog(ctx, "module/message/dao/dao_message_valid_code.go:28", "UpdateMessageValidCode")
+	log := nlog.NewLog(ctx, "module/message/dao/dao_message_valid_code.go:28", "UpdateMessageValidCode")
 	err := d.Dao.Db.Omit("create_time").Where("id=?", item.Id).Update(item).Error
 	if err != nil {
 		log.Error(err)
@@ -38,7 +38,7 @@ func (d *Dao) UpdateMessageValidCode(ctx context.Context, item *model.MessageVal
 }
 
 func (d *Dao) DeleteMessageValidCode(ctx context.Context, id string) error {
-	log := clog.NewLog(ctx, "module/message/dao/dao_message_valid_code.go:38", "DeleteMessageValidCode")
+	log := nlog.NewLog(ctx, "module/message/dao/dao_message_valid_code.go:38", "DeleteMessageValidCode")
 	err := d.Dao.Db.Where("id=?", id).Delete(&model.MessageValidCode{}).Error
 	if err != nil {
 		log.Error(err)
@@ -48,7 +48,7 @@ func (d *Dao) DeleteMessageValidCode(ctx context.Context, id string) error {
 }
 
 func (d *Dao) GetMessageValidCodeById(ctx context.Context, id string) (*model.MessageValidCode, error) {
-	log := clog.NewLog(ctx, "module/message/dao/dao_message_valid_code.go:50", "GetMessageValidCodeById")
+	log := nlog.NewLog(ctx, "module/message/dao/dao_message_valid_code.go:50", "GetMessageValidCodeById")
 	item := &model.MessageValidCode{}
 	err := d.Dao.Db.Where("id=?", id).Find(item).Error
 	if err != nil {
@@ -62,7 +62,7 @@ func (d *Dao) GetMessageValidCodeById(ctx context.Context, id string) (*model.Me
 }
 
 func (d *Dao) GetLastMessageValidCodeByPhoneNum(ctx context.Context, phoneNum string, validType int) (*model.MessageValidCode, error) {
-	log := clog.NewLog(ctx, "module/message/dao/dao_message_valid_code.go:50", "GetMessageValidCodeById")
+	log := nlog.NewLog(ctx, "module/message/dao/dao_message_valid_code.go:50", "GetMessageValidCodeById")
 	item := &model.MessageValidCode{}
 	err := d.Dao.Db.Where("phone_num=? and type=?", phoneNum, validType).Order("create_time desc").First(item).Error
 	if err != nil {

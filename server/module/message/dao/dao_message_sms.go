@@ -3,7 +3,7 @@ package dao
 import (
 	"context"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/component/clog"
+	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/message/model"
 )
 
@@ -15,7 +15,7 @@ type IMessageSms interface {
 }
 
 func (d *Dao) CreateMessageSms(ctx context.Context, item *model.MessageSms) error {
-	log := clog.NewLog(ctx, "module/message/dao/dao_message_sms.go:17", "CreateMessageSms")
+	log := nlog.NewLog(ctx, "module/message/dao/dao_message_sms.go:17", "CreateMessageSms")
 	err := d.Dao.Db.Create(item).Error
 	if err != nil {
 		log.Error(err)
@@ -25,7 +25,7 @@ func (d *Dao) CreateMessageSms(ctx context.Context, item *model.MessageSms) erro
 }
 
 func (d *Dao) UpdateMessageSms(ctx context.Context, item *model.MessageSms) error {
-	log := clog.NewLog(ctx, "module/message/dao/dao_message_sms.go:27", "UpdateMessageSms")
+	log := nlog.NewLog(ctx, "module/message/dao/dao_message_sms.go:27", "UpdateMessageSms")
 	err := d.Dao.Db.Omit("create_time").Where("id=?", item.Id).Update(item).Error
 	if err != nil {
 		log.Error(err)
@@ -35,7 +35,7 @@ func (d *Dao) UpdateMessageSms(ctx context.Context, item *model.MessageSms) erro
 }
 
 func (d *Dao) DeleteMessageSms(ctx context.Context, id string) error {
-	log := clog.NewLog(ctx, "module/message/dao/dao_message_sms.go:37", "DeleteMessageSms")
+	log := nlog.NewLog(ctx, "module/message/dao/dao_message_sms.go:37", "DeleteMessageSms")
 	err := d.Dao.Db.Where("id=?", id).Delete(&model.MessageSms{}).Error
 	if err != nil {
 		log.Error(err)

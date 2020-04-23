@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	"github.com/krilie/lico_alone/common/utils/str_util"
-	"github.com/krilie/lico_alone/component/clog"
+	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/mikespook/gorbac"
 )
 
@@ -14,7 +14,7 @@ func (s *Service) MustAuthCacheLoadAll(ctx context.Context) {
 }
 
 func (s *Service) AuthCacheLoadAll(ctx context.Context) error {
-	log := clog.NewLog(ctx, "module/user/service/service_auth.go:15", "AuthCacheLoadAll")
+	log := nlog.NewLog(ctx, "module/user/service/service_auth.go:15", "AuthCacheLoadAll")
 	// 加载所有用户->加载所有角色->加载所有权限
 	userIds, err := s.Dao.GetAllValidUserId(ctx)
 	if err != nil {

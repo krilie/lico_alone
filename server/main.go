@@ -8,7 +8,7 @@ import (
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/broker"
-	"github.com/krilie/lico_alone/component/clog"
+	"github.com/krilie/lico_alone/component/nlog"
 	broker2 "github.com/krilie/lico_alone/server/broker"
 	"github.com/krilie/lico_alone/server/cron"
 	"github.com/krilie/lico_alone/server/http"
@@ -57,9 +57,9 @@ func main() {
 	flag.Parse()
 	_ = config.LoadConfigByFile(*configFilePath)
 	// 初始化日志文件
-	clog.SetLogField(VERSION, "myapp")
-	clog.SetUpLogFile(config.Cfg.LogFile)
-	var log = clog.NewLog(ctx, "lico.main", "main")
+	nlog.SetLogField(VERSION, "myapp")
+	nlog.SetUpLogFile(config.Cfg.LogFile)
+	var log = nlog.NewLog(ctx, "lico.main", "main")
 	// 开启服务器连接
 	cdb.StartDb(config.Cfg.DB)
 	defer cdb.CloseDb()                                        // 最后关闭数据库

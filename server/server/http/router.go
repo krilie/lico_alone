@@ -7,7 +7,7 @@ import (
 	"github.com/krilie/lico_alone/application"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/component/clog"
+	"github.com/krilie/lico_alone/component/nlog"
 	_ "github.com/krilie/lico_alone/docs"
 	"github.com/krilie/lico_alone/server/http/health"
 	"github.com/krilie/lico_alone/server/http/middleware"
@@ -21,7 +21,7 @@ import (
 
 func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Duration) error) {
 	ctx := context.NewContext()
-	log := clog.NewLog(ctx, "controller.router", "InitHttpServer")
+	log := nlog.NewLog(ctx, "controller.router", "InitHttpServer")
 	// 设置gin mode
 	gin.SetMode(app.Cfg.GinMode)
 	// 路径设置 根路径
@@ -96,7 +96,7 @@ func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Du
 }
 
 func InitAndStartStaticWebServer(ctx context.Context, cfg config.Config) (shutDown func(waitSec time.Duration) error) {
-	log := clog.NewLog(ctx, "controller.router", "InitAndStartStaticWebServer")
+	log := nlog.NewLog(ctx, "controller.router", "InitAndStartStaticWebServer")
 	// 设置gin mode
 	gin.SetMode(cfg.GinMode)
 	// 路径设置 根路径

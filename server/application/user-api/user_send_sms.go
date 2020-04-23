@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/random"
-	"github.com/krilie/lico_alone/component/clog"
+	"github.com/krilie/lico_alone/component/nlog"
 )
 
 func (a *AppUser) SendRegisterSms(ctx context.Context, phoneNum string) error {
@@ -13,7 +13,7 @@ func (a *AppUser) SendRegisterSms(ctx context.Context, phoneNum string) error {
 	}
 	master, err := a.UserService.Dao.GetUserMasterByPhoneNum(ctx, phoneNum)
 	if err != nil {
-		clog.With(ctx).Error(err)
+		nlog.With(ctx).Error(err)
 		return err
 	}
 	if master != nil {

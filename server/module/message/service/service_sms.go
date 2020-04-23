@@ -6,14 +6,14 @@ import (
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/model"
 	"github.com/krilie/lico_alone/common/utils/id_util"
-	"github.com/krilie/lico_alone/component/clog"
+	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/message/model"
 	"time"
 )
 
 // SendRegisterSms 发送注册短信
 func (s *Service) SendRegisterSms(ctx context.Context, phone, code string) error {
-	log := clog.NewLog(ctx, "module/message/service/service_sms.go:9", "NewWithTxOrFromCtx")
+	log := nlog.NewLog(ctx, "module/message/service/service_sms.go:9", "NewWithTxOrFromCtx")
 	sendErr := s.sms.SendRegisterSms(ctx, phone, code)
 	if sendErr != nil {
 		log.Error(sendErr)
