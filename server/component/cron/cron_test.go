@@ -1,4 +1,4 @@
-package ccron
+package cron
 
 import (
 	"fmt"

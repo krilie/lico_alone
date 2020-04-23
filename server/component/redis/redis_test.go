@@ -1,4 +1,4 @@
-package credis
+package redis
 
 import (
 	"fmt"
