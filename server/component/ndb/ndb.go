@@ -53,8 +53,8 @@ func (ndb *NDb) CloseDb() {
 	})
 }
 
-func NewNDb(dbCfg config.DB, log *nlog.NLog) (closer func(), ndb *NDb) {
+func NewNDb(dbCfg config.DB, log *nlog.NLog) (ndb *NDb, closer func()) {
 	ndb = &NDb{log: log, cfg: dbCfg}
 	ndb.Start()
-	return ndb.CloseDb, ndb
+	return ndb, ndb.CloseDb
 }

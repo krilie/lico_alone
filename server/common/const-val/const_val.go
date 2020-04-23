@@ -1,6 +1,10 @@
 package const_val
 
-import context_enum "github.com/krilie/lico_alone/common/model/context-enum"
+import (
+	"github.com/google/wire"
+	"github.com/krilie/lico_alone/common/config"
+	context_enum "github.com/krilie/lico_alone/common/model/context-enum"
+)
 
 // RunEnv 在程序开始运行时设置的全局变量
 var RunEnv = context_enum.RunEnv{
@@ -13,3 +17,5 @@ var RunEnv = context_enum.RunEnv{
 	GoVersion: "",
 	GitCommit: "",
 }
+
+var WireProviderRunEnvAndConfig = wire.NewSet(wire.Value(config.Cfg), wire.Value(RunEnv))
