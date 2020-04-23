@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"github.com/krilie/lico_alone/common/clog"
+	"github.com/krilie/lico_alone/component/clog"
 )
 
 // 注册处理事件 有错误panic

@@ -1,4 +1,4 @@
-package ccontext
+package context
 
 import (
 	"github.com/krilie/lico_alone/common/utils/id_util"

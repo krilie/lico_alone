@@ -4,11 +4,11 @@ import (
 	"flag"
 	"fmt"
 	"github.com/krilie/lico_alone/application"
-	"github.com/krilie/lico_alone/common/broker"
-	"github.com/krilie/lico_alone/common/ccontext"
 	"github.com/krilie/lico_alone/common/cdb"
-	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/config"
+	"github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/component/broker"
+	"github.com/krilie/lico_alone/component/clog"
 	broker2 "github.com/krilie/lico_alone/server/broker"
 	"github.com/krilie/lico_alone/server/cron"
 	"github.com/krilie/lico_alone/server/http"
@@ -51,7 +51,7 @@ func main() {
 		}
 	}
 	// 开始服务
-	ctx := ccontext.NewContext()
+	ctx := context.NewContext()
 	// 初始化配置块
 	configFilePath := flag.String("config", "config.yaml", "配置文件")
 	flag.Parse()

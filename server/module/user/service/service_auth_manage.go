@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/utils/str_util"
+	"github.com/krilie/lico_alone/component/clog"
 	"github.com/mikespook/gorbac"
 )
 

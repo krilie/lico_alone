@@ -3,8 +3,8 @@ package dao
 import (
 	"context"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/errs"
+	"github.com/krilie/lico_alone/component/clog"
 	"github.com/krilie/lico_alone/module/user/model"
 	"time"
 )

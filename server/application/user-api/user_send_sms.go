@@ -2,9 +2,9 @@ package user_api
 
 import (
 	"context"
-	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/random"
+	"github.com/krilie/lico_alone/component/clog"
 )
 
 func (a *AppUser) SendRegisterSms(ctx context.Context, phoneNum string) error {

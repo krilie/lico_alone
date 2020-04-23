@@ -1,4 +1,4 @@
-package cmodel
+package model
 
 import "time"
 

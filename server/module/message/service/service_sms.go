@@ -3,10 +3,10 @@ package service
 import (
 	"context"
 	"errors"
-	"github.com/krilie/lico_alone/common/clog"
-	"github.com/krilie/lico_alone/common/cmodel"
 	"github.com/krilie/lico_alone/common/errs"
+	"github.com/krilie/lico_alone/common/model"
 	"github.com/krilie/lico_alone/common/utils/id_util"
+	"github.com/krilie/lico_alone/component/clog"
 	"github.com/krilie/lico_alone/module/message/model"
 	"time"
 )
@@ -19,7 +19,7 @@ func (s *Service) SendRegisterSms(ctx context.Context, phone, code string) error
 		log.Error(sendErr)
 		// 记录发送记录
 		err := s.Dao.CreateMessageSms(ctx, &model.MessageSms{
-			Model:     cmodel.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
+			Model:     model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
 			SendTime:  time.Now(),
 			Name:      "",
 			To:        phone,
@@ -35,7 +35,7 @@ func (s *Service) SendRegisterSms(ctx context.Context, phone, code string) error
 	} else {
 		// 记录发送记录
 		err := s.Dao.CreateMessageSms(ctx, &model.MessageSms{
-			Model:     cmodel.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
+			Model:     model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
 			SendTime:  time.Now(),
 			Name:      "",
 			To:        phone,
@@ -49,7 +49,7 @@ func (s *Service) SendRegisterSms(ctx context.Context, phone, code string) error
 		}
 		// 记录注册短信
 		err = s.Dao.CreateMessageValidCode(ctx, &model.MessageValidCode{
-			Model:    cmodel.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
+			Model:    model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
 			SendTime: time.Now(),
 			PhoneNum: phone,
 			Code:     code,

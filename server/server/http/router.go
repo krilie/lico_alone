@@ -5,9 +5,9 @@ import (
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/application"
-	"github.com/krilie/lico_alone/common/ccontext"
-	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/config"
+	"github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/component/clog"
 	_ "github.com/krilie/lico_alone/docs"
 	"github.com/krilie/lico_alone/server/http/health"
 	"github.com/krilie/lico_alone/server/http/middleware"
@@ -20,7 +20,7 @@ import (
 )
 
 func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Duration) error) {
-	ctx := ccontext.NewContext()
+	ctx := context.NewContext()
 	log := clog.NewLog(ctx, "controller.router", "InitHttpServer")
 	// 设置gin mode
 	gin.SetMode(app.Cfg.GinMode)

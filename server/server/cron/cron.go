@@ -3,8 +3,8 @@ package cron
 import (
 	"context"
 	"github.com/krilie/lico_alone/application"
-	"github.com/krilie/lico_alone/common/ccron"
-	"github.com/krilie/lico_alone/common/clog"
+	"github.com/krilie/lico_alone/component/ccron"
+	"github.com/krilie/lico_alone/component/clog"
 	"github.com/robfig/cron/v3"
 )
 

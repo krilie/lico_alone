@@ -3,8 +3,8 @@ package domain
 import (
 	"context"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/common/jwt"
 	"github.com/krilie/lico_alone/common/utils/id_util"
+	"github.com/krilie/lico_alone/common/utils/jwt"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
 	"github.com/krilie/lico_alone/module/user/dao"
 	"github.com/krilie/lico_alone/module/user/model"

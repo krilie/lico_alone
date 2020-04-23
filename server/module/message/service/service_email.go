@@ -2,10 +2,10 @@ package service
 
 import (
 	"context"
-	"github.com/krilie/lico_alone/common/clog"
-	"github.com/krilie/lico_alone/common/cmodel"
 	"github.com/krilie/lico_alone/common/errs"
+	"github.com/krilie/lico_alone/common/model"
 	"github.com/krilie/lico_alone/common/utils/id_util"
+	"github.com/krilie/lico_alone/component/clog"
 	"github.com/krilie/lico_alone/module/message/model"
 	"time"
 )
@@ -13,7 +13,7 @@ import (
 func (s *Service) SendEmail(ctx context.Context, to, subject, content string) error {
 	log := clog.NewLog(ctx, "module/message/service/service_email.go:8", "NewWithTxOrFromCtx")
 	email := &model.MessageEmail{
-		Model:     cmodel.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
+		Model:     model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
 		SendTime:  time.Now(),
 		From:      "sys",
 		To:        to,

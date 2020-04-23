@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"github.com/krilie/lico_alone/common/clog"
+	"github.com/krilie/lico_alone/component/clog"
 )
 
 func (s *Service) RegisterBroker(ctx context.Context) {

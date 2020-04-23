@@ -1,4 +1,4 @@
-package cmodel
+package model
 
 // PaginationParam 分页查询条件
 type PageParams struct {

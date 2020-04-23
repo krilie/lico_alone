@@ -1,9 +1,9 @@
 package model
 
-import "github.com/krilie/lico_alone/common/cmodel"
+import "github.com/krilie/lico_alone/common/model"
 
 type UserRole struct {
-	cmodel.Model
+	model.Model
 	RoleName string `gorm:"column:role_name;type:varchar(32)"`
 	UserId   string `gorm:"column:user_id;type:char(36)"`
 }

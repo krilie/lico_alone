@@ -3,8 +3,8 @@ package init_data
 import (
 	"context"
 	"github.com/krilie/lico_alone/common/cdb"
-	"github.com/krilie/lico_alone/common/cmodel"
 	"github.com/krilie/lico_alone/common/errs"
+	"github.com/krilie/lico_alone/common/model"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
 	"github.com/krilie/lico_alone/module/config/model"
 	model2 "github.com/krilie/lico_alone/module/user/model"
@@ -61,7 +61,7 @@ func (a *Init) InitData(ctx context.Context) {
 		adminId := "00001"
 		salt := pswd_util.GetSalt(6)
 		user := model2.UserMaster{
-			Model:      cmodel.Model{Id: adminId, CreateTime: time.Now()},
+			Model:      model.Model{Id: adminId, CreateTime: time.Now()},
 			UpdateTime: time.Now(),
 			LoginName:  "admin",
 			PhoneNum:   "",

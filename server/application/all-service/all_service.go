@@ -2,10 +2,10 @@ package all_service
 
 import (
 	"context"
-	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/time_util"
+	"github.com/krilie/lico_alone/component/clog"
 	AccountService "github.com/krilie/lico_alone/module/bookkeeping/service"
 	"github.com/krilie/lico_alone/module/config/model"
 	ConfigService "github.com/krilie/lico_alone/module/config/service"

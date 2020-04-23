@@ -1,15 +1,15 @@
 package dao
 
 import (
-	"github.com/krilie/lico_alone/common/ccontext"
 	"github.com/krilie/lico_alone/common/cdb"
-	"github.com/krilie/lico_alone/common/clog"
 	"github.com/krilie/lico_alone/common/config"
+	"github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/component/clog"
 	"github.com/krilie/lico_alone/module/config/model"
 )
 
 func AutoMigrate(d *Dao) {
-	var log = clog.NewLog(ccontext.NewContext(), "alone.module.user.model", "init")
+	var log = clog.NewLog(context.NewContext(), "alone.module.user.model", "init")
 	err := d.Db.AutoMigrate(new(model.Config)).Error
 	if err != nil {
 		panic(err)

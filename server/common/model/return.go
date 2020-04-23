@@ -1,4 +1,4 @@
-package cmodel
+package model
 
 import (
 	"github.com/krilie/lico_alone/common/errs"
