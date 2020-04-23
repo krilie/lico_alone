@@ -7,16 +7,23 @@ package nlog
 
 import (
 	"github.com/google/wire"
-	"github.com/krilie/lico_alone/common/model/context-enum"
-	"github.com/sirupsen/logrus"
+	"github.com/krilie/lico_alone/common/config"
+	"github.com/krilie/lico_alone/common/const-val"
 )
 
 // Injectors from wire.go:
 
-func InitNLog(runEnv context_enum.RunEnv, level logrus.Level) *NLog {
-	nLog := NewLogger(runEnv, level)
+func InitNLog() *NLog {
+	runEnv := _wireRunEnvValue
+	config := _wireConfigValue
+	nLog := NewLogger(runEnv, config)
 	return nLog
 }
+
+var (
+	_wireRunEnvValue = const_val.RunEnv
+	_wireConfigValue = config.Cfg
+)
 
 // wire.go:
 

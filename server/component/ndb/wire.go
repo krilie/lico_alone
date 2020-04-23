@@ -7,7 +7,7 @@ import (
 	"github.com/krilie/lico_alone/component/nlog"
 )
 
-func InitNDb(name string) (ndb *NDb, cleanUp func(), err error) {
-	wire.Build(nlog.NLogProviderSet)
+func InitNDb() (ndb *NDb, cleanUp func(), err error) {
+	wire.Build(nlog.InitNLog, NewNDb)
 	return &NDb{}, nil, nil
 }

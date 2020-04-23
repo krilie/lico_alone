@@ -7,6 +7,7 @@ type Config struct {
 	SslPri        string   `mapstructure:"ssl_pri" json:"ssl_pri" toml:"ssl_pri"`
 	SslPub        string   `mapstructure:"ssl_pub" json:"ssl_pub" toml:"ssl_pub"`
 	LogFile       string   `mapstructure:"log_file" json:"log_file" toml:"log_file"` // 配置文件 空为控制台
+	LogLevel      uint32   `mapstructure:"log_level" json:"log_level" toml:"log_level"`
 	EnableSwagger bool     `mapstructure:"enable_swagger" json:"enable_swagger" toml:"enable_swagger"`
 	DB            DB       `mapstructure:"db" json:"db" toml:"db"`
 	JWT           JWT      `mapstructure:"jwt" json:"jwt" toml:"jwt"`
