@@ -12,10 +12,11 @@ func (ndb *NDb) Transaction(ctx context.Context, fc func() error) error {
 	if tx == nil {
 		defer func() {
 			if err := recover(); err != nil {
+				SetTxToCtx(ctx, nil)
 			}
 		}()
 		return ndb.db.Transaction(func(tx *gorm.DB) error {
-
+			SetTxToCtx(ctx, tx)
 			return fc()
 		})
 	} else {

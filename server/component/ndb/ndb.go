@@ -2,10 +2,12 @@ package ndb
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/krilie/lico_alone/common/config"
+	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/nlog"
 	"runtime/debug"
 	"sync"
@@ -32,11 +34,21 @@ func (ndb *NDb) GetDb(ctx context.Context) *gorm.DB {
 }
 
 func GetTxFromCtx(ctx context.Context) *gorm.DB {
-	return ctx.Value(gormTransConDb).(*gorm.DB)
+	orNil := context2.GetContextOrNil(ctx)
+	if orNil == nil {
+		return nil
+	} else {
+		return orNil.Tx.(*gorm.DB)
+	}
 }
 
 func SetTxToCtx(ctx context.Context, tx *gorm.DB) {
-	ctx.Value()
+	orNil := context2.GetContextOrNil(ctx)
+	if orNil == nil {
+		panic(errors.New("not a app context find"))
+	} else {
+		orNil.Tx = tx
+	}
 }
 
 func (ndb *NDb) Start() {
