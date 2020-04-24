@@ -1,8 +1,6 @@
 package const_val
 
 import (
-	"github.com/google/wire"
-	"github.com/krilie/lico_alone/common/config"
 	context_enum "github.com/krilie/lico_alone/common/model/context-enum"
 )
 
@@ -17,5 +15,3 @@ var RunEnv = context_enum.RunEnv{
 	GoVersion: "",
 	GitCommit: "",
 }
-
-var WireProviderRunEnvAndConfig = wire.NewSet(wire.Value(config.Cfg), wire.Value(RunEnv))
