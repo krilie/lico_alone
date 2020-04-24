@@ -6,7 +6,8 @@ import (
 )
 
 func TestLog(t *testing.T) {
-	dig.Container.Invoke(func(log *NLog) {
+	dig.MustInvoke(func(log *NLog) {
 		log.Error("hello dig here")
+		log.Info("hello dig info")
 	})
 }

@@ -8,6 +8,13 @@ import (
 
 var Container = dig.New()
 
+func MustProvide(constructor interface{}, opts ...dig.ProvideOption) {
+	CheckErr(Container.Provide(constructor, opts...))
+}
+func MustInvoke(function interface{}, opts ...dig.InvokeOption) {
+	CheckErr(Container.Invoke(function, opts...))
+}
+
 func CheckErr(err error) {
 	if err != nil {
 		panic(err)
