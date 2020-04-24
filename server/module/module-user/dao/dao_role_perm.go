@@ -53,7 +53,7 @@ func (d *UserDao) HasRolePerm(ctx context.Context, roleName, permName string) (b
 	return count != 0, nil
 }
 
-func (d *UserDao) GetRolePerm(ctx context.Context, roleName, permName string) (*common_model.RolePermission, error) {
+func (d *UserDao) GetRolePerm(ctx context.Context, roleName, permName string) (*model.RolePermission, error) {
 	item := new(model.RolePermission)
 	err := d.GetDb(ctx).Model(&model.RolePermission{}).Where(&model.RolePermission{
 		RoleName:       roleName,

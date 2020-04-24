@@ -25,11 +25,15 @@ type NDb struct {
 }
 
 func (ndb *NDb) GetDb(ctx context.Context) *gorm.DB {
-	transDb := ctx.Value(gormTransConDb).(*gorm.DB)
-	if transDb == nil {
+	orNil := context2.GetContextOrNil(ctx)
+	if orNil == nil {
 		return ndb.db
 	} else {
-		return transDb
+		if orNil.Tx == nil {
+			return ndb.db
+		} else {
+			return orNil.Tx.(*gorm.DB)
+		}
 	}
 }
 
