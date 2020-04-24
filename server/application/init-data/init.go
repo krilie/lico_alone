@@ -7,7 +7,7 @@ import (
 	all_service "github.com/krilie/lico_alone/application/all-service"
 	"github.com/krilie/lico_alone/common/cdb"
 	configService "github.com/krilie/lico_alone/module/config/service"
-	userService "github.com/krilie/lico_alone/module/user/service"
+	userService "github.com/krilie/lico_alone/module/module-user/service"
 )
 
 type Init struct {

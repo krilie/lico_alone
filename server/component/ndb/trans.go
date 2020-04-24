@@ -12,14 +12,16 @@ func (ndb *NDb) Transaction(ctx context.Context, fc func() error) error {
 	if tx == nil {
 		defer func() {
 			if err := recover(); err != nil {
-				SetTxToCtx(ctx, nil)
+				ndb.log.Errorf("事务中发生异常 %v", err)
 			}
+			SetTxToCtx(ctx, nil)
 		}()
 		return ndb.db.Transaction(func(tx *gorm.DB) error {
 			SetTxToCtx(ctx, tx)
 			return fc()
 		})
 	} else {
+		ndb.log.Debug("已经存在事务 不再重新开启事务")
 		return fc()
 	}
 }

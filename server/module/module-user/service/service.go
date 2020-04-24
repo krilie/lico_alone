@@ -5,8 +5,8 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/cdb"
 	"github.com/krilie/lico_alone/common/config"
-	auth_cache "github.com/krilie/lico_alone/module/user/auth-cache"
-	"github.com/krilie/lico_alone/module/user/dao"
+	auth_cache "github.com/krilie/lico_alone/module/module-user/auth-cache"
+	"github.com/krilie/lico_alone/module/module-user/dao"
 )
 
 type Service struct {

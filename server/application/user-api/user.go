@@ -4,7 +4,7 @@ import (
 	"errors"
 	all_service "github.com/krilie/lico_alone/application/all-service"
 	service2 "github.com/krilie/lico_alone/module/message/service"
-	"github.com/krilie/lico_alone/module/user/service"
+	"github.com/krilie/lico_alone/module/module-user/service"
 	"github.com/mikespook/gorbac"
 )
 

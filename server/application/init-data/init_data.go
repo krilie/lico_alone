@@ -7,7 +7,7 @@ import (
 	"github.com/krilie/lico_alone/common/model"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
 	"github.com/krilie/lico_alone/module/config/model"
-	model2 "github.com/krilie/lico_alone/module/user/model"
+	model2 "github.com/krilie/lico_alone/module/module-user/model"
 	"time"
 )
 

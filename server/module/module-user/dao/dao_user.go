@@ -5,7 +5,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/component/nlog"
-	"github.com/krilie/lico_alone/module/user/model"
+	"github.com/krilie/lico_alone/module/module-user/model"
 	"time"
 )
 
@@ -19,9 +19,9 @@ type IUser interface {
 	GetAllValidUserId(ctx context.Context) ([]string, error)
 }
 
-func (d *Dao) GetUserMasterById(ctx context.Context, userId string) (*model.UserMaster, error) {
+func (d *UserDao) GetUserMasterById(ctx context.Context, userId string) (*model.UserMaster, error) {
 	var user model.UserMaster
-	err := d.Db.Model(new(model.UserMaster)).Where("id=?", userId).Find(&user).Error
+	err := d.GetDb(ctx).Model(new(model.UserMaster)).Where("id=?", userId).Find(&user).Error
 	if err != nil {
 		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil
@@ -31,9 +31,9 @@ func (d *Dao) GetUserMasterById(ctx context.Context, userId string) (*model.User
 	return &user, nil
 }
 
-func (d *Dao) GetUserMasterByPhoneNum(ctx context.Context, phoneNum string) (*model.UserMaster, error) {
+func (d *UserDao) GetUserMasterByPhoneNum(ctx context.Context, phoneNum string) (*model.UserMaster, error) {
 	var user model.UserMaster
-	err := d.Db.Where("phone_num=?", phoneNum).Find(&user).Error
+	err := d.GetDb(ctx).Where("phone_num=?", phoneNum).Find(&user).Error
 	if err != nil {
 		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil
@@ -43,9 +43,9 @@ func (d *Dao) GetUserMasterByPhoneNum(ctx context.Context, phoneNum string) (*mo
 	return &user, nil
 }
 
-func (d *Dao) GetUserMasterByLoginName(ctx context.Context, loginName string) (*model.UserMaster, error) {
+func (d *UserDao) GetUserMasterByLoginName(ctx context.Context, loginName string) (*model.UserMaster, error) {
 	var user model.UserMaster
-	err := d.Db.Model(new(model.UserMaster)).Where(&model.UserMaster{LoginName: loginName}).Find(&user).Error
+	err := d.GetDb(ctx).Model(new(model.UserMaster)).Where(&model.UserMaster{LoginName: loginName}).Find(&user).Error
 	if err != nil {
 		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil
@@ -55,9 +55,9 @@ func (d *Dao) GetUserMasterByLoginName(ctx context.Context, loginName string) (*
 	return &user, nil
 }
 
-func (d *Dao) CreateUserMaster(ctx context.Context, master *model.UserMaster) error {
+func (d *UserDao) CreateUserMaster(ctx context.Context, master *model.UserMaster) error {
 	log := nlog.NewLog(ctx, "module/user/dao/dao_user.go:58", "CreateUserMaster")
-	err := d.Db.Model(&model.UserMaster{}).Create(master).Error
+	err := d.GetDb(ctx).Model(&model.UserMaster{}).Create(master).Error
 	if err != nil {
 		log.Errorf("create user master db err:%v", err)
 		return errs.NewErrDbCreate().WithError(err)
@@ -65,21 +65,21 @@ func (d *Dao) CreateUserMaster(ctx context.Context, master *model.UserMaster) er
 	return nil
 }
 
-func (d *Dao) UpdateUserMaster(ctx context.Context, user *model.UserMaster) error {
+func (d *UserDao) UpdateUserMaster(ctx context.Context, user *model.UserMaster) error {
 	if user.Id == "" {
 		return errs.NewBadRequest().WithMsg("no primary key on update user master.")
 	}
 	user.UpdateTime = time.Now()
-	err := d.Db.Model(&model.UserMaster{}).Save(user).Error
+	err := d.GetDb(ctx).Model(&model.UserMaster{}).Save(user).Error
 	if err != nil {
 		return errs.NewErrDbUpdate().WithError(err)
 	}
 	return nil
 }
 
-func (d *Dao) PhoneNumExists(ctx context.Context, phoneNum string) (bool, error) {
+func (d *UserDao) PhoneNumExists(ctx context.Context, phoneNum string) (bool, error) {
 	count := 0
-	err := d.Db.Model(&model.UserMaster{}).Where(&model.UserMaster{PhoneNum: phoneNum}).Count(&count).Error
+	err := d.GetDb(ctx).Model(&model.UserMaster{}).Where(&model.UserMaster{PhoneNum: phoneNum}).Count(&count).Error
 	if err != nil {
 		return false, errs.NewErrDbQuery().WithError(err)
 	}
@@ -87,9 +87,9 @@ func (d *Dao) PhoneNumExists(ctx context.Context, phoneNum string) (bool, error)
 }
 
 // GetAllValidUserId 取到有效的用户id
-func (d *Dao) GetAllValidUserId(ctx context.Context) ([]string, error) {
+func (d *UserDao) GetAllValidUserId(ctx context.Context) ([]string, error) {
 	var list []*model.UserMaster
-	err := d.Db.Model(&model.UserMaster{}).Select("id").Find(&list).Error
+	err := d.GetDb(ctx).Model(&model.UserMaster{}).Select("id").Find(&list).Error
 	if err != nil {
 		return nil, errs.NewErrDbQuery().WithError(err)
 	}

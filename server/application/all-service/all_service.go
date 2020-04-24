@@ -11,7 +11,7 @@ import (
 	ConfigService "github.com/krilie/lico_alone/module/config/service"
 	FileService "github.com/krilie/lico_alone/module/file/service"
 	MessageService "github.com/krilie/lico_alone/module/message/service"
-	UserService "github.com/krilie/lico_alone/module/user/service"
+	UserService "github.com/krilie/lico_alone/module/module-user/service"
 	"time"
 )
 

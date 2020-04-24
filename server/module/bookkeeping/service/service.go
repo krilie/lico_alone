@@ -5,7 +5,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/cdb"
 	"github.com/krilie/lico_alone/common/config"
-	"github.com/krilie/lico_alone/module/user/dao"
+	"github.com/krilie/lico_alone/module/module-user/dao"
 )
 
 type Service struct {
