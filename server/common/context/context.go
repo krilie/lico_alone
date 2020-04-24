@@ -13,7 +13,6 @@ type Context struct {
 	LastTime  time.Time //调用结束时间
 	ClientId  string    //client的id号
 	UserId    string
-	Db        interface{} // 数据库对象
 	Tx        interface{} // 数据库事务对象
 }
 
@@ -28,8 +27,7 @@ func CloneContext(ctx context.Context) context.Context {
 		LastTime:  c.LastTime,
 		ClientId:  c.ClientId,
 		UserId:    c.UserId,
-		Db:        c.Db,
-		Tx:        c.Tx,
+		Tx:        nil,
 	}
 }
 

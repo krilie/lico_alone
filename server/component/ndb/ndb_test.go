@@ -7,7 +7,7 @@ import (
 
 func TestNDb_Start(t *testing.T) {
 	dig.MustInvoke(func(ndb *NDb) {
-		err := ndb.Db.Close()
+		err := ndb.db.Close()
 		t.Log(err)
 	})
 }

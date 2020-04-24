@@ -1,6 +1,7 @@
 package ndb
 
 import (
+	"context"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -11,12 +12,31 @@ import (
 	"time"
 )
 
+const gormTransConDb = "gormTransConDb"
+
 type NDb struct {
 	cfg         config.DB
 	log         *nlog.NLog
 	onceStartDb sync.Once
 	onceStopDb  sync.Once
-	Db          *gorm.DB
+	db          *gorm.DB
+}
+
+func (ndb *NDb) GetDb(ctx context.Context) *gorm.DB {
+	transDb := ctx.Value(gormTransConDb).(*gorm.DB)
+	if transDb == nil {
+		return ndb.db
+	} else {
+		return transDb
+	}
+}
+
+func GetTxFromCtx(ctx context.Context) *gorm.DB {
+	return ctx.Value(gormTransConDb).(*gorm.DB)
+}
+
+func SetTxToCtx(ctx context.Context, tx *gorm.DB) {
+	ctx.Value()
 }
 
 func (ndb *NDb) Start() {
@@ -29,23 +49,23 @@ func (ndb *NDb) Start() {
 			ndb.cfg.DbName,
 		)
 		var err error
-		if ndb.Db, err = gorm.Open("mysql", connStr+"&loc=Asia%2FShanghai"); err != nil {
+		if ndb.db, err = gorm.Open("mysql", connStr+"&loc=Asia%2FShanghai"); err != nil {
 			fmt.Println(err.Error())
 			ndb.log.Fatal(err, string(debug.Stack())) // 报错退出程序
 			return
 		} else {
-			ndb.Db.DB().SetMaxOpenConns(ndb.cfg.MaxOpenConn)
-			ndb.Db.DB().SetMaxIdleConns(ndb.cfg.MaxIdleConn)
-			ndb.Db.DB().SetConnMaxLifetime(time.Second * time.Duration(ndb.cfg.ConnMaxLeftTime))
+			ndb.db.DB().SetMaxOpenConns(ndb.cfg.MaxOpenConn)
+			ndb.db.DB().SetMaxIdleConns(ndb.cfg.MaxIdleConn)
+			ndb.db.DB().SetConnMaxLifetime(time.Second * time.Duration(ndb.cfg.ConnMaxLeftTime))
 			ndb.log.Info("db init done. params:", connStr+"&loc=Asia%2FShanghai") // 数据库初始化成功
-			ndb.Db = ndb.Db.Debug()
+			ndb.db = ndb.db.Debug()
 		}
 	})
 }
 
 func (ndb *NDb) CloseDb() {
 	ndb.onceStopDb.Do(func() {
-		err := ndb.Db.Close()
+		err := ndb.db.Close()
 		if err != nil {
 			ndb.log.Warn(err)
 		} else {
