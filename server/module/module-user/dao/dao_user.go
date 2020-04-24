@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/module-user/model"
 	"time"
 )
@@ -56,10 +55,9 @@ func (d *UserDao) GetUserMasterByLoginName(ctx context.Context, loginName string
 }
 
 func (d *UserDao) CreateUserMaster(ctx context.Context, master *model.UserMaster) error {
-	log := nlog.NewLog(ctx, "module/user/dao/dao_user.go:58", "CreateUserMaster")
 	err := d.GetDb(ctx).Model(&model.UserMaster{}).Create(master).Error
 	if err != nil {
-		log.Errorf("create user master db err:%v", err)
+		d.log.Errorf("create user master db err:%v", err)
 		return errs.NewErrDbCreate().WithError(err)
 	}
 	return nil

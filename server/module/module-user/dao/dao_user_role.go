@@ -3,6 +3,7 @@ package dao
 import (
 	"context"
 	"github.com/jinzhu/gorm"
+	common_model "github.com/krilie/lico_alone/common/common-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-user/model"
@@ -51,7 +52,7 @@ func (d *UserDao) GetUserRoleByName(ctx context.Context, userId string, roleName
 
 func (d *UserDao) CreateUserRole(ctx context.Context, userId string, roleName string) error {
 	err := d.GetDb(ctx).Model(&model.UserRole{}).Create(&model.UserRole{
-		Model: model.Model{
+		Model: common_model.Model{
 			Id:         id_util.NextSnowflake(),
 			CreateTime: time.Now(),
 		},

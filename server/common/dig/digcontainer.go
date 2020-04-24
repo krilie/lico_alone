@@ -1,8 +1,8 @@
 package dig
 
 import (
+	context_enum "github.com/krilie/lico_alone/common/common-model/context-enum"
 	"github.com/krilie/lico_alone/common/config"
-	context_enum "github.com/krilie/lico_alone/common/model/context-enum"
 	"go.uber.org/dig"
 )
 

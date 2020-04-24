@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
+	"github.com/krilie/lico_alone/common/common-model"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/common/model"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
 	"github.com/krilie/lico_alone/component/nlog"
@@ -44,8 +44,8 @@ func (s *Service) RegisterNewUser(ctx context.Context, phoneNum, password string
 		return errs.NewBadRequest().WithMsg("此手机号已注册")
 	}
 	salt := pswd_util.GetSalt(6)
-	user := model.UserMaster{
-		Model: model.Model{
+	user := common_model.UserMaster{
+		Model: common_model.Model{
 			Id:         id_util.NextSnowflake(),
 			CreateTime: time.Now(),
 		},

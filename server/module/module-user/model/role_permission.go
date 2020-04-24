@@ -1,9 +1,9 @@
 package model
 
-import "github.com/krilie/lico_alone/common/model"
+import "github.com/krilie/lico_alone/common/common-model"
 
 type RolePermission struct {
-	model.Model
+	common_model.Model
 	RoleName       string `gorm:"column:role_name;type:varchar(32)"`
 	PermissionName string `gorm:"column:permission_name;type:varchar(32)"`
 }

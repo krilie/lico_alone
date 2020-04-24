@@ -1,12 +1,12 @@
 package model
 
 import (
-	"github.com/krilie/lico_alone/common/model"
+	"github.com/krilie/lico_alone/common/common-model"
 	"time"
 )
 
 type UserMaster struct {
-	model.Model
+	common_model.Model
 	UpdateTime time.Time `gorm:"column:update_time;type:DATETIME;not null" json:"create_time"` // 创建时间
 	LoginName  string    `gorm:"column:login_name;type:varchar(50)"`                           // 呢称
 	PhoneNum   string    `gorm:"column:phone_num;type:varchar(20);unique_index"`               // 电话

@@ -1,13 +1,13 @@
 package model
 
 import (
-	"github.com/krilie/lico_alone/common/model"
+	"github.com/krilie/lico_alone/common/common-model"
 	"time"
 )
 
 // MessageEmail email 发送记录
 type MessageEmail struct {
-	model.Model
+	common_model.Model
 	SendTime  time.Time `json:"send_time" gorm:"column:send_time;type:datetime"` // 发送时间
 	From      string    `json:"from" gorm:"column:from;size:256"`                // from
 	To        string    `json:"to" gorm:"column:to;size:256"`                    // to
@@ -23,7 +23,7 @@ func (MessageEmail) TableName() string {
 
 // MessageSms 短信发送记录
 type MessageSms struct {
-	model.Model
+	common_model.Model
 	SendTime  time.Time `json:"send_time" gorm:"column:send_time;type:datetime"` // 发送时间
 	Name      string    `json:"name" gorm:"column:name"`                         // 名称
 	To        string    `json:"to" gorm:"column:to"`                             // to
@@ -38,7 +38,7 @@ func (MessageSms) TableName() string {
 
 // MessageValidCode 短信验证码表 可以是短信也可是邮件的验证码
 type MessageValidCode struct {
-	model.Model
+	common_model.Model
 	SendTime time.Time `json:"send_time" gorm:"column:send_time;type:datetime"` // 发送时间
 	PhoneNum string    `json:"phone_num" gorm:"column:phone_num;size:32"`       // 手机号
 	Code     string    `json:"code" gorm:"column:code;size:16"`                 // 验证码

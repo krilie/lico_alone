@@ -1,4 +1,4 @@
-package model
+package common_model
 
 import (
 	"github.com/krilie/lico_alone/common/errs"

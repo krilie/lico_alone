@@ -3,8 +3,8 @@ package dao
 import (
 	"context"
 	"github.com/jinzhu/gorm"
+	"github.com/krilie/lico_alone/common/common-model"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/common/model"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-user/model"
 	"time"
@@ -20,7 +20,7 @@ type IRolePerm interface {
 
 func (d *UserDao) CreateRolePerm(ctx context.Context, roleName, permName string) error {
 	err := d.GetDb(ctx).Model(&model.RolePermission{}).Create(&model.RolePermission{
-		Model: model.Model{
+		Model: common_model.Model{
 			Id:         id_util.NextSnowflake(),
 			CreateTime: time.Now(),
 		},
@@ -53,7 +53,7 @@ func (d *UserDao) HasRolePerm(ctx context.Context, roleName, permName string) (b
 	return count != 0, nil
 }
 
-func (d *UserDao) GetRolePerm(ctx context.Context, roleName, permName string) (*model.RolePermission, error) {
+func (d *UserDao) GetRolePerm(ctx context.Context, roleName, permName string) (*common_model.RolePermission, error) {
 	item := new(model.RolePermission)
 	err := d.GetDb(ctx).Model(&model.RolePermission{}).Where(&model.RolePermission{
 		RoleName:       roleName,
