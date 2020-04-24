@@ -1,12 +1,14 @@
 package cache
 
-import "testing"
+import (
+	"github.com/krilie/lico_alone/common/dig"
+	"testing"
+)
 
 func TestGCache(t *testing.T) {
-	set := GCache.Set("ok", "ok2")
-	if set != nil {
-		t.Log(set)
-	}
-	get, set := GCache.Get("ok")
-	t.Log(get, set)
+	dig.MustInvoke(func(cache *Cache) {
+		_ = cache.Set("ok", "ok")
+		get, err := cache.Get("ok")
+		t.Log(get, err)
+	})
 }
