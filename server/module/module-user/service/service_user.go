@@ -7,7 +7,6 @@ import (
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
 	"github.com/krilie/lico_alone/component/nlog"
-	"github.com/krilie/lico_alone/module/module-user/domain"
 	"time"
 )
 
