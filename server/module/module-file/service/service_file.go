@@ -42,7 +42,6 @@ func (a *FileService) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileN
 
 // 内部有事务的存在
 func (a *FileService) DeleteFile(ctx context.Context, bucket, key string) (err error) {
-
 	err = a.dao.Transaction(ctx, func(ctx context.Context) error {
 		err := a.dao.DeleteFileByBucketKey(ctx, bucket, key)
 		if err != nil {

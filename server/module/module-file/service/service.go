@@ -11,3 +11,11 @@ type FileService struct {
 	log     *nlog.NLog
 	fileApi oss_s3.FileOperator
 }
+
+func NewFileService(dao *dao.FileDao, log *nlog.NLog) *FileService {
+	return &FileService{
+		dao:     dao,
+		log:     log,
+		fileApi: nil,
+	}
+}
