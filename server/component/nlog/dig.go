@@ -7,7 +7,7 @@ import (
 )
 
 func init() {
-	dig.MustProvide(func(runEnv *context_enum.RunEnv, cfg *config.Config) *NLog {
+	dig.Container.MustProvide(func(runEnv *context_enum.RunEnv, cfg *config.Config) *NLog {
 		return NewLogger(*runEnv, *cfg)
 	})
 }

@@ -7,7 +7,7 @@ import (
 )
 
 func init() {
-	dig.MustProvide(func(cfg *config.Config, log *nlog.NLog) (ndb *NDb) {
+	dig.Container.MustProvide(func(cfg *config.Config, log *nlog.NLog) (ndb *NDb) {
 		return NewNDb(cfg.DB, log)
 	})
 }

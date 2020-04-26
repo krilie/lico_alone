@@ -5,15 +5,14 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
-	"github.com/krilie/lico_alone/component/nlog"
-	"github.com/krilie/lico_alone/module/file/model"
+	"github.com/krilie/lico_alone/module/module-file/model"
+	"github.com/prometheus/common/log"
 	"mime/multipart"
 	"time"
 )
 
 // 内部有事务的存在
 func (a *Service) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName string, file multipart.File, size int) (url, bucket, key string, err error) {
-	log := nlog.NewLog(ctx, "module/file/service/service_broker.go:5", "RegisterBroker")
 	err = cdb.WithTrans(ctx, a, func(ctx context.Context, s cdb.Service) error {
 		fileService := s.(*Service)
 		var content string

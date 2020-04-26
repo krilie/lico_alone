@@ -9,8 +9,8 @@ import (
 	AccountService "github.com/krilie/lico_alone/module/bookkeeping/service"
 	"github.com/krilie/lico_alone/module/config/model"
 	ConfigService "github.com/krilie/lico_alone/module/config/service"
-	FileService "github.com/krilie/lico_alone/module/file/service"
 	MessageService "github.com/krilie/lico_alone/module/message/service"
+	FileService "github.com/krilie/lico_alone/module/module-file/service"
 	UserService "github.com/krilie/lico_alone/module/module-user/service"
 	"time"
 )

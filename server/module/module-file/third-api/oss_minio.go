@@ -1,4 +1,4 @@
-package oss_s3
+package third_api
 
 import (
 	"context"
@@ -30,7 +30,7 @@ func NewOssClient(cfg config.Config) *OssClient {
 	return &OssClient{Client: minioClient, BucketName: cfg.FileSave.OssBucket, Url: url}
 }
 
-func (f *OssClient) GetBucketName() string {
+func (f *OssClient) GetBucketName(ctx context.Context) string {
 	return f.BucketName
 }
 

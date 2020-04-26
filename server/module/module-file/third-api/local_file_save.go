@@ -1,4 +1,4 @@
-package oss_s3
+package third_api
 
 import (
 	"context"
@@ -30,7 +30,7 @@ func (o *OssLocal) DeleteFile(ctx context.Context, userId, key string) error {
 	return o.File.DeleteFile(ctx, key)
 }
 
-func (o *OssLocal) GetBucketName() string {
+func (o *OssLocal) GetBucketName(ctx context.Context) string {
 	return ""
 }
 

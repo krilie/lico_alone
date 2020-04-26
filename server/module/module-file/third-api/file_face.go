@@ -1,4 +1,4 @@
-package oss_s3
+package third_api
 
 import (
 	"context"
@@ -10,5 +10,5 @@ type FileOperator interface {
 	DeleteFile(ctx context.Context, userId, key string) error
 	GetFullUrl(ctx context.Context, isPub bool, key string) (url string)
 	GetBaseUrl(ctx context.Context) string
-	GetBucketName() string
+	GetBucketName(ctx context.Context) string
 }
