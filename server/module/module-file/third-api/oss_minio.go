@@ -11,30 +11,30 @@ import (
 	"io"
 )
 
-type OssClient struct {
+type OssMinio struct {
 	Client     *minio.Client
 	BucketName string
 	Url        string
 }
 
-func (f *OssClient) GetFullUrl(ctx context.Context, isPub bool, key string) string {
+func (f *OssMinio) GetFullUrl(ctx context.Context, isPub bool, key string) string {
 	return fmt.Sprintf("%v/%v/%v", f.Url, f.BucketName, key)
 }
 
-func NewOssClient(cfg config.Config) *OssClient {
+func NewOssClient(cfg config.Config) *OssMinio {
 	minioClient, err := minio.New(cfg.FileSave.OssEndPoint, cfg.FileSave.OssKey, cfg.FileSave.OssSecret, true) //endpoint, accessKeyID, secretAccessKey string, secure bool
 	if err != nil {
 		panic(errs.NewInternal().WithError(err))
 	}
 	url := fmt.Sprintf("%v%v%v", cfg.FileSave.OssEndPoint, "/", cfg.FileSave.OssBucket)
-	return &OssClient{Client: minioClient, BucketName: cfg.FileSave.OssBucket, Url: url}
+	return &OssMinio{Client: minioClient, BucketName: cfg.FileSave.OssBucket, Url: url}
 }
 
-func (f *OssClient) GetBucketName(ctx context.Context) string {
+func (f *OssMinio) GetBucketName(ctx context.Context) string {
 	return f.BucketName
 }
 
-func (f *OssClient) UploadFile(ctx context.Context, userId, name string, file io.ReadSeeker, size int64) (content string, bucket string, key string, err error) {
+func (f *OssMinio) UploadFile(ctx context.Context, userId, name string, file io.ReadSeeker, size int64) (content string, bucket string, key string, err error) {
 	content, err = file_util.GetContentType(file)
 	if err != nil {
 		return "", "", "", err
@@ -54,7 +54,7 @@ func (f *OssClient) UploadFile(ctx context.Context, userId, name string, file io
 	}
 }
 
-func (f *OssClient) DeleteFile(ctx context.Context, userId, key string) error {
+func (f *OssMinio) DeleteFile(ctx context.Context, userId, key string) error {
 	err := f.Client.RemoveObject(f.BucketName, key)
 	if err != nil {
 		return errs.NewInternal().WithError(err)
@@ -62,6 +62,6 @@ func (f *OssClient) DeleteFile(ctx context.Context, userId, key string) error {
 	return nil
 }
 
-func (o *OssClient) GetBaseUrl(ctx context.Context) string {
+func (o *OssMinio) GetBaseUrl(ctx context.Context) string {
 	return o.Url
 }
