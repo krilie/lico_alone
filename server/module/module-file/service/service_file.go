@@ -12,11 +12,10 @@ import (
 )
 
 // 内部有事务的存在
-func (a *Service) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName string, file multipart.File, size int) (url, bucket, key string, err error) {
-	err = cdb.WithTrans(ctx, a, func(ctx context.Context, s cdb.Service) error {
-		fileService := s.(*Service)
+func (a *FileService) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName string, file multipart.File, size int) (url, bucket, key string, err error) {
+	err = a.dao.Transaction(ctx, func(ctx context.Context) error {
 		var content string
-		content, bucket, key, err = fileService.FileSaver.UploadFile(ctx, userId, fileName, file, int64(size))
+		content, bucket, key, err = a.fileApi.UploadFile(ctx, userId, fileName, file, int64(size))
 		if err != nil {
 			return err
 		}
@@ -30,26 +29,26 @@ func (a *Service) UploadFile(ctx context.Context, tx *gorm.DB, userId, fileName 
 			BizType:     "",
 			Size:        size,
 		}
-		err = fileService.Dao.CreateFile(ctx, &item)
+		err = a.dao.CreateFile(ctx, &item)
 		if err != nil {
 			log.Error(err.Error())
 			return errs.NewErrDbCreate().WithError(err)
 		}
-		url = fileService.FileSaver.GetFullUrl(ctx, true, key)
+		url = a.fileApi.GetFullUrl(ctx, true, key)
 		return nil
 	})
 	return url, bucket, key, err
 }
 
 // 内部有事务的存在
-func (a *Service) DeleteFile(ctx context.Context, bucket, key string) (err error) {
-	err = cdb.WithTrans(ctx, a, func(ctx context.Context, s cdb.Service) error {
-		srv := s.(*Service)
-		err := srv.Dao.DeleteFileByBucketKey(ctx, bucket, key)
+func (a *FileService) DeleteFile(ctx context.Context, bucket, key string) (err error) {
+
+	err = a.dao.Transaction(ctx, func(ctx context.Context) error {
+		err := a.dao.DeleteFileByBucketKey(ctx, bucket, key)
 		if err != nil {
 			return errs.NewErrDbDelete().WithError(err)
 		}
-		err = srv.FileSaver.DeleteFile(ctx, "", key)
+		err = a.fileApi.DeleteFile(ctx, "", key)
 		if err != nil {
 			return err
 		}
@@ -58,6 +57,6 @@ func (a *Service) DeleteFile(ctx context.Context, bucket, key string) (err error
 	return err
 }
 
-func (a *Service) GetBaseUrl(ctx context.Context) string {
-	return a.FileSaver.GetBaseUrl(ctx)
+func (a *FileService) GetBaseUrl(ctx context.Context) string {
+	return a.fileApi.GetBaseUrl(ctx)
 }
