@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/common/common-model"
+	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/jwt"
 	"github.com/krilie/lico_alone/server/http/ginutil"
@@ -31,10 +31,10 @@ func CheckAuthToken(auth IAuth) gin.HandlerFunc {
 				ginutil.AbortWithErr(c, errs.NewUnauthorized().WithMsg("token format error"))
 				return
 			} else if err == jwt.ErrTimeExp {
-				c.AbortWithStatusJSON(401, common_model.NewRetFromErr(errs.NewUnauthorized().WithMsg("token expired")))
+				c.AbortWithStatusJSON(401, com_model.NewRetFromErr(errs.NewUnauthorized().WithMsg("token expired")))
 				return
 			} else {
-				c.AbortWithStatusJSON(500, common_model.NewRetFromErr(errs.NewInternal().WithMsg(err.Error())))
+				c.AbortWithStatusJSON(500, com_model.NewRetFromErr(errs.NewInternal().WithMsg(err.Error())))
 				return
 			}
 		} else {

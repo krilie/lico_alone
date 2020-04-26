@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"github.com/krilie/lico_alone/common/common-model"
+	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/component/nlog"
@@ -12,8 +12,8 @@ import (
 
 func (s *Service) SendEmail(ctx context.Context, to, subject, content string) error {
 	log := nlog.NewLog(ctx, "module/message/service/service_email.go:8", "NewWithTxOrFromCtx")
-	email := &common_model.MessageEmail{
-		Model:     common_model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
+	email := &com_model.MessageEmail{
+		Model:     com_model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
 		SendTime:  time.Now(),
 		From:      "sys",
 		To:        to,

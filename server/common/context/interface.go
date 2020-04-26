@@ -20,6 +20,14 @@ func MustGetContext(ctx interface{}) *Context {
 	}
 }
 
+func GetContextOrNew(ctx interface{}) *Context {
+	if c, ok := ctx.(*Context); !ok {
+		return NewContext()
+	} else {
+		return c
+	}
+}
+
 func GetContextOrNil(ctx interface{}) *Context {
 	if c, ok := ctx.(*Context); !ok {
 		return nil
@@ -27,11 +35,11 @@ func GetContextOrNil(ctx interface{}) *Context {
 		return c
 	}
 }
-
-func GetContextOrNew(ctx interface{}) *Context {
-	if c, ok := ctx.(*Context); !ok {
+func CloneContextOrCreate(c *Context) *Context {
+	ctx := GetContextOrNil(c)
+	if ctx == nil {
 		return NewContext()
 	} else {
-		return c
+		return ctx.Clone()
 	}
 }

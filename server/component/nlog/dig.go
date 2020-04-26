@@ -1,7 +1,7 @@
 package nlog
 
 import (
-	context_enum "github.com/krilie/lico_alone/common/common-model/context-enum"
+	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/dig"
 )

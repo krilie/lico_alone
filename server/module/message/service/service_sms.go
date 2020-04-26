@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	"errors"
-	"github.com/krilie/lico_alone/common/common-model"
+	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/component/nlog"
@@ -18,8 +18,8 @@ func (s *Service) SendRegisterSms(ctx context.Context, phone, code string) error
 	if sendErr != nil {
 		log.Error(sendErr)
 		// 记录发送记录
-		err := s.Dao.CreateMessageSms(ctx, &common_model.MessageSms{
-			Model:     common_model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
+		err := s.Dao.CreateMessageSms(ctx, &com_model.MessageSms{
+			Model:     com_model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
 			SendTime:  time.Now(),
 			Name:      "",
 			To:        phone,
@@ -34,8 +34,8 @@ func (s *Service) SendRegisterSms(ctx context.Context, phone, code string) error
 		return errs.NewInternal().WithMsg("短信发送失败").WithError(sendErr)
 	} else {
 		// 记录发送记录
-		err := s.Dao.CreateMessageSms(ctx, &common_model.MessageSms{
-			Model:     common_model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
+		err := s.Dao.CreateMessageSms(ctx, &com_model.MessageSms{
+			Model:     com_model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
 			SendTime:  time.Now(),
 			Name:      "",
 			To:        phone,
@@ -48,12 +48,12 @@ func (s *Service) SendRegisterSms(ctx context.Context, phone, code string) error
 			return err
 		}
 		// 记录注册短信
-		err = s.Dao.CreateMessageValidCode(ctx, &common_model.MessageValidCode{
-			Model:    common_model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
+		err = s.Dao.CreateMessageValidCode(ctx, &com_model.MessageValidCode{
+			Model:    com_model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
 			SendTime: time.Now(),
 			PhoneNum: phone,
 			Code:     code,
-			Type:     common_model.MessageValidCodeTypeRegister,
+			Type:     com_model.MessageValidCodeTypeRegister,
 		})
 		if err != nil {
 			log.Error(err)

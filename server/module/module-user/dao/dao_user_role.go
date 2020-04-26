@@ -3,7 +3,7 @@ package dao
 import (
 	"context"
 	"github.com/jinzhu/gorm"
-	common_model "github.com/krilie/lico_alone/common/common-model"
+	common_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-user/model"

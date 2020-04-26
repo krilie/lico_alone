@@ -1,4 +1,4 @@
-package common_model
+package com_model
 
 // PaginationParam 分页查询条件
 type PageParams struct {

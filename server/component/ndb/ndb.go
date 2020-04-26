@@ -2,7 +2,6 @@ package ndb
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -34,24 +33,6 @@ func (ndb *NDb) GetDb(ctx context.Context) *gorm.DB {
 		} else {
 			return orNil.Tx.(*gorm.DB)
 		}
-	}
-}
-
-func GetTxFromCtx(ctx context.Context) *gorm.DB {
-	orNil := context2.GetContextOrNil(ctx)
-	if orNil == nil {
-		return nil
-	} else {
-		return orNil.Tx.(*gorm.DB)
-	}
-}
-
-func SetTxToCtx(ctx context.Context, tx *gorm.DB) {
-	orNil := context2.GetContextOrNil(ctx)
-	if orNil == nil {
-		panic(errors.New("not a app context find"))
-	} else {
-		orNil.Tx = tx
 	}
 }
 

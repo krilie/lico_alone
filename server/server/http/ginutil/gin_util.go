@@ -2,7 +2,7 @@ package ginutil
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/common/common-model"
+	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/component/nlog"
@@ -22,13 +22,13 @@ func GetAppCtxOrAbort(c *gin.Context) *context.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
 		nlog.Error("GetAppCtxOrAbort", "can not get application context for next step")
-		c.AbortWithStatusJSON(500, common_model.NewRetFromErr(errs.NewInternal()))
+		c.AbortWithStatusJSON(500, com_model.NewRetFromErr(errs.NewInternal()))
 		return nil
 	}
 	contextOrNil := context.GetContextOrNil(value)
 	if contextOrNil == nil {
 		nlog.Error("GetAppCtxOrAbort", "internal err on cast context to app context")
-		c.AbortWithStatusJSON(500, common_model.NewRetFromErr(errs.NewInternal()))
+		c.AbortWithStatusJSON(500, com_model.NewRetFromErr(errs.NewInternal()))
 		return nil
 	}
 	return contextOrNil
@@ -53,13 +53,13 @@ func GetAppCtxOrReturn(c *gin.Context) *context.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
 		nlog.Error("GetAppCtxOrReturn", "can not get application context for next step")
-		c.JSON(500, common_model.NewRet(errs.NewInternal().WithMsg("ctx not get")))
+		c.JSON(500, com_model.NewRet(errs.NewInternal().WithMsg("ctx not get")))
 		return nil
 	}
 	contextOrNil := context.GetContextOrNil(value)
 	if contextOrNil == nil {
 		nlog.Error("GetAppCtxOrReturn", "internal err on cast context to app context")
-		c.JSON(500, common_model.NewRet(errs.NewInternal().WithMsg("ctx not get is nil")))
+		c.JSON(500, com_model.NewRet(errs.NewInternal().WithMsg("ctx not get is nil")))
 		return nil
 	}
 	return contextOrNil

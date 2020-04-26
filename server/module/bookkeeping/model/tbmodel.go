@@ -1,13 +1,13 @@
 package model
 
 import (
-	"github.com/krilie/lico_alone/common/common-model"
+	"github.com/krilie/lico_alone/common/com-model"
 	"time"
 )
 import "github.com/shopspring/decimal"
 
 type AccountItem struct {
-	common_model.Model
+	com_model.Model
 	Version     int64
 	UpdateTime  time.Time       `gorm:"type:datetime;not null" json:"update_time"`
 	UserId      string          `gorm:"type:char(36);not null" json:"user_id"`
@@ -25,7 +25,7 @@ func (AccountItem) TableName() string {
 }
 
 type AccountBill struct {
-	common_model.Model
+	com_model.Model
 	Version int64
 	UserId  string          `gorm:"type:char(36);not null" json:"user_id"`
 	Amount  decimal.Decimal `gorm:"type:decimal(14,2);not null;default 0"json:"amount"` // 发生额
@@ -39,7 +39,7 @@ func (AccountBill) TableName() string {
 }
 
 type AccountBillDetail struct {
-	common_model.Model
+	com_model.Model
 	Version       int64
 	UserId        string          `gorm:"type:char(36);not null" json:"user_id"`
 	BillId        string          `gorm:"type:char(36);not null" json:"bill_id"`
@@ -53,7 +53,7 @@ func (AccountBillDetail) TableName() string {
 
 // 操作记录 可撤销最后一次记录不留痕迹
 type AccountOperatorLog struct {
-	common_model.Model
+	com_model.Model
 	Version       int64
 	UserId        string          `gorm:"type:char(36);not null" json:"user_id"`
 	BillId        string          `gorm:"type:char(36);not null" json:"bill_id"`

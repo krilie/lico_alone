@@ -1,7 +1,6 @@
 package context
 
 import (
-	"context"
 	"time"
 )
 
@@ -16,8 +15,7 @@ type Context struct {
 	Tx        interface{} // 数据库事务对象
 }
 
-func CloneContext(ctx context.Context) context.Context {
-	var c = ctx.(*Context)
+func (c *Context) Clone() *Context {
 	if c == nil {
 		return nil
 	}
@@ -27,7 +25,7 @@ func CloneContext(ctx context.Context) context.Context {
 		LastTime:  c.LastTime,
 		ClientId:  c.ClientId,
 		UserId:    c.UserId,
-		Tx:        nil,
+		Tx:        c.Tx,
 	}
 }
 

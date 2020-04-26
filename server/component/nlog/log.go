@@ -2,7 +2,7 @@ package nlog
 
 import (
 	"context"
-	context_enum "github.com/krilie/lico_alone/common/common-model/context-enum"
+	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/config"
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/sirupsen/logrus"
