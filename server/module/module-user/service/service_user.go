@@ -8,27 +8,24 @@ import (
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
 	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/module-user/domain"
-	"github.com/krilie/lico_alone/module/module-user/model"
 	"time"
 )
 
-func (s *Service) ChangeUserPassword(ctx context.Context, userId, oldPswd, newPswd string) error {
-	log := nlog.NewLog(ctx, "module/user/service/service_change_user_password.go:9", "ChangeUserPassword")
+func (s *UserService) ChangeUserPassword(ctx context.Context, userId, oldPswd, newPswd string) error {
 	user, err := domain.NewUser(ctx, s.Dao, userId)
 	if err != nil {
-		log.Errorf("change user password err:%v", err)
+		s.log.Errorf("change user password err:%v", err)
 		return err
 	}
 	err = user.UpdatePassword(ctx, oldPswd, newPswd)
 	if err != nil {
-		log.Errorf("change user password err:%v", err)
+		s.log.Errorf("change user password err:%v", err)
 		return err
 	}
 	return nil
 }
 
-func (s *Service) RegisterNewUser(ctx context.Context, phoneNum, password string) error {
-	log := nlog.NewLog(ctx, "module/user/service/service_user_register.go:14", "RegisterNewUser")
+func (s *UserService) RegisterNewUser(ctx context.Context, phoneNum, password string) error {
 	if phoneNum == "" {
 		return errs.NewBadRequest().WithMsg("手机号不能为空")
 	}
@@ -37,7 +34,7 @@ func (s *Service) RegisterNewUser(ctx context.Context, phoneNum, password string
 	}
 	master, err := s.Dao.GetUserMasterByPhoneNum(ctx, phoneNum)
 	if err != nil {
-		log.Errorf("register new user err:%v", err)
+		s.log.Errorf("register new user err:%v", err)
 		return err
 	}
 	if master != nil {
@@ -61,11 +58,10 @@ func (s *Service) RegisterNewUser(ctx context.Context, phoneNum, password string
 	return err
 }
 
-func (s *Service) UserLogin(ctx context.Context, phoneNum, password, clientId string) (jwt string, err error) {
-	log := nlog.NewLog(ctx, "module/user/service/service_login.go:10", "UserLogin")
+func (s *UserService) UserLogin(ctx context.Context, phoneNum, password, clientId string) (jwt string, err error) {
 	user, err := domain.NewUserByPhoneNum(ctx, s.Dao, phoneNum)
 	if err != nil {
-		log.Errorf("user login err:%v", err)
+		s.log.Errorf("user login err:%v", err)
 		return "", err
 	}
 	ok := user.IsPasswordOk(password)

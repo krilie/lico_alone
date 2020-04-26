@@ -16,7 +16,7 @@ import (
 )
 
 type AllService struct {
-	UserService    *UserService.Service
+	UserService    *UserService.UserService
 	ConfigService  *ConfigService.Service
 	FileService    *FileService.Service
 	AccountService *AccountService.Service
@@ -25,7 +25,7 @@ type AllService struct {
 
 func NewAllService(cfg config.Config) *AllService {
 	return &AllService{
-		UserService:    UserService.NewService(cfg.DB),
+		UserService:    UserService.NewUserService(cfg.DB),
 		ConfigService:  ConfigService.NewService(cfg.DB),
 		FileService:    FileService.NewService(cfg),
 		AccountService: AccountService.NewService(cfg.DB),

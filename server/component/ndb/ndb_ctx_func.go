@@ -19,7 +19,7 @@ func GetTxFromCtx(ctx context.Context) *gorm.DB {
 func SetTxToCtx(ctx context.Context, tx *gorm.DB) {
 	orNil := context2.GetContextOrNil(ctx)
 	if orNil == nil {
-		panic(errors.New("not a app context find"))
+		panic(errors.New("无效的上下文"))
 	} else {
 		orNil.Tx = tx
 	}

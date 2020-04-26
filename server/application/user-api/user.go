@@ -9,7 +9,7 @@ import (
 )
 
 type AppUser struct {
-	UserService *service.Service
+	UserService *service.UserService
 	Message     *service2.Service
 }
 

@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/common/cdb"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/common/utils/str_util"

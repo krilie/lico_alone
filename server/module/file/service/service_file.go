@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/cdb"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/component/nlog"

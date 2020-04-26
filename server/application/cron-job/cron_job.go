@@ -7,7 +7,7 @@ import (
 )
 
 type CronJob struct {
-	UserService *service.Service
+	UserService *service.UserService
 }
 
 func NewCronJob(allSrv *all_service.AllService) *CronJob {

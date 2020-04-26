@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"github.com/jinzhu/gorm"
-	"github.com/krilie/lico_alone/common/cdb"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/module/file/dao"
 	oss_s3 "github.com/krilie/lico_alone/module/file/oss-s3"

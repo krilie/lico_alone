@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"github.com/krilie/lico_alone/application"
-	"github.com/krilie/lico_alone/common/cdb"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/broker"
