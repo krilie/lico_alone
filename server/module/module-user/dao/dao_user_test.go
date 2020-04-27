@@ -9,7 +9,7 @@ import (
 )
 
 func TestDao_GetAllValidUserId(t *testing.T) {
-	dig.MustInvoke(func(dao *UserDao) {
+	dig.Container.MustInvoke(func(dao *UserDao) {
 		err := dao.CreatePerm(context.NewContext(), &model.Permission{
 			Name:        "11111",
 			CreateTime:  time.Now(),

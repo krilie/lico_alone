@@ -7,7 +7,7 @@ import (
 )
 
 func init() {
-	dig.MustProvide(func(db *ndb.NDb, log *nlog.NLog) *UserDao {
+	dig.Container.MustProvide(func(db *ndb.NDb, log *nlog.NLog) *UserDao {
 		return NewUserDao(db, log)
 	})
 }
