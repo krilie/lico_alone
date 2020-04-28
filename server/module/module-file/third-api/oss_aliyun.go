@@ -7,15 +7,15 @@ import (
 
 type OssAliyun struct{}
 
-func (o *OssAliyun) UploadFile(ctx context.Context, userId, name string, file io.ReadSeeker, size int64) (content, bucket, key string, err error) {
+func (o *OssAliyun) UploadFile(ctx context.Context, fileName string, fileStream io.ReadSeeker, fileSize int64) (url, key string, err error) {
 	panic("implement me")
 }
 
-func (o *OssAliyun) DeleteFile(ctx context.Context, userId, key string) error {
+func (o *OssAliyun) DeleteFile(ctx context.Context, fileKey string) error {
 	panic("implement me")
 }
 
-func (o *OssAliyun) GetFullUrl(ctx context.Context, isPub bool, key string) (url string) {
+func (o *OssAliyun) GetUrl(ctx context.Context, isPub bool, fileKey string) (url string, err error) {
 	panic("implement me")
 }
 
