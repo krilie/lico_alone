@@ -37,10 +37,6 @@ func (o *LocalFileSave) GetUrl(ctx context.Context, isPub bool, fileKey string) 
 	return fmt.Sprintf("%v/%v", o.GetBaseUrl(ctx), fileKey), nil
 }
 
-func (o *LocalFileSave) GetFullUrl(ctx context.Context, isPub bool, key string) string {
-	return fmt.Sprintf("%v/%v", o.Url, key)
-}
-
 func (o *LocalFileSave) GetBaseUrl(ctx context.Context) string {
 	return o.Url
 }

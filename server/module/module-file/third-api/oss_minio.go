@@ -18,7 +18,7 @@ type OssMinio struct {
 }
 
 func (f *OssMinio) GetUrl(ctx context.Context, isPub bool, fileKey string) (url string, err error) {
-	return fmt.Sprintf("%v/%v/%v", f.Url, f.BucketName, key), nil
+	return fmt.Sprintf("%v/%v/%v", f.Url, f.BucketName, fileKey), nil
 }
 
 func (f *OssMinio) GetBucketName(ctx context.Context) string {
