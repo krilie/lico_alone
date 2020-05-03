@@ -24,14 +24,14 @@ type NDb struct {
 }
 
 func (ndb *NDb) GetDb(ctx context.Context) *gorm.DB {
-	orNil := context2.GetContextOrNil(ctx)
-	if orNil == nil {
+	nCtx := context2.GetContextOrNil(ctx)
+	if nCtx == nil {
 		return ndb.db
 	} else {
-		if orNil.Tx == nil {
+		if nCtx.Tx == nil {
 			return ndb.db
 		} else {
-			return orNil.Tx.(*gorm.DB)
+			return nCtx.Tx.(*gorm.DB)
 		}
 	}
 }
