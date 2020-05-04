@@ -7,47 +7,59 @@ import (
 	"strings"
 )
 
-// 定义通用错误 pkg errors cause error
-var (
-	Error           = &Err{Code: 0, Message: ""}        // nil
-	errForbidden    = &Err{Code: 403, Message: "禁止访问"}  // 403
-	errNotFound     = &Err{Code: 404, Message: "资源不存在"} // 404
-	errBadRequest   = &Err{Code: 400, Message: "请求无效"}  // 400
-	errUnauthorized = &Err{Code: 401, Message: "未授权"}   // 401
-	errInternal     = &Err{Code: 500, Message: "服务器错误"} // 500
-	// 其它错误
-	errDbCreate = &Err{Code: 500, Message: "数据库创建错误"}
-	errDbUpdate = &Err{Code: 500, Message: "数据库更新错误"}
-	errDbDelete = &Err{Code: 500, Message: "数据库删除错误"}
-	errDbQuery  = &Err{Code: 500, Message: "数据库查询错误"}
+type ErrCode int
+
+func (code ErrCode) ToInt() int    { return int(code) }
+func (code ErrCode) ToStr() string { return strconv.Itoa(int(code)) }
+
+const (
+	Success           ErrCode = 2000
+	ErrorNormal       ErrCode = 2500
+	ErrorNoPermission ErrCode = 4001
+	ErrorInvalidToken ErrCode = 4002
+	ErrorInternal     ErrCode = 5000
 )
 
+// 定义通用错误 pkg errors cause error
+var (
+	NormalError       = &Err{Code: ErrorNormal, Message: "业务错误"}       // 2100
+	NoPermissionError = &Err{Code: ErrorNoPermission, Message: "无权限"}  // 4001
+	InternalError     = &Err{Code: ErrorInternal, Message: "内部错误"}     // 5000
+	InvalidTokenError = &Err{Code: ErrorInvalidToken, Message: "凭证无效"} // invalidToken
+)
+
+func New(code ErrCode) *Err { return &Err{Code: code} }
+func NewNoPermission() *Err { return NoPermissionError.New() }
+func NewInternal() *Err     { return InternalError.New() }
+func NewNormal() *Err       { return NormalError.New() }
+func NewInvalidToken() *Err { return InvalidTokenError.New() }
+
 type Err struct {
-	Code    int
-	Message string
-	Err     error // 原始错误
+	Code      ErrCode
+	Message   string
+	InsideErr error // 原始错误
 }
 
 func (w *Err) Error() string {
 	builder := strings.Builder{}
 	builder.WriteString("[code:")
-	builder.WriteString(strconv.Itoa(w.Code))
+	builder.WriteString(w.Code.ToStr())
 	builder.WriteString(" message:")
 	builder.WriteString(w.Message)
-	if w.Err != nil {
+	if w.InsideErr != nil {
 		builder.WriteString(" err:")
-		builder.WriteString(w.Err.Error())
+		builder.WriteString(w.InsideErr.Error())
 		builder.WriteString("]")
 	}
 	return builder.String()
 }
 
-func (w *Err) WithError(err error) *Err { w.Err = err; return w }
-func (w *Err) GetCode() int             { return w.Code }
-func (w *Err) WithCode(code int) *Err   { w.Code = code; return w }
-func (w *Err) WithMsg(msg string) *Err  { w.Message = msg; return w }
-func (w *Err) New() *Err                { return &Err{Code: w.Code, Message: w.Message, Err: w.Err} }
-func (w *Err) Unwrap() error            { return w.Err }
+func (w *Err) WithError(err error) *Err   { w.InsideErr = err; return w }
+func (w *Err) GetCode() int               { return w.Code.ToInt() }
+func (w *Err) WithCode(code ErrCode) *Err { w.Code = code; return w }
+func (w *Err) WithMsg(msg string) *Err    { w.Message = msg; return w }
+func (w *Err) New() *Err                  { return &Err{Code: w.Code, Message: w.Message, InsideErr: w.InsideErr} }
+func (w *Err) Unwrap() error              { return w.InsideErr }
 
 func (w *Err) WithMsgf(format string, args ...interface{}) *Err {
 	w.Message = fmt.Sprintf(format, args...)
@@ -58,19 +70,6 @@ func (w *Err) GetFullMsg() string {
 	return GetErrMsg(w)
 }
 
-func New() *Err             { return &Err{} }
-func NewForbidden() *Err    { return errForbidden.New() }
-func NewNotFound() *Err     { return errNotFound.New() }
-func NewBadRequest() *Err   { return errBadRequest.New() }
-func NewUnauthorized() *Err { return errUnauthorized.New() }
-func NewInternal() *Err     { return errInternal.New() }
-
-// 其它错误
-func NewErrDbCreate() *Err { return errDbCreate.New() }
-func NewErrDbUpdate() *Err { return errDbUpdate.New() }
-func NewErrDbDelete() *Err { return errDbDelete.New() }
-func NewErrDbQuery() *Err  { return errDbQuery.New() }
-
 // 取到最内层的Err 如是没有返回nil
 func GetInnerErr(err error) *Err {
 	var retErr *Err
@@ -78,7 +77,7 @@ func GetInnerErr(err error) *Err {
 		tErr, ok := err.(*Err)
 		if ok {
 			retErr = tErr
-			err = tErr.Err
+			err = tErr.InsideErr
 			continue
 		} else {
 			break
@@ -101,7 +100,7 @@ func ToErrOrNil(err error) *Err {
 func GetCode(err error) int {
 	Err := ToErrOrNil(err)
 	if Err != nil {
-		return Err.Code
+		return Err.Code.ToInt()
 	}
 	return 500
 }
