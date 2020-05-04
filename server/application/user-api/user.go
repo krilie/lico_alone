@@ -10,7 +10,7 @@ import (
 
 type AppUser struct {
 	UserService *service.UserService
-	Message     *service2.Service
+	Message     *service2.MessageService
 }
 
 func (a *AppUser) HasUser(id string) (bool, error) {

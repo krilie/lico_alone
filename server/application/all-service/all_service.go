@@ -20,7 +20,7 @@ type AllService struct {
 	ConfigService  *ConfigService.ConfigService
 	FileService    *FileService.Service
 	AccountService *AccountService.Service
-	Message        *MessageService.Service
+	Message        *MessageService.MessageService
 }
 
 func NewAllService(cfg config.Config) *AllService {
@@ -29,7 +29,7 @@ func NewAllService(cfg config.Config) *AllService {
 		ConfigService:  ConfigService.NewService(cfg.DB),
 		FileService:    FileService.NewService(cfg),
 		AccountService: AccountService.NewService(cfg.DB),
-		Message:        MessageService.NewService(cfg),
+		Message:        MessageService.NewMessageService(cfg),
 	}
 }
 

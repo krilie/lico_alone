@@ -21,7 +21,7 @@ type CommonReturn struct {
 func NewRet(err *errs.Err) *CommonReturn {
 	fullMsg := err.GetFullMsg()
 	return &CommonReturn{
-		Code:    err.Code,
+		Code:    err.Code.ToInt(),
 		Message: err.Message,
 		Detail:  &fullMsg,
 		Data:    nil,

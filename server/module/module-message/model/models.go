@@ -2,6 +2,7 @@ package model
 
 import (
 	"github.com/krilie/lico_alone/common/com-model"
+	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"time"
 )
 
@@ -49,8 +50,10 @@ func (MessageValidCode) TableName() string {
 	return "tb_message_valid_code"
 }
 
+type ValidCodeType = context_enum.IntEnum
+
 const (
-	MessageValidCodeTypeLogin        = 1 // 登录
-	MessageValidCodeTypeRegister     = 2 // 注册
-	MessageValidCodeTypeChangePassWd = 3 // 改密码
+	MessageValidCodeTypeLogin        ValidCodeType = 1 // 登录
+	MessageValidCodeTypeRegister     ValidCodeType = 2 // 注册
+	MessageValidCodeTypeChangePassWd ValidCodeType = 3 // 改密码
 )
