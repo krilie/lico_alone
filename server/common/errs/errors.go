@@ -15,6 +15,7 @@ func (code ErrCode) ToStr() string { return strconv.Itoa(int(code)) }
 const (
 	Success           ErrCode = 2000
 	ErrorNormal       ErrCode = 2500
+	ErrorParam        ErrCode = 4000
 	ErrorNoPermission ErrCode = 4001
 	ErrorInvalidToken ErrCode = 4002
 	ErrorInternal     ErrCode = 5000
@@ -23,6 +24,7 @@ const (
 // 定义通用错误 pkg errors cause error
 var (
 	NormalError       = &Err{Code: ErrorNormal, Message: "业务错误"}       // 2100
+	ParamError        = &Err{Code: ErrorParam, Message: "参数错误"}        // 4000
 	NoPermissionError = &Err{Code: ErrorNoPermission, Message: "无权限"}  // 4001
 	InternalError     = &Err{Code: ErrorInternal, Message: "内部错误"}     // 5000
 	InvalidTokenError = &Err{Code: ErrorInvalidToken, Message: "凭证无效"} // invalidToken
@@ -33,6 +35,7 @@ func NewNoPermission() *Err { return NoPermissionError.New() }
 func NewInternal() *Err     { return InternalError.New() }
 func NewNormal() *Err       { return NormalError.New() }
 func NewInvalidToken() *Err { return InvalidTokenError.New() }
+func NewParamError() *Err   { return ParamError.New() }
 
 type Err struct {
 	Code      ErrCode

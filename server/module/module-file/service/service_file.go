@@ -32,7 +32,7 @@ func (a *FileService) UploadFile(ctx context.Context, userId, fileName string, f
 		err = a.dao.CreateFile(ctx, &item)
 		if err != nil {
 			log.Error(err.Error())
-			return errs.NewErrDbCreate().WithError(err)
+			return errs.NewInternal().WithError(err)
 		}
 		return nil
 	})
@@ -47,7 +47,7 @@ func (a *FileService) DeleteFile(ctx context.Context, bucket, key string) (err e
 		}
 		err := a.dao.DeleteFileByBucketKey(ctx, bucket, key)
 		if err != nil {
-			return errs.NewErrDbDelete().WithError(err)
+			return errs.NewInternal().WithError(err)
 		}
 		err = a.fileApi.DeleteFile(ctx, key)
 		if err != nil {

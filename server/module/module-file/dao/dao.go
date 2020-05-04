@@ -29,7 +29,7 @@ func NewFileDao(db *ndb.NDb, log *nlog.NLog) *FileDao {
 func (a *FileDao) CreateFile(ctx context.Context, file *model.FileMaster) error {
 	err := a.GetDb(ctx).Create(file).Error
 	if err != nil {
-		return errs.NewErrDbCreate().WithError(err)
+		return errs.NewInternal().WithError(err)
 	}
 	return nil
 }
@@ -37,7 +37,7 @@ func (a *FileDao) CreateFile(ctx context.Context, file *model.FileMaster) error 
 func (a *FileDao) SaveFile(ctx context.Context, file *model.FileMaster) error {
 	err := a.GetDb(ctx).Save(file).Error
 	if err != nil {
-		return errs.NewErrDbUpdate().WithError(err)
+		return errs.NewInternal().WithError(err)
 	}
 	return nil
 }
@@ -45,7 +45,7 @@ func (a *FileDao) SaveFile(ctx context.Context, file *model.FileMaster) error {
 func (a *FileDao) UpdateFile(ctx context.Context, file *model.FileMaster) error {
 	err := a.GetDb(ctx).Update(file).Error
 	if err != nil {
-		return errs.NewErrDbUpdate().WithError(err)
+		return errs.NewInternal().WithError(err)
 	}
 	return nil
 }
@@ -53,7 +53,7 @@ func (a *FileDao) UpdateFile(ctx context.Context, file *model.FileMaster) error 
 func (a *FileDao) DeleteFile(ctx context.Context, id string) error {
 	err := a.GetDb(ctx).Where("id=?", id).Delete(&model.FileMaster{}).Error
 	if err != nil {
-		return errs.NewErrDbDelete().WithError(err)
+		return errs.NewInternal().WithError(err)
 	}
 	return nil
 }
@@ -62,10 +62,10 @@ func (a *FileDao) DeleteFileByBucketKey(ctx context.Context, bucket, key string)
 	result := a.GetDb(ctx).Where("bucket_name=? and key_name=?", bucket, key).Delete(&model.FileMaster{})
 	err := result.Error
 	if err != nil {
-		return errs.NewErrDbDelete().WithError(err)
+		return errs.NewInternal().WithError(err)
 	}
 	if result.RowsAffected == 0 {
-		return errs.NewNotFound().WithMsg("删除没有成功")
+		return errs.NewNormal().WithMsg("删除没有成功")
 	}
 	return nil
 }

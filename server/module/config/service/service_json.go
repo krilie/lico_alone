@@ -12,7 +12,7 @@ import (
 func (a *ConfigService) GetJsonValue(ctx context.Context, name string, resOut interface{}) (content *model.Config, err error) {
 	config, err := a.Dao.GetConfigByName(ctx, name)
 	if err != nil {
-		return nil, errs.NewErrDbQuery().WithError(err)
+		return nil, errs.NewInternal().WithError(err)
 	}
 	if config == nil {
 		return nil, nil
@@ -43,7 +43,7 @@ func (a *ConfigService) SetJsonValue(ctx context.Context, name string, value int
 func (a *ConfigService) GetValueStr(ctx context.Context, name string) (*string, error) {
 	config, err := a.Dao.GetConfigByName(ctx, name)
 	if err != nil {
-		return nil, errs.NewErrDbQuery().WithError(err)
+		return nil, errs.NewInternal().WithError(err)
 	}
 	if config == nil {
 		return nil, nil

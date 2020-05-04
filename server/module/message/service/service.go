@@ -10,14 +10,14 @@ import (
 )
 
 type Service struct {
-	Dao   *dao.Dao
+	Dao   *dao.MessageDao
 	email email.IEmail
 	sms   sms.IAliSms
 }
 
 func (a *Service) NewWithTx(ctx context.Context, tx *gorm.DB) (service cdb.Service, err error) {
 	return &Service{
-		Dao:   &dao.Dao{Dao: &cdb.Dao{Db: tx}},
+		Dao:   &dao.MessageDao{Dao: &cdb.Dao{Db: tx}},
 		email: a.email,
 		sms:   a.sms,
 	}, nil
