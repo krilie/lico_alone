@@ -2,6 +2,7 @@ package third_api
 
 import (
 	"context"
+	"github.com/krilie/lico_alone/common/config"
 	"github.com/qiniu/api.v7/v7/auth/qbox"
 	"io"
 )
@@ -31,4 +32,13 @@ func (o *OssQiNiu) GetBaseUrl(ctx context.Context) string {
 
 func (o *OssQiNiu) GetBucketName(ctx context.Context) string {
 	panic("implement me")
+}
+
+func NewOssQiNiu(cfg *config.FileSave) *OssQiNiu {
+	return &OssQiNiu{
+		AccessKey:  cfg.OssKey,
+		SecretKey:  cfg.OssSecret,
+		BucketName: cfg.OssBucket,
+		qboxMac:    nil,
+	}
 }

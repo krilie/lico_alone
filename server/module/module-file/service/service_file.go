@@ -6,12 +6,12 @@ import (
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-file/model"
 	"github.com/prometheus/common/log"
-	"mime/multipart"
+	"io"
 	"time"
 )
 
 // 内部有事务的存在
-func (a *FileService) UploadFile(ctx context.Context, userId, fileName string, file multipart.File, size int) (url, bucket, key string, err error) {
+func (a *FileService) UploadFile(ctx context.Context, userId, fileName string, file io.ReadSeeker, size int) (url, bucket, key string, err error) {
 	err = a.dao.Transaction(ctx, func(ctx context.Context) error {
 		var content string
 		url, key, err = a.fileApi.UploadFile(ctx, fileName, file, int64(size))
