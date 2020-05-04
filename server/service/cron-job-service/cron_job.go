@@ -2,14 +2,13 @@
 package cron_job_service
 
 import (
-	"github.com/krilie/lico_alone/module/module-user/service"
-	all_service "github.com/krilie/lico_alone/service/notification-email-service"
+	union_service "github.com/krilie/lico_alone/service/union-service"
 )
 
-type CronJob struct {
-	UserService *service.UserService
+type CronJobService struct {
+	*union_service.UnionService
 }
 
-func NewCronJob(allSrv *all_service.NotificationEmailService) *CronJob {
-	return &CronJob{UserService: allSrv.UserService}
+func NewCronJobService(unionService *union_service.UnionService) *CronJobService {
+	return &CronJobService{UnionService: unionService}
 }
