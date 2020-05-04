@@ -3,6 +3,7 @@ package file_util
 import (
 	"io"
 	"net/http"
+	"strings"
 )
 
 func GetContentType(file io.ReadSeeker) (string, error) {
@@ -15,4 +16,12 @@ func GetContentType(file io.ReadSeeker) (string, error) {
 	}
 	contentType := http.DetectContentType(decByte)
 	return contentType, nil
+}
+
+func GetFileExtension(fileName string) string {
+	index := strings.LastIndex(fileName, ".")
+	if index == -1 {
+		return ""
+	}
+	return fileName[index:]
 }

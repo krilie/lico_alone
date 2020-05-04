@@ -3,10 +3,12 @@ package service
 import (
 	"context"
 	"github.com/krilie/lico_alone/common/errs"
+	"github.com/krilie/lico_alone/common/utils/file_util"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-file/model"
 	"github.com/prometheus/common/log"
 	"io"
+	"mime"
 	"time"
 )
 
@@ -14,6 +16,14 @@ import (
 func (a *FileService) UploadFile(ctx context.Context, userId, fileName string, file io.ReadSeeker, size int) (url, bucket, key string, err error) {
 	err = a.dao.Transaction(ctx, func(ctx context.Context) error {
 		var content string
+		extension := file_util.GetFileExtension(fileName)
+		content1 := mime.TypeByExtension(extension)
+		content2, _ := file_util.GetContentType(file)
+		if content1 != "" {
+			content = content1
+		} else {
+			content = content2
+		}
 		url, key, err = a.fileApi.UploadFile(ctx, fileName, file, int64(size))
 		if err != nil {
 			return err
@@ -32,6 +42,9 @@ func (a *FileService) UploadFile(ctx context.Context, userId, fileName string, f
 // 内部有事务的存在
 func (a *FileService) DeleteFile(ctx context.Context, bucket, key string) (err error) {
 	err = a.dao.Transaction(ctx, func(ctx context.Context) error {
+		if bucket == "" {
+			bucket = a.fileApi.GetBucketName(ctx)
+		}
 		err := a.dao.DeleteFileByBucketKey(ctx, bucket, key)
 		if err != nil {
 			return errs.NewErrDbDelete().WithError(err)
