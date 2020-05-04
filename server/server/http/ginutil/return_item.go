@@ -40,20 +40,20 @@ func HandlerErrorOrReturnJson(c *gin.Context, err error, ret interface{}) {
 
 // abort with err use err's default http status
 func ReturnWithErr(c *gin.Context, err error) {
-	if lerr := errs.ToErrOrNil(err); lerr != nil {
-		c.JSON(lerr.Code, com_model.NewRet(lerr))
+	if nErr := errs.ToErrOrNil(err); nErr != nil {
+		c.JSON(200, com_model.NewRet(nErr))
 	} else {
-		c.JSON(500, com_model.NewRetFromErr(err))
+		c.JSON(200, com_model.NewRetFromErr(err))
 	}
 }
 
 func ReturnWithAppErr(c *gin.Context, err *errs.Err) {
-	c.JSON(err.Code, com_model.NewRet(err))
+	c.JSON(200, com_model.NewRet(err))
 }
 
 func ReturnOk(c *gin.Context) {
 	c.JSON(200, com_model.StdSuccess)
 }
-func ReturnFailure(code int, c *gin.Context) {
-	c.JSON(code, com_model.NewFailure(code, ""))
+func ReturnFailure(code errs.ErrCode, c *gin.Context) {
+	c.JSON(200, com_model.NewFailure(code, ""))
 }

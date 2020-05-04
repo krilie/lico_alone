@@ -8,13 +8,13 @@ import (
 
 // abort with err use err's default http status
 func AbortWithErr(c *gin.Context, err error) {
-	if lerr := errs.ToErrOrNil(err); lerr != nil {
-		c.AbortWithStatusJSON(lerr.Code, com_model.NewRet(lerr))
+	if nErr := errs.ToErrOrNil(err); nErr != nil {
+		c.AbortWithStatusJSON(200, com_model.NewRet(nErr))
 	} else {
-		c.AbortWithStatusJSON(500, com_model.NewRetFromErr(err))
+		c.AbortWithStatusJSON(200, com_model.NewRetFromErr(err))
 	}
 }
 
 func AbortWithAppErr(c *gin.Context, err *errs.Err) {
-	c.AbortWithStatusJSON(err.Code, com_model.NewRetFromErr(err))
+	c.AbortWithStatusJSON(200, com_model.NewRetFromErr(err))
 }

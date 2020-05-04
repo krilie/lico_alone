@@ -5,7 +5,7 @@ import (
 )
 
 var StdSuccess = &CommonReturn{
-	Code:    200,
+	Code:    errs.Success.ToInt(),
 	Message: "success",
 	Detail:  nil,
 	Data:    nil,
@@ -29,19 +29,24 @@ func NewRet(err *errs.Err) *CommonReturn {
 }
 func NewRetFromErr(err error) *CommonReturn {
 	fullMsg := errs.GetErrMsg(err)
-	return &CommonReturn{
-		Code:    500,
-		Message: err.Error(),
-		Detail:  &fullMsg,
-		Data:    nil,
+	nErr, ok := err.(*errs.Err)
+	if ok {
+		return NewRet(nErr)
+	} else {
+		return &CommonReturn{
+			Code:    errs.ErrorNormal.ToInt(),
+			Message: err.Error(),
+			Detail:  &fullMsg,
+			Data:    nil,
+		}
 	}
 }
-func NewFailure(code int, msg string) *CommonReturn {
+func NewFailure(code errs.ErrCode, msg string) *CommonReturn {
 	if msg == "" {
 		msg = "failure"
 	}
 	return &CommonReturn{
-		Code:    code,
+		Code:    code.ToInt(),
 		Message: msg,
 		Detail:  nil,
 		Data:    nil,
