@@ -28,7 +28,7 @@ func (d *UserDao) CreateRolePerm(ctx context.Context, roleName, permName string)
 		PermissionName: permName,
 	}).Error
 	if err != nil {
-		return errs.NewErrDbCreate().WithError(err)
+		return errs.NewInternal().WithError(err)
 	}
 	return nil
 }
@@ -39,7 +39,7 @@ func (d *UserDao) DeleteRolePerm(ctx context.Context, roleName, permName string)
 		PermissionName: permName,
 	}).Delete(&model.RolePermission{}).Error
 	if err != nil {
-		return errs.NewErrDbDelete().WithError(err)
+		return errs.NewInternal().WithError(err)
 	}
 	return nil
 }
@@ -48,7 +48,7 @@ func (d *UserDao) HasRolePerm(ctx context.Context, roleName, permName string) (b
 	count := 0
 	err := d.GetDb(ctx).Model(&model.RolePermission{}).Where(&model.RolePermission{RoleName: roleName, PermissionName: permName}).Count(&count).Error
 	if err != nil {
-		return false, errs.NewErrDbQuery().WithError(err)
+		return false, errs.NewInternal().WithError(err)
 	}
 	return count != 0, nil
 }
@@ -63,7 +63,7 @@ func (d *UserDao) GetRolePerm(ctx context.Context, roleName, permName string) (*
 		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil
 		}
-		return nil, errs.NewErrDbQuery().WithError(err)
+		return nil, errs.NewInternal().WithError(err)
 	}
 	return item, nil
 }
@@ -72,7 +72,7 @@ func (d *UserDao) GetRolePermsByRoleName(ctx context.Context, roleName string) (
 	var list []*model.RolePermission
 	err := d.GetDb(ctx).Model(list).Where("role_name=?", roleName).Find(&list).Error
 	if err != nil {
-		return nil, errs.NewErrDbQuery().WithError(err)
+		return nil, errs.NewInternal().WithError(err)
 	}
 	return list, nil
 }
@@ -81,7 +81,7 @@ func (d *UserDao) GetRolePermsByRolesWithPermName(ctx context.Context, permName 
 	var list []*model.RolePermission
 	err := d.GetDb(ctx).Model(&model.RolePermission{}).Where(&model.RolePermission{PermissionName: permName}).Where("role_name in (?)", roleNames).Find(&list).Error
 	if err != nil {
-		return nil, errs.NewErrDbQuery().WithError(err)
+		return nil, errs.NewInternal().WithError(err)
 	}
 	return list, nil
 }

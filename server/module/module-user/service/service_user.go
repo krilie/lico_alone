@@ -21,7 +21,7 @@ func (s *UserService) ChangeUserPassword(ctx context.Context, userId, oldPswd, n
 		s.log.Warnf("change user password no user find id:%v", userId)
 	}
 	if !pswd_util.IsPasswordOk(oldPswd, user.Password, user.Salt) {
-		return errs.NewBadRequest().WithMsg("password err")
+		return errs.NewNormal().WithMsg("password err")
 	}
 	user.Password = pswd_util.GetMd5Password(newPswd, user.Salt)
 	err = s.Dao.UpdateUserMaster(ctx, user)
@@ -30,7 +30,7 @@ func (s *UserService) ChangeUserPassword(ctx context.Context, userId, oldPswd, n
 
 func (s *UserService) RegisterNewUser(ctx context.Context, phoneNum, password string) error {
 	if phoneNum == "" {
-		return errs.NewBadRequest().WithMsg("手机号不能为空")
+		return errs.NewNormal().WithMsg("手机号不能为空")
 	}
 	if password == "" {
 		password = id_util.GetUuid()
@@ -41,7 +41,7 @@ func (s *UserService) RegisterNewUser(ctx context.Context, phoneNum, password st
 		return err
 	}
 	if master != nil {
-		return errs.NewBadRequest().WithMsg("此手机号已注册")
+		return errs.NewNormal().WithMsg("此手机号已注册")
 	}
 	salt := pswd_util.GetSalt(6)
 	user := &model.UserMaster{
@@ -64,10 +64,10 @@ func (s *UserService) RegisterNewUser(ctx context.Context, phoneNum, password st
 func (s *UserService) UserLogin(ctx context.Context, phoneNum, password, clientId string) (jwtToken string, err error) {
 	userMaster, err := s.Dao.GetUserMasterByPhoneNum(ctx, phoneNum)
 	if userMaster == nil {
-		return "", errs.NewUnauthorized().WithMsg("无此用户")
+		return "", errs.NewNormal().WithMsg("无此用户")
 	}
 	if !pswd_util.IsPasswordOk(password, userMaster.Password, userMaster.Salt) {
-		return "", errs.NewBadRequest().WithMsg("密码错误")
+		return "", errs.NewNormal().WithMsg("密码错误")
 	}
 	claims := jwt.UserClaims{
 		ClientId: clientId,

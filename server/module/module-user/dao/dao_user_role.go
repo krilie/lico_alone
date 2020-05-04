@@ -80,7 +80,7 @@ func (d *UserDao) GetUserRolesByUserId(ctx context.Context, userId string) ([]*m
 	var list []*model.UserRole
 	err := d.GetDb(ctx).Model(&model.UserRole{}).Where("user_id=?", userId).Find(&list).Error
 	if err != nil {
-		return nil, errs.NewErrDbQuery().WithError(err)
+		return nil, errs.NewInternal().WithError(err)
 	}
 	return list, nil
 }
@@ -89,7 +89,7 @@ func (d *UserDao) GetAllUserRole(ctx context.Context) ([]*model.UserRole, error)
 	var list []*model.UserRole
 	err := d.GetDb(ctx).Model(&model.UserRole{}).Select("role_name,user_id").Find(&list).Error
 	if err != nil {
-		return nil, errs.NewErrDbQuery().WithError(err)
+		return nil, errs.NewInternal().WithError(err)
 	}
 	return list, nil
 }
@@ -98,7 +98,7 @@ func (d *UserDao) GetAllRolePermission(ctx context.Context) ([]*model.RolePermis
 	var list []*model.RolePermission
 	err := d.GetDb(ctx).Model(&model.RolePermission{}).Select("role_name,permission_name").Find(&list).Error
 	if err != nil {
-		return nil, errs.NewErrDbQuery().WithError(err)
+		return nil, errs.NewInternal().WithError(err)
 	}
 	return list, nil
 }

@@ -27,7 +27,7 @@ func (d *UserDao) GetUserMasterById(ctx context.Context, userId string) (*model.
 		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil
 		}
-		return nil, errs.NewErrDbQuery().WithError(err)
+		return nil, errs.NewInternal().WithError(err)
 	}
 	return &user, nil
 }
@@ -39,7 +39,7 @@ func (d *UserDao) GetUserMasterByPhoneNum(ctx context.Context, phoneNum string) 
 		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil
 		}
-		return nil, errs.NewErrDbQuery().WithError(err)
+		return nil, errs.NewInternal().WithError(err)
 	}
 	return &user, nil
 }
@@ -51,7 +51,7 @@ func (d *UserDao) GetUserMasterByLoginName(ctx context.Context, loginName string
 		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil
 		}
-		return nil, errs.NewErrDbQuery().WithError(err)
+		return nil, errs.NewInternal().WithError(err)
 	}
 	return &user, nil
 }
@@ -60,19 +60,19 @@ func (d *UserDao) CreateUserMaster(ctx context.Context, master *model.UserMaster
 	err := d.GetDb(ctx).Model(&model.UserMaster{}).Create(master).Error
 	if err != nil {
 		d.log.Errorf("create user master db err:%v", err)
-		return errs.NewErrDbCreate().WithError(err)
+		return errs.NewInternal().WithError(err)
 	}
 	return nil
 }
 
 func (d *UserDao) UpdateUserMaster(ctx context.Context, user *model.UserMaster) error {
 	if user.Id == "" {
-		return errs.NewBadRequest().WithMsg("no primary key on update user master.")
+		return errs.NewNormal().WithMsg("no primary key on update user master.")
 	}
 	user.UpdateTime = time.Now()
 	err := d.GetDb(ctx).Model(&model.UserMaster{}).Save(user).Error
 	if err != nil {
-		return errs.NewErrDbUpdate().WithError(err)
+		return errs.NewInternal().WithError(err)
 	}
 	return nil
 }
@@ -81,7 +81,7 @@ func (d *UserDao) IsPhoneNumExists(ctx context.Context, phoneNum string) (bool, 
 	count := 0
 	err := d.GetDb(ctx).Model(&model.UserMaster{}).Where(&model.UserMaster{PhoneNum: phoneNum}).Count(&count).Error
 	if err != nil {
-		return false, errs.NewErrDbQuery().WithError(err)
+		return false, errs.NewInternal().WithError(err)
 	}
 	return count == 1, nil
 }
@@ -91,7 +91,7 @@ func (d *UserDao) GetAllValidUserId(ctx context.Context) ([]string, error) {
 	var list []*model.UserMaster
 	err := d.GetDb(ctx).Model(&model.UserMaster{}).Select("id").Find(&list).Error
 	if err != nil {
-		return nil, errs.NewErrDbQuery().WithError(err)
+		return nil, errs.NewInternal().WithError(err)
 	}
 	var retList []string
 	for _, v := range list {
@@ -102,7 +102,7 @@ func (d *UserDao) GetAllValidUserId(ctx context.Context) ([]string, error) {
 
 func (d *UserDao) UpdateUserPassword(ctx context.Context, userId, md5edPswd, salt string) error {
 	if userId == "" {
-		return errs.NewBadRequest().WithMsg("no primary key on update user master.")
+		return errs.NewNormal().WithMsg("no primary key on update user master.")
 	}
 	err := d.GetDb(ctx).
 		Model(&model.UserMaster{}).
@@ -110,7 +110,7 @@ func (d *UserDao) UpdateUserPassword(ctx context.Context, userId, md5edPswd, sal
 		UpdateColumns(map[string]interface{}{"update_time": time.Now(), "password": md5edPswd, "salt": salt}).
 		Error
 	if err != nil {
-		return errs.NewErrDbUpdate().WithError(err)
+		return errs.NewInternal().WithError(err)
 	}
 	return nil
 }
