@@ -8,7 +8,7 @@ import (
 )
 
 // check user has some permission request by used url
-func NeedPermission(auth IAuth, perms string) gin.HandlerFunc {
+func NeedPermission(auth IAuth) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		method := c.Request.Method
 		path := c.Request.URL.Path
@@ -19,7 +19,7 @@ func NeedPermission(auth IAuth, perms string) gin.HandlerFunc {
 			return
 		}
 		//check user has permission
-		b, err := auth.HasPermission(userId, perms)
+		b, err := auth.HasPermission(userId, method, path)
 		if err != nil {
 			ginutil.AbortWithErr(c, err)
 			return

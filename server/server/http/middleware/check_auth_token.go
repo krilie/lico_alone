@@ -12,7 +12,7 @@ import (
 // 权限接口
 type IAuth interface {
 	HasUser(userId string) (bool, error)
-	HasPermission(userId, permission string) (bool, error)
+	HasPermission(userId, method, path string) (bool, error)
 	HasRole(userId, roleId string) (bool, error)
 }
 

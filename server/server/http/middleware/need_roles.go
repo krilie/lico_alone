@@ -20,7 +20,7 @@ func NeedRoles(auth IAuth, role string) gin.HandlerFunc {
 			return
 		}
 		if !b {
-			ginutil.AbortWithErr(c, errs.NewUnauthorized().WithMsg("没有权限"))
+			ginutil.AbortWithErr(c, errs.NewNoPermission().WithMsg("没有权限"))
 			return
 		}
 		c.Next()
