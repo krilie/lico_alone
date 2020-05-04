@@ -6,7 +6,7 @@ func (s *UserService) HasUser(id string) (bool, error) {
 	panic("implement me")
 }
 
-func (s *UserService) HasPermission(id, permission string) (bool, error) {
+func (s *UserService) HasPermission(id, method, path string) (bool, error) {
 	panic("implement me")
 }
 

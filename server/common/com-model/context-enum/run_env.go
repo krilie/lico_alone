@@ -12,3 +12,15 @@ type RunEnv struct {
 	GoVersion  string
 	GitCommit  string
 }
+
+var RunEnvLocal = &RunEnv{
+	AppName:    "AppName",
+	AppVersion: "AppVersion",
+	AppHost:    "AppHost",
+	ClientId:   "ClientId",
+	UserId:     "UserId",
+	Version:    "Version",
+	BuildTime:  "BuildTime",
+	GoVersion:  "GoVersion",
+	GitCommit:  "GitCommit",
+}

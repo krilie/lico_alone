@@ -5,13 +5,14 @@ import (
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/config"
-	"github.com/krilie/lico_alone/common/context"
+	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/nlog"
 	_ "github.com/krilie/lico_alone/docs"
 	"github.com/krilie/lico_alone/server/http/health"
 	"github.com/krilie/lico_alone/server/http/middleware"
 	"github.com/krilie/lico_alone/server/http/user"
 	"github.com/krilie/lico_alone/service"
+	"github.com/prometheus/common/log"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"net/http"
@@ -20,8 +21,7 @@ import (
 )
 
 func InitAndStartHttpServer(app *service.App) (shutDown func(waitSec time.Duration) error) {
-	ctx := context.NewContext()
-	log := nlog.NewLog(ctx, "controller.router", "InitHttpServer")
+	ctx := context2.NewContext()
 	// 设置gin mode
 	gin.SetMode(app.Cfg.GinMode)
 	// 路径设置 根路径
@@ -49,13 +49,14 @@ func InitAndStartHttpServer(app *service.App) (shutDown func(waitSec time.Durati
 
 	// 不检查权限的分组
 	noCheckToken := apiGroup.Group("")
-	userCtrl := user.NewUserCtrl(app)
+	userCtrl := user.NewUserCtrl(app.UserService)
 	noCheckToken.POST("/user/login", userCtrl.UserLogin)
 	noCheckToken.POST("/user/register", userCtrl.UserRegister)
 	noCheckToken.POST("/user/send_sms", userCtrl.UserSendSms)
 
 	// 检查权限的分组
-	//checkToken :=apiGroup.Group("").Use(middleware.CheckAuthToken(app.User))
+	// checkToken :=apiGroup.Group("").
+	//   Use(middleware.CheckAuthToken(app.UnionService.ModuleUser))
 
 	// 开始服务
 	srv := &http.Server{
@@ -80,8 +81,8 @@ func InitAndStartHttpServer(app *service.App) (shutDown func(waitSec time.Durati
 			}
 		}()
 	}
-	return func(waitSec time.Duration) error {
-		ctxTimeout, cancelFunc := context.WithTimeout(ctx, waitSec)
+	return func(waitDuration time.Duration) error {
+		ctxTimeout, cancelFunc := context.WithTimeout(ctx, waitDuration)
 		defer cancelFunc()
 		// shutdown
 		err := srv.Shutdown(ctxTimeout)
@@ -96,7 +97,7 @@ func InitAndStartHttpServer(app *service.App) (shutDown func(waitSec time.Durati
 }
 
 func InitAndStartStaticWebServer(ctx context.Context, cfg config.Config) (shutDown func(waitSec time.Duration) error) {
-	log := nlog.NewLog(ctx, "controller.router", "InitAndStartStaticWebServer")
+	log := nlog.Log.NewLog(ctx, "controller.router", "InitAndStartStaticWebServer")
 	// 设置gin mode
 	gin.SetMode(cfg.GinMode)
 	// 路径设置 根路径

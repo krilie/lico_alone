@@ -35,17 +35,7 @@ func init() {
 	CheckErr(err)
 	// runEnv
 	err = Container.Provide(func() *context_enum.RunEnv {
-		return &context_enum.RunEnv{
-			AppName:    "AppName",
-			AppVersion: "AppVersion",
-			AppHost:    "AppHost",
-			ClientId:   "ClientId",
-			UserId:     "UserId",
-			Version:    "Version",
-			BuildTime:  "BuildTime",
-			GoVersion:  "GoVersion",
-			GitCommit:  "GitCommit",
-		}
+		return context_enum.RunEnvLocal
 	})
 	CheckErr(err)
 }
