@@ -5,6 +5,7 @@ import (
 	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
+	"github.com/krilie/lico_alone/common/utils/jwt"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
 	"github.com/krilie/lico_alone/module/module-user/model"
 	"time"
@@ -60,7 +61,7 @@ func (s *UserService) RegisterNewUser(ctx context.Context, phoneNum, password st
 	return err
 }
 
-func (s *UserService) UserLogin(ctx context.Context, phoneNum, password, clientId string) (jwt string, err error) {
+func (s *UserService) UserLogin(ctx context.Context, phoneNum, password, clientId string) (jwtToken string, err error) {
 	userMaster, err := s.Dao.GetUserMasterByPhoneNum(ctx, phoneNum)
 	if userMaster == nil {
 		return "", errs.NewUnauthorized().WithMsg("无此用户")
@@ -68,5 +69,17 @@ func (s *UserService) UserLogin(ctx context.Context, phoneNum, password, clientI
 	if !pswd_util.IsPasswordOk(password, userMaster.Password, userMaster.Salt) {
 		return "", errs.NewBadRequest().WithMsg("密码错误")
 	}
-	return user.NewJwt(clientId)
+	claims := jwt.UserClaims{
+		ClientId: clientId,
+		UserId:   userMaster.Id,
+		Iat:      time.Now().Unix(),
+		Exp:      time.Now().Add(time.Hour * 24 * 7).Unix(),
+		Jti:      id_util.GetUuid(),
+		Iss:      "sys",
+	}
+	jwtToken, err = jwt.GetNewJwtToken(&claims)
+	if err != nil {
+		return "", errs.NewInternal().WithError(err).WithMsg("凭证生成失败")
+	}
+	return jwtToken, nil
 }
