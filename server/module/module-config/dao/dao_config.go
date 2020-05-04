@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/module/config/model"
+	"github.com/krilie/lico_alone/module/module-config/model"
 )
 
 func (a *ConfigDao) GetConfigByName(ctx context.Context, name string) (*model.Config, error) {

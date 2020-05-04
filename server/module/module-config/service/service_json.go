@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/str_util"
-	"github.com/krilie/lico_alone/module/config/model"
+	"github.com/krilie/lico_alone/module/module-config/model"
 	"time"
 )
 

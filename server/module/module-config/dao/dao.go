@@ -4,7 +4,7 @@ import (
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
-	"github.com/krilie/lico_alone/module/config/model"
+	"github.com/krilie/lico_alone/module/module-config/model"
 )
 
 type ConfigDao struct {
