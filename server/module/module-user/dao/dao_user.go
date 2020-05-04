@@ -105,8 +105,9 @@ func (d *UserDao) UpdateUserPassword(ctx context.Context, userId, md5edPswd, sal
 		return errs.NewBadRequest().WithMsg("no primary key on update user master.")
 	}
 	err := d.GetDb(ctx).
+		Model(&model.UserMaster{}).
 		Where(&model.UserMaster{Model: com_model.Model{Id: userId}}).
-		UpdateColumns(&model.UserMaster{UpdateTime: time.Now(), Password: md5edPswd, Salt: salt}).
+		UpdateColumns(map[string]interface{}{"update_time": time.Now(), "password": md5edPswd, "salt": salt}).
 		Error
 	if err != nil {
 		return errs.NewErrDbUpdate().WithError(err)
