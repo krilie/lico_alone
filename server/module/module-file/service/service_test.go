@@ -11,7 +11,7 @@ import (
 func TestFileService_UploadFile(t *testing.T) {
 	dig.Container.MustInvoke(func(svc *FileService) {
 		uploadStr := "hello qiniu oss"
-		url, bucket, key, err := svc.UploadFile(context.NewContext(), "test", "test", strings.NewReader(uploadStr), len(uploadStr))
+		url, bucket, key, err := svc.UploadFile(context.NewContext(), "test", "test.txt", strings.NewReader(uploadStr), len(uploadStr))
 		t.Logf("%v %v %v %v", url, bucket, key, err)
 		if err != nil {
 			log.Error(err)
