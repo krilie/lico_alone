@@ -52,3 +52,12 @@ func NewFailure(code errs.ErrCode, msg string) *CommonReturn {
 		Data:    nil,
 	}
 }
+
+func NewSuccess(data interface{}) *CommonReturn {
+	return &CommonReturn{
+		Code:    errs.Success.ToInt(),
+		Message: "successful",
+		Detail:  nil,
+		Data:    data,
+	}
+}
