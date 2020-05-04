@@ -3,6 +3,7 @@ package dao
 import (
 	"context"
 	"github.com/jinzhu/gorm"
+	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/module/module-user/model"
 	"time"
@@ -14,7 +15,8 @@ type IUser interface {
 	GetUserMasterByLoginName(ctx context.Context, loginName string) (*model.UserMaster, error)
 	CreateUserMaster(ctx context.Context, master *model.UserMaster) error
 	UpdateUserMaster(ctx context.Context, user *model.UserMaster) error
-	PhoneNumExists(ctx context.Context, phoneNum string) (bool, error)
+	UpdateUserPassword(ctx context.Context, userId, md5edPswd, salt string) error
+	IsPhoneNumExists(ctx context.Context, phoneNum string) (bool, error)
 	GetAllValidUserId(ctx context.Context) ([]string, error)
 }
 
@@ -75,7 +77,7 @@ func (d *UserDao) UpdateUserMaster(ctx context.Context, user *model.UserMaster) 
 	return nil
 }
 
-func (d *UserDao) PhoneNumExists(ctx context.Context, phoneNum string) (bool, error) {
+func (d *UserDao) IsPhoneNumExists(ctx context.Context, phoneNum string) (bool, error) {
 	count := 0
 	err := d.GetDb(ctx).Model(&model.UserMaster{}).Where(&model.UserMaster{PhoneNum: phoneNum}).Count(&count).Error
 	if err != nil {
@@ -96,4 +98,18 @@ func (d *UserDao) GetAllValidUserId(ctx context.Context) ([]string, error) {
 		retList = append(retList, v.Id)
 	}
 	return retList, nil
+}
+
+func (d *UserDao) UpdateUserPassword(ctx context.Context, userId, md5edPswd, salt string) error {
+	if userId == "" {
+		return errs.NewBadRequest().WithMsg("no primary key on update user master.")
+	}
+	err := d.GetDb(ctx).
+		Where(&model.UserMaster{Model: com_model.Model{Id: userId}}).
+		UpdateColumns(&model.UserMaster{UpdateTime: time.Now(), Password: md5edPswd, Salt: salt}).
+		Error
+	if err != nil {
+		return errs.NewErrDbUpdate().WithError(err)
+	}
+	return nil
 }
