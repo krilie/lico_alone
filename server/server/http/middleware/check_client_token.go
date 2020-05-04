@@ -4,7 +4,7 @@ package middleware
 //// on header "ClientAccToken"
 //func CheckClientToken(auth IAuth) gin.HandlerFunc {
 //	return func(c *gin.Context) {
-//		// take application context
+//		// take service context
 //		context := ginutil.GetAppCtxOrAbort(c)
 //		if context == nil {
 //			return

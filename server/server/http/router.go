@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/application"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/nlog"
@@ -12,6 +11,7 @@ import (
 	"github.com/krilie/lico_alone/server/http/health"
 	"github.com/krilie/lico_alone/server/http/middleware"
 	"github.com/krilie/lico_alone/server/http/user"
+	"github.com/krilie/lico_alone/service"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"net/http"
@@ -19,7 +19,7 @@ import (
 	"time"
 )
 
-func InitAndStartHttpServer(app *application.App) (shutDown func(waitSec time.Duration) error) {
+func InitAndStartHttpServer(app *service.App) (shutDown func(waitSec time.Duration) error) {
 	ctx := context.NewContext()
 	log := nlog.NewLog(ctx, "controller.router", "InitHttpServer")
 	// 设置gin mode

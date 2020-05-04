@@ -21,7 +21,7 @@ var (
 func GetAppCtxOrAbort(c *gin.Context) *context.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
-		nlog.Error("GetAppCtxOrAbort", "can not get application context for next step")
+		nlog.Error("GetAppCtxOrAbort", "can not get service context for next step")
 		c.AbortWithStatusJSON(500, com_model.NewRetFromErr(errs.NewInternal()))
 		return nil
 	}
@@ -52,7 +52,7 @@ func GetAppCtxOrReturn(c *gin.Context) *context.Context {
 	nlog = nlog.WithField(nlog.Function, "GetAppCtxOrReturn")
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
-		nlog.Error("GetAppCtxOrReturn", "can not get application context for next step")
+		nlog.Error("GetAppCtxOrReturn", "can not get service context for next step")
 		c.JSON(500, com_model.NewRet(errs.NewInternal().WithMsg("ctx not get")))
 		return nil
 	}
@@ -68,7 +68,7 @@ func GetAppCtxOrReturn(c *gin.Context) *context.Context {
 func MustGetAppCtx(c *gin.Context) *context.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
-		nlog.Panic("GetAppCtxOrReturn", "can not get application context for next step")
+		nlog.Panic("GetAppCtxOrReturn", "can not get service context for next step")
 		return nil
 	}
 	return context.MustGetContext(value)

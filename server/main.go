@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/krilie/lico_alone/application"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/broker"
@@ -11,6 +10,7 @@ import (
 	broker2 "github.com/krilie/lico_alone/server/broker"
 	"github.com/krilie/lico_alone/server/cron"
 	"github.com/krilie/lico_alone/server/http"
+	"github.com/krilie/lico_alone/service"
 	"os"
 	"os/signal"
 	"syscall"
@@ -63,7 +63,7 @@ func main() {
 	cdb.StartDb(config.Cfg.DB)
 	defer cdb.CloseDb()                                        // 最后关闭数据库
 	defer func() { broker.Smq.Close(); log.Infof("消息队列退出") }() // 关闭消息队列
-	app := application.NewApp(ctx, config.Cfg, VERSION, BUILD_TIME, GIT_COMMIT, GO_VERSION)
+	app := service.NewApp(ctx, config.Cfg, VERSION, BUILD_TIME, GIT_COMMIT, GO_VERSION)
 	// 初始化数据 权限账号等
 	app.Init.InitData(ctx)
 	// 加载所有权限

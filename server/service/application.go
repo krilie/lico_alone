@@ -1,12 +1,12 @@
-package application
+package service
 
 import (
 	"context"
-	all_service "github.com/krilie/lico_alone/application/all-service"
-	"github.com/krilie/lico_alone/application/cron-job"
-	"github.com/krilie/lico_alone/application/init-data"
-	"github.com/krilie/lico_alone/application/user-api"
 	"github.com/krilie/lico_alone/common/config"
+	all_service "github.com/krilie/lico_alone/service/all-service"
+	"github.com/krilie/lico_alone/service/cron-job"
+	"github.com/krilie/lico_alone/service/init-data"
+	"github.com/krilie/lico_alone/service/user-api"
 )
 
 type App struct {

@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/aliyun/alibaba-cloud-sdk-go/sdk/utils"
-	all_service "github.com/krilie/lico_alone/application/all-service"
 	"github.com/krilie/lico_alone/common/config"
+	all_service "github.com/krilie/lico_alone/service/all-service"
 	"testing"
 )
 

@@ -2,9 +2,9 @@ package user_api
 
 import (
 	"errors"
-	all_service "github.com/krilie/lico_alone/application/all-service"
 	service2 "github.com/krilie/lico_alone/module/message/service"
 	"github.com/krilie/lico_alone/module/module-user/service"
+	all_service "github.com/krilie/lico_alone/service/all-service"
 	"github.com/mikespook/gorbac"
 )
 

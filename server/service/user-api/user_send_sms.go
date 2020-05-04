@@ -9,7 +9,7 @@ import (
 
 func (a *AppUser) SendRegisterSms(ctx context.Context, phoneNum string) error {
 	if phoneNum == "" {
-		return errs.NewBadRequest().WithMsg("手机号格式不正确")
+		return errs.NewParamError().WithMsg("手机号格式不正确")
 	}
 	master, err := a.UserService.Dao.GetUserMasterByPhoneNum(ctx, phoneNum)
 	if err != nil {
@@ -17,7 +17,7 @@ func (a *AppUser) SendRegisterSms(ctx context.Context, phoneNum string) error {
 		return err
 	}
 	if master != nil {
-		return errs.NewBadRequest().WithMsg("已经注册")
+		return errs.NewNormal().WithMsg("已经注册")
 	}
 	err = a.Message.SendRegisterSms(ctx, phoneNum, random.GetRandomNum(5))
 	return err
