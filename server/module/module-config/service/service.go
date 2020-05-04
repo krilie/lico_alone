@@ -2,7 +2,7 @@ package service
 
 import (
 	"github.com/krilie/lico_alone/component/nlog"
-	"github.com/krilie/lico_alone/module/config/dao"
+	"github.com/krilie/lico_alone/module/module-config/dao"
 )
 
 // 系统配置服务
