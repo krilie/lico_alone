@@ -2,6 +2,7 @@ package context
 
 import (
 	"github.com/krilie/lico_alone/common/utils/id_util"
+	"strings"
 	"time"
 )
 
@@ -42,4 +43,12 @@ func CloneContextOrCreate(c *Context) *Context {
 	} else {
 		return ctx.Clone()
 	}
+}
+
+func MustGetUserId(ctx interface{}) string {
+	orNil := GetContextOrNil(ctx)
+	if orNil == nil || strings.TrimSpace(orNil.UserId) == "" {
+		panic("no user id find")
+	}
+	return orNil.UserId
 }
