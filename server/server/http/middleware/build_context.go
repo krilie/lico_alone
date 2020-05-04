@@ -16,7 +16,6 @@ func BuildContext() gin.HandlerFunc {
 		ctx := context.NewContext()
 		ctx.SetTraceId(str_util.EmptyOrDefault(c.GetHeader(ginutil.HeaderTraceId), id_util.GetUuid()))
 		ctx.SetStartTime(time.Now())
-		ctx.Db = cdb.Db
 		c.Set(ginutil.GinKeyAppContext, ctx)
 		c.Next()
 		ctx.SetLastTime(time.Now())
