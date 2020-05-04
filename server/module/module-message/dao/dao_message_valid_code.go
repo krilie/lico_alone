@@ -5,7 +5,7 @@ import (
 	"errors"
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/module/message/model"
+	"github.com/krilie/lico_alone/module/module-message/model"
 )
 
 type IMessageValidCode interface {
@@ -56,9 +56,9 @@ func (d *MessageDao) GetMessageValidCodeById(ctx context.Context, id string) (*m
 	return item, nil
 }
 
-func (d *MessageDao) GetLastMessageValidCodeByPhoneNum(ctx context.Context, phoneNum string, validType int) (*model.MessageValidCode, error) {
+func (d *MessageDao) GetLastMessageValidCodeByPhoneNum(ctx context.Context, phoneNum string, validType model.ValidCodeType) (*model.MessageValidCode, error) {
 	item := &model.MessageValidCode{}
-	err := d.GetDb(ctx).Where("phone_num=? and type=?", phoneNum, validType).Order("create_time desc").First(item).Error
+	err := d.GetDb(ctx).Where("phone_num=? and type=?", phoneNum, validType.ToInt()).Order("create_time desc").First(item).Error
 	if err != nil {
 		d.log.Error(err)
 		if errors.Is(err, gorm.ErrRecordNotFound) {

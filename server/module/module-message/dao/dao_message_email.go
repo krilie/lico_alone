@@ -5,7 +5,7 @@ import (
 	"errors"
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/module/message/model"
+	"github.com/krilie/lico_alone/module/module-message/model"
 )
 
 type IMessageEmail interface {

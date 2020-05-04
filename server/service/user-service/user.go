@@ -1,48 +1,21 @@
 package user_service
 
 import (
-	"errors"
-	service2 "github.com/krilie/lico_alone/module/message/service"
+	"github.com/krilie/lico_alone/component/nlog"
+	MessageService "github.com/krilie/lico_alone/module/module-message/service"
 	"github.com/krilie/lico_alone/module/module-user/service"
-	all_service "github.com/krilie/lico_alone/service/notification-email-service"
-	"github.com/mikespook/gorbac"
 )
 
-type AppUser struct {
-	UserService *service.UserService
-	Message     *service2.MessageService
+type UserService struct {
+	log        *nlog.NLog
+	moduleUser *service.UserService
+	moduleMsg  *MessageService.MessageService
 }
 
-func (a *AppUser) HasUser(id string) (bool, error) {
-	_, _, err := a.UserService.AuthRBAC.Get(id)
-	if err != nil {
-		if errors.Is(err, gorbac.ErrRoleNotExist) {
-			return false, nil
-		} else {
-			return false, err
-		}
+func NewUserService(log *nlog.NLog, moduleUser *service.UserService, moduleMsg *MessageService.MessageService) *UserService {
+	return &UserService{
+		log:        log,
+		moduleUser: moduleUser,
+		moduleMsg:  moduleMsg,
 	}
-	return true, nil
-}
-
-func (a *AppUser) HasPermission(id, permission string) (bool, error) {
-	rslt := a.UserService.AuthRBAC.IsGranted(id, gorbac.NewStdPermission(permission), nil)
-	return rslt, nil
-}
-
-func (a *AppUser) HasRole(userId, roleId string) (bool, error) {
-	strings, err := a.UserService.AuthRBAC.GetParents(userId)
-	if err != nil {
-		return false, err
-	}
-	for _, v := range strings {
-		if roleId == v {
-			return true, nil
-		}
-	}
-	return false, nil
-}
-
-func NewAppUser(allSrv *all_service.NotificationEmailService) *AppUser {
-	return &AppUser{UserService: allSrv.UserService, Message: allSrv.Message}
 }

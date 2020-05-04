@@ -3,7 +3,7 @@ package dao
 import (
 	"context"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/module/message/model"
+	"github.com/krilie/lico_alone/module/module-message/model"
 )
 
 type IMessageSms interface {

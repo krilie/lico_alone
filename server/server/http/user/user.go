@@ -6,7 +6,7 @@ import (
 )
 
 type UserCtrl struct {
-	AppUser *user_service.AppUser
+	AppUser *user_service.UserService
 }
 
 func NewUserCtrl(app *service.App) *UserCtrl {

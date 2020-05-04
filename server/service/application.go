@@ -1,19 +1,21 @@
 package service
 
 import (
-	"context"
+	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/service/cron-job-service"
 	"github.com/krilie/lico_alone/service/init-data-service"
 	"github.com/krilie/lico_alone/service/notification-email-service"
+	union_service "github.com/krilie/lico_alone/service/union-service"
 	"github.com/krilie/lico_alone/service/user-service"
 )
 
 type App struct {
-	UserService              *user_service.AppUser
-	InitService              *init_data_service.init
+	UserService              *user_service.UserService
+	InitService              *init_data_service.InitDataService
 	CronJobService           *cron_job_service.CronJobService
 	NotificationEmailService *notification_email_service.NotificationEmailService
+	UnionService             *union_service.UnionService
 	Version                  string
 	GitCommit                string
 	BuildTime                string
@@ -21,17 +23,23 @@ type App struct {
 	Cfg                      config.Config
 }
 
-func NewApp(ctx context.Context, cfg config.Config, version string, buildTime string, gitCommit, goVersion string) *App {
-	allSrv := all_service.NewAllService(cfg)
+func NewApp(cfg *config.Config, runEnv *context_enum.RunEnv,
+	UserService *user_service.UserService,
+	InitService *init_data_service.InitDataService,
+	CronJobService *cron_job_service.CronJobService,
+	NotificationEmailService *notification_email_service.NotificationEmailService,
+	UnionService *union_service.UnionService,
+) *App {
 	return &App{
-		User:      user_service.NewAppUser(allSrv),
-		Init:      init_data_service.NewInit(allSrv),
-		CronJob:   cron_job_service.NewCronJob(allSrv),
-		All:       allSrv,
-		Version:   version,
-		GitCommit: gitCommit,
-		BuildTime: buildTime,
-		GoVersion: goVersion,
-		Cfg:       cfg,
+		UserService:              UserService,
+		InitService:              InitService,
+		CronJobService:           CronJobService,
+		NotificationEmailService: NotificationEmailService,
+		UnionService:             UnionService,
+		Version:                  runEnv.Version,
+		GitCommit:                runEnv.GitCommit,
+		BuildTime:                runEnv.BuildTime,
+		GoVersion:                runEnv.GoVersion,
+		Cfg:                      *cfg,
 	}
 }
