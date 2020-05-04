@@ -5,20 +5,6 @@ import (
 	"testing"
 )
 
-func TestErr(t *testing.T) {
-	err := errors.WithMessage(errInternal, "数据库插入错误")
-	if errInternal == errors.Cause(err) {
-		t.Log("ok")
-	}
-}
-
-func TestErr2(t *testing.T) {
-	err := errors.WithMessage(errBadRequest, "数据库插入错误")
-	if errInternal == errors.Cause(err) {
-		t.Log("ok")
-	}
-}
-
 func TestErr3(t *testing.T) {
 	err := errors.WithMessage(errors.New("fasdfas"), "数据库插入错误")
 	err = errors.WithMessage(err, "数据库插入错误")

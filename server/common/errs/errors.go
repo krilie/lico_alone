@@ -40,6 +40,14 @@ type Err struct {
 	InsideErr error // 原始错误
 }
 
+func (w *Err) Is(target error) bool {
+	val, ok := target.(*Err)
+	if !ok {
+		return false
+	}
+	return w.Code == val.Code
+}
+
 func (w *Err) Error() string {
 	builder := strings.Builder{}
 	builder.WriteString("[code:")
