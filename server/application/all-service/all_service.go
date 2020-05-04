@@ -17,7 +17,7 @@ import (
 
 type AllService struct {
 	UserService    *UserService.UserService
-	ConfigService  *ConfigService.Service
+	ConfigService  *ConfigService.ConfigService
 	FileService    *FileService.Service
 	AccountService *AccountService.Service
 	Message        *MessageService.Service

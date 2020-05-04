@@ -8,6 +8,7 @@ import (
 
 func init() {
 	dig.Container.MustProvide(func(cfg *config.Config, log *nlog.NLog) (ndb *NDb) {
+		log.Info("provide db ...")
 		return NewNDb(cfg.DB, log)
 	})
 }

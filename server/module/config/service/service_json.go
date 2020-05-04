@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func (a *Service) GetJsonValue(ctx context.Context, name string, resOut interface{}) (content *model.Config, err error) {
+func (a *ConfigService) GetJsonValue(ctx context.Context, name string, resOut interface{}) (content *model.Config, err error) {
 	config, err := a.Dao.GetConfigByName(ctx, name)
 	if err != nil {
 		return nil, errs.NewErrDbQuery().WithError(err)
@@ -23,7 +23,7 @@ func (a *Service) GetJsonValue(ctx context.Context, name string, resOut interfac
 	}
 	return config, nil
 }
-func (a *Service) SetJsonValue(ctx context.Context, name string, value interface{}) error {
+func (a *ConfigService) SetJsonValue(ctx context.Context, name string, value interface{}) error {
 	config, err := a.Dao.GetConfigByName(ctx, name)
 	if err != nil {
 		return err
@@ -40,7 +40,7 @@ func (a *Service) SetJsonValue(ctx context.Context, name string, value interface
 	}
 }
 
-func (a *Service) GetValueStr(ctx context.Context, name string) (*string, error) {
+func (a *ConfigService) GetValueStr(ctx context.Context, name string) (*string, error) {
 	config, err := a.Dao.GetConfigByName(ctx, name)
 	if err != nil {
 		return nil, errs.NewErrDbQuery().WithError(err)
@@ -50,7 +50,7 @@ func (a *Service) GetValueStr(ctx context.Context, name string) (*string, error)
 	}
 	return &config.Value, nil
 }
-func (a *Service) SetValueStr(ctx context.Context, name string, value string) error {
+func (a *ConfigService) SetValueStr(ctx context.Context, name string, value string) error {
 	config, err := a.Dao.GetConfigByName(ctx, name)
 	if err != nil {
 		return err
