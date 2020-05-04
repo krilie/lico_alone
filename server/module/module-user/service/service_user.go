@@ -6,6 +6,7 @@ import (
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
+	"github.com/krilie/lico_alone/module/module-user/model"
 	"time"
 )
 
@@ -42,7 +43,7 @@ func (s *UserService) RegisterNewUser(ctx context.Context, phoneNum, password st
 		return errs.NewBadRequest().WithMsg("此手机号已注册")
 	}
 	salt := pswd_util.GetSalt(6)
-	user := com_model.UserMaster{
+	user := &model.UserMaster{
 		Model: com_model.Model{
 			Id:         id_util.NextSnowflake(),
 			CreateTime: time.Now(),
@@ -50,23 +51,21 @@ func (s *UserService) RegisterNewUser(ctx context.Context, phoneNum, password st
 		UpdateTime: time.Now(),
 		LoginName:  phoneNum,
 		PhoneNum:   phoneNum,
-		Email:      nil,
+		Email:      "",
 		Password:   pswd_util.GetMd5Password(password, salt),
 		Picture:    "",
 		Salt:       salt,
 	}
-	err = s.Dao.CreateUserMaster(ctx, &user)
+	err = s.Dao.CreateUserMaster(ctx, user)
 	return err
 }
 
 func (s *UserService) UserLogin(ctx context.Context, phoneNum, password, clientId string) (jwt string, err error) {
-	user, err := domain.NewUserByPhoneNum(ctx, s.Dao, phoneNum)
-	if err != nil {
-		s.log.Errorf("user login err:%v", err)
-		return "", err
+	userMaster, err := s.Dao.GetUserMasterByPhoneNum(ctx, phoneNum)
+	if userMaster == nil {
+		return "", errs.NewUnauthorized().WithMsg("无此用户")
 	}
-	ok := user.IsPasswordOk(password)
-	if !ok {
+	if !pswd_util.IsPasswordOk(password, userMaster.Password, userMaster.Salt) {
 		return "", errs.NewBadRequest().WithMsg("密码错误")
 	}
 	return user.NewJwt(clientId)
