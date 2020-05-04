@@ -17,6 +17,10 @@ type OssMinio struct {
 	Url        string
 }
 
+func (o *OssMinio) DeleteFileByUrl(ctx context.Context, url string) error {
+	panic("implement me")
+}
+
 func (f *OssMinio) GetUrl(ctx context.Context, isPub bool, fileKey string) (url string, err error) {
 	return fmt.Sprintf("%v/%v/%v", f.Url, f.BucketName, fileKey), nil
 }

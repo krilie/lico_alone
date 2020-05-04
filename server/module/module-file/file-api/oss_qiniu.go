@@ -6,6 +6,8 @@ import (
 	"github.com/qiniu/api.v7/v7/auth/qbox"
 	"github.com/qiniu/api.v7/v7/storage"
 	"io"
+	url2 "net/url"
+	"strings"
 	"time"
 )
 
@@ -69,6 +71,18 @@ func (o *OssQiNiu) GetUrl(ctx context.Context, isPub bool, fileKey string) (url 
 		privateAccessURL := storage.MakePrivateURL(o.qboxMac, o.BaseUrl, fileKey, deadline)
 		return privateAccessURL, nil
 	}
+}
+
+func (o *OssQiNiu) DeleteFileByUrl(ctx context.Context, url string) error {
+	return o.DeleteFile(ctx, o.GetKeyByUrl(ctx, url))
+}
+
+func (o *OssQiNiu) GetKeyByUrl(ctx context.Context, url string) string {
+	key, err := url2.QueryUnescape(strings.TrimPrefix(url, o.BaseUrl+"/"))
+	if err != nil {
+		return ""
+	}
+	return key
 }
 
 func (o *OssQiNiu) GetBaseUrl(ctx context.Context) string {

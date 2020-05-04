@@ -12,6 +12,10 @@ type LocalFileSave struct {
 	Url  string
 }
 
+func (o *LocalFileSave) DeleteFileByUrl(ctx context.Context, url string) error {
+	panic("implement me")
+}
+
 func (o *LocalFileSave) GetBucketName(ctx context.Context) string {
 	return ""
 }

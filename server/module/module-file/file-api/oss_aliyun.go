@@ -7,6 +7,10 @@ import (
 
 type OssAliyun struct{}
 
+func (o *OssAliyun) DeleteFileByUrl(ctx context.Context, url string) error {
+	panic("implement me")
+}
+
 func (o *OssAliyun) UploadFile(ctx context.Context, fileName string, fileStream io.ReadSeeker, fileSize int64) (url, key string, err error) {
 	panic("implement me")
 }
