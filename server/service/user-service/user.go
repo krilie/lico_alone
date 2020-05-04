@@ -1,10 +1,10 @@
-package user_api
+package user_service
 
 import (
 	"errors"
 	service2 "github.com/krilie/lico_alone/module/message/service"
 	"github.com/krilie/lico_alone/module/module-user/service"
-	all_service "github.com/krilie/lico_alone/service/all-service"
+	all_service "github.com/krilie/lico_alone/service/notification-email-service"
 	"github.com/mikespook/gorbac"
 )
 
@@ -43,6 +43,6 @@ func (a *AppUser) HasRole(userId, roleId string) (bool, error) {
 	return false, nil
 }
 
-func NewAppUser(allSrv *all_service.AllService) *AppUser {
+func NewAppUser(allSrv *all_service.NotificationEmailService) *AppUser {
 	return &AppUser{UserService: allSrv.UserService, Message: allSrv.Message}
 }

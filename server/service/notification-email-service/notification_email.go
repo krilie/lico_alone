@@ -1,4 +1,4 @@
-package all_service
+package notification_email_service
 
 import (
 	"context"
@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-type AllService struct {
+type NotificationEmailService struct {
 	UserService    *UserService.UserService
 	ConfigService  *ConfigService.ConfigService
 	FileService    *FileService.FileService
@@ -26,8 +26,8 @@ func NewAllService(UserService *UserService.UserService,
 	ConfigService *ConfigService.ConfigService,
 	FileService *FileService.FileService,
 	MessageService *MessageService.MessageService,
-	log *nlog.NLog) *AllService {
-	return &AllService{
+	log *nlog.NLog) *NotificationEmailService {
+	return &NotificationEmailService{
 		UserService:    UserService,
 		ConfigService:  ConfigService,
 		FileService:    FileService,
@@ -37,7 +37,7 @@ func NewAllService(UserService *UserService.UserService,
 }
 
 // SendRunUpEmail 发送服务启动消息
-func (a *AllService) SendServiceUpEmail(ctx context.Context) error {
+func (a *NotificationEmailService) SendServiceUpEmail(ctx context.Context) error {
 	emailAddr, err := a.ConfigService.GetValueStr(ctx, model.CommonNotificationEmail)
 	if err != nil {
 		log.Error(err)
@@ -55,7 +55,7 @@ func (a *AllService) SendServiceUpEmail(ctx context.Context) error {
 }
 
 // SendGoodMorningEmail 发送早上好消息
-func (a *AllService) SendGoodMorningEmail(ctx context.Context) error {
+func (a *NotificationEmailService) SendGoodMorningEmail(ctx context.Context) error {
 	emailAddr, err := a.ConfigService.GetValueStr(ctx, model.CommonNotificationEmail)
 	if err != nil {
 		log.Error(err)
@@ -72,7 +72,7 @@ func (a *AllService) SendGoodMorningEmail(ctx context.Context) error {
 }
 
 // SendGoodMorningEmail 发送服务关闭消息
-func (a *AllService) SendServiceEndEmail(ctx context.Context) error {
+func (a *NotificationEmailService) SendServiceEndEmail(ctx context.Context) error {
 	emailAddr, err := a.ConfigService.GetValueStr(ctx, model.CommonNotificationEmail)
 	if err != nil {
 		log.Error(err)

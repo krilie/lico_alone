@@ -1,11 +1,11 @@
-package user_api
+package user_service
 
 import (
 	"context"
 	"fmt"
 	"github.com/aliyun/alibaba-cloud-sdk-go/sdk/utils"
 	"github.com/krilie/lico_alone/common/config"
-	all_service "github.com/krilie/lico_alone/service/all-service"
+	all_service "github.com/krilie/lico_alone/service/notification-email-service"
 	"testing"
 )
 

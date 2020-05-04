@@ -1,5 +1,5 @@
 //// Package init 一些数据的初始化
-package init_data
+package init_data_service
 
 //
 //import (

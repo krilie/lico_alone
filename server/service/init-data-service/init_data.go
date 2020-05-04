@@ -1,4 +1,4 @@
-package init_data
+package init_data_service
 
 //
 //import (
