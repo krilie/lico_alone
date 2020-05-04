@@ -1,4 +1,4 @@
-package third_api
+package file_api
 
 import (
 	"context"
@@ -41,6 +41,9 @@ func (o *LocalFileSave) GetBaseUrl(ctx context.Context) string {
 	return o.Url
 }
 
-func NewLocalFileSave(saveDir string) *LocalFileSave {
-	return &LocalFileSave{File: s_file.NewSFile(saveDir)}
+func NewLocalFileSave(saveDir string, baseUrl string) *LocalFileSave {
+	return &LocalFileSave{
+		File: s_file.NewSFile(saveDir),
+		Url:  baseUrl,
+	}
 }

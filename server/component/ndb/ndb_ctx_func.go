@@ -8,20 +8,24 @@ import (
 )
 
 func GetTxFromCtx(ctx context.Context) *gorm.DB {
-	orNil := context2.GetContextOrNil(ctx)
-	if orNil == nil {
+	nctx := context2.GetContextOrNil(ctx)
+	if nctx == nil {
 		return nil
 	} else {
-		return orNil.Tx.(*gorm.DB)
+		if nctx.Tx == nil {
+			return nil
+		} else {
+			return nctx.Tx.(*gorm.DB)
+		}
 	}
 }
 
 func SetTxToCtx(ctx context.Context, tx *gorm.DB) {
-	orNil := context2.GetContextOrNil(ctx)
-	if orNil == nil {
+	nCtx := context2.GetContextOrNil(ctx)
+	if nCtx == nil {
 		panic(errors.New("无效的上下文"))
 	} else {
-		orNil.Tx = tx
+		nCtx.Tx = tx
 	}
 }
 

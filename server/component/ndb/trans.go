@@ -14,14 +14,18 @@ func (ndb *NDb) Transaction(ctx context.Context, fc func(ctx context.Context) er
 	if tx == nil {
 		defer func() {
 			if err := recover(); err != nil {
-				ndb.log.Errorf("事务中发生异常 %v", err)
+				ndb.log.Errorf("事务中发生panic 已回滚 %v", err)
 			}
 			ClearTxOnCtl(ctx)
 		}()
-		return ndb.db.Transaction(func(tx *gorm.DB) error {
+		err := ndb.db.Transaction(func(tx *gorm.DB) error {
 			SetTxToCtx(ctx, tx)
 			return fc(ctx)
 		})
+		if err != nil {
+			ndb.log.Warnf("在事务中发生错误 事务回滚 %v", err)
+		}
+		return err
 	} else {
 		ndb.log.Debug("已经存在事务 不再重新开启事务")
 		return fc(ctx)
@@ -42,8 +46,12 @@ func (ndb *NDb) TransactionOnNewSession(ctx context.Context, fc func(ctx context
 		}
 		ClearTxOnCtl(newCtx)
 	}()
-	return ndb.db.Transaction(func(tx *gorm.DB) error {
+	err := ndb.db.Transaction(func(tx *gorm.DB) error {
 		SetTxToCtx(newCtx, tx)
 		return fc(newCtx)
 	})
+	if err != nil {
+		ndb.log.Warnf("在事务中发生错误 事务回滚 %v", err)
+	}
+	return err
 }

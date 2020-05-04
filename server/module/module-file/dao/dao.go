@@ -59,9 +59,13 @@ func (a *FileDao) DeleteFile(ctx context.Context, id string) error {
 }
 
 func (a *FileDao) DeleteFileByBucketKey(ctx context.Context, bucket, key string) error {
-	err := a.GetDb(ctx).Where("bucket_name=? and key_name=?", bucket, key).Delete(&model.FileMaster{}).Error
+	result := a.GetDb(ctx).Where("bucket_name=? and key_name=?", bucket, key).Delete(&model.FileMaster{})
+	err := result.Error
 	if err != nil {
 		return errs.NewErrDbDelete().WithError(err)
+	}
+	if result.RowsAffected == 0 {
+		return errs.NewNotFound().WithMsg("删除没有成功")
 	}
 	return nil
 }

@@ -9,6 +9,6 @@ import (
 
 func init() {
 	dig.Container.MustProvide(func(dao *dao.FileDao, log *nlog.NLog, cfg *config.Config) *FileService {
-		return NewFileService(dao, log, cfg)
+		return NewFileService(dao, log, &cfg.FileSave)
 	})
 }

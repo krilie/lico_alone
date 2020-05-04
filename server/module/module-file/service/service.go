@@ -4,17 +4,24 @@ import (
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/module-file/dao"
-	oss_s3 "github.com/krilie/lico_alone/module/module-file/third-api"
+	"github.com/krilie/lico_alone/module/module-file/file-api"
 )
 
 type FileService struct {
 	dao     *dao.FileDao
 	log     *nlog.NLog
-	fileApi oss_s3.FileOperator
+	fileApi file_api.FileOperator
 }
 
-func NewFileService(dao *dao.FileDao, log *nlog.NLog, cfg *config.Config) *FileService {
-	fileApi := oss_s3.NewOssQiNiu(&cfg.FileSave)
+func NewFileService(dao *dao.FileDao, log *nlog.NLog, cfg *config.FileSave) *FileService {
+	var fileApi file_api.FileOperator
+	if cfg.SaveType == "local" {
+		fileApi = file_api.NewLocalFileSave(cfg.LocalFileSaveDir, cfg.LocalFileSaveUrl)
+	} else if cfg.SaveType == "qiniuOss" {
+		fileApi = file_api.NewOssQiNiu(cfg)
+	} else {
+		panic("config error on file save " + cfg.SaveType)
+	}
 	return &FileService{
 		dao:     dao,
 		log:     log,
