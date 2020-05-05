@@ -1,7 +1,7 @@
 package const_val
 
 import (
-	"github.com/krilie/lico_alone/run-env"
+	"github.com/krilie/lico_alone/run_env"
 )
 
 // RunEnv 在程序开始运行时设置的全局变量

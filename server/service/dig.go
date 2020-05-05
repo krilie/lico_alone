@@ -3,7 +3,7 @@ package service
 import (
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/dig"
-	"github.com/krilie/lico_alone/run-env"
+	"github.com/krilie/lico_alone/run_env"
 	cron_job_service "github.com/krilie/lico_alone/service/cron-job-service"
 	init_data_service "github.com/krilie/lico_alone/service/init-data-service"
 	notification_email_service "github.com/krilie/lico_alone/service/notification-email-service"

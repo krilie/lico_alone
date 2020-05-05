@@ -2,7 +2,7 @@ package dig
 
 import (
 	"github.com/krilie/lico_alone/common/config"
-	"github.com/krilie/lico_alone/run-env"
+	"github.com/krilie/lico_alone/run_env"
 	"go.uber.org/dig"
 )
 

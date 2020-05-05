@@ -3,7 +3,7 @@ package nlog
 import (
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/dig"
-	"github.com/krilie/lico_alone/run-env"
+	"github.com/krilie/lico_alone/run_env"
 )
 
 var Log *NLog
