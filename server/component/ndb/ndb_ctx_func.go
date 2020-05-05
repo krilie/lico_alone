@@ -8,14 +8,14 @@ import (
 )
 
 func GetTxFromCtx(ctx context.Context) *gorm.DB {
-	nctx := context2.GetContextOrNil(ctx)
-	if nctx == nil {
+	nCtx := context2.GetContextOrNil(ctx)
+	if nCtx == nil {
 		return nil
 	} else {
-		if nctx.Tx == nil {
+		if nCtx.Tx == nil {
 			return nil
 		} else {
-			return nctx.Tx.(*gorm.DB)
+			return nCtx.Tx.(*gorm.DB)
 		}
 	}
 }

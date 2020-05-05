@@ -5,8 +5,15 @@ import (
 	"errors"
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/errs"
+	"github.com/krilie/lico_alone/component/ndb"
+	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/module-message/model"
 )
+
+type messageEmail struct {
+	*ndb.NDb
+	log *nlog.NLog
+}
 
 type IMessageEmail interface {
 	CreateMessageEmail(ctx context.Context, item *model.MessageEmail) error
@@ -15,7 +22,7 @@ type IMessageEmail interface {
 	GetMessageEmailById(ctx context.Context, id string) (*model.MessageEmail, error)
 }
 
-func (d *MessageDao) CreateMessageEmail(ctx context.Context, item *model.MessageEmail) error {
+func (d *messageEmail) CreateMessageEmail(ctx context.Context, item *model.MessageEmail) error {
 	err := d.GetDb(ctx).Create(item).Error
 	if err != nil {
 		d.log.Error(err)
@@ -24,7 +31,7 @@ func (d *MessageDao) CreateMessageEmail(ctx context.Context, item *model.Message
 	return nil
 }
 
-func (d *MessageDao) UpdateMessageEmail(ctx context.Context, item *model.MessageEmail) error {
+func (d *messageEmail) UpdateMessageEmail(ctx context.Context, item *model.MessageEmail) error {
 	err := d.GetDb(ctx).Omit("create_time").Where("id=?", item.Id).Update(item).Error
 	if err != nil {
 		d.log.Error(err)
@@ -33,7 +40,7 @@ func (d *MessageDao) UpdateMessageEmail(ctx context.Context, item *model.Message
 	return nil
 }
 
-func (d *MessageDao) DeleteMessageEmail(ctx context.Context, id string) error {
+func (d *messageEmail) DeleteMessageEmail(ctx context.Context, id string) error {
 	err := d.GetDb(ctx).Where("id=?", id).Delete(&model.MessageEmail{}).Error
 	if err != nil {
 		d.log.Error(err)
@@ -42,7 +49,7 @@ func (d *MessageDao) DeleteMessageEmail(ctx context.Context, id string) error {
 	return nil
 }
 
-func (d *MessageDao) GetMessageEmailById(ctx context.Context, id string) (*model.MessageEmail, error) {
+func (d *messageEmail) GetMessageEmailById(ctx context.Context, id string) (*model.MessageEmail, error) {
 	item := &model.MessageEmail{}
 	err := d.GetDb(ctx).Where("id=?", id).Find(item).Error
 	if err != nil {
