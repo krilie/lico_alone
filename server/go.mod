@@ -19,7 +19,7 @@ require (
 	github.com/gomodule/redigo v2.0.0+incompatible
 	github.com/jinzhu/gorm v1.9.12
 	github.com/json-iterator/go v1.1.7 // indirect
-	github.com/krilie/go-smq v0.0.0-20200426063429-520e51d883e3
+	github.com/krilie/go-smq v2.0.0
 	github.com/krilie/s-file v0.0.0-20190906025558-22dc46235d3b
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/mikespook/gorbac v2.1.0+incompatible
@@ -30,7 +30,6 @@ require (
 	github.com/qiniu/api.v7/v7 v7.4.2
 	github.com/robfig/cron/v3 v3.0.0
 	github.com/satori/go.uuid v1.2.0
-	github.com/shopspring/decimal v0.0.0-20190905144223-a36b5d85f337
 	github.com/sirupsen/logrus v1.4.2
 	github.com/smartystreets/goconvey v0.0.0-20190731233626-505e41936337 // indirect
 	github.com/spf13/viper v1.4.0
