@@ -19,7 +19,7 @@ require (
 	github.com/gomodule/redigo v2.0.0+incompatible
 	github.com/jinzhu/gorm v1.9.12
 	github.com/json-iterator/go v1.1.7 // indirect
-	github.com/krilie/go-smq v2.0.0
+	github.com/krilie/go-smq v0.0.0-20200426063429-520e51d883e3
 	github.com/krilie/s-file v0.0.0-20190906025558-22dc46235d3b
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/mikespook/gorbac v2.1.0+incompatible
