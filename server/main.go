@@ -58,11 +58,6 @@ func main() {
 		// 最后初始化为开启http服务
 		shutDownApi := http.InitAndStartHttpServer(app)
 		shutDownWeb := http.InitAndStartStaticWebServer(ctx, app.Cfg)
-		// 发送上线邮件
-		//err := app.All.SendServiceUpEmail(ctx)
-		//if err != nil {
-		//	log.Error(err)
-		//}
 		// 收尾工作
 		c := make(chan os.Signal, 1)
 		signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL)
@@ -87,11 +82,6 @@ func main() {
 				// 关闭定时任务
 				cronStop()
 				log.Infoln("cron job end.")
-				// 发送结束邮件
-				//err = app.All.SendServiceEndEmail(ctx)
-				//if err != nil {
-				//	log.Error(err)
-				//}
 				log.Infoln("service is done.")
 				return
 			case syscall.SIGHUP:
