@@ -93,7 +93,7 @@ func TryLoadFromArgConfigFile() bool {
 	var configFilePath = commandLine.String("config", "", "配置文件")
 	err := commandLine.Parse(os.Args[1:])
 	if err != nil {
-		panic(err)
+		log.Printf("没有config %v", err)
 	}
 	if *configFilePath != "" {
 		_ = LoadConfigByFile(*configFilePath)
