@@ -26,12 +26,12 @@ func (initData *InitDataService) InitData(ctx context.Context) {
 
 // IsInit 是否有被初始化
 func (initData *InitDataService) IsInit(ctx context.Context) bool {
-	valueBool, err := initData.unionService.ModuleConfig.GetValueBool(ctx, model.ConfigItemsIsInitData.Value())
+	valueBool, err := initData.unionService.ModuleConfig.GetValueBool(ctx, model.ConfigItemsIsInitData.Val())
 	if err != nil {
 		panic(err)
 	}
 	if valueBool == nil {
-		err := initData.unionService.ModuleConfig.SetValueBool(ctx, model.ConfigItemsIsInitData.Value(), false)
+		err := initData.unionService.ModuleConfig.SetValueBool(ctx, model.ConfigItemsIsInitData.Val(), false)
 		if err != nil {
 			panic(err)
 		}

@@ -2,7 +2,7 @@ package model
 
 type ConfigItems string
 
-func (item ConfigItems) Value() string {
+func (item ConfigItems) Val() string {
 	return string(item)
 }
 

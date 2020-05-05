@@ -12,11 +12,11 @@ func (a *ConfigService) InitConfigData(ctx context.Context) error {
 		if err != nil {
 			return err
 		}
-		err = a.SetValueBool(ctx, model.ConfigItemsIsInitData.Value(), true)
+		err = a.SetValueBool(ctx, model.ConfigItemsIsInitData.Val(), true)
 		if err != nil {
 			return err
 		}
-		err = a.SetValueStr(ctx, model.ConfigItemsNotificationEmail.Value(), "example@example.com")
+		err = a.SetValueStr(ctx, model.ConfigItemsNotificationEmail.Val(), "example@example.com")
 		if err != nil {
 			return err
 		}
