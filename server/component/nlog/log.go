@@ -21,7 +21,7 @@ func NewLogger(runEnv run_env.RunEnv, cfg config.Config) *NLog {
 	Log.Logger.SetOutput(os.Stdout)
 	Log = Log.
 		WithField(context_enum.AppName, runEnv.AppName).
-		WithField(context_enum.AppVersion, runEnv.AppVersion).
+		WithField(context_enum.AppVersion, runEnv.Version).
 		WithField(context_enum.AppHost, runEnv.AppHost)
 	Log.Infoln("log init ok")
 	log := &NLog{Log}
