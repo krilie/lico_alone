@@ -2,31 +2,21 @@ package cron
 
 import (
 	"context"
-	"github.com/krilie/lico_alone/application"
-	"github.com/krilie/lico_alone/common/ccron"
-	"github.com/krilie/lico_alone/common/clog"
-	"github.com/robfig/cron/v3"
+	"github.com/krilie/lico_alone/service"
+	"github.com/prometheus/common/log"
 )
 
-func mustAddCronFunc(cron *cron.Cron, spec string, f func()) {
-	_, err := cron.AddFunc(spec, f)
-	if err != nil {
-		panic(err)
-	}
-}
-
-func InitAndStartCorn(ctx context.Context, app *application.App) (cronStop func()) {
-	crone := ccron.NewCrone()
+func InitAndStartCorn(ctx context.Context, app *service.App) (cronStop func()) {
+	crone := NewCrone()
 	//// 定时任务 * * 7 * * ?
-	mustAddCronFunc(crone, "0 0 7 * * *", func() {
-		log := clog.NewLog(ctx, "定时任务", "早上好")
-		err := app.All.SendGoodMorningEmail(ctx)
+	crone.mustAddCronFunc("0 0 7 * * *", func() {
+		err := app.NotificationEmailService.SendGoodMorningEmail(ctx)
 		if err != nil {
 			log.Error(err)
 		}
 	})
 	// stop 定时任务
 	return func() {
-		ccron.Stop(crone)
+		crone.StopAndWait()
 	}
 }

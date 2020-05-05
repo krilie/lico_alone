@@ -1,17 +1,18 @@
 package middleware
 
 import (
+	"errors"
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/common/cmodel"
+	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/common/jwt"
+	"github.com/krilie/lico_alone/common/utils/jwt"
 	"github.com/krilie/lico_alone/server/http/ginutil"
 )
 
 // 权限接口
 type IAuth interface {
-	HasUser(id string) (bool, error)
-	HasPermission(id, permission string) (bool, error)
+	HasUser(userId string) (bool, error)
+	HasPermission(userId, method, path string) (bool, error)
 	HasRole(userId, roleId string) (bool, error)
 }
 
@@ -27,14 +28,14 @@ func CheckAuthToken(auth IAuth) gin.HandlerFunc {
 
 		var claims, err = jwt.CheckJwtToken(headerAuth)
 		if err != nil {
-			if err == jwt.ErrIatTime {
-				ginutil.AbortWithErr(c, errs.NewUnauthorized().WithMsg("token format error"))
+			if errors.Is(err, jwt.ErrIatTime) {
+				ginutil.AbortWithErr(c, errs.NewInvalidToken().WithMsg("token format error"))
 				return
-			} else if err == jwt.ErrTimeExp {
-				c.AbortWithStatusJSON(401, cmodel.NewRetFromErr(errs.NewUnauthorized().WithMsg("token expired")))
+			} else if errors.Is(err, jwt.ErrTimeExp) {
+				c.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInvalidToken().WithMsg("token expired")))
 				return
 			} else {
-				c.AbortWithStatusJSON(500, cmodel.NewRetFromErr(errs.NewInternal().WithMsg(err.Error())))
+				c.AbortWithStatusJSON(500, com_model.NewRetFromErr(errs.NewInternal().WithMsg(err.Error())))
 				return
 			}
 		} else {
@@ -44,7 +45,7 @@ func CheckAuthToken(auth IAuth) gin.HandlerFunc {
 				return
 			}
 			if !b {
-				ginutil.AbortWithAppErr(c, errs.NewUnauthorized())
+				ginutil.AbortWithAppErr(c, errs.NewInvalidToken())
 				return
 			}
 			ctx.SetUserId(claims.UserId)

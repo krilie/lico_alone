@@ -14,13 +14,14 @@ import (
 // @Param phone formData string true "用户手机号"
 // @Param password formData string true "用户密码"
 // @Param valid_code formData string true "验证码"
-// @Success 200 {object} cmodel.CommonReturn
-// @Failure 400 {object} cmodel.CommonReturn
-// @Failure 404 {object} cmodel.CommonReturn
-// @Failure 500 {object} cmodel.CommonReturn
+// @Success 200 {object} com_model.CommonReturn
+// @Failure 500 {object} com_model.CommonReturn
 // @Router /api/user/register [post]
 func (a *UserCtrl) UserRegister(c *gin.Context) {
-	err := a.AppUser.UserRegister(ginutil.MustGetAppCtx(c), c.PostForm("phone"), c.PostForm("password"), c.PostForm("valid_code"), "")
+	phone := c.PostForm("phone")
+	password := c.PostForm("password")
+	validCode := c.PostForm("valid_code")
+	err := a.userService.UserRegister(ginutil.MustGetAppCtx(c), phone, password, validCode, "")
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return

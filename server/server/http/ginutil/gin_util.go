@@ -2,10 +2,10 @@ package ginutil
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/common/ccontext"
-	"github.com/krilie/lico_alone/common/clog"
-	"github.com/krilie/lico_alone/common/cmodel"
+	"github.com/krilie/lico_alone/common/com-model"
+	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/errs"
+	"github.com/krilie/lico_alone/component/nlog"
 )
 
 // some const value for gin http protocol
@@ -18,17 +18,17 @@ var (
 
 // 给中间件使用
 // get app context or nil
-func GetAppCtxOrAbort(c *gin.Context) *ccontext.Context {
+func GetAppCtxOrAbort(c *gin.Context) *context.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
-		log.Error("GetAppCtxOrAbort", "can not get application context for next step")
-		c.AbortWithStatusJSON(500, cmodel.NewRetFromErr(errs.NewInternal()))
+		nlog.Log.Error("GetAppCtxOrAbort", "can not get service context for next step")
+		c.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
 		return nil
 	}
-	contextOrNil := ccontext.GetContextOrNil(value)
+	contextOrNil := context.GetContextOrNil(value)
 	if contextOrNil == nil {
-		log.Error("GetAppCtxOrAbort", "internal err on cast context to app context")
-		c.AbortWithStatusJSON(500, cmodel.NewRetFromErr(errs.NewInternal()))
+		nlog.Log.Error("GetAppCtxOrAbort", "internal err on cast context to app context")
+		c.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
 		return nil
 	}
 	return contextOrNil
@@ -40,7 +40,7 @@ func GetUserIdOrAbort(c *gin.Context) string {
 		return ""
 	}
 	if ctx.GetUserId() == "" {
-		AbortWithErr(c, errs.NewUnauthorized().WithMsg("没取到用户id"))
+		AbortWithErr(c, errs.NewInvalidToken().WithMsg("登录信息无效"))
 		return ""
 	} else {
 		return ctx.GetUserId()
@@ -48,30 +48,29 @@ func GetUserIdOrAbort(c *gin.Context) string {
 }
 
 // GetAppCtxOrReturn get app context or nil
-func GetAppCtxOrReturn(c *gin.Context) *ccontext.Context {
-	log = log.WithField(clog.Function, "GetAppCtxOrReturn")
+func GetAppCtxOrReturn(c *gin.Context) *context.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
-		log.Error("GetAppCtxOrReturn", "can not get application context for next step")
-		c.JSON(500, cmodel.NewRet(errs.NewInternal().WithMsg("ctx not get")))
+		nlog.Log.Error("GetAppCtxOrReturn", "can not get service context for next step")
+		c.JSON(200, com_model.NewRet(errs.NewInternal().WithMsg("ctx not get")))
 		return nil
 	}
-	contextOrNil := ccontext.GetContextOrNil(value)
+	contextOrNil := context.GetContextOrNil(value)
 	if contextOrNil == nil {
-		log.Error("GetAppCtxOrReturn", "internal err on cast context to app context")
-		c.JSON(500, cmodel.NewRet(errs.NewInternal().WithMsg("ctx not get is nil")))
+		nlog.Log.Error("GetAppCtxOrReturn", "internal err on cast context to app context")
+		c.JSON(200, com_model.NewRet(errs.NewInternal().WithMsg("ctx not get is nil")))
 		return nil
 	}
 	return contextOrNil
 }
 
-func MustGetAppCtx(c *gin.Context) *ccontext.Context {
+func MustGetAppCtx(c *gin.Context) *context.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
-		log.Panic("GetAppCtxOrReturn", "can not get application context for next step")
+		nlog.Log.Panic("GetAppCtxOrReturn", "can not get service context for next step")
 		return nil
 	}
-	return ccontext.MustGetContext(value)
+	return context.MustGetContext(value)
 }
 
 func MustGetUserId(c *gin.Context) string {
@@ -79,7 +78,7 @@ func MustGetUserId(c *gin.Context) string {
 	if ctx.GetUserId() != "" {
 		return ctx.GetUserId()
 	} else {
-		log.Panic("must get user id can not get user id.")
+		nlog.Log.Panic("must get user id can not get user id.")
 		return ""
 	}
 }

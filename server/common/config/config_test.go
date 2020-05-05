@@ -24,3 +24,10 @@ func TestSaveToFile(t *testing.T) {
 	err := v.WriteConfig()
 	t.Log(err)
 }
+
+func TestSetEnv(t *testing.T) {
+	err := os.Setenv("APP_CONFIG_PATH", "D:\\Users\\Administrator\\IdeaProjects\\lico_alone2\\server\\config.yaml")
+	t.Log(err)
+	getenv := os.Getenv("APP_CONFIG_PATH")
+	t.Log(getenv)
+}

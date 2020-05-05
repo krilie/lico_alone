@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/prometheus/common/log"
 	"github.com/spf13/viper"
+	"log"
 	"os"
 	"strings"
 )
@@ -61,7 +61,7 @@ func init() {
 	v.SetDefault("ali_sms.secret", "")
 	err := v.Unmarshal(&Cfg)
 	if err != nil {
-		log.Error(err)
+		log.Println(err)
 		return
 	}
 	// 没有环境变量
@@ -70,9 +70,9 @@ func init() {
 		return
 	}
 	// 加载配置文件
-	log.Warnln("set config file from env APP_CONFIG_PATH " + configFile)
+	log.Println("set config file from env APP_CONFIG_PATH " + configFile)
 	if err := LoadConfigByFile(configFile); err != nil {
-		log.Error(err.Error())
+		log.Println(err.Error())
 		return
 	}
 }
@@ -83,9 +83,9 @@ func LoadConfigByFile(name string) error {
 		switch err.(type) {
 		case viper.ConfigFileNotFoundError:
 			//err = Conf.v.WriteConfigAs("config.yaml") //new config file and ignore err
-			log.Infoln("no config file use default:", err)
+			log.Println("no config file use default:", err)
 		default:
-			log.Warnln(err)
+			log.Println(err)
 		}
 	}
 	err := v.Unmarshal(&Cfg)

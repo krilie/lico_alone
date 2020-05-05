@@ -1,6 +1,6 @@
 module github.com/krilie/lico_alone
 
-go 1.13
+go 1.14
 
 require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
@@ -17,9 +17,9 @@ require (
 	github.com/go-playground/universal-translator v0.16.0 // indirect
 	github.com/go-redis/redis/v7 v7.0.0-beta.5
 	github.com/gomodule/redigo v2.0.0+incompatible
-	github.com/jinzhu/gorm v1.9.10
+	github.com/jinzhu/gorm v1.9.12
 	github.com/json-iterator/go v1.1.7 // indirect
-	github.com/krilie/go-smq v1.0.1
+	github.com/krilie/go-smq v0.0.0-20200426063429-520e51d883e3
 	github.com/krilie/s-file v0.0.0-20190906025558-22dc46235d3b
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/mikespook/gorbac v2.1.0+incompatible
@@ -27,6 +27,7 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/pkg/errors v0.8.1
 	github.com/prometheus/common v0.4.0
+	github.com/qiniu/api.v7/v7 v7.4.2
 	github.com/robfig/cron/v3 v3.0.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/shopspring/decimal v0.0.0-20190905144223-a36b5d85f337
@@ -37,6 +38,7 @@ require (
 	github.com/stretchr/testify v1.4.0
 	github.com/swaggo/gin-swagger v1.2.0
 	github.com/swaggo/swag v1.6.2
+	go.uber.org/dig v1.9.0
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/go-playground/validator.v8 v8.18.2
 	gopkg.in/go-playground/validator.v9 v9.30.0

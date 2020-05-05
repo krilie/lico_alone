@@ -1,14 +1,13 @@
 package user
 
 import (
-	"github.com/krilie/lico_alone/application"
-	"github.com/krilie/lico_alone/application/user-api"
+	"github.com/krilie/lico_alone/service/user-service"
 )
 
 type UserCtrl struct {
-	AppUser *user_api.AppUser
+	userService *user_service.UserService
 }
 
-func NewUserCtrl(app *application.App) *UserCtrl {
-	return &UserCtrl{AppUser: app.User}
+func NewUserCtrl(userService *user_service.UserService) *UserCtrl {
+	return &UserCtrl{userService: userService}
 }

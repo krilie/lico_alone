@@ -8,7 +8,7 @@ Accept: application/json
 ###
 ### Get request with environment variables
 #GET {{host}}/get?show_env={{show_env}}
-#Accept: application/json
+#Accept: service/json
 
 ### Get request with disabled redirects
 # @no-redirect
