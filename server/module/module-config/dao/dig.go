@@ -8,6 +8,6 @@ import (
 
 func init() {
 	dig.Container.MustProvide(func(ndb *ndb.NDb, log *nlog.NLog) *ConfigDao {
-		return NewDao(ndb, log)
+		return NewConfigDao(ndb, log)
 	})
 }
