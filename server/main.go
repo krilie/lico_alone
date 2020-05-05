@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	run_env "github.com/krilie/lico_alone/common/com-model/run-env"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/component/broker"
@@ -15,13 +16,6 @@ import (
 	"syscall"
 )
 
-var (
-	VERSION    string
-	BUILD_TIME string
-	GO_VERSION string
-	GIT_COMMIT string
-)
-
 //go:generate swag init -g ./main.go
 
 // @title Swagger Example API
@@ -33,16 +27,16 @@ func main() {
 		cmd := os.Args[1]
 		switch cmd {
 		case "version", "--version", "-version":
-			fmt.Println(VERSION)
+			fmt.Println(run_env.VERSION)
 			return
 		case "git-commit", "--git-commit", "-git-commit":
-			fmt.Println(GIT_COMMIT)
+			fmt.Println(run_env.GIT_COMMIT)
 			return
 		case "go-version", "-go-version", "--go-version":
-			fmt.Println(GO_VERSION)
+			fmt.Println(run_env.GO_VERSION)
 			return
 		case "build-time", "-build-time", "--build-time":
-			fmt.Println(BUILD_TIME)
+			fmt.Println(run_env.BUILD_TIME)
 			return
 		default:
 			break

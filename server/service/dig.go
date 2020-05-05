@@ -1,7 +1,7 @@
 package service
 
 import (
-	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
+	"github.com/krilie/lico_alone/common/com-model/run-env"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/dig"
 	cron_job_service "github.com/krilie/lico_alone/service/cron-job-service"
@@ -12,7 +12,7 @@ import (
 )
 
 func init() {
-	dig.Container.MustProvide(func(cfg *config.Config, runEnv *context_enum.RunEnv,
+	dig.Container.MustProvide(func(cfg *config.Config, runEnv *run_env.RunEnv,
 		UserService *user_service.UserService,
 		InitService *init_data_service.InitDataService,
 		CronJobService *cron_job_service.CronJobService,
