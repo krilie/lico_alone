@@ -1,9 +1,7 @@
 package main
 
 import (
-	"flag"
 	"fmt"
-	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/component/broker"
@@ -52,10 +50,6 @@ func main() {
 	}
 	// 开始服务
 	ctx := context.NewContext()
-	// 初始化配置块
-	configFilePath := flag.String("config", "config.yaml", "配置文件")
-	flag.Parse()
-	_ = config.LoadConfigByFile(*configFilePath)
 	dig.Container.MustInvoke(func(log *nlog.NLog, app *service.App) {
 		// 初始化日志文件
 		defer func() {

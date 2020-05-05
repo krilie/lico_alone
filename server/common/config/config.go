@@ -1,6 +1,7 @@
 package config
 
 import (
+	"flag"
 	"github.com/spf13/viper"
 	"log"
 	"os"
@@ -64,17 +65,41 @@ func init() {
 		log.Println(err)
 		return
 	}
-	// 没有环境变量
-	configFile := os.Getenv("APP_CONFIG_PATH")
-	if configFile == "" {
-		return
-	}
-	// 加载配置文件
-	log.Println("set config file from env APP_CONFIG_PATH " + configFile)
-	if err := LoadConfigByFile(configFile); err != nil {
+
+	// 默认位置
+	if err := LoadConfigByFile("config.yaml"); err != nil {
 		log.Println(err.Error())
 		return
 	}
+
+	// 没有环境变量
+	configFile := os.Getenv("APP_CONFIG_PATH")
+	if configFile != "" {
+		// 加载配置文件
+		log.Println("set config file from env APP_CONFIG_PATH " + configFile)
+		if err := LoadConfigByFile(configFile); err != nil {
+			log.Println(err.Error())
+			return
+		}
+	}
+
+	// 命令行配置文件优先级最高
+	TryLoadFromArgConfigFile()
+}
+
+func TryLoadFromArgConfigFile() bool {
+	// The default set of command-line flags, parsed from os.Args.
+	var commandLine = flag.NewFlagSet(os.Args[0], flag.ContinueOnError)
+	var configFilePath = commandLine.String("config", "", "配置文件")
+	err := commandLine.Parse(os.Args[1:])
+	if err != nil {
+		panic(err)
+	}
+	if *configFilePath != "" {
+		_ = LoadConfigByFile(*configFilePath)
+		return true
+	}
+	return false
 }
 
 func LoadConfigByFile(name string) error {
