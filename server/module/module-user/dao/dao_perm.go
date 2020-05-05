@@ -11,6 +11,7 @@ type IPerm interface {
 	GetPermByName(ctx context.Context, name string) (*model.Permission, error)
 	DeletePermByName(ctx context.Context, name string) error
 	CreatePerm(ctx context.Context, item *model.Permission) error
+	CreatePerms(ctx context.Context, items []model.Permission) error
 }
 
 func (d *UserDao) GetPermByName(ctx context.Context, name string) (*model.Permission, error) {
@@ -40,6 +41,17 @@ func (d *UserDao) CreatePerm(ctx context.Context, item *model.Permission) error 
 	err := d.GetDb(ctx).Model(&model.Permission{}).Create(item).Error
 	if err != nil {
 		return errs.NewInternal().WithError(err)
+	}
+	return nil
+}
+
+//CreatePerms
+func (d *UserDao) CreatePerms(ctx context.Context, items []model.Permission) error {
+	for i := range items {
+		err := d.CreatePerm(ctx, &items[i])
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }

@@ -9,8 +9,12 @@ import (
 func (initData *InitDataService) InitData(ctx context.Context) {
 	err := initData.GetNDb(ctx).Transaction(ctx, func(ctx context.Context) error {
 		if !initData.IsInit(ctx) {
-			// todo: init functions
+			// init functions
 			err := initData.unionService.ModuleConfig.InitConfigData(ctx)
+			if err != nil {
+				return err
+			}
+			err = initData.unionService.ModuleUser.InitUserData(ctx)
 			if err != nil {
 				return err
 			}
