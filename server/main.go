@@ -43,20 +43,21 @@ func main() {
 		}
 	}
 	// 开始服务
-	ctx := context.NewContext()
 	dig.Container.MustInvoke(func(log *nlog.NLog, app *service.App) {
+		ctx := context.NewContext()
 		// 初始化日志文件
 		defer func() {
 			broker.Smq.Close()
 			log.Infof("消息队列退出")
 		}()
-		// 关闭消息队列
+		// 初始化数据
+		app.InitService.InitData(ctx)
 		// 注册所有消息处理句柄
 		broker2.RegisterHandler(ctx, app)
 		// 初始化定时任务
 		cronStop := cron.InitAndStartCorn(ctx, app)
 		// 最后初始化为开启http服务
-		shutDownApi := http.InitAndStartHttpServer(app)
+		shutDownApi := http.InitAndStartHttpServer(ctx, app)
 		shutDownWeb := http.InitAndStartStaticWebServer(ctx, app.Cfg)
 		// 收尾工作
 		c := make(chan os.Signal, 1)

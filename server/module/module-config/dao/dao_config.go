@@ -34,6 +34,15 @@ func (a *ConfigDao) DeleteConfig(ctx context.Context, name string) error {
 	}
 	return nil
 }
+
+func (a *ConfigDao) DeleteAllConfig(ctx context.Context) error {
+	err := a.GetDb(ctx).Delete(new(model.Config)).Error
+	if err != nil {
+		return errs.NewInternal().WithError(err)
+	}
+	return nil
+}
+
 func (a *ConfigDao) UpdateConfig(ctx context.Context, config *model.Config) error {
 	err := a.GetDb(ctx).Model(config).Where("name=?", config.Name).Omit("create_time").Update(config).Error
 	if err != nil {

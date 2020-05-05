@@ -1,6 +1,6 @@
 basePath: '{{.BasePath}}'
 definitions:
-  cmodel.CommonReturn:
+  com_model.CommonReturn:
     properties:
       code:
         example: 400
@@ -43,23 +43,13 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{jwt:"asb"}'
+          description: 2000 {token:"asb"}
           schema:
             type: string
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
-            type: object
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
-            type: object
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
+            $ref: '#/definitions/com_model.CommonReturn'
             type: object
       summary: 用户登录
       tags:
@@ -90,22 +80,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
-            type: object
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
-            type: object
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
+            $ref: '#/definitions/com_model.CommonReturn'
             type: object
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
+            $ref: '#/definitions/com_model.CommonReturn'
             type: object
       summary: 用户注册
       tags:
@@ -131,22 +111,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
-            type: object
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
-            type: object
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
+            $ref: '#/definitions/com_model.CommonReturn'
             type: object
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
+            $ref: '#/definitions/com_model.CommonReturn'
             type: object
       summary: 用户发短信
       tags:

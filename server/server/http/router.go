@@ -5,7 +5,6 @@ import (
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/config"
-	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/nlog"
 	_ "github.com/krilie/lico_alone/docs"
 	"github.com/krilie/lico_alone/server/http/health"
@@ -20,8 +19,7 @@ import (
 	"time"
 )
 
-func InitAndStartHttpServer(app *service.App) (shutDown func(waitSec time.Duration) error) {
-	ctx := context2.NewContext()
+func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown func(waitSec time.Duration) error) {
 	// 设置gin mode
 	gin.SetMode(app.Cfg.GinMode)
 	// 路径设置 根路径
