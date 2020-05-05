@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/krilie/lico_alone/common/com-model/run-env"
 	"github.com/krilie/lico_alone/common/config"
+	"github.com/krilie/lico_alone/run-env"
 	"github.com/krilie/lico_alone/service/cron-job-service"
 	"github.com/krilie/lico_alone/service/init-data-service"
 	"github.com/krilie/lico_alone/service/notification-email-service"

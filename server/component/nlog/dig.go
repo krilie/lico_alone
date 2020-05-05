@@ -1,9 +1,9 @@
 package nlog
 
 import (
-	"github.com/krilie/lico_alone/common/com-model/run-env"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/dig"
+	"github.com/krilie/lico_alone/run-env"
 )
 
 var Log *NLog

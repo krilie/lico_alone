@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	run_env "github.com/krilie/lico_alone/common/com-model/run-env"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/component/broker"
 	"github.com/krilie/lico_alone/component/nlog"
+	run_env "github.com/krilie/lico_alone/run-env"
 	broker2 "github.com/krilie/lico_alone/server/broker"
 	"github.com/krilie/lico_alone/server/cron"
 	"github.com/krilie/lico_alone/server/http"

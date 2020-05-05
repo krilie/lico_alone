@@ -3,9 +3,9 @@ package nlog
 import (
 	"context"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
-	"github.com/krilie/lico_alone/common/com-model/run-env"
 	"github.com/krilie/lico_alone/common/config"
 	context2 "github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/run-env"
 	"github.com/sirupsen/logrus"
 	"os"
 )
