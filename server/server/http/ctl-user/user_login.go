@@ -2,7 +2,6 @@ package ctl_user
 
 import (
 	"github.com/gin-gonic/gin"
-	com_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/server/http/ginutil"
 )
 
@@ -25,6 +24,6 @@ func (a *UserCtrl) UserLogin(c *gin.Context) {
 		ginutil.ReturnWithErr(c, err)
 		return
 	}
-	c.JSON(200, com_model.NewSuccess(gin.H{"token": jwt}))
+	ginutil.ReturnData(c, gin.H{"token": jwt})
 	return
 }
