@@ -20,6 +20,10 @@ func (a *ConfigService) InitConfigData(ctx context.Context) error {
 		if err != nil {
 			return err
 		}
+		err = a.SetJsonValue(ctx, model.ConfigItemsNotificationEmail.Val(), model.IcpInfo{Name: "1", Label: "2", Link: "3"})
+		if err != nil {
+			return err
+		}
 		return nil
 	})
 	if err != nil {
