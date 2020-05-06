@@ -1,4 +1,4 @@
-package health
+package ctl_health_check
 
 import (
 	"github.com/gin-gonic/gin"

@@ -5,11 +5,13 @@ import (
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/config"
+	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/component/nlog"
 	_ "github.com/krilie/lico_alone/docs"
-	"github.com/krilie/lico_alone/server/http/health"
+	ctl_common "github.com/krilie/lico_alone/server/http/ctl-common"
+	"github.com/krilie/lico_alone/server/http/ctl-health-check"
+	"github.com/krilie/lico_alone/server/http/ctl-user"
 	"github.com/krilie/lico_alone/server/http/middleware"
-	"github.com/krilie/lico_alone/server/http/user"
 	"github.com/krilie/lico_alone/service"
 	"github.com/prometheus/common/log"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -31,7 +33,7 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown fun
 		RootRouter.GET("/swagger/*any", gzip.Gzip(gzip.DefaultCompression), ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 	// 健康检查
-	health.Init(RootRouter)
+	ctl_health_check.Init(RootRouter)
 	// 版本号
 	RootRouter.GET("/version", func(c *gin.Context) {
 		c.JSON(200, gin.H{
@@ -47,7 +49,7 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown fun
 
 	// 不检查权限的分组
 	noCheckToken := apiGroup.Group("")
-	userCtrl := user.NewUserCtrl(app.UserService)
+	userCtrl := ctl_user.NewUserCtrl(app.UserService)
 	noCheckToken.POST("/user/login", userCtrl.UserLogin)
 	noCheckToken.POST("/user/register", userCtrl.UserRegister)
 	noCheckToken.POST("/user/send_sms", userCtrl.UserSendSms)
@@ -55,6 +57,12 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown fun
 	// 检查权限的分组
 	// checkToken :=apiGroup.Group("").
 	//   Use(middleware.CheckAuthToken(app.UnionService.ModuleUser))
+
+	// common 服务
+	dig.Container.MustInvoke(func(commonCtl *ctl_common.CommonCtrl) {
+		commonApi := apiGroup.Group("")
+		commonApi.GET("/common/icp_info", commonCtl.GetIcpInfo)
+	})
 
 	// 开始服务
 	srv := &http.Server{

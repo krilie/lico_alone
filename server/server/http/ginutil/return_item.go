@@ -54,6 +54,11 @@ func ReturnWithAppErr(c *gin.Context, err *errs.Err) {
 func ReturnOk(c *gin.Context) {
 	c.JSON(200, com_model.StdSuccess)
 }
+
+func ReturnData(c *gin.Context, data interface{}) {
+	c.JSON(200, com_model.NewSuccess(data))
+}
+
 func ReturnFailure(code errs.ErrCode, c *gin.Context) {
 	c.JSON(200, com_model.NewFailure(code, ""))
 }

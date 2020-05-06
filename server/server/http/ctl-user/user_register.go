@@ -1,4 +1,4 @@
-package user
+package ctl_user
 
 import (
 	"github.com/gin-gonic/gin"
