@@ -34,7 +34,7 @@ info:
   version: 0.0.1
 paths:
   /api/common/icp_info:
-    post:
+    get:
       description: Icp信息
       operationId: Icp信息
       responses:
@@ -143,7 +143,7 @@ paths:
       tags:
       - 用户发短信
   /health:
-    post:
+    get:
       description: 健康检查2
       operationId: 健康检查2
       responses:

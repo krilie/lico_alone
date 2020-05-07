@@ -14,7 +14,7 @@ var startTime = time.Now()
 // @Tags 健康检查
 // @ID 健康检查
 // @Success 200 {string} string "hello"
-// @Router /health [post]
+// @Router /health [get]
 func Hello(c *gin.Context) {
 	c.String(http.StatusOK, "hello")
 }
@@ -25,7 +25,7 @@ func Hello(c *gin.Context) {
 // @Tags 健康检查2
 // @ID 健康检查2
 // @Success 200 {string} string "pong start time up time"
-// @Router /health [post]
+// @Router /health [get]
 func Ping(c *gin.Context) {
 	c.String(http.StatusOK, "pong start time "+startTime.String())
 }

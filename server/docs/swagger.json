@@ -11,7 +11,7 @@
     "basePath": "{{.BasePath}}",
     "paths": {
         "/api/common/icp_info": {
-            "post": {
+            "get": {
                 "description": "Icp信息",
                 "tags": [
                     "Icp信息"
@@ -170,7 +170,7 @@
             }
         },
         "/health": {
-            "post": {
+            "get": {
                 "description": "健康检查2",
                 "tags": [
                     "健康检查2"
