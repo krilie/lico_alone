@@ -27,16 +27,8 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown fun
 	gin.SetMode(app.Cfg.GinMode)
 	// 路径设置 根路径
 	RootRouter := gin.Default() // logger recover
-
-	RootRouter.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"localhost:3000", "https://lizo.top"},
-		AllowMethods:     []string{"GET", "POST", "DELETE", "PUT", "OPTIONS"},
-		AllowHeaders:     []string{"Origin"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		MaxAge:           12 * time.Hour,
-	}))
-
+	// 跨域
+	RootRouter.Use(cors.Default())
 	// 静态文件 图片等
 	RootRouter.StaticFile("/files", app.Cfg.FileSave.LocalFileSaveDir)
 	// swagger + gzip压缩
@@ -46,14 +38,7 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown fun
 	// 健康检查
 	ctl_health_check.Init(RootRouter)
 	// 版本号
-	RootRouter.GET("/version", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"version":    app.Version,
-			"build_time": app.BuildTime,
-			"git_commit": app.GitCommit,
-			"go_version": app.GoVersion,
-		})
-	})
+	RootRouter.GET("/version", Version(app.Version, app.BuildTime, app.GitCommit, app.GoVersion))
 	// api路由 + 中间件
 	apiGroup := RootRouter.Group("/api")
 	apiGroup.Use(middleware.BuildContext())
@@ -159,5 +144,24 @@ func InitAndStartStaticWebServer(ctx context.Context, cfg config.Config) (shutDo
 			log.Info("end of service...")
 			return nil
 		}
+	}
+}
+
+// UserLogin Version
+// @Summary Version
+// @Description Version
+// @Tags Version
+// @ID Version
+// @Success 200 {string} string "version build_time git_commit go_version"
+// @Failure 500 {object} string ""
+// @Router /version [get]
+func Version(version, buildTime, gitCommit, goVersion string) func(c *gin.Context) {
+	return func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"version":    version,
+			"build_time": buildTime,
+			"git_commit": gitCommit,
+			"go_version": goVersion,
+		})
 	}
 }

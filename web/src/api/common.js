@@ -25,3 +25,15 @@ export const getIcpInfo = () => {
         return {name: "unknown", link: "unknown", label: "unknown"};
     });
 }
+
+export const getVersion = ()=>{
+    get("api/common/icp_info").then((res) => {
+        if (res.code !== 2000) {
+            openNotification(res.message);
+        }
+        return res.data;
+    }).catch((error) => {
+        openNotification(error.toString());
+        return {name: "unknown", link: "unknown", label: "unknown"};
+    });
+}

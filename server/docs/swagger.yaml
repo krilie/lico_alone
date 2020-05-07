@@ -154,4 +154,21 @@ paths:
       summary: 健康检查2
       tags:
       - 健康检查2
+  /version:
+    get:
+      description: Version
+      operationId: Version
+      responses:
+        "200":
+          description: version build_time git_commit go_version
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/string'
+            type: object
+      summary: Version
+      tags:
+      - Version
 swagger: "2.0"

@@ -186,6 +186,31 @@
                     }
                 }
             }
+        },
+        "/version": {
+            "get": {
+                "description": "Version",
+                "tags": [
+                    "Version"
+                ],
+                "summary": "Version",
+                "operationId": "Version",
+                "responses": {
+                    "200": {
+                        "description": "version build_time git_commit go_version",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/string"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
