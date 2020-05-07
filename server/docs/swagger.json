@@ -10,6 +10,24 @@
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/common/icp_info": {
+            "post": {
+                "description": "Icp信息",
+                "tags": [
+                    "Icp信息"
+                ],
+                "summary": "Icp信息",
+                "operationId": "Icp信息",
+                "responses": {
+                    "200": {
+                        "description": "pong start time up time",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/login": {
             "post": {
                 "description": "用户用密码登录",
@@ -150,6 +168,24 @@
                     }
                 }
             }
+        },
+        "/health": {
+            "post": {
+                "description": "健康检查2",
+                "tags": [
+                    "健康检查2"
+                ],
+                "summary": "健康检查2",
+                "operationId": "健康检查2",
+                "responses": {
+                    "200": {
+                        "description": "pong start time up time",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -172,6 +208,20 @@
                 "message": {
                     "type": "string",
                     "example": "错误信息"
+                }
+            }
+        },
+        "model.IcpInfo": {
+            "type": "object",
+            "properties": {
+                "label": {
+                    "type": "string"
+                },
+                "link": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
                 }
             }
         }
