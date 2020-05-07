@@ -2,6 +2,7 @@ package http
 
 import (
 	"context"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/config"
@@ -26,6 +27,16 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown fun
 	gin.SetMode(app.Cfg.GinMode)
 	// 路径设置 根路径
 	RootRouter := gin.Default() // logger recover
+
+	RootRouter.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"localhost:3000", "https://lizo.top"},
+		AllowMethods:     []string{"GET", "POST", "DELETE", "PUT", "OPTIONS"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
 	// 静态文件 图片等
 	RootRouter.StaticFile("/files", app.Cfg.FileSave.LocalFileSaveDir)
 	// swagger + gzip压缩
