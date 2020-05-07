@@ -16,10 +16,10 @@ const get = (url) => {
 // {"code":2000,"message":"successful","data":{"name":"1","link":"2","label":"3"}}
 export const getIcpInfo = () => {
     get("api/common/icp_info").then((res) => {
-        if (res.code !== 2000) {
+        if (res.data.code !== 2000) {
             openNotification(res.message);
         }
-        return res.data;
+        return res.data.data;
     }).catch((error) => {
         openNotification(error.toString());
         return {name: "unknown", link: "unknown", label: "unknown"};
