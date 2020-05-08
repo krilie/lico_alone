@@ -14,15 +14,14 @@ const get = (url) => {
 };
 
 // {"code":2000,"message":"successful","data":{"name":"1","link":"2","label":"3"}}
-export const getIcpInfo = () => {
+export const getIcpInfo = (then) => {
     get("api/common/icp_info").then((res) => {
         if (res.data.code !== 2000) {
             openNotification(res.message);
         }
-        return res.data.data;
+        then(res.data.data);
     }).catch((error) => {
         openNotification(error.toString());
-        return {name: "unknown", link: "unknown", label: "unknown"};
     });
 }
 

@@ -12,14 +12,15 @@ export default class IcpLabel extends React.Component {
     }
 
     componentDidMount() {
-        var data = getIcpInfo();
-        this.setState({
-            ...data
-        })
+        getIcpInfo(data=>{
+            this.setState({
+                ...data
+            })
+        });
     }
 
     render() {
-        var {name,link,label} = this.state;
+        const {name,link,label} = this.state;
         return (
             <div className="icpLableDiv" >
                 <a
