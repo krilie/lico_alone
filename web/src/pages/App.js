@@ -41,7 +41,7 @@ class App extends React.Component {
             <div>
                 <Row className="fix-height-menu">
                     <Col className="menu-logo fix-height-menu" span={3}><Logo/></Col>
-                    <Col className="fix-height-menu" span={5}>
+                    <Col className="fix-height-menu" span={9}>
                         <Menu className="Menu" onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
                             <Menu.Item key="/home">主页</Menu.Item>
                             <Menu.Item key="/article">博文</Menu.Item>
@@ -49,7 +49,7 @@ class App extends React.Component {
                             <Menu.Item key="/share">分享</Menu.Item>
                         </Menu>
                     </Col>
-                    <Col className="fix-height-menu" span={14}><AppVersion/></Col>
+                    <Col className="fix-height-menu" span={10}><AppVersion/></Col>
                     <Col className="fix-height-menu" span={2}/>
                 </Row>
                 <Divider orientation="left" className="div-line"/>
