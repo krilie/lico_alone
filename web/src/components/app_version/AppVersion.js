@@ -26,12 +26,32 @@ export default class AppVersion extends React.Component {
         return (
             <div className="appVersion">
                 <Row>
-                    <Col span={12}>{build_time}</Col>
-                    <Col span={12}>{git_commit}</Col>
+                    <Col span={12}>
+                        <Row>
+                            <Col span={4} className="text-right ellipsis text-size">构建时间</Col>
+                            <Col span={20} className="text-left ellipsis text-size">{build_time}</Col>
+                        </Row>
+                    </Col>
+                    <Col span={12}>
+                        <Row>
+                            <Col span={4} className="text-right ellipsis text-size">散列值</Col>
+                            <Col span={20} className="text-left ellipsis text-size">{git_commit}</Col>
+                        </Row>
+                    </Col>
                 </Row>
                 <Row>
-                    <Col span={12}>{go_version}</Col>
-                    <Col span={12}>{version}</Col>
+                    <Col span={12}>
+                        <Row>
+                            <Col span={4} className="text-size text-right ellipsis">Go版本</Col>
+                            <Col span={20} className="text-size text-left ellipsis">{go_version}</Col>
+                        </Row>
+                    </Col>
+                    <Col span={12}>
+                        <Row>
+                            <Col span={4}  className="text-size text-right ellipsis">App版本</Col>
+                            <Col span={20} className="text-size text-left ellipsis">{version}</Col>
+                        </Row>
+                    </Col>
                 </Row>
             </div>
         );
