@@ -6,7 +6,8 @@ import {Route, Switch} from "react-router-dom";
 import Share from "./share/Share";
 import Photos from "./photos/Photos";
 import Article from "./article/Article";
-import IcpLabel from "../components/icp/icpLabel";
+import IcpLabel from "../components/icp/IcpLabel";
+import AppVersion from "../components/app_version/AppVersion";
 import {withRouter, Redirect} from "react-router-dom";
 import "./App.less"
 import Home from "./home/Home";
@@ -53,6 +54,7 @@ class App extends React.Component {
                     <Menu.Item key="/share">
                         分享
                     </Menu.Item>
+                    <AppVersion/>
                 </Menu>
                 <Switch>
                     <Route exact path="/home" component={Home}/>

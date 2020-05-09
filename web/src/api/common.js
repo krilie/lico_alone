@@ -17,7 +17,7 @@ const get = (url) => {
 export const getIcpInfo = (then) => {
     get("api/common/icp_info").then((res) => {
         if (res.data.code !== 2000) {
-            openNotification(res.message);
+            openNotification(res.data.message);
         }
         then(res.data.data);
     }).catch((error) => {
@@ -25,14 +25,10 @@ export const getIcpInfo = (then) => {
     });
 }
 
-export const getVersion = ()=>{
-    get("api/common/icp_info").then((res) => {
-        if (res.code !== 2000) {
-            openNotification(res.message);
-        }
-        return res.data;
+export const getVersion = (then)=>{
+    get("version").then((res) => {
+        then(res.data)
     }).catch((error) => {
         openNotification(error.toString());
-        return {name: "unknown", link: "unknown", label: "unknown"};
     });
 }

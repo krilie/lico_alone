@@ -1,5 +1,5 @@
 import React from "react";
-import "./icplable.less"
+import "./Icplable.less"
 import {getIcpInfo} from "../../api/common";
 
 export default class IcpLabel extends React.Component {
