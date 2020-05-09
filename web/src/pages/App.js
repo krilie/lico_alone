@@ -1,6 +1,6 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import {Menu} from 'antd';
+import {Menu, Row,Col,Divider} from 'antd';
 import Logo from "../components/logo/Logo";
 import {Route, Switch} from "react-router-dom";
 import Share from "./share/Share";
@@ -39,23 +39,20 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Menu className="Menu" onClick={this.handleClick} selectedKeys={[this.state.current]}
-                      mode="horizontal">
-                    <Logo/>
-                    <Menu.Item key="/home">
-                        主页
-                    </Menu.Item>
-                    <Menu.Item key="/article">
-                        博文
-                    </Menu.Item>
-                    <Menu.Item key="/photos">
-                        图片
-                    </Menu.Item>
-                    <Menu.Item key="/share">
-                        分享
-                    </Menu.Item>
-                    <AppVersion/>
-                </Menu>
+                <Row>
+                    <Col span={3}><Logo/></Col>
+                    <Col span={11}>
+                        <Menu className="Menu" onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
+                            <Menu.Item key="/home">主页</Menu.Item>
+                            <Menu.Item key="/article">博文</Menu.Item>
+                            <Menu.Item key="/photos">图片</Menu.Item>
+                            <Menu.Item key="/share">分享</Menu.Item>
+                        </Menu>
+                    </Col>
+                    <Col span={8}><AppVersion/></Col>
+                    <Col span={2}/>
+                </Row>
+                <Divider orientation="left" className="div-line"/>
                 <Switch>
                     <Route exact path="/home" component={Home}/>
                     <Route exact path="/share" component={Share}/>

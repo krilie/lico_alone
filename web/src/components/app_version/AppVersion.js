@@ -1,5 +1,6 @@
 import React from "react";
 import "./AppVersion.less"
+import {Row,Col} from "antd"
 import {getVersion} from "../../api/common";
 
 export default class AppVersion extends React.Component {
@@ -24,10 +25,14 @@ export default class AppVersion extends React.Component {
         const {build_time, git_commit, go_version, version} = this.state;
         return (
             <div className="appVersion">
-                <div>{build_time}</div>
-                <div>{git_commit}</div>
-                <div>{go_version}</div>
-                <div>{version}</div>
+                <Row>
+                    <Col span={12}>{build_time}</Col>
+                    <Col span={12}>{git_commit}</Col>
+                </Row>
+                <Row>
+                    <Col span={12}>{go_version}</Col>
+                    <Col span={12}>{version}</Col>
+                </Row>
             </div>
         );
     }
