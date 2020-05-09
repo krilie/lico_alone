@@ -1,7 +1,9 @@
 import React from "react";
 import "./AppVersion.less"
-import {Row, Col} from "antd"
+import {Row, Col,Button} from "antd"
 import {getVersion} from "../../api/common";
+import CopyToBoard from "../../utils/CopyToBoard";
+import openNotification from "../../utils/MessageBoard";
 
 export default class AppVersion extends React.Component {
 
@@ -21,28 +23,31 @@ export default class AppVersion extends React.Component {
         });
     }
 
+    copyText = (text)=>{
+        CopyToBoard(text)
+        openNotification("copy success")
+    }
+
     render() {
         const {build_time, git_commit, go_version, version} = this.state;
         const buildTime = <Row>
-            <Col flex="50px" className="text-right ellipsis text-size">构建时间</Col>
-            <Col flex="auto" className="text-left ellipsis text-size">{build_time}</Col>
+            <Col flex="auto" className="text-left ellipsis text-size-small" title={build_time}>构建时间: {build_time}</Col>
         </Row>
         const gitCommit = <Row>
-            <Col flex="50px"  className="text-right ellipsis text-size">散列值</Col>
-            <Col flex="auto"  className="text-left ellipsis text-size">{git_commit}</Col>
+            <Col flex="auto"  className="text-left ellipsis text-size" title={git_commit}>
+                <Button onClick={()=>this.copyText(git_commit)} type="link" className="text-left ellipsis text-size no-margin-padding"> 散列值 : {git_commit}</Button>
+            </Col>
         </Row>
         const goVersion = <Row>
-            <Col flex="50px" className="text-size text-right ellipsis">Go版本</Col>
-            <Col flex="auto" className="text-size text-left ellipsis">{go_version}</Col>
+            <Col flex="auto" className="text-size text-left ellipsis" title={go_version}>Go版本 : {go_version}</Col>
         </Row>
         const appVersion = <Row>
-            <Col flex="50px" className="text-size text-right ellipsis">App版本</Col>
-            <Col flex="auto" className="text-size text-left ellipsis">{version}</Col>
+            <Col flex="auto" className="text-size-small text-left ellipsis" title={version}>App版本 : {version}</Col>
         </Row>
         return (
             <div className="appVersion">
-                <Row><Col span={12}>{buildTime}</Col><Col span={12}>{gitCommit}</Col></Row>
-                <Row><Col span={12}>{goVersion}</Col><Col span={12}>{appVersion}</Col></Row>
+                <Row><Col span={8}>{buildTime}</Col><Col span={16}>{gitCommit}</Col></Row>
+                <Row><Col span={8}>{appVersion}</Col><Col span={16}>{goVersion}</Col></Row>
             </div>
         );
     }
