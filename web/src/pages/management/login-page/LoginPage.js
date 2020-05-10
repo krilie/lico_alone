@@ -34,7 +34,7 @@ export default class LoginPage extends React.Component {
             };
         const
             tailLayout = {
-                wrapperCol: {offset: 8, span: 16},
+                wrapperCol: {offset: 12, span: 12},
             };
 
 
@@ -45,7 +45,6 @@ export default class LoginPage extends React.Component {
                     this.setToken(res.data.data.token)
                     this.goToPage("/management/manage")
                 } else {
-                    debugger
                     openNotification(res.data.message + res.data.detail)
                 }
             }).then(err => {
@@ -92,9 +91,9 @@ export default class LoginPage extends React.Component {
 
         return (
             <Row className="main-row">
-                <Col span={4}/>
+                <Col span={2}/>
                 <Col span={16}>{form}</Col>
-                <Col span={4}/>
+                <Col span={6}/>
             </Row>
         );
     };
