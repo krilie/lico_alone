@@ -5,6 +5,11 @@ import React from "react";
 const { Header, Content, Footer, Sider } = Layout;
 
 export default class ManagePage extends React.Component {
+
+    goToPage = path => {
+        this.props.history.push(path);
+    };
+
     render() {
         return (
             <Layout>

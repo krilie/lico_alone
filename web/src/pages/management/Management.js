@@ -24,7 +24,7 @@ export default class Management extends React.Component {
                 <Switch>
                     <Route exact path="/management/login" component={LoginPage}/>
                     <Route exact path="/management/manage" component={ManagePage}/>
-                    <Redirect path="/management/login" to={{pathname: '/home'}}/>
+                    <Redirect path="/management" to={{pathname: '/management/login'}}/>
                 </Switch>
             </div>
         );

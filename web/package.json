@@ -147,6 +147,7 @@
   },
   "devDependencies": {
     "less": "^3.11.1",
-    "react-router-dom": "^5.1.2"
+    "react-router-dom": "^5.1.2",
+    "storejs": "^1.0.25"
   }
 }
