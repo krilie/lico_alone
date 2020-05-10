@@ -39,11 +39,11 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Row className="fix-height-menu" justify="start">
+                <Row className="fix-height-menu" justify="start" align="middle">
                     <Col className="menu-logo" flex="150px">
                         <Logo/>
                     </Col>
-                    <Col className="fix-height-menu" flex="300px">
+                    <Col className="fix-height-menu" flex="0 1 250px">
                         <Menu className="Menu" onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
                             <Menu.Item key="/home">主页</Menu.Item>
                             <Menu.Item key="/article">博文</Menu.Item>
@@ -51,7 +51,7 @@ class App extends React.Component {
                             <Menu.Item key="/share">分享</Menu.Item>
                         </Menu>
                     </Col>
-                    <Col className="fix-height-menu" flex="400px"><AppVersion/></Col>
+                    <Col className="fix-height-menu" flex="0 1 300px"><AppVersion/></Col>
                 </Row>
                 <Divider orientation="left" className="div-line"/>
                 <Switch>
