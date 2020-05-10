@@ -1,6 +1,6 @@
 import React from "react";
 import "./AppVersion.less"
-import {Row, Col,Button} from "antd"
+import {Row, Col} from "antd"
 import {getVersion} from "../../api/common";
 import CopyToBoard from "../../utils/CopyToBoard";
 import openNotification from "../../utils/MessageBoard";
@@ -46,8 +46,8 @@ export default class AppVersion extends React.Component {
         </Row>
         return (
             <div className="appVersion">
-                <Row><Col span={8}>{buildTime}</Col><Col span={16}>{gitCommit}</Col></Row>
-                <Row><Col span={8}>{appVersion}</Col><Col span={16}>{goVersion}</Col></Row>
+                <Row><Col span={13}>{buildTime}</Col><Col span={11}>{gitCommit}</Col></Row>
+                <Row><Col span={13}>{appVersion}</Col><Col span={11}>{goVersion}</Col></Row>
             </div>
         );
     }

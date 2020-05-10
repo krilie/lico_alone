@@ -11,6 +11,9 @@ import AppVersion from "../components/app_version/AppVersion";
 import {withRouter, Redirect} from "react-router-dom";
 import "./App.less"
 import Home from "./home/Home";
+import RightOutlined from "@ant-design/icons/lib/icons/RightOutlined";
+import RightCircleTwoTone from "@ant-design/icons/lib/icons/RightCircleTwoTone";
+import openNotification from "../utils/MessageBoard";
 
 class App extends React.Component {
 
@@ -40,10 +43,10 @@ class App extends React.Component {
         return (
             <div>
                 <Row className="fix-height-menu" justify="start" align="middle">
-                    <Col className="menu-logo" flex="150px">
+                    <Col className="menu-logo" flex="0 1 150px">
                         <Logo/>
                     </Col>
-                    <Col className="fix-height-menu" flex="0 1 250px">
+                    <Col className="fix-height-menu" flex="1 1 250px">
                         <Menu className="Menu" onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
                             <Menu.Item key="/home">主页</Menu.Item>
                             <Menu.Item key="/article">博文</Menu.Item>
@@ -51,7 +54,9 @@ class App extends React.Component {
                             <Menu.Item key="/share">分享</Menu.Item>
                         </Menu>
                     </Col>
-                    <Col className="fix-height-menu" flex="0 1 300px"><AppVersion/></Col>
+                    <Col flex="0 1 310px"> <AppVersion/> </Col>
+                    <Col flex="10px"></Col>
+                    <Col flex="0 1 20px"> <RightCircleTwoTone onClick={()=>openNotification("hello")} /></Col>
                 </Row>
                 <Divider orientation="left" className="div-line"/>
                 <Switch>
