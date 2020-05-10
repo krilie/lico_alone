@@ -20,7 +20,20 @@
                 "operationId": "Icp信息",
                 "responses": {
                     "200": {
-                        "description": "pong start time up time",
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.IcpInfo"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
                         "schema": {
                             "type": "string"
                         }
@@ -59,14 +72,14 @@
                     "200": {
                         "description": "2000 {token:\"asb\"}",
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "type": "string"
                         }
                     }
                 }
@@ -117,8 +130,7 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "type": "string"
                         }
                     }
                 }
@@ -162,8 +174,7 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "type": "string"
                         }
                     }
                 }

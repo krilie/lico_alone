@@ -19,7 +19,9 @@ func NewCommonCtrl(common *common_service.CommonService) *CommonCtrl {
 // @Description Icp信息
 // @Tags Icp信息
 // @ID Icp信息
-// @Success 200 {string} model.IcpInfo "pong start time up time"
+// @Success 200 {object} model.IcpInfo
+// @Success 400 {string} errInfo
+// @Success 500 {string} errInfo
 // @Router /api/common/icp_info [get]
 func (common *CommonCtrl) GetIcpInfo(c *gin.Context) {
 	info := common.CommonService.GetIcpInfo(ginutil.MustGetAppCtx(c))

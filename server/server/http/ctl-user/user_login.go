@@ -13,8 +13,8 @@ import (
 // @Produce  json
 // @Param phone formData string true "用户手机号"
 // @Param password formData string true "用户密码"
-// @Success 200 {string} com_model.CommonReturn "2000 {token:"asb"}"
-// @Failure 500 {object} com_model.CommonReturn
+// @Success 200 {object} com_model.CommonReturn "2000 {token:"asb"}"
+// @Failure 500 {string} errInfo
 // @Router /api/user/login [post]
 func (a *UserCtrl) UserLogin(c *gin.Context) {
 	phone := c.PostForm("phone")

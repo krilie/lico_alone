@@ -39,7 +39,16 @@ paths:
       operationId: Icp信息
       responses:
         "200":
-          description: pong start time up time
+          description: OK
+          schema:
+            $ref: '#/definitions/model.IcpInfo'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
           schema:
             type: string
       summary: Icp信息
@@ -66,12 +75,12 @@ paths:
         "200":
           description: 2000 {token:"asb"}
           schema:
-            type: string
+            $ref: '#/definitions/com_model.CommonReturn'
+            type: object
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
-            type: object
+            type: string
       summary: 用户登录
       tags:
       - 用户账号
@@ -106,8 +115,7 @@ paths:
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
-            type: object
+            type: string
       summary: 用户注册
       tags:
       - 用户账号
@@ -137,8 +145,7 @@ paths:
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
-            type: object
+            type: string
       summary: 用户发短信
       tags:
       - 用户发短信

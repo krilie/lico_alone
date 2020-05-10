@@ -15,7 +15,7 @@ import (
 // @Param password formData string true "用户密码"
 // @Param valid_code formData string true "验证码"
 // @Success 200 {object} com_model.CommonReturn
-// @Failure 500 {object} com_model.CommonReturn
+// @Failure 500 {string} errInfo
 // @Router /api/user/register [post]
 func (a *UserCtrl) UserRegister(c *gin.Context) {
 	phone := c.PostForm("phone")
