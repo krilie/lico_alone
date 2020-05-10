@@ -14,7 +14,6 @@ import Home from "./home/Home";
 import RightCircleTwoTone from "@ant-design/icons/lib/icons/RightCircleTwoTone";
 import Management from "./management/Management";
 import RhythmStateHolder from "../utils/RhythmStateHolder";
-import openNotification from "../utils/MessageBoard";
 
 class App extends React.Component {
 
@@ -42,9 +41,8 @@ class App extends React.Component {
 
     times = new RhythmStateHolder()
     toManagePage = ()=>{
-        if (this.times.PushStateOrReset()) {
+        if (this.times.PushStateOrReset() === true) {
             this.handleClick({key: "/management"})
-            this.times = 0
         }else{
 
         }
