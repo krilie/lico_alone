@@ -55,7 +55,7 @@ class App extends React.Component {
                     </Col>
                     <Col flex="0 1 310px"> <AppVersion/> </Col>
                     <Col flex="10px"/>
-                    <Col flex="0 1 20px"> <RightCircleTwoTone onClick={()=>this.handleClick({key:"management"})} /></Col>
+                    <Col flex="0 1 20px"> <RightCircleTwoTone onClick={()=>this.handleClick({key:"/management"})} /></Col>
                 </Row>
                 <Divider orientation="left" className="div-line"/>
                 <Switch>
