@@ -35,7 +35,7 @@ export default class AppVersion extends React.Component {
         </Row>
         const gitCommit = <Row>
             <Col flex="auto"  className="text-left ellipsis text-size" title={git_commit}>
-                <Button onClick={()=>this.copyText(git_commit)} type="link" className="text-left ellipsis text-size no-margin-padding"> 散列值 : {git_commit}</Button>
+                <div style={{cursor:"pointer"}} onClick={()=>this.copyText(git_commit)}> 散列值 : {git_commit}</div>
             </Col>
         </Row>
         const goVersion = <Row>
