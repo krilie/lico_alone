@@ -1,5 +1,9 @@
 import React from "react";
-import {GetUserToken,SetUserToken} from "../../../utils/LocalStorageUtil";
+import "./LoginPage.less"
+import {GetUserToken, SetUserToken} from "../../../utils/LocalStorageUtil";
+import {Button, Col, Form, Input, Row} from "antd";
+import {userLogin} from "../../../api/UserApi";
+import openNotification from "../../../utils/MessageBoard";
 
 /**
  * 1.检查token 如果token不为空或null 则跳转主管理页面
@@ -17,15 +21,81 @@ export default class LoginPage extends React.Component {
         this.props.history.push(path);
     };
 
-    setToken(token){
+    setToken(token) {
         SetUserToken(token)
     }
 
+
     render() {
+        const
+            layout = {
+                labelCol: {span: 8},
+                wrapperCol: {span: 16},
+            };
+        const
+            tailLayout = {
+                wrapperCol: {offset: 8, span: 16},
+            };
+
+
+        const onFinish = values => {
+            // 登录
+            userLogin(values).then(res => {
+                if (res.data.code === 2000) {
+                    this.setToken(res.data.data.token)
+                    this.goToPage("/management/manage")
+                } else {
+                    debugger
+                    openNotification(res.data.message + res.data.detail)
+                }
+            }).then(err => {
+                if (err !== undefined)
+                    openNotification(err)
+            }).finally(()=>{
+
+            })
+        };
+
+        const onFinishFailed = errorInfo => {
+            console.log('Failed:', errorInfo);
+        };
+
+        const form = <Form
+            {...layout}
+            name="basic"
+            initialValues={{remember: true}}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+        >
+            <Form.Item
+                label="手机号"
+                name="phone"
+                rules={[{required: true, message: '手机号'}]}
+            >
+                <Input/>
+            </Form.Item>
+
+            <Form.Item
+                label="密码"
+                name="password"
+                rules={[{required: true, message: '请输入密码'}]}
+            >
+                <Input.Password/>
+            </Form.Item>
+
+            <Form.Item {...tailLayout}>
+                <Button type="primary" htmlType="submit">
+                    登录
+                </Button>
+            </Form.Item>
+        </Form>
+
         return (
-            <div>
-                login page
-            </div>
+            <Row className="main-row">
+                <Col span={4}/>
+                <Col span={16}>{form}</Col>
+                <Col span={4}/>
+            </Row>
         );
-    }
+    };
 }
