@@ -21,6 +21,9 @@ class App extends React.Component {
     };
 
     componentWillMount() {
+        if (this.props.location.pathname === '/') {
+            this.props.location.pathname = "/home";
+        }
         const {pathname} = this.props.location;
         this.props.history.push(pathname);
         this.setState({
@@ -60,7 +63,7 @@ class App extends React.Component {
                     <Route exact path="/share" component={Share}/>
                     <Route exact path="/photos" component={Photos}/>
                     <Route exact path="/article" component={Article}/>
-                    <Route exact path="/management" component={Management}/>
+                    <Route exact={false} path="/management" component={Management}/>
                     <Redirect path="/" to={{pathname: '/home'}}/>
                 </Switch>
                 <IcpLabel/>
