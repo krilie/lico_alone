@@ -12,7 +12,6 @@ import {withRouter, Redirect} from "react-router-dom";
 import "./App.less"
 import Home from "./home/Home";
 import RightCircleTwoTone from "@ant-design/icons/lib/icons/RightCircleTwoTone";
-import openNotification from "../utils/MessageBoard";
 import Management from "./management/Management";
 
 class App extends React.Component {
@@ -22,9 +21,6 @@ class App extends React.Component {
     };
 
     componentWillMount() {
-        if (this.props.location.pathname === '/') {
-            this.props.location.pathname = "/home";
-        }
         const {pathname} = this.props.location;
         this.props.history.push(pathname);
         this.setState({
