@@ -13,6 +13,7 @@ import "./App.less"
 import Home from "./home/Home";
 import RightCircleTwoTone from "@ant-design/icons/lib/icons/RightCircleTwoTone";
 import openNotification from "../utils/MessageBoard";
+import Management from "./management/Management";
 
 class App extends React.Component {
 
@@ -54,8 +55,8 @@ class App extends React.Component {
                         </Menu>
                     </Col>
                     <Col flex="0 1 310px"> <AppVersion/> </Col>
-                    <Col flex="10px"></Col>
-                    <Col flex="0 1 20px"> <RightCircleTwoTone onClick={()=>openNotification("hello")} /></Col>
+                    <Col flex="10px"/>
+                    <Col flex="0 1 20px"> <RightCircleTwoTone onClick={()=>this.handleClick({key:"management"})} /></Col>
                 </Row>
                 <Divider orientation="left" className="div-line"/>
                 <Switch>
@@ -63,6 +64,7 @@ class App extends React.Component {
                     <Route exact path="/share" component={Share}/>
                     <Route exact path="/photos" component={Photos}/>
                     <Route exact path="/article" component={Article}/>
+                    <Route exact path="/management" component={Management}/>
                     <Redirect path="/" to={{pathname: '/home'}}/>
                 </Switch>
                 <IcpLabel/>
