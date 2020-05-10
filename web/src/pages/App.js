@@ -11,7 +11,6 @@ import AppVersion from "../components/app_version/AppVersion";
 import {withRouter, Redirect} from "react-router-dom";
 import "./App.less"
 import Home from "./home/Home";
-import RightOutlined from "@ant-design/icons/lib/icons/RightOutlined";
 import RightCircleTwoTone from "@ant-design/icons/lib/icons/RightCircleTwoTone";
 import openNotification from "../utils/MessageBoard";
 
