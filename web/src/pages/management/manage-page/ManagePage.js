@@ -5,7 +5,7 @@ import "./ManagePage.less"
 import { Route, Switch} from "react-router";
 import SettingPage from "./setting-page/SettingPage";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Sider } = Layout;
 
 export default class ManagePage extends React.Component {
 
