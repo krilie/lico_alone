@@ -1,6 +1,6 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import {Menu, Row,Col,Divider} from 'antd';
+import {Menu, Row, Col, Divider, BackTop} from 'antd';
 import Logo from "../components/logo/Logo";
 import {Route, Switch} from "react-router-dom";
 import Share from "./share/Share";
@@ -48,7 +48,22 @@ class App extends React.Component {
         }
     }
 
+
+
+
     render() {
+
+       const style = {
+            height: 40,
+            width: 40,
+            lineHeight: '40px',
+            borderRadius: 4,
+            backgroundColor: '#1088e9',
+            color: '#fff',
+            textAlign: 'center',
+            fontSize: 14,
+        };
+
         return (
             <div>
                 <Row className="fix-height-menu" justify="start" align="middle">
@@ -77,6 +92,9 @@ class App extends React.Component {
                     <Redirect path="/" to={{pathname: '/home'}}/>
                 </Switch>
                 <IcpLabel/>
+                <BackTop>
+                    <div style={style}>UP</div>
+                </BackTop>
             </div>
         );
     }
