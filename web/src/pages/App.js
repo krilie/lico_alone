@@ -1,6 +1,6 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import 'antd/dist/antd.css';
-import {Menu, Row, Col, Divider, BackTop} from 'antd';
+import {Menu, Row, Col, Divider, BackTop, Affix} from 'antd';
 import Logo from "../components/logo/Logo";
 import {Route, Switch} from "react-router-dom";
 import Share from "./share/Share";
@@ -48,9 +48,6 @@ class App extends React.Component {
         }
     }
 
-
-
-
     render() {
 
        const style = {
@@ -64,25 +61,32 @@ class App extends React.Component {
             fontSize: 14,
         };
 
+
         return (
             <div>
-                <Row className="fix-height-menu" justify="start" align="middle">
-                    <Col className="menu-logo" flex="0 1 150px">
-                        <Logo/>
-                    </Col>
-                    <Col className="fix-height-menu" flex="1 1 250px">
-                        <Menu className="Menu" onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
-                            <Menu.Item key="/home">主页</Menu.Item>
-                            <Menu.Item key="/article">博文</Menu.Item>
-                            <Menu.Item key="/photos">图片</Menu.Item>
-                            <Menu.Item key="/share">分享</Menu.Item>
-                        </Menu>
-                    </Col>
-                    <Col flex="0 1 310px"> <AppVersion/> </Col>
-                    <Col flex="10px"/>
-                    <Col flex="0 1 20px"> <RightCircleTwoTone onClick={()=>this.toManagePage()} /></Col>
-                </Row>
-                <Divider orientation="left" className="div-line"/>
+                <Affix className="menu-affix" offsetTop={0}>
+                    <Row className="fix-height-menu menu-affix" justify="start" align="middle">
+                        <Col className="menu-logo" flex="0 1 150px">
+                            <Logo/>
+                        </Col>
+                        <Col className="fix-height-menu" flex="1 1 250px">
+                            <Menu className="Menu" onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
+                                <Menu.Item key="/home">主页</Menu.Item>
+                                <Menu.Item key="/article">博文</Menu.Item>
+                                <Menu.Item key="/photos">图片</Menu.Item>
+                                <Menu.Item key="/share">分享</Menu.Item>
+                            </Menu>
+                        </Col>
+                        <Col flex="0 1 310px"  className="array-router" > <AppVersion/> </Col>
+                        <Col flex="10px"  className="array-router"/>
+                        <Col flex="0 1 20px" className="array-router">
+                            <RightCircleTwoTone  className="array-router" onClick={()=>this.toManagePage()} />
+                        </Col>
+                    </Row>
+                    <Divider orientation="left" className="div-line"/>
+                </Affix>
+
+
                 <Switch>
                     <Route exact path="/home" component={Home}/>
                     <Route exact path="/share" component={Share}/>
