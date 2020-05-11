@@ -150,10 +150,10 @@ func InitAndStartStaticWebServer(ctx context.Context, cfg config.Config) (shutDo
 // UserLogin Version
 // @Summary Version
 // @Description Version
-// @Tags Version
+// @Tags 基本信息
 // @ID Version
 // @Success 200 {string} string "version build_time git_commit go_version"
-// @Failure 500 {object} string ""
+// @Failure 500 {string} string ""
 // @Router /version [get]
 func Version(version, buildTime, gitCommit, goVersion string) func(c *gin.Context) {
 	return func(c *gin.Context) {

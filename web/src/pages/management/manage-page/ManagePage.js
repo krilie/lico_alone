@@ -16,8 +16,9 @@ export default class ManagePage extends React.Component {
 
     constructor(props) {
         super(props);
+        const {pathname} = this.props.location;
         this.state = {
-            currentPage:""
+            currentPage:pathname
         }
     }
 

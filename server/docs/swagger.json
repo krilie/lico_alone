@@ -14,7 +14,7 @@
             "get": {
                 "description": "Icp信息",
                 "tags": [
-                    "Icp信息"
+                    "Common"
                 ],
                 "summary": "Icp信息",
                 "operationId": "Icp信息",
@@ -48,7 +48,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "用户账号"
+                    "用户"
                 ],
                 "summary": "用户登录",
                 "operationId": "用户登录",
@@ -92,7 +92,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "用户账号"
+                    "用户"
                 ],
                 "summary": "用户注册",
                 "operationId": "用户注册",
@@ -143,7 +143,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "用户发短信"
+                    "用户"
                 ],
                 "summary": "用户发短信",
                 "operationId": "用户发短信",
@@ -184,7 +184,7 @@
             "get": {
                 "description": "健康检查2",
                 "tags": [
-                    "健康检查2"
+                    "基本信息"
                 ],
                 "summary": "健康检查2",
                 "operationId": "健康检查2",
@@ -202,7 +202,7 @@
             "get": {
                 "description": "Version",
                 "tags": [
-                    "Version"
+                    "基本信息"
                 ],
                 "summary": "Version",
                 "operationId": "Version",
@@ -216,8 +216,7 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/string"
+                            "type": "string"
                         }
                     }
                 }

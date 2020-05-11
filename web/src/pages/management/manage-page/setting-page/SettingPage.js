@@ -15,3 +15,4 @@ export default class SettingPage extends React.Component {
         );
     }
 }
+

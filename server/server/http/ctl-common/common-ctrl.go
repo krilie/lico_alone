@@ -17,7 +17,7 @@ func NewCommonCtrl(common *common_service.CommonService) *CommonCtrl {
 // Health Icp信息
 // @Summary Icp信息
 // @Description Icp信息
-// @Tags Icp信息
+// @Tags Common
 // @ID Icp信息
 // @Success 200 {object} model.IcpInfo
 // @Success 400 {string} errInfo

@@ -9,7 +9,7 @@ import (
 // UserSendSms 用户发短信
 // @Summary 用户发短信
 // @Description 用户发短信
-// @Tags 用户发短信
+// @Tags 用户
 // @ID 用户发短信
 // @Produce  json
 // @Param phone formData string true "用户手机号"

@@ -53,7 +53,7 @@ paths:
             type: string
       summary: Icp信息
       tags:
-      - Icp信息
+      - Common
   /api/user/login:
     post:
       description: 用户用密码登录
@@ -83,7 +83,7 @@ paths:
             type: string
       summary: 用户登录
       tags:
-      - 用户账号
+      - 用户
   /api/user/register:
     post:
       description: 用户注册
@@ -118,7 +118,7 @@ paths:
             type: string
       summary: 用户注册
       tags:
-      - 用户账号
+      - 用户
   /api/user/send_sms:
     post:
       description: 用户发短信
@@ -148,7 +148,7 @@ paths:
             type: string
       summary: 用户发短信
       tags:
-      - 用户发短信
+      - 用户
   /health:
     get:
       description: 健康检查2
@@ -160,7 +160,7 @@ paths:
             type: string
       summary: 健康检查2
       tags:
-      - 健康检查2
+      - 基本信息
   /version:
     get:
       description: Version
@@ -173,9 +173,8 @@ paths:
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/string'
-            type: object
+            type: string
       summary: Version
       tags:
-      - Version
+      - 基本信息
 swagger: "2.0"

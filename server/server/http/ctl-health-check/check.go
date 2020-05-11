@@ -22,7 +22,7 @@ func Hello(c *gin.Context) {
 // Health 健康检查2
 // @Summary 健康检查2
 // @Description 健康检查2
-// @Tags 健康检查2
+// @Tags 基本信息
 // @ID 健康检查2
 // @Success 200 {string} string "pong start time up time"
 // @Router /health [get]
