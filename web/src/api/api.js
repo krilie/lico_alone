@@ -3,6 +3,7 @@ import qs from 'qs'
 import {GetUserToken} from "../utils/LocalStorageUtil";
 import openNotification from "../utils/MessageBoard"
 
+// api请求组 外层返回结构终一
 const apiRequest = axios.create({
     baseURL: 'https://api.lizo.top'
 })
@@ -25,6 +26,10 @@ apiRequest.interceptors.request.use(
 // 返回后拦截
 apiRequest.interceptors.response.use(
     data => {
+        if (data.data.code !== 2000) {
+            openNotification(data.data.message)
+            return Promise.reject(data)
+        }
         return data;
     },
     err => {
