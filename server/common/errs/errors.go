@@ -18,6 +18,7 @@ const (
 	ErrorParam        ErrCode = 4000
 	ErrorNoPermission ErrCode = 4001
 	ErrorInvalidToken ErrCode = 4002
+	ErrorNotExists    ErrCode = 4004
 	ErrorInternal     ErrCode = 5000
 )
 
@@ -28,14 +29,16 @@ var (
 	NoPermissionError = &Err{Code: ErrorNoPermission, Message: "无权限"}  // 4001
 	InternalError     = &Err{Code: ErrorInternal, Message: "内部错误"}     // 5000
 	InvalidTokenError = &Err{Code: ErrorInvalidToken, Message: "凭证无效"} // invalidToken
+	NotExistsError    = &Err{Code: ErrorNotExists, Message: "未找到"}     // not found
 )
 
-func New(code ErrCode) *Err { return &Err{Code: code} }
-func NewNoPermission() *Err { return NoPermissionError.New() }
-func NewInternal() *Err     { return InternalError.New() }
-func NewNormal() *Err       { return NormalError.New() }
-func NewInvalidToken() *Err { return InvalidTokenError.New() }
-func NewParamError() *Err   { return ParamError.New() }
+func New(code ErrCode) *Err   { return &Err{Code: code} }
+func NewNoPermission() *Err   { return NoPermissionError.New() }
+func NewInternal() *Err       { return InternalError.New() }
+func NewNormal() *Err         { return NormalError.New() }
+func NewInvalidToken() *Err   { return InvalidTokenError.New() }
+func NewParamError() *Err     { return ParamError.New() }
+func NewNotExistsError() *Err { return NotExistsError.New() }
 
 type Err struct {
 	Code      ErrCode

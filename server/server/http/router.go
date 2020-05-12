@@ -50,9 +50,10 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown fun
 	noCheckToken.POST("/user/register", userCtrl.UserRegister)
 	noCheckToken.POST("/user/send_sms", userCtrl.UserSendSms)
 
-	// 检查权限的分组
-	// checkToken :=apiGroup.Group("").
-	//   Use(middleware.CheckAuthToken(app.UnionService.ModuleUser))
+	//检查权限的分组
+	checkToken := apiGroup.Group("")
+	checkToken.Use(middleware.CheckAuthToken(app.UnionService.ModuleUser))
+	checkToken.GET("/manage/setting/get_setting_all", userCtrl.ManageGetConfigList)
 
 	// common 服务
 	dig.Container.MustInvoke(func(commonCtl *ctl_common.CommonCtrl) {

@@ -89,7 +89,9 @@ func init() {
 
 func TryLoadFromArgConfigFile() bool {
 	// The default set of command-line flags, parsed from os.Args.
+	file, _ := os.Open("/dev/null")
 	var commandLine = flag.NewFlagSet(os.Args[0], flag.ContinueOnError)
+	commandLine.SetOutput(file)
 	var configFilePath = commandLine.String("config", "", "配置文件")
 	err := commandLine.Parse(os.Args[1:])
 	if err != nil {
