@@ -5,7 +5,8 @@ import openNotification from "../utils/MessageBoard"
 
 // api请求组 外层返回结构终一
 const apiRequest = axios.create({
-    baseURL: 'https://api.lizo.top'
+    baseURL: 'https://lizo.top'
+    // baseURL: ''
 })
 
 let base = "/api";
