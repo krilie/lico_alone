@@ -12,7 +12,7 @@ export default class JsonView extends React.Component {
     }
 
     render() {
-        const {data, onDataChange} = this.props
+        const {data, onDataOk} = this.props
         if (data instanceof Object) {
             return <div>
                 <div>
@@ -22,7 +22,7 @@ export default class JsonView extends React.Component {
                             <div>theValue {value}</div>
                         </div>)}
                 </div>
-                <Button type="primary" onClick={() => onDataChange(data)}>确认</Button>
+                <Button type="primary" onClick={() => onDataOk(data)}>确认</Button>
             </div>
         }
     }

@@ -81,7 +81,7 @@ export const getQuery = (url, query) => {
     console.log(query)
     return apiRequest({
         method: "get",
-        url: `${base}${url}?${qs.stringify(query)}`,
+        url: query === undefined ? `${base}${url}` : `${base}${url}?${qs.stringify(query)}`,
     });
 };
 

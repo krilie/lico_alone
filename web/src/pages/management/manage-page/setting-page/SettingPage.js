@@ -1,6 +1,10 @@
 import React from "react";
 import "./SettingPage.less"
 import {connect} from "react-redux";
+import {getSettingListAllRedux} from "../../../../api/SettingApi";
+import store from "../../../../redux/RuduxIndex"
+import JsonView from "../../../../components/json_view/JsonView";
+import openNotification from "../../../../utils/MessageBoard";
 
 class SettingPage extends React.Component {
 
@@ -9,7 +13,7 @@ class SettingPage extends React.Component {
         this.state = {
             settings: []
         }
-
+        store.dispatch(getSettingListAllRedux())
     }
 
     goToPage = path => {
@@ -17,9 +21,15 @@ class SettingPage extends React.Component {
     };
 
     render() {
+        const {settings} = this.state
+        const sets = settings.map(val=>
+            <div>
+                <JsonView data={val} onDataOk={(data) => openNotification(data)}/>
+            </div>
+        )
         return (
             <div>
-                setting
+                {sets}
             </div>
         );
     }
