@@ -54,6 +54,61 @@ paths:
       summary: Icp信息
       tags:
       - Common
+  /api/manage/setting/get_setting_all:
+    post:
+      description: 获取所有配置项
+      operationId: 获取所有配置项
+      parameters:
+      - description: 搜索值
+        in: query
+        name: searchKey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 获取所有配置项
+      tags:
+      - 配置项
+  /api/manage/setting/update_config:
+    post:
+      description: 更新配置项
+      operationId: 更新配置项
+      parameters:
+      - description: 配置名
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: 配置值
+        in: formData
+        name: value
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 更新配置项
+      tags:
+      - 配置项
   /api/user/login:
     post:
       description: 用户用密码登录

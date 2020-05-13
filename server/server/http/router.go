@@ -54,6 +54,7 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown fun
 	checkToken := apiGroup.Group("")
 	checkToken.Use(middleware.CheckAuthToken(app.UnionService.ModuleUser))
 	checkToken.GET("/manage/setting/get_setting_all", userCtrl.ManageGetConfigList)
+	checkToken.POST("/manage/setting/update_config", userCtrl.ManageUpdateConfig)
 
 	// common 服务
 	dig.Container.MustInvoke(func(commonCtl *ctl_common.CommonCtrl) {
