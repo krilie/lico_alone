@@ -7,9 +7,6 @@ import {Button} from "antd";
  * 目标一 编辑一级json字段
  */
 export default class JsonView extends React.Component {
-    constructor(props) {
-        super(props); // data onDataChange
-    }
 
     render() {
         const {data, onDataOk} = this.props
