@@ -5,9 +5,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/dig"
-	"github.com/krilie/lico_alone/component/nlog"
 	_ "github.com/krilie/lico_alone/docs"
 	ctl_common "github.com/krilie/lico_alone/server/http/ctl-common"
 	"github.com/krilie/lico_alone/server/http/ctl-health-check"
@@ -17,6 +15,7 @@ import (
 	"github.com/prometheus/common/log"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 	"time"
@@ -39,6 +38,25 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown fun
 	ctl_health_check.Init(RootRouter)
 	// 版本号
 	RootRouter.GET("/version", Version(app.Version, app.BuildTime, app.GitCommit, app.GoVersion))
+	// web 网页
+	// web 站点
+	webRouter := RootRouter.Group("/")
+	webRouter.Use(gzip.Gzip(gzip.DefaultCompression)) // 开启gzip压缩
+
+	dir, err := ioutil.ReadDir("./www")
+	if err != nil {
+		panic(err)
+	}
+	for _, info := range dir {
+		if info.IsDir() {
+			webRouter.Static("/"+info.Name(), "./www/"+info.Name())
+		} else {
+			webRouter.StaticFile("/"+info.Name(), "./www/"+info.Name())
+			if info.Name() == "index.html" {
+				webRouter.StaticFile("/", "./www/"+info.Name())
+			}
+		}
+	}
 	// api路由 + 中间件
 	apiGroup := RootRouter.Group("/api")
 	apiGroup.Use(cors.Default())
@@ -88,55 +106,6 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown fun
 	}
 	return func(waitDuration time.Duration) error {
 		ctxTimeout, cancelFunc := context.WithTimeout(ctx, waitDuration)
-		defer cancelFunc()
-		// shutdown
-		err := srv.Shutdown(ctxTimeout)
-		if err != nil {
-			log.Error(err)
-			return err
-		} else {
-			log.Info("end of service...")
-			return nil
-		}
-	}
-}
-
-func InitAndStartStaticWebServer(ctx context.Context, cfg config.Config) (shutDown func(waitSec time.Duration) error) {
-	log := nlog.Log.NewLog(ctx, "controller.router", "InitAndStartStaticWebServer")
-	// 设置gin mode
-	gin.SetMode(cfg.GinMode)
-	// 路径设置 根路径
-	RootRouter := gin.New()
-	RootRouter.Use(gin.Logger(), gin.Recovery())
-	// web 站点
-	webRouter := RootRouter.Group("/")
-	webRouter.Use(gzip.Gzip(gzip.DefaultCompression)) // 开启gzip压缩
-	webRouter.Static("/", "./www")
-	// 开始服务
-	srv := &http.Server{
-		Addr:    ":" + strconv.Itoa(cfg.WebPort),
-		Handler: RootRouter,
-	}
-	//是否有ssl.public_key ssl.private_key
-	pubKey := cfg.SslPub
-	priKey := cfg.SslPri
-	if pubKey == "" || priKey == "" {
-		go func() {
-			if err := srv.ListenAndServe(); err != nil {
-				log.Warnln(err)
-				return
-			}
-		}()
-	} else {
-		go func() {
-			if err := srv.ListenAndServeTLS(pubKey, priKey); err != nil {
-				log.Warnln(err)
-				return
-			}
-		}()
-	}
-	return func(waitSec time.Duration) error {
-		ctxTimeout, cancelFunc := context.WithTimeout(ctx, waitSec)
 		defer cancelFunc()
 		// shutdown
 		err := srv.Shutdown(ctxTimeout)

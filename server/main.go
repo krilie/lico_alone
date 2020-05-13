@@ -58,7 +58,6 @@ func main() {
 		cronStop := cron.InitAndStartCorn(ctx, app)
 		// 最后初始化为开启http服务
 		shutDownApi := http.InitAndStartHttpServer(ctx, app)
-		shutDownWeb := http.InitAndStartStaticWebServer(ctx, app.Cfg)
 		// 收尾工作
 		c := make(chan os.Signal, 1)
 		signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL)
@@ -67,14 +66,7 @@ func main() {
 			log.Info("get a signal %s", s.String())
 			switch s {
 			case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL:
-				// shutdown
-				err := shutDownWeb(10)
-				if err != nil {
-					log.Errorln(err)
-				} else {
-					log.Infoln("service is closed normally")
-				}
-				err = shutDownApi(30)
+				err := shutDownApi(30)
 				if err != nil {
 					log.Errorln(err)
 				} else {
