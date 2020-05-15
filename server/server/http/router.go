@@ -59,7 +59,6 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown fun
 	}
 	// api路由 + 中间件
 	apiGroup := RootRouter.Group("/api")
-	apiGroup.Use(cors.Default())
 	apiGroup.Use(middleware.BuildContext())
 
 	// 不检查权限的分组

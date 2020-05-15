@@ -3,8 +3,8 @@ import openNotification from "../utils/MessageBoard";
 
 // 非api 外层返回结构可能不统一
 const apiCommon = axios.create({
-    // baseURL: 'https://api.lizo.top'
-    baseURL: ''
+    baseURL: 'https://api.lizo.top'
+    // baseURL: ''
 })
 
 const get = (url) => {
