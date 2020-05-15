@@ -27,7 +27,10 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown fun
 	// 路径设置 根路径
 	RootRouter := gin.Default() // logger recover
 	// 跨域
-	RootRouter.Use(cors.Default())
+	var theCors = cors.DefaultConfig()
+	theCors.AllowAllOrigins = true
+	theCors.AddAllowHeaders("Authorization")
+	RootRouter.Use(cors.New(theCors))
 	// 静态文件 图片等
 	RootRouter.StaticFile("/files", app.Cfg.FileSave.LocalFileSaveDir)
 	// swagger + gzip压缩
