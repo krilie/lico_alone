@@ -3,8 +3,8 @@ import "./SettingPage.less"
 import {connect} from "react-redux";
 import {getSettingListAllRedux} from "../../../../api/SettingApi";
 import store from "../../../../redux/RuduxIndex"
-import JsonView from "../../../../components/json_view/JsonView";
-import openNotification from "../../../../utils/MessageBoard";
+// import JsonView from "../../../../components/json_view/JsonView";
+// import openNotification from "../../../../utils/MessageBoard";
 
 class SettingPage extends React.Component {
 
