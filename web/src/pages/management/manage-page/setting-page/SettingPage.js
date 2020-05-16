@@ -24,7 +24,10 @@ class SettingPage extends React.Component {
         const {settings} = this.state
         const sets = settings.map(val=>
             <div>
-                <JsonView data={val} onDataOk={(data) => openNotification(data)}/>
+                <div>{val.name}</div>
+                <div>{val.create_time}</div>
+                <div>{val.value}</div>
+                {/*<JsonView data={val} onDataOk={(data) => openNotification(data)}/>*/}
             </div>
         )
         return (
