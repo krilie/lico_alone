@@ -2,11 +2,11 @@ import axios from "axios";
 import qs from 'qs'
 import {GetUserToken} from "../utils/LocalStorageUtil";
 import openNotification from "../utils/MessageBoard"
+import {baseUrl} from "./baseUrl";
 
 // api请求组 外层返回结构终一
 const apiRequest = axios.create({
-    // baseURL: 'https://lizo.top'
-    // baseURL: ''
+    baseURL: baseUrl
 })
 
 let base = "/api";

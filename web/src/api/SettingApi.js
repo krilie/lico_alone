@@ -5,7 +5,7 @@ export const getSettingListAllRedux = () => {
     return (dispatch) => {
         getQuery("/manage/setting/get_setting_all")
             .then((res) => {
-                const data = res.data; // data 就是body
+                const data = res.data.data; // data 就是body
                 const action = actions.getSettings(data);
                 dispatch(action);
             })

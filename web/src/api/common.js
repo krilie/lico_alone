@@ -1,10 +1,10 @@
 import axios from "axios";
 import openNotification from "../utils/MessageBoard";
+import {baseUrl} from "./baseUrl";
 
 // 非api 外层返回结构可能不统一
 const apiCommon = axios.create({
-    // baseURL: 'https://lizo.top'
-    // baseURL: ''
+    baseURL: baseUrl
 })
 
 const get = (url) => {

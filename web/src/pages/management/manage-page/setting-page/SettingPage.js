@@ -3,6 +3,7 @@ import "./SettingPage.less"
 import {connect} from "react-redux";
 import {getSettingListAllRedux} from "../../../../api/SettingApi";
 import store from "../../../../redux/RuduxIndex"
+//import {Col, Row} from "antd";
 // import JsonView from "../../../../components/json_view/JsonView";
 // import openNotification from "../../../../utils/MessageBoard";
 
@@ -10,9 +11,6 @@ class SettingPage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            settings: []
-        }
         store.dispatch(getSettingListAllRedux())
     }
 
@@ -21,18 +19,17 @@ class SettingPage extends React.Component {
     };
 
     render() {
-        const {settings} = this.state
-        const sets = settings.map(val=>
-            <div>
-                <div>{val.name}</div>
-                <div>{val.create_time}</div>
-                <div>{val.value}</div>
-                {/*<JsonView data={val} onDataOk={(data) => openNotification(data)}/>*/}
-            </div>
-        )
+        const {settings} = this.props
         return (
-            <div>
-                {sets}
+            <div className="setting-height">
+                {settings.map(val =>
+                    <div>
+                        <div >{val.name}</div>
+                        <div >{val.create_time}</div>
+                        <div >{val.value}</div>
+                        <br/>
+                        {/*<JsonView data={val} onDataOk={(data) => openNotification(data)}/>*/}
+                    </div>)}
             </div>
         );
     }
