@@ -9,6 +9,7 @@ import (
 
 type IPerm interface {
 	GetPermByName(ctx context.Context, name string) (*model.Permission, error)
+	GetPermByMethodPath(ctx context.Context, method, path string) (*model.Permission, error)
 	DeletePermByName(ctx context.Context, name string) error
 	CreatePerm(ctx context.Context, item *model.Permission) error
 	CreatePerms(ctx context.Context, items []model.Permission) error
@@ -54,4 +55,19 @@ func (d *UserDao) CreatePerms(ctx context.Context, items []model.Permission) err
 		}
 	}
 	return nil
+}
+
+func (d *UserDao) GetPermByMethodPath(ctx context.Context, method, path string) (*model.Permission, error) {
+	perm := new(model.Permission)
+	err := d.GetDb(ctx).Model(&model.Permission{}).Where(&model.Permission{
+		RefMethod: method,
+		RefPath:   path,
+	}).Find(perm).Error
+	if err != nil {
+		if gorm.IsRecordNotFoundError(err) {
+			return nil, nil
+		}
+		return nil, errs.NewInternal().WithError(err)
+	}
+	return perm, nil
 }

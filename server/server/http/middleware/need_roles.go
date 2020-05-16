@@ -14,7 +14,7 @@ func NeedRoles(auth IAuth, role string) gin.HandlerFunc {
 			return
 		}
 		//check user has permission
-		b, err := auth.HasRole(userId, role)
+		b, err := auth.HasRole(ginutil.MustGetAppCtx(c), userId, role)
 		if err != nil {
 			ginutil.AbortWithErr(c, err)
 			return
