@@ -66,19 +66,18 @@ jobs:
           echo ::set-env name=DOCKER_IMAGE_TAGS_VERSION::$(cat version)
           echo ::set-env name=TZ::"Asia/Shanghai"
 
-      - name: Publish to Registry
-        uses: elgohr/Publish-Docker-Github-Action@master
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1.1.0
         env:
           TAG: ${{ github.sha }}
           TZ:  "Asia/Shanghai"
         with:
-          name: ${{ secrets.DOCKER_IMAGE_NAME }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
-          workdir: ./docker
-          tags: ${{ env.DOCKER_IMAGE_TAGS_VERSION }},${{ env.GITHUB_SHA_SHORT }}
-          snapshot: true
+          path: ./docker
+          repository: ${{ secrets.DOCKER_IMAGE_NAME }}
+          tags:  ${{ env.DOCKER_IMAGE_TAGS_VERSION }},${{ env.GITHUB_SHA_SHORT }}
 
       - name: apply app server
         uses: appleboy/ssh-action@master
