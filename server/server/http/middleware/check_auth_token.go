@@ -32,10 +32,10 @@ func CheckAuthToken(auth IAuth) gin.HandlerFunc {
 		if err != nil {
 			if errors.As(err, &jwt2.ValidationError{}) {
 				validateErr := err.(*jwt2.ValidationError)
-				if errors.Is(validateErr.Inner, jwt.ErrIatTime) {
+				if validateErr.Inner == jwt.ErrIatTime {
 					ginutil.AbortWithErr(c, errs.NewInvalidToken().WithMsg("token format error"))
 					return
-				} else if errors.Is(validateErr.Inner, jwt.ErrTimeExp) {
+				} else if validateErr.Inner == jwt.ErrTimeExp {
 					c.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInvalidToken().WithMsg("token expired")))
 					return
 				}
