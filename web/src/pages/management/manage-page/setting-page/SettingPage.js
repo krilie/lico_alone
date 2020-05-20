@@ -5,6 +5,7 @@ import {getSettingListAllRedux} from "../../../../api/SettingApi";
 import store from "../../../../redux/RuduxIndex"
 import JsonView from "../../../../components/json_view/JsonView";
 import openNotification from "../../../../utils/MessageBoard";
+import {TextArea} from "antd";
 //import {Col, Row} from "antd";
 
 class SettingPage extends React.Component {
@@ -25,10 +26,7 @@ class SettingPage extends React.Component {
                 {settings.map(val =>
                     <div>
                         <div >{val.name}</div>
-                        <div >{val.create_time}</div>
-                        <div >{val.value}</div>
-                        <br/>
-                        <JsonView data={val} onDataOk={(data) => openNotification(data)}/>
+                        <TextArea rows={4} defaultValue ={val.value} />
                     </div>)}
             </div>
         );
