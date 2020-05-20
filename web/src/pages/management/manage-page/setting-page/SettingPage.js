@@ -3,12 +3,9 @@ import "./SettingPage.less"
 import {connect} from "react-redux";
 import {getSettingListAllRedux} from "../../../../api/SettingApi";
 import store from "../../../../redux/RuduxIndex"
-import JsonView from "../../../../components/json_view/JsonView";
-import openNotification from "../../../../utils/MessageBoard";
 import {Input} from "antd";
 
 const {TextArea} = Input
-//import {Col, Row} from "antd";
 
 class SettingPage extends React.Component {
 
