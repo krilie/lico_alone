@@ -3,6 +3,7 @@ package middleware
 import (
 	"context"
 	"errors"
+	jwt2 "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
@@ -29,10 +30,15 @@ func CheckAuthToken(auth IAuth) gin.HandlerFunc {
 
 		var claims, err = jwt.CheckJwtToken(headerAuth)
 		if err != nil {
-			if errors.Is(err, jwt.ErrIatTime) {
-				ginutil.AbortWithErr(c, errs.NewInvalidToken().WithMsg("token format error"))
-				return
-			} else if errors.Is(err, jwt.ErrTimeExp) {
+			if errors.As(err, &jwt2.ValidationError{}) {
+				validateErr := err.(*jwt2.ValidationError)
+				if errors.Is(validateErr.Inner, jwt.ErrIatTime) {
+					ginutil.AbortWithErr(c, errs.NewInvalidToken().WithMsg("token format error"))
+					return
+				} else if errors.Is(validateErr.Inner, jwt.ErrTimeExp) {
+					c.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInvalidToken().WithMsg("token expired")))
+					return
+				}
 				c.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInvalidToken().WithMsg("token expired")))
 				return
 			} else {

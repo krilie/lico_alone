@@ -5,7 +5,9 @@ import {getSettingListAllRedux} from "../../../../api/SettingApi";
 import store from "../../../../redux/RuduxIndex"
 import JsonView from "../../../../components/json_view/JsonView";
 import openNotification from "../../../../utils/MessageBoard";
-import {TextArea} from "antd";
+import {Input} from "antd";
+
+const {TextArea} = Input
 //import {Col, Row} from "antd";
 
 class SettingPage extends React.Component {
@@ -19,14 +21,18 @@ class SettingPage extends React.Component {
         this.props.history.push(path);
     };
 
+    handleUpdate = (name,value)=>{
+
+    }
+
     render() {
         const {settings} = this.props
         return (
             <div className="setting-height">
                 {settings.map(val =>
                     <div>
-                        <div >{val.name}</div>
-                        <TextArea rows={4} defaultValue ={val.value} />
+                        <div>{val.name}</div>
+                        <TextArea rows={4} onChange={(e)=>console.log(e.value)} defaultValue={val.value}/>
                     </div>)}
             </div>
         );
