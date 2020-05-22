@@ -24,12 +24,10 @@ export default class SettingCard extends React.Component {
 
     render() {
         const {name, create_time, value} = this.props.data
-        const extra = <div>
-            <p>{create_time}</p>
-            <Button type="primary" size="small" onChange={this.onCommitSetting}>保存</Button>
-        </div>
-        return <Card title={name} extra={extra} style={{width: 300}}>
-            <TextArea rows={4} onChange={(e) => this.upDataSetting({name, value: e.value})} defaultValue={value}/>
+        const extra = <Button type="primary" size="small" onChange={this.onCommitSetting}>保存</Button>
+        const title = <div>{name} {create_time}</div>
+        return <Card title={title} extra={extra} >
+            <TextArea rows={4} onChange={(e) => this.upDataSetting({name: name,value: e.value})} defaultValue={value}/>
         </Card>
     }
 }
