@@ -1,8 +1,8 @@
 package dig
 
 import (
-	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/config"
+	"github.com/krilie/lico_alone/run_env"
 	"go.uber.org/dig"
 )
 
@@ -34,8 +34,8 @@ func init() {
 	})
 	CheckErr(err)
 	// runEnv
-	err = Container.Provide(func() *context_enum.RunEnv {
-		return context_enum.RunEnvLocal
+	err = Container.Provide(func() *run_env.RunEnv {
+		return run_env.RunEnvLocal
 	})
 	CheckErr(err)
 }

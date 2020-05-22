@@ -19,3 +19,6 @@ server.iml
 config.yaml
 static_files/
 log.txt
+
+www
+!www/.gitignore

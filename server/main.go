@@ -1,13 +1,12 @@
 package main
 
 import (
-	"flag"
 	"fmt"
-	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/component/broker"
 	"github.com/krilie/lico_alone/component/nlog"
+	run_env "github.com/krilie/lico_alone/run_env"
 	broker2 "github.com/krilie/lico_alone/server/broker"
 	"github.com/krilie/lico_alone/server/cron"
 	"github.com/krilie/lico_alone/server/http"
@@ -15,13 +14,6 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-)
-
-var (
-	VERSION    string
-	BUILD_TIME string
-	GO_VERSION string
-	GIT_COMMIT string
 )
 
 //go:generate swag init -g ./main.go
@@ -35,46 +27,37 @@ func main() {
 		cmd := os.Args[1]
 		switch cmd {
 		case "version", "--version", "-version":
-			fmt.Println(VERSION)
+			fmt.Println(run_env.VERSION)
 			return
 		case "git-commit", "--git-commit", "-git-commit":
-			fmt.Println(GIT_COMMIT)
+			fmt.Println(run_env.GIT_COMMIT)
 			return
 		case "go-version", "-go-version", "--go-version":
-			fmt.Println(GO_VERSION)
+			fmt.Println(run_env.GO_VERSION)
 			return
 		case "build-time", "-build-time", "--build-time":
-			fmt.Println(BUILD_TIME)
+			fmt.Println(run_env.BUILD_TIME)
 			return
 		default:
 			break
 		}
 	}
 	// 开始服务
-	ctx := context.NewContext()
-	// 初始化配置块
-	configFilePath := flag.String("config", "config.yaml", "配置文件")
-	flag.Parse()
-	_ = config.LoadConfigByFile(*configFilePath)
 	dig.Container.MustInvoke(func(log *nlog.NLog, app *service.App) {
+		ctx := context.NewContext()
 		// 初始化日志文件
 		defer func() {
 			broker.Smq.Close()
 			log.Infof("消息队列退出")
 		}()
-		// 关闭消息队列
+		// 初始化数据
+		app.InitService.InitData(ctx)
 		// 注册所有消息处理句柄
 		broker2.RegisterHandler(ctx, app)
 		// 初始化定时任务
 		cronStop := cron.InitAndStartCorn(ctx, app)
 		// 最后初始化为开启http服务
-		shutDownApi := http.InitAndStartHttpServer(app)
-		shutDownWeb := http.InitAndStartStaticWebServer(ctx, app.Cfg)
-		// 发送上线邮件
-		//err := app.All.SendServiceUpEmail(ctx)
-		//if err != nil {
-		//	log.Error(err)
-		//}
+		shutDownApi := http.InitAndStartHttpServer(ctx, app)
 		// 收尾工作
 		c := make(chan os.Signal, 1)
 		signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL)
@@ -83,14 +66,7 @@ func main() {
 			log.Info("get a signal %s", s.String())
 			switch s {
 			case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL:
-				// shutdown
-				err := shutDownWeb(10)
-				if err != nil {
-					log.Errorln(err)
-				} else {
-					log.Infoln("service is closed normally")
-				}
-				err = shutDownApi(30)
+				err := shutDownApi(30)
 				if err != nil {
 					log.Errorln(err)
 				} else {
@@ -99,11 +75,6 @@ func main() {
 				// 关闭定时任务
 				cronStop()
 				log.Infoln("cron job end.")
-				// 发送结束邮件
-				//err = app.All.SendServiceEndEmail(ctx)
-				//if err != nil {
-				//	log.Error(err)
-				//}
 				log.Infoln("service is done.")
 				return
 			case syscall.SIGHUP:

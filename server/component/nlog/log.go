@@ -5,6 +5,7 @@ import (
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/config"
 	context2 "github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/run_env"
 	"github.com/sirupsen/logrus"
 	"os"
 )
@@ -13,14 +14,14 @@ type NLog struct {
 	*logrus.Entry
 }
 
-func NewLogger(runEnv context_enum.RunEnv, cfg config.Config) *NLog {
+func NewLogger(runEnv run_env.RunEnv, cfg config.Config) *NLog {
 	var Log = logrus.NewEntry(logrus.New())
 	Log.Logger.SetFormatter(&logrus.TextFormatter{})
 	Log.Logger.SetLevel(logrus.Level(cfg.LogLevel))
 	Log.Logger.SetOutput(os.Stdout)
 	Log = Log.
 		WithField(context_enum.AppName, runEnv.AppName).
-		WithField(context_enum.AppVersion, runEnv.AppVersion).
+		WithField(context_enum.AppVersion, runEnv.Version).
 		WithField(context_enum.AppHost, runEnv.AppHost)
 	Log.Infoln("log init ok")
 	log := &NLog{Log}

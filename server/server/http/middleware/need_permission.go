@@ -19,12 +19,12 @@ func NeedPermission(auth IAuth) gin.HandlerFunc {
 			return
 		}
 		//check user has permission
-		b, err := auth.HasPermission(userId, method, path)
+		has, err := auth.HasPermission(ginutil.MustGetAppCtx(c), userId, method, path)
 		if err != nil {
 			ginutil.AbortWithErr(c, err)
 			return
 		}
-		if !b {
+		if !has {
 			ginutil.AbortWithErr(c, errs.NewNoPermission().WithMsg("无权限"))
 			return
 		}

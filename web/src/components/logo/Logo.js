@@ -5,7 +5,12 @@ import "./Logo.less"
 export default class Logo extends React.Component {
     render() {
         return (
-            <a href={"/"}><img src={ imageLogo }  alt={"Logo"}/></a>
+            <div className="logo">
+                <a className="logo" href={"/"}>
+                    <img src={ imageLogo }  alt={"Logo"}/>
+                </a>
+            </div>
+
         );
     }
 }

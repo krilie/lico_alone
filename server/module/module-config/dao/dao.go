@@ -12,7 +12,7 @@ type ConfigDao struct {
 	log *nlog.NLog
 }
 
-func NewDao(ndb *ndb.NDb, log *nlog.NLog) *ConfigDao {
+func NewConfigDao(ndb *ndb.NDb, log *nlog.NLog) *ConfigDao {
 	err := ndb.GetDb(context.NewContext()).AutoMigrate(&model.Config{}).Error
 	if err != nil {
 		panic(err)

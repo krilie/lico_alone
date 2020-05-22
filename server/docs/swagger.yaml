@@ -1,6 +1,6 @@
 basePath: '{{.BasePath}}'
 definitions:
-  cmodel.CommonReturn:
+  com_model.CommonReturn:
     properties:
       code:
         example: 400
@@ -16,6 +16,15 @@ definitions:
         example: 错误信息
         type: string
     type: object
+  model.IcpInfo:
+    properties:
+      label:
+        type: string
+      link:
+        type: string
+      name:
+        type: string
+    type: object
 host: '{{.Host}}'
 info:
   contact: {}
@@ -24,6 +33,82 @@ info:
   title: Swagger Example API
   version: 0.0.1
 paths:
+  /api/common/icp_info:
+    get:
+      description: Icp信息
+      operationId: Icp信息
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.IcpInfo'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Icp信息
+      tags:
+      - Common
+  /api/manage/setting/get_setting_all:
+    post:
+      description: 获取所有配置项
+      operationId: 获取所有配置项
+      parameters:
+      - description: 搜索值
+        in: query
+        name: searchKey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 获取所有配置项
+      tags:
+      - 配置项
+  /api/manage/setting/update_config:
+    post:
+      description: 更新配置项
+      operationId: 更新配置项
+      parameters:
+      - description: 配置名
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: 配置值
+        in: formData
+        name: value
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 更新配置项
+      tags:
+      - 配置项
   /api/user/login:
     post:
       description: 用户用密码登录
@@ -43,27 +128,17 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{jwt:"asb"}'
+          description: 2000 {token:"asb"}
           schema:
-            type: string
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
-            type: object
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
+            $ref: '#/definitions/com_model.CommonReturn'
             type: object
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
-            type: object
+            type: string
       summary: 用户登录
       tags:
-      - 用户账号
+      - 用户
   /api/user/register:
     post:
       description: 用户注册
@@ -90,26 +165,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
-            type: object
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
-            type: object
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
+            $ref: '#/definitions/com_model.CommonReturn'
             type: object
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
-            type: object
+            type: string
       summary: 用户注册
       tags:
-      - 用户账号
+      - 用户
   /api/user/send_sms:
     post:
       description: 用户发短信
@@ -131,24 +195,41 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
-            type: object
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
-            type: object
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
+            $ref: '#/definitions/com_model.CommonReturn'
             type: object
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/cmodel.CommonReturn'
-            type: object
+            type: string
       summary: 用户发短信
       tags:
-      - 用户发短信
+      - 用户
+  /health:
+    get:
+      description: 健康检查2
+      operationId: 健康检查2
+      responses:
+        "200":
+          description: pong start time up time
+          schema:
+            type: string
+      summary: 健康检查2
+      tags:
+      - 基本信息
+  /version:
+    get:
+      description: Version
+      operationId: Version
+      responses:
+        "200":
+          description: version build_time git_commit go_version
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Version
+      tags:
+      - 基本信息
 swagger: "2.0"

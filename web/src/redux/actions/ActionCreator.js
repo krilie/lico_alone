@@ -1,8 +1,8 @@
-export const GET_DIR_FILE_ITEMS = 'GET_DIR_FILE_ITEMS';
+export const GET_SETTING = 'GET_SETTING';
 
 let actions = {
-    getDirFileItems: function (DirData) {
-        return {type: GET_DIR_FILE_ITEMS, payload: DirData}
+    getSettings: function (settings) {
+        return {type: GET_SETTING, payload: settings}
     },
 };
 

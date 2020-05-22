@@ -1,4 +1,4 @@
-package user
+package ctl_user
 
 import (
 	"github.com/gin-gonic/gin"
@@ -9,13 +9,13 @@ import (
 // UserSendSms 用户发短信
 // @Summary 用户发短信
 // @Description 用户发短信
-// @Tags 用户发短信
+// @Tags 用户
 // @ID 用户发短信
 // @Produce  json
 // @Param phone formData string true "用户手机号"
 // @Param send_type formData string true "register login change_password"
 // @Success 200 {object} com_model.CommonReturn
-// @Failure 500 {object} com_model.CommonReturn
+// @Failure 500 {string} errInfo
 // @Router /api/user/send_sms [post]
 func (a *UserCtrl) UserSendSms(c *gin.Context) {
 	phone := c.PostForm("phone")

@@ -55,3 +55,7 @@ func (ndb *NDb) TransactionOnNewSession(ctx context.Context, fc func(ctx context
 	}
 	return err
 }
+
+type IGetNDb interface {
+	GetNDb(ctx context.Context) *NDb
+}

@@ -2,6 +2,7 @@ package jwt
 
 import (
 	"github.com/dgrijalva/jwt-go"
+	"github.com/krilie/lico_alone/common/utils/str_util"
 	"testing"
 	"time"
 )
@@ -33,4 +34,10 @@ func TestNewJwtToken(t *testing.T) {
 	} else {
 		t.Log(claims)
 	}
+}
+
+func TestCheckJwtToken2(t *testing.T) {
+	claims, e := CheckJwtToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiIiLCJ1c2VyX2lkIjoiMTI1OTQ5MTY2MTA1MDgxMDM2OCIsImlhdCI6MTU4OTIwMzYxOSwiZXhwIjoxNTg5ODA4NDE5LCJqdGkiOiI0N2Q3NzQ0NDcxYTk0Njk2YThlOWQ3MjM0MTljYjdmMSIsImlzcyI6InN5cyJ9.ggFsvQS5WOPLHImsPmiJswrVx6fE7HGrgq9KSIdHRo0")
+	println(str_util.ToJson(claims))
+	println(str_util.ToJson(e))
 }

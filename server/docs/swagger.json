@@ -10,6 +10,118 @@
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/common/icp_info": {
+            "get": {
+                "description": "Icp信息",
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Icp信息",
+                "operationId": "Icp信息",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.IcpInfo"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/manage/setting/get_setting_all": {
+            "post": {
+                "description": "获取所有配置项",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "配置项"
+                ],
+                "summary": "获取所有配置项",
+                "operationId": "获取所有配置项",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "搜索值",
+                        "name": "searchKey",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/com_model.CommonReturn"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/manage/setting/update_config": {
+            "post": {
+                "description": "更新配置项",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "配置项"
+                ],
+                "summary": "更新配置项",
+                "operationId": "更新配置项",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "配置名",
+                        "name": "name",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "配置值",
+                        "name": "value",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/com_model.CommonReturn"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/login": {
             "post": {
                 "description": "用户用密码登录",
@@ -17,7 +129,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "用户账号"
+                    "用户"
                 ],
                 "summary": "用户登录",
                 "operationId": "用户登录",
@@ -39,30 +151,16 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "{jwt:\"asb\"}",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
+                        "description": "2000 {token:\"asb\"}",
                         "schema": {
                             "type": "object",
-                            "$ref": "#/definitions/cmodel.CommonReturn"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/cmodel.CommonReturn"
+                            "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/cmodel.CommonReturn"
+                            "type": "string"
                         }
                     }
                 }
@@ -75,7 +173,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "用户账号"
+                    "用户"
                 ],
                 "summary": "用户注册",
                 "operationId": "用户注册",
@@ -107,28 +205,13 @@
                         "description": "OK",
                         "schema": {
                             "type": "object",
-                            "$ref": "#/definitions/cmodel.CommonReturn"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/cmodel.CommonReturn"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/cmodel.CommonReturn"
+                            "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/cmodel.CommonReturn"
+                            "type": "string"
                         }
                     }
                 }
@@ -141,7 +224,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "用户发短信"
+                    "用户"
                 ],
                 "summary": "用户发短信",
                 "operationId": "用户发短信",
@@ -166,28 +249,55 @@
                         "description": "OK",
                         "schema": {
                             "type": "object",
-                            "$ref": "#/definitions/cmodel.CommonReturn"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/cmodel.CommonReturn"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/cmodel.CommonReturn"
+                            "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/cmodel.CommonReturn"
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "description": "健康检查2",
+                "tags": [
+                    "基本信息"
+                ],
+                "summary": "健康检查2",
+                "operationId": "健康检查2",
+                "responses": {
+                    "200": {
+                        "description": "pong start time up time",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/version": {
+            "get": {
+                "description": "Version",
+                "tags": [
+                    "基本信息"
+                ],
+                "summary": "Version",
+                "operationId": "Version",
+                "responses": {
+                    "200": {
+                        "description": "version build_time git_commit go_version",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -195,7 +305,7 @@
         }
     },
     "definitions": {
-        "cmodel.CommonReturn": {
+        "com_model.CommonReturn": {
             "type": "object",
             "properties": {
                 "code": {
@@ -214,6 +324,20 @@
                 "message": {
                     "type": "string",
                     "example": "错误信息"
+                }
+            }
+        },
+        "model.IcpInfo": {
+            "type": "object",
+            "properties": {
+                "label": {
+                    "type": "string"
+                },
+                "link": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
                 }
             }
         }
