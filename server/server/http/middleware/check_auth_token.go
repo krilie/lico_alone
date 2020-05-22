@@ -42,7 +42,7 @@ func CheckAuthToken(auth IAuth) gin.HandlerFunc {
 				c.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInvalidToken().WithMsg("token error")))
 				return
 			} else {
-				c.AbortWithStatusJSON(500, com_model.NewRetFromErr(errs.NewInternal().WithMsg(err.Error())))
+				c.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInvalidToken().WithMsg("unknown token error")))
 				return
 			}
 		} else {
