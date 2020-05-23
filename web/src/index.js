@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from "react-redux";
 import App from "./pages/App";
-import {HashRouter, Route} from 'react-router-dom'
+import {BrowserRouter, Route} from 'react-router-dom'
 import store from "./redux/RuduxIndex";
 
 ReactDOM.render((
     <Provider store={store}>
-        <HashRouter basename='/'>
+        <BrowserRouter basename='/'>
             <Route path={`/`} component={App}/>
-        </HashRouter>
+        </BrowserRouter>
     </Provider>
 ), document.getElementById('root'));

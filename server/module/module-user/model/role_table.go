@@ -5,10 +5,12 @@ import (
 )
 
 type Role struct {
-	Name               string    `gorm:"column:name;primary_key;type:varchar(32)" json:"name"`
-	CreateTime         time.Time `gorm:"column:create_time;type:datetime;not null" json:"create_time"`
-	Description        string    `gorm:"column:description;type:varchar(100);not null" json:"description"`
-	MainPermissionName string    `gorm:"column:main_permission_name;type:varchar(32);not null;" json:"main_permission_name"`
+	CreatedAt          time.Time  `json:"created_at"`
+	UpdatedAt          time.Time  `json:"updated_at"`
+	DeletedAt          *time.Time `sql:"index" json:"deleted_at"`
+	Name               string     `gorm:"column:name;primary_key;type:varchar(32)" json:"name"`
+	Description        string     `gorm:"column:description;type:varchar(100);not null" json:"description"`
+	MainPermissionName string     `gorm:"column:main_permission_name;type:varchar(32);not null;" json:"main_permission_name"`
 }
 
 func (Role) TableName() string {

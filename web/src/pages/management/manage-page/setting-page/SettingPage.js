@@ -21,7 +21,7 @@ class SettingPage extends React.Component {
         return (
             <div className="setting-height">
                 {settings.map(val =>
-                    <SettingCard data={val}/>
+                    <SettingCard key={val.name} data={val}/>
                 )}
             </div>
         );

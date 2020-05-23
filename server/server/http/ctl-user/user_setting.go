@@ -38,8 +38,8 @@ func (a *UserCtrl) ManageGetConfigList(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/setting/update_config [post]
 func (a *UserCtrl) ManageUpdateConfig(c *gin.Context) {
-	name := c.Query("name")
-	value := c.Query("value")
+	name := c.PostForm("name")
+	value := c.PostForm("value")
 	err := a.userService.UpdateConfig(ginutil.MustGetAppCtx(c), name, value)
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
