@@ -11,7 +11,12 @@ import (
 
 func (s *MessageService) SendEmail(ctx context.Context, to, subject, content string) error {
 	email := &model.MessageEmail{
-		Model:     com_model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
+		Model: com_model.Model{
+			Id:        id_util.GetUuid(),
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
+			DeletedAt: nil,
+		},
 		SendTime:  time.Now(),
 		From:      "sys",
 		To:        to,

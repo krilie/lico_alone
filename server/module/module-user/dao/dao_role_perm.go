@@ -21,8 +21,10 @@ type IRolePerm interface {
 func (d *UserDao) CreateRolePerm(ctx context.Context, roleName, permName string) error {
 	err := d.GetDb(ctx).Model(&model.RolePermission{}).Create(&model.RolePermission{
 		Model: com_model.Model{
-			Id:         id_util.NextSnowflake(),
-			CreateTime: time.Now(),
+			Id:        id_util.NextSnowflake(),
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
+			DeletedAt: nil,
 		},
 		RoleName:       roleName,
 		PermissionName: permName,
