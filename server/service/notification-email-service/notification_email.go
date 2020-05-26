@@ -5,18 +5,21 @@ import (
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/time_util"
 	"github.com/krilie/lico_alone/module/module-config/model"
-	union_service "github.com/krilie/lico_alone/service/union-service"
+	ConfigService "github.com/krilie/lico_alone/module/module-config/service"
+	MessageService "github.com/krilie/lico_alone/module/module-message/service"
 	"github.com/prometheus/common/log"
 	"time"
 )
 
 type NotificationEmailService struct {
-	*union_service.UnionService
+	ModuleConfig  *ConfigService.ConfigService
+	ModuleMessage *MessageService.MessageService
 }
 
-func NewNotificationEmailService(unionService *union_service.UnionService) *NotificationEmailService {
+func NewNotificationEmailService(moduleConfig *ConfigService.ConfigService, moduleMessage *MessageService.MessageService) *NotificationEmailService {
 	return &NotificationEmailService{
-		UnionService: unionService,
+		ModuleConfig:  moduleConfig,
+		ModuleMessage: moduleMessage,
 	}
 }
 

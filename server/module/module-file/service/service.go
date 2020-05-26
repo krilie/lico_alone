@@ -21,12 +21,13 @@ type FileService struct {
 	fileApi file_api.FileOperator
 }
 
-func NewFileService(dao *dao.FileDao, log *nlog.NLog, cfg *config.FileSave) *FileService {
+func NewFileService(dao *dao.FileDao, log *nlog.NLog, cfgs *config.Config) *FileService {
 	var fileApi file_api.FileOperator
+	cfg := &cfgs.FileSave
 	if cfg.SaveType == "local" {
 		fileApi = file_api.NewLocalFileSave(cfg.LocalFileSaveDir, cfg.LocalFileSaveUrl)
 	} else if cfg.SaveType == "qiniuOss" {
-		fileApi = file_api.NewOssQiNiu(cfg)
+		fileApi = file_api.NewOssQiNiu(cfgs)
 	} else {
 		panic("config error on file save " + cfg.SaveType)
 	}

@@ -18,7 +18,12 @@ func (s *MessageService) SendRegisterSms(ctx context.Context, phone, code string
 		s.log.Error(sendErr)
 		// 记录发送记录
 		err := s.Dao.CreateMessageSms(ctx, &model.MessageSms{
-			Model:     com_model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
+			Model: com_model.Model{
+				Id:        id_util.GetUuid(),
+				CreatedAt: time.Now(),
+				UpdatedAt: time.Now(),
+				DeletedAt: nil,
+			},
 			SendTime:  time.Now(),
 			Name:      "",
 			To:        phone,
@@ -34,7 +39,12 @@ func (s *MessageService) SendRegisterSms(ctx context.Context, phone, code string
 	} else {
 		// 记录发送记录
 		err := s.Dao.CreateMessageSms(ctx, &model.MessageSms{
-			Model:     com_model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
+			Model: com_model.Model{
+				Id:        id_util.GetUuid(),
+				CreatedAt: time.Now(),
+				UpdatedAt: time.Now(),
+				DeletedAt: nil,
+			},
 			SendTime:  time.Now(),
 			Name:      "",
 			To:        phone,
@@ -48,7 +58,12 @@ func (s *MessageService) SendRegisterSms(ctx context.Context, phone, code string
 		}
 		// 记录注册短信
 		err = s.Dao.CreateMessageValidCode(ctx, &model.MessageValidCode{
-			Model:    com_model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
+			Model: com_model.Model{
+				Id:        id_util.GetUuid(),
+				CreatedAt: time.Now(),
+				UpdatedAt: time.Now(),
+				DeletedAt: nil,
+			},
 			SendTime: time.Now(),
 			PhoneNum: phone,
 			Code:     code,

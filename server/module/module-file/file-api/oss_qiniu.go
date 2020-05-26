@@ -93,12 +93,13 @@ func (o *OssQiNiu) GetBucketName(ctx context.Context) string {
 	return o.BucketName
 }
 
-func NewOssQiNiu(cfg *config.FileSave) *OssQiNiu {
+func NewOssQiNiu(cfg *config.Config) *OssQiNiu {
+	cfgFile := cfg.FileSave
 	return &OssQiNiu{
-		AccessKey:  cfg.OssKey,
-		SecretKey:  cfg.OssSecret,
-		BucketName: cfg.OssBucket,
-		BaseUrl:    cfg.OssEndPoint,
-		qboxMac:    qbox.NewMac(cfg.OssKey, cfg.OssSecret),
+		AccessKey:  cfgFile.OssKey,
+		SecretKey:  cfgFile.OssSecret,
+		BucketName: cfgFile.OssBucket,
+		BaseUrl:    cfgFile.OssEndPoint,
+		qboxMac:    qbox.NewMac(cfgFile.OssKey, cfgFile.OssSecret),
 	}
 }

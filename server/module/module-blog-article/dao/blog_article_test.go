@@ -15,7 +15,7 @@ func TestBlogArticleDao_CreateArticle(t *testing.T) {
 	dig.Container.MustInvoke(func(dao *BlogArticleDao) {
 		err := dao.CreateArticle(context.NewContext(), &model.Article{
 			Model: com_model.Model{
-				ID:        id_util.GetUuid(),
+				Id:        id_util.GetUuid(),
 				CreatedAt: time.Now(),
 				UpdatedAt: time.Now(),
 				DeletedAt: nil,

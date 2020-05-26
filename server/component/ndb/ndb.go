@@ -71,8 +71,9 @@ func (ndb *NDb) CloseDb() {
 	})
 }
 
-func NewNDb(dbCfg config.DB, log *nlog.NLog) (ndb *NDb) {
-	ndb = &NDb{log: log, cfg: dbCfg}
+func NewNDb(dbCfg *config.Config, log *nlog.NLog) (ndb *NDb) {
+	log.Info("no ndb created")
+	ndb = &NDb{log: log, cfg: dbCfg.DB}
 	ndb.Start()
 	return ndb
 }

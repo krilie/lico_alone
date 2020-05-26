@@ -16,6 +16,7 @@ require (
 	github.com/go-ini/ini v1.46.0 // indirect
 	github.com/go-playground/locales v0.13.0 // indirect
 	github.com/go-redis/redis/v7 v7.0.0-beta.5
+	github.com/golang/mock v1.4.3 // indirect
 	github.com/gomodule/redigo v2.0.0+incompatible
 	github.com/jinzhu/gorm v1.9.12
 	github.com/krilie/go-smq v0.0.0-20200426063429-520e51d883e3

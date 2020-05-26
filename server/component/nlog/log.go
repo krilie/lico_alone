@@ -14,7 +14,7 @@ type NLog struct {
 	*logrus.Entry
 }
 
-func NewLogger(runEnv run_env.RunEnv, cfg config.Config) *NLog {
+func NewLogger(runEnv *run_env.RunEnv, cfg *config.Config) *NLog {
 	var Log = logrus.NewEntry(logrus.New())
 	Log.Logger.SetFormatter(&logrus.TextFormatter{})
 	Log.Logger.SetLevel(logrus.Level(cfg.LogLevel))

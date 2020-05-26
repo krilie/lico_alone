@@ -18,6 +18,7 @@ type IUser interface {
 	UpdateUserPassword(ctx context.Context, userId, md5edPswd, salt string) error
 	IsPhoneNumExists(ctx context.Context, phoneNum string) (bool, error)
 	GetAllValidUserId(ctx context.Context) ([]string, error)
+	DeleteUserByPhone(ctx context.Context, phone string) error
 }
 
 func (d *UserDao) GetUserMasterById(ctx context.Context, userId string) (*model.UserMaster, error) {
@@ -113,4 +114,11 @@ func (d *UserDao) UpdateUserPassword(ctx context.Context, userId, md5edPswd, sal
 		return errs.NewInternal().WithError(err)
 	}
 	return nil
+}
+
+func (d *UserDao) DeleteUserByPhone(ctx context.Context, phone string) error {
+	err := d.GetDb(ctx).Model(new(model.UserMaster)).Delete(&model.UserMaster{
+		PhoneNum: phone,
+	}).Error
+	return err
 }

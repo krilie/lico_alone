@@ -46,8 +46,10 @@ func (s *UserService) RegisterNewUser(ctx context.Context, phoneNum, password st
 	salt := pswd_util.GetSalt(6)
 	user := &model.UserMaster{
 		Model: com_model.Model{
-			Id:         id_util.NextSnowflake(),
-			CreateTime: time.Now(),
+			Id:        id_util.GetUuid(),
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
+			DeletedAt: nil,
 		},
 		UpdateTime: time.Now(),
 		LoginName:  phoneNum,
