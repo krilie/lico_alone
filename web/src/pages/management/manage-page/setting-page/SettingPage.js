@@ -3,9 +3,7 @@ import "./SettingPage.less"
 import {connect} from "react-redux";
 import {getSettingListAllRedux} from "../../../../api/SettingApi";
 import store from "../../../../redux/RuduxIndex"
-import {Input} from "antd";
-
-const {TextArea} = Input
+import SettingCard from "../../../../components/setting_card/SettingCard";
 
 class SettingPage extends React.Component {
 
@@ -18,19 +16,13 @@ class SettingPage extends React.Component {
         this.props.history.push(path);
     };
 
-    handleUpdate = (name,value)=>{
-
-    }
-
     render() {
         const {settings} = this.props
         return (
             <div className="setting-height">
                 {settings.map(val =>
-                    <div>
-                        <div>{val.name}</div>
-                        <TextArea rows={4} onChange={(e)=>console.log(e.value)} defaultValue={val.value}/>
-                    </div>)}
+                    <SettingCard key={val.name} data={val}/>
+                )}
             </div>
         );
     }

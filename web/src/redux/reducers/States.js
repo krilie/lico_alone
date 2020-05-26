@@ -1,5 +1,5 @@
 //定义默认状态
 let initState = {
-    settings: []
+    settings: [],
 };
 export default initState;
