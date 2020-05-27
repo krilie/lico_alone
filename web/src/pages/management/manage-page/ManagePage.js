@@ -10,8 +10,6 @@ const { Sider } = Layout;
 export default class ManagePage extends React.Component {
 
     componentWillMount() {
-        const {pathname} = this.props.location;
-        this.props.history.push(pathname);
     }
 
     constructor(props) {

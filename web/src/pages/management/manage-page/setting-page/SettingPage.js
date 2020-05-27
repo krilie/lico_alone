@@ -7,6 +7,11 @@ import SettingCard from "../../../../components/setting_card/SettingCard";
 
 class SettingPage extends React.Component {
 
+    componentWillMount() {
+        // const {pathname} = this.props.location;
+        // this.props.history.push(pathname);
+    }
+
     constructor(props) {
         super(props);
         store.dispatch(getSettingListAllRedux())
