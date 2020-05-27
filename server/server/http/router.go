@@ -42,7 +42,6 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App, ctrl *Control
 	// 版本号
 	RootRouter.GET("/version", Version(app.RunEnv.Version, app.RunEnv.BuildTime, app.RunEnv.GitCommit, app.RunEnv.GoVersion))
 	// web 网页
-	// web 站点
 	webRouter := RootRouter.Group("/")
 	webRouter.Use(gzip.Gzip(gzip.DefaultCompression)) // 开启gzip压缩
 
@@ -60,6 +59,25 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App, ctrl *Control
 			}
 		}
 	}
+	// 重定向
+	RootRouter.NoRoute(func(c *gin.Context) {
+		if c.Request.Method != "GET" {
+			c.String(404, "page not found")
+			return
+		}
+		path := c.Request.URL.Path
+		prefix := []string{"/api", "/files", "/swagger", "/health", "/version"}
+		for i := range prefix {
+			if strings.HasPrefix(path, prefix[i]) {
+				c.String(404, "page not found")
+				return
+			}
+		}
+		c.Request.URL.Path = "/"
+		RootRouter.HandleContext(c)
+		return
+	})
+
 	// api路由 + 中间件
 	apiGroup := RootRouter.Group("/api")
 	apiGroup.Use(middleware.BuildContext())
