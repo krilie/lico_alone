@@ -62,3 +62,15 @@ func TestBlogArticleDao_QueryArticleById(t *testing.T) {
 		t.Log(id, err)
 	})
 }
+
+func TestBlogArticleDao_UpdateArticleSample(t *testing.T) {
+	dig.Container.MustInvoke(func(dao *BlogArticleDao) {
+		err := dao.UpdateArticleSample(context.NewContext(), &model.UpdateArticleModel{
+			Id:      "11",
+			Title:   "22",
+			Content: "33",
+			Picture: "44",
+		})
+		t.Log(err)
+	})
+}

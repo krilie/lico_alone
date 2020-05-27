@@ -15,3 +15,10 @@ type Article struct {
 func (Article) TableName() string {
 	return "tb_article_master"
 }
+
+type UpdateArticleModel struct {
+	Id      string `json:"id"`
+	Title   string `json:"title"`
+	Content string `json:"content"`
+	Picture string `json:"picture"`
+}
