@@ -91,7 +91,7 @@
       "last 1 safari version"
     ]
   },
-  "homepage": ".",
+  "homepage": "/",
   "jest": {
     "roots": [
       "<rootDir>/src"

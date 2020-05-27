@@ -1,6 +1,6 @@
 import axios from "axios";
 import qs from 'qs'
-import {GetUserToken} from "../utils/LocalStorageUtil";
+import {GetUserToken,ClearToken} from "../utils/LocalStorageUtil";
 import openNotification from "../utils/MessageBoard"
 import {baseUrl} from "./baseUrl";
 
@@ -30,6 +30,11 @@ apiRequest.interceptors.response.use(
         if (data.data.code !== 2000) {
             openNotification(data.data.message)
             return Promise.reject(data)
+        }
+        if (data.data.code === 4002){
+            openNotification(data.data.message)
+            ClearToken()
+            window.location.reload()
         }
         return data;
     },

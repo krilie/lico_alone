@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/com-model"
+	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-blog-article/model"
 )
@@ -39,9 +40,20 @@ func (b *BlogArticleDao) DeleteArticleById(ctx context.Context, id string) (bool
 }
 
 func (b *BlogArticleDao) UpdateArticle(ctx context.Context, article *model.Article) error {
-	panic("implement me")
+	result := b.GetDb(ctx).Model(new(model.Article)).Select("*").Update(article)
+	if result.Error != nil {
+		return result.Error
+	}
+	if result.RowsAffected <= 0 {
+		return errs.NewNotExistsError().WithMsg("记录不存在")
+	}
+	return nil
 }
 
-func (b *BlogArticleDao) QueryArticleById(ctx context.Context, id string) (*model.Article, error) {
-	panic("implement me")
+func (b *BlogArticleDao) QueryArticleById(ctx context.Context, id string) (article *model.Article, err error) {
+	err = b.GetDb(ctx).Find(article, "id=?", id).Error
+	if err != nil {
+		return nil, err
+	}
+	return article, err
 }

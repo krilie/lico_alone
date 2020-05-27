@@ -3,15 +3,14 @@ import "./Management.less"
 import {Redirect, Route, Switch} from "react-router-dom";
 import LoginPage from "./login-page/LoginPage";
 import ManagePage from "./manage-page/ManagePage";
+import {GetUserToken} from "../../utils/LocalStorageUtil";
 
 export default class Management extends React.Component {
 
     componentWillMount() {
-        if (this.props.location.pathname === '/management') {
-            this.props.location.pathname = "/management/login";
-        }
-        const {pathname} = this.props.location;
-        this.props.history.push(pathname);
+        const token = GetUserToken();
+        if (token === "")
+            this.goToPage("/management/login");
     }
 
     goToPage = path => {
