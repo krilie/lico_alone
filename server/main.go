@@ -43,7 +43,7 @@ func main() {
 		}
 	}
 	// 开始服务
-	dig.Container.MustInvoke(func(log *nlog.NLog, app *service.App) {
+	dig.Container.MustInvoke(func(log *nlog.NLog, app *service.App, ctrl *http.Controllers) {
 		ctx := context.NewContext()
 		// 初始化日志文件
 		defer func() {
@@ -57,7 +57,7 @@ func main() {
 		// 初始化定时任务
 		cronStop := cron.InitAndStartCorn(ctx, app)
 		// 最后初始化为开启http服务
-		shutDownApi := http.InitAndStartHttpServer(ctx, app)
+		shutDownApi := http.InitAndStartHttpServer(ctx, app, ctrl)
 		// 收尾工作
 		c := make(chan os.Signal, 1)
 		signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL)

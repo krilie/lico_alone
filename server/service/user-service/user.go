@@ -14,6 +14,10 @@ type UserService struct {
 	moduleConfig *ConfigService.ConfigService
 }
 
+func (u *UserService) GetAuthFace() *service.UserService {
+	return u.moduleUser
+}
+
 func NewUserService(log *nlog.NLog, moduleConfig *ConfigService.ConfigService, moduleUser *service.UserService, moduleMsg *MessageService.MessageService) *UserService {
 	return &UserService{
 		log:          log,

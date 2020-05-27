@@ -53,8 +53,8 @@ func (d *UserDao) GetUserRoleByName(ctx context.Context, userId string, roleName
 func (d *UserDao) CreateUserRole(ctx context.Context, userId string, roleName string) error {
 	err := d.GetDb(ctx).Model(&model.UserRole{}).Create(&model.UserRole{
 		Model: common_model.Model{
-			Id:         id_util.NextSnowflake(),
-			CreateTime: time.Now(),
+			Id:        id_util.NextSnowflake(),
+			CreatedAt: time.Now(),
 		},
 		RoleName: roleName,
 		UserId:   userId,

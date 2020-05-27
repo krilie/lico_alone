@@ -16,8 +16,8 @@ type IBlogArticleDao interface {
 }
 
 func (b *BlogArticleDao) CreateArticle(ctx context.Context, article *model.Article) error {
-	if article.ID == "" {
-		article.ID = id_util.GetUuid()
+	if article.Id == "" {
+		article.Id = id_util.GetUuid()
 	}
 	err := b.GetDb(ctx).Model(new(model.Article)).Create(article).Error
 	return err
@@ -26,7 +26,7 @@ func (b *BlogArticleDao) CreateArticle(ctx context.Context, article *model.Artic
 func (b *BlogArticleDao) DeleteArticleById(ctx context.Context, id string) (bool, error) {
 	err := b.GetDb(ctx).Delete(&model.Article{
 		Model: com_model.Model{
-			ID: id,
+			Id: id,
 		},
 	}).Error
 	if gorm.IsRecordNotFoundError(err) {

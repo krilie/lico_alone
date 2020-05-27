@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/file_util"
 	"github.com/krilie/lico_alone/common/utils/id_util"
@@ -28,7 +29,21 @@ func (a *FileService) UploadFile(ctx context.Context, userId, fileName string, f
 		if err != nil {
 			return err
 		}
-		item := model.FileMaster{Id: id_util.GetUuid(), CreateTime: time.Now(), KeyName: key, BucketName: bucket, Url: url, UserId: userId, ContentType: content, BizType: "", Size: size}
+		item := model.FileMaster{
+			Model: com_model.Model{
+				Id:        id_util.GetUuid(),
+				CreatedAt: time.Now(),
+				UpdatedAt: time.Now(),
+				DeletedAt: nil,
+			},
+			KeyName:     key,
+			BucketName:  bucket,
+			Url:         url,
+			UserId:      userId,
+			ContentType: content,
+			BizType:     "",
+			Size:        size,
+		}
 		err = a.dao.CreateFile(ctx, &item)
 		if err != nil {
 			log.Error(err.Error())

@@ -65,7 +65,7 @@ func (d *messageValidCode) GetMessageValidCodeById(ctx context.Context, id strin
 
 func (d *messageValidCode) GetLastMessageValidCodeByPhoneNum(ctx context.Context, phoneNum string, validType model.ValidCodeType) (*model.MessageValidCode, error) {
 	item := &model.MessageValidCode{}
-	err := d.GetDb(ctx).Where("phone_num=? and type=?", phoneNum, validType.ToInt()).Order("create_time desc").First(item).Error
+	err := d.GetDb(ctx).Where("phone_num=? and type=?", phoneNum, validType.ToInt()).Order("created_at desc").First(item).Error
 	if err != nil {
 		d.log.Error(err)
 		if errors.Is(err, gorm.ErrRecordNotFound) {

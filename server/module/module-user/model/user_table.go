@@ -19,3 +19,22 @@ type UserMaster struct {
 func (user UserMaster) TableName() string {
 	return "tb_user_master"
 }
+
+func NewUserMaster(Id string, CreatedAt time.Time, UpdatedAt time.Time, DeletedAt *time.Time, UpdateTime time.Time,
+	LoginName, PhoneNum, Email, Password, Picture, Salt string) *UserMaster {
+	return &UserMaster{
+		Model: com_model.Model{
+			Id:        Id,
+			CreatedAt: CreatedAt,
+			UpdatedAt: UpdatedAt,
+			DeletedAt: DeletedAt,
+		},
+		UpdateTime: UpdateTime,
+		LoginName:  LoginName,
+		PhoneNum:   PhoneNum,
+		Email:      Email,
+		Password:   Password,
+		Picture:    Picture,
+		Salt:       Salt,
+	}
+}

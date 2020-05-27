@@ -57,8 +57,10 @@ type initAdminUserStruct struct {
 
 func NewPerm(name, method, path, desc string, sort int) model.Permission {
 	return model.Permission{
+		CreatedAt:   time.Now(),
+		UpdatedAt:   time.Now(),
+		DeletedAt:   nil,
 		Name:        name,
-		CreateTime:  time.Now(),
 		Description: desc,
 		RefMethod:   method,
 		RefPath:     path,
@@ -69,13 +71,13 @@ func NewPerm(name, method, path, desc string, sort int) model.Permission {
 func getInitAdminUserData() initAdminUserStruct {
 	return initAdminUserStruct{
 		user: model.UserMaster{
-			Model:      com_model.Model{Id: "00001", CreateTime: time.Now()},
+			Model:      com_model.Model{Id: "00001", CreatedAt: time.Now(), UpdatedAt: time.Now(), DeletedAt: nil},
 			UpdateTime: time.Now(), LoginName: "admin", PhoneNum: "", Email: "",
 			Password: pswd_util.GetMd5Password("123456", "2345r"),
 			Picture:  "", Salt: "2345r",
 		},
 		role: model.Role{
-			Name: "admin", CreateTime: time.Now(), Description: "超级管理员 初始勿动", MainPermissionName: "",
+			Name: "admin", CreatedAt: time.Now(), Description: "超级管理员 初始勿动", MainPermissionName: "",
 		},
 		permissions: []model.Permission{
 			NewPerm("test", "get", "test", "测试用", 0),

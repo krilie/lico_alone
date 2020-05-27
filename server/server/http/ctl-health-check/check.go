@@ -2,11 +2,10 @@ package ctl_health_check
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/krilie/lico_alone/common/dig"
 	"net/http"
 	"time"
 )
-
-var startTime = time.Now()
 
 // Health 健康检查
 // @Summary 健康检查
@@ -15,7 +14,7 @@ var startTime = time.Now()
 // @ID 健康检查
 // @Success 200 {string} string "hello"
 // @Router /health [get]
-func Hello(c *gin.Context) {
+func (h *HealthCheckCtrl) Hello(c *gin.Context) {
 	c.String(http.StatusOK, "hello")
 }
 
@@ -26,12 +25,17 @@ func Hello(c *gin.Context) {
 // @ID 健康检查2
 // @Success 200 {string} string "pong start time up time"
 // @Router /health [get]
-func Ping(c *gin.Context) {
-	c.String(http.StatusOK, "pong start time "+startTime.String())
+func (h *HealthCheckCtrl) Ping(c *gin.Context) {
+	c.String(http.StatusOK, "pong start time "+h.startTime.String())
 }
 
-// 健康检查 ping
-func Init(engine *gin.Engine) {
-	engine.GET("health/", Hello)
-	engine.GET("health/ping", Ping)
+type HealthCheckCtrl struct {
+	startTime time.Time
+}
+
+func NewHealthCheckCtl() *HealthCheckCtrl {
+	return &HealthCheckCtrl{startTime: time.Now()}
+}
+func init() {
+	dig.Container.MustProvide(NewHealthCheckCtl)
 }

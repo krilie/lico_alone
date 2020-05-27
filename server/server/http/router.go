@@ -5,11 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/common/dig"
 	_ "github.com/krilie/lico_alone/docs"
-	ctl_common "github.com/krilie/lico_alone/server/http/ctl-common"
-	"github.com/krilie/lico_alone/server/http/ctl-health-check"
-	"github.com/krilie/lico_alone/server/http/ctl-user"
 	"github.com/krilie/lico_alone/server/http/middleware"
 	"github.com/krilie/lico_alone/service"
 	"github.com/prometheus/common/log"
@@ -22,7 +18,7 @@ import (
 	"time"
 )
 
-func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown func(waitSec time.Duration) error) {
+func InitAndStartHttpServer(ctx context.Context, app *service.App, ctrl *Controllers) (shutDown func(waitSec time.Duration) error) {
 	// 设置gin mode
 	gin.SetMode(app.Cfg.GinMode)
 	// 路径设置 根路径
@@ -41,9 +37,10 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown fun
 		RootRouter.GET("/swagger/*any", gzip.Gzip(gzip.DefaultCompression), ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 	// 健康检查
-	ctl_health_check.Init(RootRouter)
+	RootRouter.GET("health/", ctrl.healthCheckCtrl.Hello)
+	RootRouter.GET("health/ping", ctrl.healthCheckCtrl.Ping)
 	// 版本号
-	RootRouter.GET("/version", Version(app.Version, app.BuildTime, app.GitCommit, app.GoVersion))
+	RootRouter.GET("/version", Version(app.RunEnv.Version, app.RunEnv.BuildTime, app.RunEnv.GitCommit, app.RunEnv.GoVersion))
 	// web 网页
 	// web 站点
 	webRouter := RootRouter.Group("/")
@@ -69,22 +66,18 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown fun
 
 	// 不检查权限的分组
 	noCheckToken := apiGroup.Group("")
-	userCtrl := ctl_user.NewUserCtrl(app.UserService)
-	noCheckToken.POST("/user/login", userCtrl.UserLogin)
-	noCheckToken.POST("/user/register", userCtrl.UserRegister)
-	noCheckToken.POST("/user/send_sms", userCtrl.UserSendSms)
-
+	noCheckToken.POST("/user/login", ctrl.userCtrl.UserLogin)
+	noCheckToken.POST("/user/register", ctrl.userCtrl.UserRegister)
+	noCheckToken.POST("/user/send_sms", ctrl.userCtrl.UserSendSms)
 	//检查权限的分组
 	checkToken := apiGroup.Group("")
-	checkToken.Use(middleware.CheckAuthToken(app.UnionService.ModuleUser))
-	checkToken.GET("/manage/setting/get_setting_all", userCtrl.ManageGetConfigList)
-	checkToken.POST("/manage/setting/update_config", userCtrl.ManageUpdateConfig)
+	checkToken.Use(middleware.CheckAuthToken(app.UserService.GetAuthFace()))
+	checkToken.GET("/manage/setting/get_setting_all", ctrl.userCtrl.ManageGetConfigList)
+	checkToken.POST("/manage/setting/update_config", ctrl.userCtrl.ManageUpdateConfig)
 
 	// common 服务
-	dig.Container.MustInvoke(func(commonCtl *ctl_common.CommonCtrl) {
-		commonApi := apiGroup.Group("")
-		commonApi.GET("/common/icp_info", commonCtl.GetIcpInfo)
-	})
+	commonApi := apiGroup.Group("")
+	commonApi.GET("/common/icp_info", ctrl.commonCtrl.GetIcpInfo)
 
 	// 开始服务
 	srv := &http.Server{
