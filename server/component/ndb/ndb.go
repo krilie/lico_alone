@@ -57,6 +57,7 @@ func (ndb *NDb) Start() {
 			ndb.log.Info("db init done. params:", connStr+"&loc=Asia%2FShanghai") // 数据库初始化成功
 			ndb.db = ndb.db.Debug()
 			ndb.db.LogMode(true)
+			//ndb.db.SetLogger(ndb.log)
 		}
 	})
 }

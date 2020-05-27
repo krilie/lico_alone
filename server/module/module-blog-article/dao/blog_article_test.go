@@ -7,7 +7,6 @@ import (
 	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-blog-article/model"
-	"os"
 	"testing"
 	"time"
 )
@@ -53,7 +52,13 @@ func TestBlogArticleDao_UpdateArticle(t *testing.T) {
 			Picture: "123",
 		})
 		dao.log.Info("info")
-		os.Stdout.Write([]byte("ss"))
 		t.Log(err)
+	})
+}
+
+func TestBlogArticleDao_QueryArticleById(t *testing.T) {
+	dig.Container.MustInvoke(func(dao *BlogArticleDao) {
+		id, err := dao.QueryArticleById(context.NewContext(), "12")
+		t.Log(id, err)
 	})
 }

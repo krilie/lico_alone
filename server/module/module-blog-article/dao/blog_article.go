@@ -51,8 +51,12 @@ func (b *BlogArticleDao) UpdateArticle(ctx context.Context, article *model.Artic
 }
 
 func (b *BlogArticleDao) QueryArticleById(ctx context.Context, id string) (article *model.Article, err error) {
-	err = b.GetDb(ctx).Find(article, "id=?", id).Error
+	article = new(model.Article)
+	err = b.GetDb(ctx).First(article, "id=?", id).Error
 	if err != nil {
+		if gorm.IsRecordNotFoundError(err) {
+			return nil, nil
+		}
 		return nil, err
 	}
 	return article, err
