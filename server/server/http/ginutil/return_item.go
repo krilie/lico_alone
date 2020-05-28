@@ -59,6 +59,6 @@ func ReturnData(c *gin.Context, data interface{}) {
 	c.JSON(200, com_model.NewSuccess(data))
 }
 
-func ReturnFailure(code errs.ErrCode, c *gin.Context) {
-	c.JSON(200, com_model.NewFailure(code, ""))
+func ReturnFailure(c *gin.Context, code errs.ErrCode, msg string) {
+	c.JSON(200, com_model.NewFailure(code, msg))
 }

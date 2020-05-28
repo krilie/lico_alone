@@ -71,3 +71,6 @@ func (nlog *NLog) NewWithCtx(ctx context.Context, location ...string) *logrus.En
 		context_enum.Module:   module,
 		context_enum.Function: funcName})
 }
+func (log *NLog) WithField(key string, value interface{}) *NLog {
+	return &NLog{Entry: log.Entry.WithField(key, value)}
+}

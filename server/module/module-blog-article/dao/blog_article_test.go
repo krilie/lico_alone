@@ -53,7 +53,25 @@ func TestBlogArticleDao_UpdateArticle(t *testing.T) {
 			Picture: "123",
 		})
 		dao.log.Info("info")
-		os.Stdout.Write([]byte("ss"))
+		t.Log(err)
+	})
+}
+
+func TestBlogArticleDao_QueryArticleById(t *testing.T) {
+	dig.Container.MustInvoke(func(dao *BlogArticleDao) {
+		id, err := dao.QueryArticleById(context.NewContext(), "12")
+		t.Log(id, err)
+	})
+}
+
+func TestBlogArticleDao_UpdateArticleSample(t *testing.T) {
+	dig.Container.MustInvoke(func(dao *BlogArticleDao) {
+		err := dao.UpdateArticleSample(context.NewContext(), &model.UpdateArticleModel{
+			Id:      "11",
+			Title:   "22",
+			Content: "33",
+			Picture: "44",
+		})
 		t.Log(err)
 	})
 }

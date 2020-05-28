@@ -50,9 +50,24 @@ func (b *BlogArticleDao) UpdateArticle(ctx context.Context, article *model.Artic
 	return nil
 }
 
+func (b *BlogArticleDao) UpdateArticleSample(ctx context.Context, article *model.UpdateArticleModel) error {
+	result := b.GetDb(ctx).Model(new(model.Article)).Select("id,title,content,picture").Update(article)
+	if result.Error != nil {
+		return result.Error
+	}
+	if result.RowsAffected <= 0 {
+		return errs.NewNotExistsError().WithMsg("记录不存在")
+	}
+	return nil
+}
+
 func (b *BlogArticleDao) QueryArticleById(ctx context.Context, id string) (article *model.Article, err error) {
-	err = b.GetDb(ctx).Find(article, "id=?", id).Error
+	article = new(model.Article)
+	err = b.GetDb(ctx).First(article, "id=?", id).Error
 	if err != nil {
+		if gorm.IsRecordNotFoundError(err) {
+			return nil, nil
+		}
 		return nil, err
 	}
 	return article, err
