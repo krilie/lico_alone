@@ -3,6 +3,7 @@ package ctl_health_check
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/dig"
+	"github.com/krilie/lico_alone/component/ndb"
 	"net/http"
 	"time"
 )
@@ -26,15 +27,21 @@ func (h *HealthCheckCtrl) Hello(c *gin.Context) {
 // @Success 200 {string} string "pong start time up time"
 // @Router /health [get]
 func (h *HealthCheckCtrl) Ping(c *gin.Context) {
+	err := h.db.Ping()
+	if err != nil {
+		c.String(http.StatusInternalServerError, "数据库异常")
+		return
+	}
 	c.String(http.StatusOK, "pong start time "+h.startTime.String())
 }
 
 type HealthCheckCtrl struct {
 	startTime time.Time
+	db        *ndb.NDb
 }
 
-func NewHealthCheckCtl() *HealthCheckCtrl {
-	return &HealthCheckCtrl{startTime: time.Now()}
+func NewHealthCheckCtl(db *ndb.NDb) *HealthCheckCtrl {
+	return &HealthCheckCtrl{startTime: time.Now(), db: db}
 }
 func init() {
 	dig.Container.MustProvide(NewHealthCheckCtl)

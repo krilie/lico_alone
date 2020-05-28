@@ -7,7 +7,6 @@ import (
 	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-blog-article/model"
-	"os"
 	"testing"
 	"time"
 )

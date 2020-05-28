@@ -36,6 +36,10 @@ func (ndb *NDb) GetDb(ctx context.Context) *gorm.DB {
 	}
 }
 
+func (ndb *NDb) Ping() error {
+	return ndb.db.DB().Ping()
+}
+
 func (ndb *NDb) Start() {
 	ndb.onceStartDb.Do(func() {
 		connStr := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True",
@@ -57,6 +61,7 @@ func (ndb *NDb) Start() {
 			ndb.log.Info("db init done. params:", connStr+"&loc=Asia%2FShanghai") // 数据库初始化成功
 			ndb.db = ndb.db.Debug()
 			ndb.db.LogMode(true)
+			ndb.db.SetLogger(ndb.log)
 		}
 	})
 }
