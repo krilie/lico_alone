@@ -2,7 +2,6 @@ package ctl_user
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/module/module-blog-article/model"
 	"github.com/krilie/lico_alone/server/http/ginutil"
@@ -48,7 +47,7 @@ func (a *UserCtrl) UpdateArticle(c *gin.Context) {
 		ginutil.ReturnFailure(c, errs.ErrorParam, "参数错误")
 		return
 	}
-	err = a.userService.UpdateArticle(ginutil.MustGetAppCtx(c), id)
+	err = a.userService.UpdateArticleSample(ginutil.MustGetAppCtx(c), param)
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return

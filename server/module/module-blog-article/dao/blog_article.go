@@ -13,6 +13,7 @@ type IBlogArticleDao interface {
 	CreateArticle(ctx context.Context, article *model.Article) error
 	DeleteArticleById(ctx context.Context, id string) (bool, error)
 	UpdateArticle(ctx context.Context, article *model.Article) error
+	UpdateArticleSample(ctx context.Context, article *model.UpdateArticleModel) error
 	QueryArticleById(ctx context.Context, id string) (*model.Article, error)
 }
 
