@@ -7,6 +7,7 @@ import (
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
+	"github.com/krilie/lico_alone/common/utils/time_util"
 	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
@@ -25,7 +26,7 @@ func NewElfLogHook(cfg *config.Config) *ElfLogHook {
 		Secret: cfg.ElfLog.Secret,
 		Url:    cfg.ElfLog.Url,
 		jsonFormatter: &logrus.JSONFormatter{
-			TimestampFormat:  "",
+			TimestampFormat:  time_util.DefaultFormat,
 			DisableTimestamp: false,
 			DataKey:          "",
 			FieldMap:         nil,
