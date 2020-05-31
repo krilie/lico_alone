@@ -3,6 +3,7 @@ package logsyshook
 import (
 	"encoding/json"
 	"fmt"
+	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
@@ -15,6 +16,7 @@ import (
 
 type ElfLogHook struct {
 	Key, Secret, Url string
+	jsonFormatter    *logrus.JSONFormatter
 }
 
 func NewElfLogHook(cfg *config.Config) *ElfLogHook {
@@ -22,6 +24,14 @@ func NewElfLogHook(cfg *config.Config) *ElfLogHook {
 		Key:    cfg.ElfLog.Key,
 		Secret: cfg.ElfLog.Secret,
 		Url:    cfg.ElfLog.Url,
+		jsonFormatter: &logrus.JSONFormatter{
+			TimestampFormat:  "",
+			DisableTimestamp: false,
+			DataKey:          "",
+			FieldMap:         nil,
+			CallerPrettyfier: nil,
+			PrettyPrint:      false,
+		},
 	}
 }
 
@@ -29,21 +39,39 @@ func (e *ElfLogHook) Levels() []logrus.Level {
 	return logrus.AllLevels
 }
 
+func GetLogStrValOrDefault(fields logrus.Fields, key, defVal string) string {
+	val, ok := fields[key]
+	if ok {
+		return val.(string)
+	} else {
+		return defVal
+	}
+}
+
+func (e *ElfLogHook) GetJsonContent(entry *logrus.Entry) string {
+	format, err := e.jsonFormatter.Format(entry)
+	if err != nil {
+		return err.Error()
+	}
+	return string(format)
+}
+
 func (e *ElfLogHook) Fire(entry *logrus.Entry) error {
 	var logData = &CreateLogReqModel{
-		AppName:    entry.Data["ok"].(string),
-		AppVersion: entry.Data,
-		AppHost:    "",
-		RemoteIp:   "",
-		ModuleName: "",
-		FuncName:   "",
-		ClientId:   "",
-		Time:       time.Time{},
-		TraceId:    "",
-		UserId:     "",
-		Message:    "",
+		AppName:    GetLogStrValOrDefault(entry.Data, context_enum.AppName.Str(), ""),
+		AppVersion: GetLogStrValOrDefault(entry.Data, context_enum.AppVersion.Str(), ""),
+		AppHost:    GetLogStrValOrDefault(entry.Data, context_enum.AppHost.Str(), ""),
+		RemoteIp:   GetLogStrValOrDefault(entry.Data, context_enum.RemoteIp.Str(), ""),
+		ModuleName: GetLogStrValOrDefault(entry.Data, context_enum.Module.Str(), ""),
+		FuncName:   GetLogStrValOrDefault(entry.Data, context_enum.Function.Str(), ""),
+		ClientId:   GetLogStrValOrDefault(entry.Data, context_enum.ClientId.Str(), ""),
+		Time:       entry.Time,
+		TraceId:    GetLogStrValOrDefault(entry.Data, context_enum.TraceId.Str(), ""),
+		UserId:     GetLogStrValOrDefault(entry.Data, context_enum.UserId.Str(), ""),
+		Message:    entry.Message,
 		TimeStamp:  time.Now().Unix(),
-		Content:    "",
+		Content:    e.GetJsonContent(entry),
+		Level:      int(entry.Level), // 0-6
 	}
 	return e.PostLog(logData)
 }
@@ -117,4 +145,5 @@ type CreateLogReqModel struct {
 	Message    string    `json:"message"`
 	TimeStamp  int64     `json:"time_stamp"` // unix 时间戳
 	Content    string    `json:"content"`    // 所有内容的json形式
+	Level      int       `json:"level"`      // level
 }
