@@ -2,10 +2,10 @@ package logsyshook
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
-	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
@@ -15,15 +15,13 @@ import (
 
 type ElfLogHook struct {
 	Key, Secret, Url string
-	log              *nlog.NLog
 }
 
-func NewElfLogHook(cfg *config.Config, log *nlog.NLog) *ElfLogHook {
+func NewElfLogHook(cfg *config.Config) *ElfLogHook {
 	return &ElfLogHook{
 		Key:    cfg.ElfLog.Key,
 		Secret: cfg.ElfLog.Secret,
 		Url:    cfg.ElfLog.Url,
-		log:    log,
 	}
 }
 
@@ -66,7 +64,7 @@ func (e *ElfLogHook) postLogJson(url, key, sign, data string) error {
 	payload := strings.NewReader(data)
 	req, err := http.NewRequest(method, url, payload)
 	if err != nil {
-		e.log.Error(err)
+		println(err)
 		return errs.NewInternal().WithError(err)
 	}
 	req.Header.Add("key", key)
@@ -75,24 +73,24 @@ func (e *ElfLogHook) postLogJson(url, key, sign, data string) error {
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
-		e.log.Error(err)
+		println(err)
 		return errs.NewInternal().WithError(err)
 	}
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		e.log.Error(err)
+		println(err)
 		return errs.NewInternal().WithError(err)
 	}
 	// code message detail code=2000=success
 	var ret = &ElfLogReturn{}
 	err = json.Unmarshal(body, ret)
 	if err != nil {
-		e.log.Error(err)
+		println(err)
 		return errs.NewInternal().WithError(err)
 	}
 	if ret.Code != 2000 {
-		e.log.Errorf("%v %v %v %v", ret.Code, ret.Message, ret.Detail, string(body))
+		fmt.Printf("%v %v %v %v", ret.Code, ret.Message, ret.Detail, string(body))
 		return errs.NewInternal().WithMsg(ret.Message)
 	}
 	return nil
