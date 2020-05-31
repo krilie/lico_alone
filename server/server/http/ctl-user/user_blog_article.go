@@ -39,7 +39,7 @@ func (a *UserCtrl) GetArticleById(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/article/update [POST]
 func (a *UserCtrl) UpdateArticle(c *gin.Context) {
-	log := a.log.NewWithCtx(ginutil.MustGetAppCtx(c), "userControl", "UpdateArticle")
+	log := a.log.Get(ginutil.MustGetAppCtx(c), "userControl", "UpdateArticle")
 	param := &model.UpdateArticleModel{}
 	err := c.ShouldBindJSON(param)
 	if err != nil {

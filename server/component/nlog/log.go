@@ -22,10 +22,10 @@ func NewLogger(runEnv *run_env.RunEnv, cfg *config.Config, hook *logsyshook.Sysl
 	Log.Logger.AddHook(hook)
 	Log.Logger.SetOutput(os.Stdout)
 	Log = Log.
-		WithField(context_enum.AppName, runEnv.AppName).
-		WithField(context_enum.AppVersion, runEnv.Version).
-		WithField(context_enum.AppHost, runEnv.AppHost).
-		WithField(context_enum.TraceId, "")
+		WithField(context_enum.AppName.Str(), runEnv.AppName).
+		WithField(context_enum.AppVersion.Str(), runEnv.Version).
+		WithField(context_enum.AppHost.Str(), runEnv.AppHost).
+		WithField(context_enum.TraceId.Str(), "")
 	Log.Infoln("log init ok")
 	log := &NLog{Log}
 	log.SetUpLogFile(cfg.LogFile)
@@ -47,18 +47,7 @@ func (nlog *NLog) SetUpLogFile(f string) {
 	nlog.Logger.Warnln("set log out file to " + f)
 }
 
-// trace_id
-func (nlog *NLog) NewLog(ctx context.Context, moduleName string, functionName string) *logrus.Entry {
-	nCtx := context2.GetContextOrNew(ctx)
-	return nlog.WithFields(logrus.Fields{
-		context_enum.TraceId:  nCtx.GetTraceId(),
-		context_enum.ClientId: nCtx.GetClientId(),
-		context_enum.UserId:   nCtx.GetUserId(),
-		context_enum.Module:   moduleName,
-		context_enum.Function: functionName})
-}
-
-func (nlog *NLog) NewWithCtx(ctx context.Context, location ...string) *logrus.Entry {
+func (nlog *NLog) Get(ctx context.Context, location ...string) *NLog {
 	var module, funcName string
 	if len(location) > 0 {
 		module = location[0]
@@ -66,14 +55,26 @@ func (nlog *NLog) NewWithCtx(ctx context.Context, location ...string) *logrus.En
 	if len(location) > 1 {
 		funcName = location[1]
 	}
-	c := context2.GetContextOrNew(ctx)
-	return nlog.WithFields(logrus.Fields{
-		context_enum.TraceId:  c.GetTraceId(),
-		context_enum.ClientId: c.GetClientId(),
-		context_enum.UserId:   c.GetUserId(),
-		context_enum.Module:   module,
-		context_enum.Function: funcName})
+	nCtx := context2.GetContextOrNew(ctx)
+	if nCtx.Module != "" {
+		module = nCtx.Module
+	}
+	if nCtx.Function != "" {
+		funcName = nCtx.Function
+	}
+	return &NLog{Entry: nlog.WithFields(logrus.Fields{
+		//context_enum.AppName.Str():    nCtx.AppName,
+		//context_enum.AppVersion.Str(): nCtx.AppVersion,
+		//context_enum.AppHost.Str():    nCtx.AppHost,
+		//context_enum.TraceId.Str():    nCtx.GetTraceId(),
+		context_enum.ClientId.Str(): nCtx.GetClientId(),
+		context_enum.UserId.Str():   nCtx.GetUserId(),
+		context_enum.Stack.Str():    nCtx.Stack,
+		context_enum.RemoteIp.Str(): nCtx.RemoteIp,
+		context_enum.Module.Str():   module,
+		context_enum.Function.Str(): funcName})}
 }
-func (log *NLog) WithField(key string, value interface{}) *NLog {
-	return &NLog{Entry: log.Entry.WithField(key, value)}
+
+func (nlog *NLog) WithField(key string, value interface{}) *NLog {
+	return &NLog{Entry: nlog.Entry.WithField(key, value)}
 }

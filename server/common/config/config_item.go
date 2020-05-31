@@ -14,6 +14,7 @@ type Config struct {
 	FileSave      FileSave `mapstructure:"file_save" json:"file_save" toml:"file_save"`
 	Email         Email    `mapstructure:"email" json:"email" toml:"email"`
 	AliSms        AliSms   `mapstructure:"ali_sms" json:"ali_sms" toml:"ali_sms"`
+	ElfLog        ElfLog   `mapstructure:"elf_log" json:"elf_log" toml:"elf_log"`
 }
 
 type DB struct {
@@ -53,4 +54,10 @@ type Email struct {
 type AliSms struct {
 	Key    string `mapstructure:"key" json:"key" toml:"key"`
 	Secret string `mapstructure:"secret" json:"secret" toml:"secret"`
+}
+
+type ElfLog struct {
+	Key    string `mapstructure:"key" json:"key" toml:"key"`
+	Secret string `mapstructure:"secret" json:"secret" toml:"secret"`
+	Url    string `mapstructure:"url" json:"url" toml:"url"`
 }

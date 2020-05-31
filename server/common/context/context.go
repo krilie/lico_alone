@@ -1,17 +1,16 @@
 package context
 
 import (
+	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"time"
 )
 
 // 运行上下文对象
 // 可记录来自那个ip 用户的信息等
 type Context struct {
-	TraceId   string    //微服务调用栈分析追踪
-	StartTime time.Time //开始调用时间
-	LastTime  time.Time //调用结束时间
-	ClientId  string    //client的id号
-	UserId    string
+	context_enum.ContextValues
+	StartTime time.Time   //开始调用时间
+	LastTime  time.Time   //调用结束时间
 	Tx        interface{} // 数据库事务对象
 }
 
@@ -20,12 +19,10 @@ func (c *Context) Clone() *Context {
 		return nil
 	}
 	return &Context{
-		TraceId:   c.TraceId,
-		StartTime: c.StartTime,
-		LastTime:  c.LastTime,
-		ClientId:  c.ClientId,
-		UserId:    c.UserId,
-		Tx:        c.Tx,
+		ContextValues: c.ContextValues,
+		StartTime:     c.StartTime,
+		LastTime:      c.LastTime,
+		Tx:            c.Tx,
 	}
 }
 
@@ -80,4 +77,11 @@ func (c *Context) SetTx(tx interface{}) {
 }
 func (c *Context) GetTx() interface{} {
 	return c.Tx
+}
+
+func (c *Context) GetRemoteIp() string {
+	return c.RemoteIp
+}
+func (c *Context) SetRemoteIp(ip string) {
+	c.RemoteIp = ip
 }
