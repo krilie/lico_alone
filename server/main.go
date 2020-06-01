@@ -6,6 +6,7 @@ import (
 	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/component/broker"
 	"github.com/krilie/lico_alone/component/nlog"
+	"github.com/krilie/lico_alone/component/nlog/logsyshook"
 	run_env "github.com/krilie/lico_alone/run_env"
 	broker2 "github.com/krilie/lico_alone/server/broker"
 	"github.com/krilie/lico_alone/server/cron"
@@ -43,8 +44,9 @@ func main() {
 		}
 	}
 	// 开始服务
-	dig.Container.MustInvoke(func(log *nlog.NLog, app *service.App, ctrl *http.Controllers) {
+	dig.Container.MustInvoke(func(logHook *logsyshook.ElfLogHook, log *nlog.NLog, app *service.App, ctrl *http.Controllers) {
 		ctx := context.NewContext()
+		defer logHook.StopPushLogWorker(ctx)
 		// 初始化日志文件
 		defer func() {
 			broker.Smq.Close()
@@ -74,7 +76,6 @@ func main() {
 				}
 				// 关闭定时任务
 				cronStop()
-				log.Infoln("cron job end.")
 				log.Infoln("service is done.")
 				return
 			case syscall.SIGHUP:

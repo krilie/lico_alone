@@ -1,10 +1,12 @@
 package logsyshook
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/config"
+	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
 	"github.com/krilie/lico_alone/common/utils/time_util"
@@ -12,16 +14,21 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"sync"
 	"time"
 )
 
 type ElfLogHook struct {
 	Key, Secret, Url string
 	jsonFormatter    *logrus.JSONFormatter
+	logChannel       chan *logChannelReq
+	waitChannel      sync.WaitGroup
+	onceStart        sync.Once
+	onceStop         sync.Once
 }
 
 func NewElfLogHook(cfg *config.Config) *ElfLogHook {
-	return &ElfLogHook{
+	var elflog = &ElfLogHook{
 		Key:    cfg.ElfLog.Key,
 		Secret: cfg.ElfLog.Secret,
 		Url:    cfg.ElfLog.Url,
@@ -33,7 +40,13 @@ func NewElfLogHook(cfg *config.Config) *ElfLogHook {
 			CallerPrettyfier: nil,
 			PrettyPrint:      false,
 		},
+		logChannel:  make(chan *logChannelReq, 600),
+		waitChannel: sync.WaitGroup{},
+		onceStart:   sync.Once{},
+		onceStop:    sync.Once{},
 	}
+	elflog.StartPushLog(context2.NewContext())
+	return elflog
 }
 
 func (e *ElfLogHook) Levels() []logrus.Level {
@@ -84,7 +97,13 @@ func (e *ElfLogHook) PostLog(logModel *CreateLogReqModel) error {
 	}
 	jsonData := string(jsonStr)
 	sign := pswd_util.Md5(jsonData + e.Secret)
-	return e.postLogJson(e.Url, e.Key, sign, jsonData)
+	e.logChannel <- &logChannelReq{
+		Url:  e.Url,
+		Key:  e.Key,
+		Sign: sign,
+		Data: jsonData,
+	}
+	return nil
 }
 
 // post方法
@@ -125,6 +144,41 @@ func (e *ElfLogHook) postLogJson(url, key, sign, data string) error {
 	return nil
 }
 
+func (e *ElfLogHook) StopPushLogWorker(ctx context.Context) {
+	e.onceStop.Do(func() {
+		close(e.logChannel)
+		e.waitChannel.Wait()
+		println("log channel closed.")
+	})
+}
+
+func (e *ElfLogHook) StartPushLog(ctx context.Context) {
+	e.onceStart.Do(func() {
+		e.waitChannel.Add(1)
+		go func() {
+			defer e.waitChannel.Done()
+			for {
+				log, ok := <-e.logChannel
+				if !ok {
+					break
+				} else {
+					func() {
+						defer func() {
+							if pan := recover(); pan != nil {
+								println(pan)
+							}
+						}()
+						err := e.postLogJson(log.Url, log.Key, log.Sign, log.Data)
+						if err != nil {
+							println(err)
+						}
+					}()
+				}
+			}
+		}()
+	})
+}
+
 type ElfLogReturn struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
@@ -147,4 +201,11 @@ type CreateLogReqModel struct {
 	TimeStamp  int64     `json:"time_stamp"` // unix 时间戳
 	Content    string    `json:"content"`    // 所有内容的json形式
 	Level      int       `json:"level"`      // level
+}
+
+type logChannelReq struct {
+	Url  string
+	Key  string
+	Sign string
+	Data string
 }
