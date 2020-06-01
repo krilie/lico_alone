@@ -6,7 +6,7 @@ import (
 )
 
 func TestGCache(t *testing.T) {
-	dig.MustInvoke(func(cache *Cache) {
+	dig.Container.MustInvoke(func(cache *Cache) {
 		_ = cache.Set("ok", "ok")
 		get, err := cache.Get("ok")
 		t.Log(get, err)
