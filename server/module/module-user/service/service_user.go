@@ -14,11 +14,11 @@ import (
 func (s *UserService) ChangeUserPassword(ctx context.Context, userId, oldPswd, newPswd string) error {
 	user, err := s.Dao.GetUserMasterById(ctx, userId)
 	if err != nil {
-		s.log.Errorf("change user password err:%v", err)
+		s.log.Get(ctx).Get(ctx).Errorf("change user password err:%v", err)
 		return err
 	}
 	if user == nil {
-		s.log.Warnf("change user password no user find id:%v", userId)
+		s.log.Get(ctx).Warnf("change user password no user find id:%v", userId)
 	}
 	if !pswd_util.IsPasswordOk(oldPswd, user.Password, user.Salt) {
 		return errs.NewNormal().WithMsg("password err")
@@ -37,7 +37,7 @@ func (s *UserService) RegisterNewUser(ctx context.Context, phoneNum, password st
 	}
 	master, err := s.Dao.GetUserMasterByPhoneNum(ctx, phoneNum)
 	if err != nil {
-		s.log.Errorf("register new user err:%v", err)
+		s.log.Get(ctx).Errorf("register new user err:%v", err)
 		return err
 	}
 	if master != nil {

@@ -23,7 +23,7 @@ type IMessageSms interface {
 func (d *messageSms) CreateMessageSms(ctx context.Context, item *model.MessageSms) error {
 	err := d.GetDb(ctx).Create(item).Error
 	if err != nil {
-		d.log.Error(err)
+		d.log.Get(ctx).Error(err)
 		return errs.NewInternal().WithError(err)
 	}
 	return nil
@@ -32,7 +32,7 @@ func (d *messageSms) CreateMessageSms(ctx context.Context, item *model.MessageSm
 func (d *messageSms) UpdateMessageSms(ctx context.Context, item *model.MessageSms) error {
 	err := d.GetDb(ctx).Omit("create_time").Where("id=?", item.Id).Update(item).Error
 	if err != nil {
-		d.log.Error(err)
+		d.log.Get(ctx).Error(err)
 		return errs.NewInternal().WithError(err)
 	}
 	return nil
@@ -41,7 +41,7 @@ func (d *messageSms) UpdateMessageSms(ctx context.Context, item *model.MessageSm
 func (d *messageSms) DeleteMessageSms(ctx context.Context, id string) error {
 	err := d.GetDb(ctx).Where("id=?", id).Delete(&model.MessageSms{}).Error
 	if err != nil {
-		d.log.Error(err)
+		d.log.Get(ctx).Error(err)
 		return errs.NewInternal().WithError(err)
 	}
 	return nil

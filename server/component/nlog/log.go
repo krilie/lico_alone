@@ -49,12 +49,6 @@ func (nlog *NLog) SetUpLogFile(f string) {
 
 func (nlog *NLog) Get(ctx context.Context, location ...string) *NLog {
 	var module, funcName string
-	if len(location) > 0 {
-		module = location[0]
-	}
-	if len(location) > 1 {
-		funcName = location[1]
-	}
 	nCtx := context2.GetContextOrNew(ctx)
 	if nCtx.Module != "" {
 		module = nCtx.Module
@@ -62,11 +56,17 @@ func (nlog *NLog) Get(ctx context.Context, location ...string) *NLog {
 	if nCtx.Function != "" {
 		funcName = nCtx.Function
 	}
+	if len(location) > 0 {
+		module = location[0]
+	}
+	if len(location) > 1 {
+		funcName = location[1]
+	}
 	return &NLog{Entry: nlog.WithFields(logrus.Fields{
 		//context_enum.AppName.Str():    nCtx.AppName,
 		//context_enum.AppVersion.Str(): nCtx.AppVersion,
 		//context_enum.AppHost.Str():    nCtx.AppHost,
-		//context_enum.TraceId.Str():    nCtx.GetTraceId(),
+		context_enum.TraceId.Str():  nCtx.GetTraceId(),
 		context_enum.ClientId.Str(): nCtx.GetClientId(),
 		context_enum.UserId.Str():   nCtx.GetUserId(),
 		context_enum.Stack.Str():    nCtx.Stack,

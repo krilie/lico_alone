@@ -15,7 +15,7 @@ import (
 func (s *MessageService) SendRegisterSms(ctx context.Context, phone, code string) error {
 	sendErr := s.sms.SendRegisterSms(ctx, phone, code)
 	if sendErr != nil {
-		s.log.Error(sendErr)
+		s.log.Get(ctx).Error(sendErr)
 		// 记录发送记录
 		err := s.Dao.CreateMessageSms(ctx, &model.MessageSms{
 			Model: com_model.Model{
@@ -53,7 +53,7 @@ func (s *MessageService) SendRegisterSms(ctx context.Context, phone, code string
 			Other:     "注册短信",
 		})
 		if err != nil {
-			s.log.Error(err)
+			s.log.Get(ctx).Error(err)
 			return err
 		}
 		// 记录注册短信
@@ -70,7 +70,7 @@ func (s *MessageService) SendRegisterSms(ctx context.Context, phone, code string
 			Type:     model.MessageValidCodeTypeRegister.ToInt(),
 		})
 		if err != nil {
-			s.log.Error(err)
+			s.log.Get(ctx).Error(err)
 			return err
 		}
 		return nil

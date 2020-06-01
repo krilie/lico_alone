@@ -198,7 +198,7 @@ type CreateLogReqModel struct {
 	TraceId    string    `json:"trace_id"`
 	UserId     string    `json:"user_id"`
 	Message    string    `json:"message"`
-	TimeStamp  int64     `json:"time_stamp"` // unix 时间戳
+	TimeStamp  int64     `json:"time_stamp"` // unix 时间戳 防非法请求
 	Content    string    `json:"content"`    // 所有内容的json形式
 	Level      int       `json:"level"`      // level
 }

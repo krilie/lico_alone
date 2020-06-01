@@ -27,19 +27,19 @@ func (s *MessageService) SendEmail(ctx context.Context, to, subject, content str
 	}
 	err := s.email.SendEmail(ctx, to, subject, content)
 	if err != nil {
-		s.log.Error(err)
+		s.log.Get(ctx).Error(err)
 		email.IsSuccess = false
 		email.Other = err.Error()
 		err = s.Dao.CreateMessageEmail(ctx, email)
 		if err != nil {
-			s.log.Error(err)
+			s.log.Get(ctx).Error(err)
 			return err
 		}
 		return errs.NewInternal().WithError(err)
 	}
 	err = s.Dao.CreateMessageEmail(ctx, email)
 	if err != nil {
-		s.log.Error(err)
+		s.log.Get(ctx).Error(err)
 		return err
 	}
 	return nil
