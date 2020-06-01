@@ -51,13 +51,12 @@ func (s *UserService) RegisterNewUser(ctx context.Context, phoneNum, password st
 			UpdatedAt: time.Now(),
 			DeletedAt: nil,
 		},
-		UpdateTime: time.Now(),
-		LoginName:  phoneNum,
-		PhoneNum:   phoneNum,
-		Email:      "",
-		Password:   pswd_util.GetMd5Password(password, salt),
-		Picture:    "",
-		Salt:       salt,
+		LoginName: phoneNum,
+		PhoneNum:  phoneNum,
+		Email:     "",
+		Password:  pswd_util.GetMd5Password(password, salt),
+		Picture:   "",
+		Salt:      salt,
 	}
 	err = s.Dao.CreateUserMaster(ctx, user)
 	return err

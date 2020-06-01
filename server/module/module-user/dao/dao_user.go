@@ -70,7 +70,7 @@ func (d *UserDao) UpdateUserMaster(ctx context.Context, user *model.UserMaster) 
 	if user.Id == "" {
 		return errs.NewNormal().WithMsg("no primary key on update user master.")
 	}
-	user.UpdateTime = time.Now()
+	user.UpdatedAt = time.Now()
 	err := d.GetDb(ctx).Model(&model.UserMaster{}).Save(user).Error
 	if err != nil {
 		return errs.NewInternal().WithError(err)
