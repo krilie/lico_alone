@@ -1,19 +1,36 @@
 package cron
 
 import (
+	"context"
+	"github.com/krilie/lico_alone/common/dig"
 	"github.com/robfig/cron/v3"
 )
 
-func Stop(cron *cron.Cron) {
-	if cron != nil {
-		stop := cron.Stop()
+type NCron struct {
+	*cron.Cron
+}
+
+func (c *NCron) StopAndWait(ctx context.Context) {
+	if c.Cron != nil {
+		stop := c.Cron.Stop()
 		<-stop.Done()
 	}
 }
 
-func NewCrone() *cron.Cron {
+func NewCrone() *NCron {
 	CronGlobal := cron.New(cron.WithParser(cron.NewParser(cron.Second|cron.Minute|cron.Hour|cron.Dom|cron.Month|cron.DowOptional|cron.Descriptor)),
 		cron.WithChain(cron.Recover(cron.DefaultLogger)))
 	CronGlobal.Start()
-	return CronGlobal
+	return &NCron{Cron: CronGlobal}
+}
+
+func (c *NCron) MustAddFunc(ctx context.Context, spec string, f func()) {
+	_, err := c.Cron.AddFunc(spec, f)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func init() {
+	dig.Container.MustProvide(NewCrone)
 }

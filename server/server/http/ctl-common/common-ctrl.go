@@ -2,8 +2,8 @@ package ctl_common
 
 import (
 	"github.com/gin-gonic/gin"
+	common_service "github.com/krilie/lico_alone/module/service-common"
 	"github.com/krilie/lico_alone/server/http/ginutil"
-	common_service "github.com/krilie/lico_alone/service/common-service"
 )
 
 type CommonCtrl struct {

@@ -1,4 +1,4 @@
-package init_data_service
+package service_init_data
 
 import (
 	"context"

@@ -5,14 +5,15 @@ import (
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/config"
 	context2 "github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/common/run_env"
 	"github.com/krilie/lico_alone/component/nlog/logsyshook"
-	"github.com/krilie/lico_alone/run_env"
 	"github.com/sirupsen/logrus"
 	"os"
 )
 
 type NLog struct {
 	*logrus.Entry
+	hook *logsyshook.ElfLogHook
 }
 
 func NewLogger(runEnv *run_env.RunEnv, cfg *config.Config, hook *logsyshook.ElfLogHook) *NLog {
@@ -27,7 +28,7 @@ func NewLogger(runEnv *run_env.RunEnv, cfg *config.Config, hook *logsyshook.ElfL
 		WithField(context_enum.AppHost.Str(), runEnv.AppHost).
 		WithField(context_enum.TraceId.Str(), "")
 	Log.Infoln("log init ok")
-	log := &NLog{Log}
+	log := &NLog{Entry: Log, hook: hook}
 	log.SetUpLogFile(cfg.LogFile)
 	return log
 }
@@ -72,9 +73,13 @@ func (nlog *NLog) Get(ctx context.Context, location ...string) *NLog {
 		context_enum.Stack.Str():    nCtx.Stack,
 		context_enum.RemoteIp.Str(): nCtx.RemoteIp,
 		context_enum.Module.Str():   module,
-		context_enum.Function.Str(): funcName})}
+		context_enum.Function.Str(): funcName}), hook: nlog.hook}
 }
 
 func (nlog *NLog) WithField(key string, value interface{}) *NLog {
-	return &NLog{Entry: nlog.Entry.WithField(key, value)}
+	return &NLog{Entry: nlog.Entry.WithField(key, value), hook: nlog.hook}
+}
+
+func (nlog *NLog) CloseAndWait(ctx context.Context) {
+	nlog.hook.StopPushLogWorker(ctx)
 }

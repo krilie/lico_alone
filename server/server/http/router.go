@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
+	"github.com/krilie/lico_alone/common/config"
+	"github.com/krilie/lico_alone/common/run_env"
 	_ "github.com/krilie/lico_alone/docs"
 	"github.com/krilie/lico_alone/server/http/middleware"
-	"github.com/krilie/lico_alone/service"
 	"github.com/prometheus/common/log"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
@@ -18,9 +19,9 @@ import (
 	"time"
 )
 
-func InitAndStartHttpServer(ctx context.Context, app *service.App, ctrl *Controllers) (shutDown func(waitSec time.Duration) error) {
+func InitAndStartHttpServer(ctx context.Context, cfg *config.Config, runEnv *run_env.RunEnv, auth middleware.IAuth, ctrl *Controllers) (shutDown func(waitSec time.Duration) error) {
 	// 设置gin mode
-	gin.SetMode(app.Cfg.GinMode)
+	gin.SetMode(cfg.GinMode)
 	// 路径设置 根路径
 	RootRouter := gin.Default() // logger recover
 	// 跨域
@@ -31,16 +32,16 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App, ctrl *Control
 	//RootRouter.Use(cors.New(theCors))
 	RootRouter.Use(Cors())
 	// 静态文件 图片等
-	RootRouter.StaticFile("/files", app.Cfg.FileSave.LocalFileSaveDir)
+	RootRouter.StaticFile("/files", cfg.FileSave.LocalFileSaveDir)
 	// swagger + gzip压缩
-	if app.Cfg.EnableSwagger {
+	if cfg.EnableSwagger {
 		RootRouter.GET("/swagger/*any", gzip.Gzip(gzip.DefaultCompression), ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 	// 健康检查
 	RootRouter.GET("health/", ctrl.healthCheckCtrl.Hello)
 	RootRouter.GET("health/ping", ctrl.healthCheckCtrl.Ping)
 	// 版本号
-	RootRouter.GET("/version", Version(app.RunEnv.Version, app.RunEnv.BuildTime, app.RunEnv.GitCommit, app.RunEnv.GoVersion))
+	RootRouter.GET("/version", Version(runEnv.Version, runEnv.BuildTime, runEnv.GitCommit, runEnv.GoVersion))
 	// web 网页
 	webRouter := RootRouter.Group("/")
 	webRouter.Use(gzip.Gzip(gzip.DefaultCompression)) // 开启gzip压缩
@@ -89,7 +90,7 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App, ctrl *Control
 	noCheckToken.POST("/user/send_sms", ctrl.userCtrl.UserSendSms)
 	//检查权限的分组
 	checkToken := apiGroup.Group("")
-	checkToken.Use(middleware.CheckAuthToken(app.UserService.GetAuthFace()))
+	checkToken.Use(middleware.CheckAuthToken(auth))
 	checkToken.GET("/manage/setting/get_setting_all", ctrl.userCtrl.ManageGetConfigList)
 	checkToken.POST("/manage/setting/update_config", ctrl.userCtrl.ManageUpdateConfig)
 
@@ -99,12 +100,12 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App, ctrl *Control
 
 	// 开始服务
 	srv := &http.Server{
-		Addr:    ":" + strconv.Itoa(app.Cfg.HttpPort),
+		Addr:    ":" + strconv.Itoa(cfg.HttpPort),
 		Handler: RootRouter,
 	}
 	//是否有ssl.public_key ssl.private_key
-	pubKey := app.Cfg.SslPub
-	priKey := app.Cfg.SslPri
+	pubKey := cfg.SslPub
+	priKey := cfg.SslPri
 	if pubKey == "" || priKey == "" {
 		go func() {
 			if err := srv.ListenAndServe(); err != nil {

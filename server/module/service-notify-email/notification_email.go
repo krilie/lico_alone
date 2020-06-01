@@ -1,4 +1,4 @@
-package notification_email_service
+package service_notify_email
 
 import (
 	"context"
