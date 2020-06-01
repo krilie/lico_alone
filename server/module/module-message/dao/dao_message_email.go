@@ -25,7 +25,7 @@ type IMessageEmail interface {
 func (d *messageEmail) CreateMessageEmail(ctx context.Context, item *model.MessageEmail) error {
 	err := d.GetDb(ctx).Create(item).Error
 	if err != nil {
-		d.log.Error(err)
+		d.log.Get(ctx).Error(err)
 		return errs.NewInternal().WithError(err)
 	}
 	return nil
@@ -34,7 +34,7 @@ func (d *messageEmail) CreateMessageEmail(ctx context.Context, item *model.Messa
 func (d *messageEmail) UpdateMessageEmail(ctx context.Context, item *model.MessageEmail) error {
 	err := d.GetDb(ctx).Omit("create_time").Where("id=?", item.Id).Update(item).Error
 	if err != nil {
-		d.log.Error(err)
+		d.log.Get(ctx).Error(err)
 		return errs.NewInternal().WithError(err)
 	}
 	return nil
@@ -43,7 +43,7 @@ func (d *messageEmail) UpdateMessageEmail(ctx context.Context, item *model.Messa
 func (d *messageEmail) DeleteMessageEmail(ctx context.Context, id string) error {
 	err := d.GetDb(ctx).Where("id=?", id).Delete(&model.MessageEmail{}).Error
 	if err != nil {
-		d.log.Error(err)
+		d.log.Get(ctx).Error(err)
 		return errs.NewInternal().WithError(err)
 	}
 	return nil
@@ -53,7 +53,7 @@ func (d *messageEmail) GetMessageEmailById(ctx context.Context, id string) (*mod
 	item := &model.MessageEmail{}
 	err := d.GetDb(ctx).Where("id=?", id).Find(item).Error
 	if err != nil {
-		d.log.Error(err)
+		d.log.Get(ctx).Error(err)
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}

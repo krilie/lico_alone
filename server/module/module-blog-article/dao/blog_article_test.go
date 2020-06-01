@@ -51,7 +51,7 @@ func TestBlogArticleDao_UpdateArticle(t *testing.T) {
 			Content: "231",
 			Picture: "123",
 		})
-		dao.log.Info("info")
+		dao.log.Get(ctx).Info("info")
 		t.Log(err)
 	})
 }

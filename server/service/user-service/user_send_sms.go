@@ -12,7 +12,7 @@ func (a *UserService) SendRegisterSms(ctx context.Context, phoneNum string) erro
 	}
 	master, err := a.moduleUser.Dao.GetUserMasterByPhoneNum(ctx, phoneNum)
 	if err != nil {
-		a.log.Error(err)
+		a.log.Get(ctx).Error(err)
 		return err
 	}
 	if master != nil {

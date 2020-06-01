@@ -60,7 +60,7 @@ func (d *UserDao) GetUserMasterByLoginName(ctx context.Context, loginName string
 func (d *UserDao) CreateUserMaster(ctx context.Context, master *model.UserMaster) error {
 	err := d.GetDb(ctx).Model(&model.UserMaster{}).Create(master).Error
 	if err != nil {
-		d.log.Errorf("create user master db err:%v", err)
+		d.log.Get(ctx).Errorf("create user master db err:%v", err)
 		return errs.NewInternal().WithError(err)
 	}
 	return nil

@@ -46,11 +46,13 @@ func main() {
 	// 开始服务
 	dig.Container.MustInvoke(func(logHook *logsyshook.ElfLogHook, log *nlog.NLog, app *service.App, ctrl *http.Controllers) {
 		ctx := context.NewContext()
+		ctx.Module = "main"
+		ctx.Function = "main"
 		defer logHook.StopPushLogWorker(ctx)
 		// 初始化日志文件
 		defer func() {
 			broker.Smq.Close()
-			log.Infof("消息队列退出")
+			log.Get(ctx).Infof("消息队列退出")
 		}()
 		// 初始化数据
 		app.InitService.InitData(ctx)
@@ -65,18 +67,18 @@ func main() {
 		signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL)
 		for {
 			s := <-c
-			log.Info("get a signal %s", s.String())
+			log.Get(ctx).Info("get a signal %s", s.String())
 			switch s {
 			case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL:
 				err := shutDownApi(30)
 				if err != nil {
-					log.Errorln(err)
+					log.Get(ctx).Errorln(err)
 				} else {
-					log.Infoln("service is closed normally")
+					log.Get(ctx).Infoln("service is closed normally")
 				}
 				// 关闭定时任务
 				cronStop()
-				log.Infoln("service is done.")
+				log.Get(ctx).Infoln("service is done.")
 				return
 			case syscall.SIGHUP:
 			default:
