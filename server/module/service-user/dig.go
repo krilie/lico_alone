@@ -1,9 +1,9 @@
-package service
+package service_user
 
 import (
 	"github.com/krilie/lico_alone/common/dig"
 )
 
 func init() {
-	dig.Container.MustProvide(NewApp)
+	dig.Container.MustProvide(NewUserService)
 }

@@ -1,4 +1,4 @@
-package user_service
+package service_user
 
 import (
 	"github.com/krilie/lico_alone/component/nlog"

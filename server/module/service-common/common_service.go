@@ -1,4 +1,4 @@
-package common_service
+package service_common
 
 import (
 	"context"

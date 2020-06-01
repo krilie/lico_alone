@@ -1,9 +1,9 @@
-package cron_job_service
+package service_common
 
 import (
 	"github.com/krilie/lico_alone/common/dig"
 )
 
 func init() {
-	dig.Container.MustProvide(NewCronJobService)
+	dig.Container.MustProvide(NewCommonService)
 }
