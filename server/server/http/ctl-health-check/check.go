@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/component/ndb"
+	"github.com/krilie/lico_alone/component/nlog"
 	"net/http"
 	"time"
 )
@@ -16,6 +17,8 @@ import (
 // @Success 200 {string} string "hello"
 // @Router /health [get]
 func (h *HealthCheckCtrl) Hello(c *gin.Context) {
+	nlog.Log.Warn("on health check")
+	println("on health check")
 	c.String(http.StatusOK, "hello")
 }
 
@@ -32,6 +35,8 @@ func (h *HealthCheckCtrl) Ping(c *gin.Context) {
 		c.String(http.StatusInternalServerError, "数据库异常")
 		return
 	}
+	nlog.Log.Warn("on ping check")
+	println("on ping check")
 	c.String(http.StatusOK, "pong start time "+h.startTime.String())
 }
 
