@@ -86,7 +86,6 @@ class App extends React.Component {
                     <Divider orientation="left" className="div-line"/>
                 </Affix>
 
-
                 <Switch>
                     <Route exact path="/home" component={Home}/>
                     <Route exact path="/share" component={Share}/>

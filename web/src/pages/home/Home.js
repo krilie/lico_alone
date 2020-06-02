@@ -3,6 +3,7 @@ import "./Home.less"
 import {connect} from 'react-redux'
 import {Col, Row} from "antd";
 import SlidePictures from "../../components/home/SlidePictures";
+import ArticleListPageRollView from "../../components/home/ArticleListPageRollView";
 
 /**
  * ================================================
@@ -29,7 +30,7 @@ class Home extends React.Component {
                 </Col>
             </Row>
             <Row >
-                <Col span={16} className="article-area">666</Col>
+                <Col span={16} className="article-area"><ArticleListPageRollView/></Col>
                 <Col span={8} className="status-area">sss</Col>
             </Row>
         </div>);
