@@ -38,7 +38,7 @@ func NewLogger(runEnv *run_env.RunEnv, cfg *config.Config, hook *logsyshook.ElfL
 func (nlog *NLog) SetUpLogFile(f string) {
 	if f == "" || f == "stdout" {
 		nlog.Logger.SetOutput(os.Stdout)
-		nlog.Logger.Warnln("set log out file to stdout")
+		nlog.Warnln("set log out file to stdout")
 		return
 	}
 	file, e := os.OpenFile(f, os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModeAppend)
@@ -47,7 +47,7 @@ func (nlog *NLog) SetUpLogFile(f string) {
 		return
 	}
 	nlog.Logger.SetOutput(file)
-	nlog.Logger.Warnln("set log out file to " + f)
+	nlog.Warnln("set log out file to " + f)
 }
 
 func (nlog *NLog) Get(ctx context.Context, location ...string) *NLog {

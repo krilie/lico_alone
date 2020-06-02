@@ -25,11 +25,11 @@ class App extends React.Component {
         // if (this.props.location.pathname === '/') {
         //     this.props.location.pathname = "/home";
         // }
-        // const {pathname} = this.props.location;
+        const {pathname} = this.props.location;
         // this.props.history.push(pathname);
-        // this.setState({
-        //     current: pathname,
-        // });
+        this.setState({
+            current: pathname,
+        });
     }
 
     handleClick = e => {

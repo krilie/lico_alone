@@ -11,11 +11,11 @@ import (
 	"time"
 )
 
-// Health 健康检查
-// @Summary 健康检查
-// @Description 健康检查
+// Health 健康检查Hello
+// @Summary 健康检查Hello
+// @Description 健康检查Hello 返回hello字样
 // @Tags 健康检查
-// @ID 健康检查
+// @ID 健康检查Hello
 // @Success 200 {string} string "hello"
 // @Router /health [get]
 func (h *HealthCheckCtrl) Hello(c *gin.Context) {
@@ -24,13 +24,13 @@ func (h *HealthCheckCtrl) Hello(c *gin.Context) {
 	c.String(http.StatusOK, "hello")
 }
 
-// Health 健康检查2
-// @Summary 健康检查2
-// @Description 健康检查2
-// @Tags 基本信息
-// @ID 健康检查2
+// Health 健康检查Ping
+// @Summary 健康检查Ping
+// @Description 健康检查Ping 检查数据库是否正常 并返回启动时间
+// @Tags 健康检查
+// @ID 健康检查Ping
 // @Success 200 {string} string "pong start time up time"
-// @Router /health [get]
+// @Router /health/ping [get]
 func (h *HealthCheckCtrl) Ping(c *gin.Context) {
 	err := h.db.Ping()
 	if err != nil {
