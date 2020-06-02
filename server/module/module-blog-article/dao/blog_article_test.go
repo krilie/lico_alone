@@ -20,10 +20,11 @@ func TestBlogArticleDao_CreateArticle(t *testing.T) {
 				UpdatedAt: time.Now(),
 				DeletedAt: nil,
 			},
-			Title:   "test",
-			Pv:      0,
-			Content: "test",
-			Picture: "test",
+			Title:       "test",
+			Pv:          0,
+			Content:     "test",
+			Picture:     "test",
+			Description: "",
 		})
 		fmt.Println(err)
 	})
@@ -46,10 +47,11 @@ func TestBlogArticleDao_UpdateArticle(t *testing.T) {
 				UpdatedAt: time.Now(),
 				DeletedAt: nil,
 			},
-			Title:   "123",
-			Pv:      10,
-			Content: "231",
-			Picture: "123",
+			Title:       "123",
+			Pv:          10,
+			Content:     "231",
+			Picture:     "123",
+			Description: "",
 		})
 		dao.log.Get(ctx).Info("info")
 		t.Log(err)

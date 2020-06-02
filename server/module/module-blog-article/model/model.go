@@ -6,10 +6,11 @@ import (
 
 type Article struct {
 	common_model.Model
-	Title   string `json:"title" gorm:"column:title;type:varchar(256);not null"`
-	Pv      int    `json:"pv" gorm:"column:pv;type:int;not null"`
-	Content string `json:"content" gorm:"column:content;type:text;not null"`
-	Picture string `json:"picture" gorm:"column:picture;type:varchar(512);not null"`
+	Title       string `json:"title" gorm:"column:title;type:varchar(256);not null"`
+	Pv          int    `json:"pv" gorm:"column:pv;type:int;not null"`
+	Content     string `json:"content" gorm:"column:content;type:text;not null"`
+	Picture     string `json:"picture" gorm:"column:picture;type:varchar(512);not null"`
+	Description string `json:"description" gorm:"column:description;type:varchar(512);not null"` // 描述+关键值
 }
 
 func (Article) TableName() string {
@@ -17,8 +18,9 @@ func (Article) TableName() string {
 }
 
 type UpdateArticleModel struct {
-	Id      string `json:"id"`
-	Title   string `json:"title"`
-	Content string `json:"content"`
-	Picture string `json:"picture"`
+	Id          string `json:"id"`
+	Title       string `json:"title"`
+	Content     string `json:"content"`
+	Picture     string `json:"picture"`
+	Description string `json:"description"`
 }

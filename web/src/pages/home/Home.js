@@ -1,6 +1,8 @@
 import React from "react";
 import "./Home.less"
 import {connect} from 'react-redux'
+import {Col, Row} from "antd";
+import SlidePictures from "../../components/home/SlidePictures";
 
 /**
  * ================================================
@@ -20,8 +22,16 @@ import {connect} from 'react-redux'
  */
 class Home extends React.Component {
     render() {
-        return (<div>
-            <div>您有444555件事未完成</div>
+        return (<div className="home">
+            <Row >
+                <Col span={24} className="slide-picture">
+                    <SlidePictures/>
+                </Col>
+            </Row>
+            <Row >
+                <Col span={16} className="article-area">666</Col>
+                <Col span={8} className="status-area">sss</Col>
+            </Row>
         </div>);
     }
 }
