@@ -2,6 +2,7 @@ package nlog
 
 import (
 	"context"
+	"fmt"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/config"
 	context2 "github.com/krilie/lico_alone/common/context"
@@ -26,6 +27,7 @@ func NewLogger(runEnv *run_env.RunEnv, cfg *config.Config, hook *logsyshook.ElfL
 		WithField(context_enum.AppName.Str(), runEnv.AppName).
 		WithField(context_enum.AppVersion.Str(), runEnv.Version).
 		WithField(context_enum.AppHost.Str(), runEnv.AppHost).
+		WithField(context_enum.CommitSha.Str(), runEnv.GitCommit).
 		WithField(context_enum.TraceId.Str(), "")
 	Log.Infoln("log init ok")
 	log := &NLog{Entry: Log, hook: hook}
@@ -50,6 +52,14 @@ func (nlog *NLog) SetUpLogFile(f string) {
 
 func (nlog *NLog) Get(ctx context.Context, location ...string) *NLog {
 	var module, funcName string
+	val, ok := nlog.Entry.Data[context_enum.Module.Str()]
+	if ok {
+		module = fmt.Sprint(val)
+	}
+	val, ok = nlog.Entry.Data[context_enum.Function.Str()]
+	if ok {
+		funcName = fmt.Sprint(val)
+	}
 	nCtx := context2.GetContextOrNew(ctx)
 	if nCtx.Module != "" {
 		module = nCtx.Module
@@ -67,6 +77,7 @@ func (nlog *NLog) Get(ctx context.Context, location ...string) *NLog {
 		//context_enum.AppName.Str():    nCtx.AppName,
 		//context_enum.AppVersion.Str(): nCtx.AppVersion,
 		//context_enum.AppHost.Str():    nCtx.AppHost,
+		//context_enum.CommitSha.Str(): nCtx.CommitSha,
 		context_enum.TraceId.Str():  nCtx.GetTraceId(),
 		context_enum.ClientId.Str(): nCtx.GetClientId(),
 		context_enum.UserId.Str():   nCtx.GetUserId(),

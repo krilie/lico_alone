@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/module-file/dao"
@@ -22,6 +23,7 @@ type FileService struct {
 }
 
 func NewFileService(dao *dao.FileDao, log *nlog.NLog, cfgs *config.Config) *FileService {
+	log = log.WithField(context_enum.Module.Str(), "module file service")
 	var fileApi file_api.FileOperator
 	cfg := &cfgs.FileSave
 	if cfg.SaveType == "local" {

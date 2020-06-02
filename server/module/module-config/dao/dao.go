@@ -1,6 +1,7 @@
 package dao
 
 import (
+	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
@@ -13,6 +14,7 @@ type ConfigDao struct {
 }
 
 func NewConfigDao(ndb *ndb.NDb, log *nlog.NLog) *ConfigDao {
+	log = log.WithField(context_enum.Module.Str(), "config dao")
 	err := ndb.GetDb(context.NewContext()).AutoMigrate(&model.Config{}).Error
 	if err != nil {
 		panic(err)

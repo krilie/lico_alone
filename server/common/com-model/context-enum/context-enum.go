@@ -17,6 +17,7 @@ const (
 	Function   ContextEnum = "function"
 	Stack      ContextEnum = "stack"
 	RemoteIp   ContextEnum = "remote_ip"
+	CommitSha  ContextEnum = "commit_sha"
 )
 
 type ContextValues struct {
@@ -30,4 +31,5 @@ type ContextValues struct {
 	Function   string
 	Stack      string
 	RemoteIp   string
+	CommitSha  string
 }

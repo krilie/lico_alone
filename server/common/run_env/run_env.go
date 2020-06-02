@@ -35,3 +35,10 @@ func GetHostName() string {
 	}
 	return hostname
 }
+
+func (env RunEnv) GetShortGitCommitSha() string {
+	if len(env.GitCommit) >= 6 {
+		return env.GitCommit[0:6]
+	}
+	return env.GitCommit
+}
