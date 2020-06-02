@@ -25,11 +25,6 @@ func InitAndStartHttpServer(ctx context.Context, cfg *config.Config, runEnv *run
 	// 路径设置 根路径
 	RootRouter := gin.Default() // logger recover
 	// 跨域
-	//var theCors = cors.DefaultConfig()
-	//theCors.AllowAllOrigins = true
-	//theCors.AddAllowHeaders("Content-Type", "X-CSRF-Token", "Authorization", "Token")
-	//theCors.AllowCredentials = true
-	//RootRouter.Use(cors.New(theCors))
 	RootRouter.Use(Cors())
 	// 静态文件 图片等
 	RootRouter.StaticFile("/files", cfg.FileSave.LocalFileSaveDir)
@@ -37,15 +32,14 @@ func InitAndStartHttpServer(ctx context.Context, cfg *config.Config, runEnv *run
 	if cfg.EnableSwagger {
 		RootRouter.GET("/swagger/*any", gzip.Gzip(gzip.DefaultCompression), ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
+
 	// 健康检查
 	RootRouter.GET("health/", ctrl.healthCheckCtrl.Hello)
 	RootRouter.GET("health/ping", ctrl.healthCheckCtrl.Ping)
-	// 版本号
-	RootRouter.GET("/version", Version(runEnv.Version, runEnv.BuildTime, runEnv.GitCommit, runEnv.GoVersion))
+
 	// web 网页
 	webRouter := RootRouter.Group("/")
 	webRouter.Use(gzip.Gzip(gzip.DefaultCompression)) // 开启gzip压缩
-
 	dir, err := ioutil.ReadDir("./www")
 	if err != nil {
 		panic(err)
@@ -97,6 +91,7 @@ func InitAndStartHttpServer(ctx context.Context, cfg *config.Config, runEnv *run
 	// common 服务
 	commonApi := apiGroup.Group("")
 	commonApi.GET("/common/icp_info", ctrl.commonCtrl.GetIcpInfo)
+	RootRouter.GET("/version", ctrl.commonCtrl.Version) // 版本号
 
 	// 开始服务
 	srv := &http.Server{
@@ -133,25 +128,6 @@ func InitAndStartHttpServer(ctx context.Context, cfg *config.Config, runEnv *run
 			log.Info("end of service...")
 			return nil
 		}
-	}
-}
-
-// UserLogin Version
-// @Summary Version
-// @Description Version
-// @Tags 基本信息
-// @ID Version
-// @Success 200 {string} string "version build_time git_commit go_version"
-// @Failure 500 {string} string ""
-// @Router /version [get]
-func Version(version, buildTime, gitCommit, goVersion string) func(c *gin.Context) {
-	return func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"version":    version,
-			"build_time": buildTime,
-			"git_commit": gitCommit,
-			"go_version": goVersion,
-		})
 	}
 }
 

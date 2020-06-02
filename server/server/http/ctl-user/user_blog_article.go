@@ -28,13 +28,13 @@ func (a *UserCtrl) GetArticleById(c *gin.Context) {
 	return
 }
 
-// ManageUpdateConfig 通过id获取文章
-// @Summary 通过id获取文章
-// @Description 获取一个文章信息
+// ManageUpdateConfig 更新文章内容
+// @Summary 更新文章内容
+// @Description 更新文章内容
 // @Tags 文章
-// @ID 获取一个文章信息
-// @Produce  json
-// @Param id query string true "文章id"
+// @ID 更新文章内容
+// @Produce json
+// @Param article body model.UpdateArticleModel true "文章内容"
 // @Success 200 {object} com_model.CommonReturn
 // @Failure 500 {string} errInfo
 // @Router /api/manage/article/update [POST]

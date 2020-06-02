@@ -25,6 +25,17 @@ definitions:
       name:
         type: string
     type: object
+  model.UpdateArticleModel:
+    properties:
+      content:
+        type: string
+      id:
+        type: string
+      picture:
+        type: string
+      title:
+        type: string
+    type: object
 host: '{{.Host}}'
 info:
   contact: {}
@@ -53,7 +64,59 @@ paths:
             type: string
       summary: Icp信息
       tags:
-      - Common
+      - 公共接口
+  /api/manage/article/get_by_id:
+    get:
+      description: 获取一个文章信息
+      operationId: 获取一个文章信息
+      parameters:
+      - description: 文章id
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 通过id获取文章
+      tags:
+      - 文章
+  /api/manage/article/update:
+    post:
+      description: 更新文章内容
+      operationId: 更新文章内容
+      parameters:
+      - description: 文章内容
+        in: body
+        name: article
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateArticleModel'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 更新文章内容
+      tags:
+      - 文章
   /api/manage/setting/get_setting_all:
     post:
       description: 获取所有配置项
@@ -206,16 +269,28 @@ paths:
       - 用户
   /health:
     get:
-      description: 健康检查2
-      operationId: 健康检查2
+      description: 健康检查Hello 返回hello字样
+      operationId: 健康检查Hello
+      responses:
+        "200":
+          description: hello
+          schema:
+            type: string
+      summary: 健康检查Hello
+      tags:
+      - 健康检查
+  /health/ping:
+    get:
+      description: 健康检查Ping 检查数据库是否正常 并返回启动时间
+      operationId: 健康检查Ping
       responses:
         "200":
           description: pong start time up time
           schema:
             type: string
-      summary: 健康检查2
+      summary: 健康检查Ping
       tags:
-      - 基本信息
+      - 健康检查
   /version:
     get:
       description: Version
