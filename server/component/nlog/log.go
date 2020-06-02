@@ -27,7 +27,7 @@ func NewLogger(runEnv *run_env.RunEnv, cfg *config.Config, hook *logsyshook.ElfL
 		WithField(context_enum.AppName.Str(), runEnv.AppName).
 		WithField(context_enum.AppVersion.Str(), runEnv.Version).
 		WithField(context_enum.AppHost.Str(), runEnv.AppHost).
-		WithField(context_enum.CommitSha.Str(), runEnv.GitCommit).
+		WithField(context_enum.CommitSha.Str(), runEnv.GetShortGitCommitSha()).
 		WithField(context_enum.TraceId.Str(), "")
 	Log.Infoln("log init ok")
 	log := &NLog{Entry: Log, hook: hook}
