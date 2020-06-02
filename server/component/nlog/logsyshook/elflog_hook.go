@@ -112,7 +112,7 @@ func (e *ElfLogHook) postLogJson(url, key, sign, data string) error {
 	payload := strings.NewReader(data)
 	req, err := http.NewRequest(method, url, payload)
 	if err != nil {
-		println(err)
+		println(err.Error())
 		return errs.NewInternal().WithError(err)
 	}
 	req.Header.Add("key", key)
@@ -121,24 +121,24 @@ func (e *ElfLogHook) postLogJson(url, key, sign, data string) error {
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
-		println(err)
+		println(err.Error())
 		return errs.NewInternal().WithError(err)
 	}
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		println(err)
+		println(err.Error())
 		return errs.NewInternal().WithError(err)
 	}
 	// code message detail code=2000=success
 	var ret = &ElfLogReturn{}
 	err = json.Unmarshal(body, ret)
 	if err != nil {
-		println(err)
+		println(err.Error())
 		return errs.NewInternal().WithError(err)
 	}
 	if ret.Code != 2000 {
-		fmt.Printf("%v %v %v %v", ret.Code, ret.Message, ret.Detail, string(body))
+		fmt.Printf("code:%v message:%v detail:%v body:%v", ret.Code, ret.Message, ret.Detail, string(body))
 		return errs.NewInternal().WithMsg(ret.Message)
 	}
 	return nil
@@ -165,12 +165,12 @@ func (e *ElfLogHook) StartPushLog(ctx context.Context) {
 					func() {
 						defer func() {
 							if pan := recover(); pan != nil {
-								println(pan)
+								fmt.Printf("%v", pan)
 							}
 						}()
 						err := e.postLogJson(log.Url, log.Key, log.Sign, log.Data)
 						if err != nil {
-							println(err)
+							println(err.Error())
 						}
 					}()
 				}
