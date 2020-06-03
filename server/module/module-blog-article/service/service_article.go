@@ -40,6 +40,6 @@ func (b *BlogArticleModule) QueryArticleSamplePage(ctx context.Context, page com
 	countDb := db
 	dataDb := db.Order("created_at desc")
 	data = make([]*model.QueryArticleModel, 0)
-	totalCount, totalPage, err = ndb.PageGetData(countDb, dataDb, page.PageIndex, page.PageSize, &data)
+	totalCount, totalPage, err = ndb.PageGetData(countDb, dataDb, page.PageNum, page.PageSize, &data)
 	return totalCount, totalPage, data, err
 }

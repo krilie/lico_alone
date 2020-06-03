@@ -18,7 +18,7 @@ import (
 	"syscall"
 )
 
-//go:generate swag init -g ./main.go
+//go:generate swag init
 
 // @title Swagger Example API
 // @version 0.0.1

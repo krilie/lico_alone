@@ -7,9 +7,84 @@
         "license": {},
         "version": "0.0.1"
     },
-    "host": "{{.Host}}",
-    "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/common/article/query_sample": {
+            "get": {
+                "description": "查询文章列表",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "公共接口"
+                ],
+                "summary": "查询文章列表",
+                "operationId": "查询文章列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "搜索内容",
+                        "name": "search_key",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页索引",
+                        "name": "page_num",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页大小",
+                        "name": "page_size",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "Data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/com_model.PageData"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "Data": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/model.QueryArticleModel"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/common/icp_info": {
             "get": {
                 "description": "Icp信息",
@@ -22,7 +97,6 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/model.IcpInfo"
                         }
                     },
@@ -65,7 +139,6 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
@@ -96,7 +169,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/model.UpdateArticleModel"
                         }
                     }
@@ -105,7 +177,6 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
@@ -142,8 +213,22 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.Config"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -186,7 +271,6 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
@@ -230,7 +314,6 @@
                     "200": {
                         "description": "2000 {token:\"asb\"}",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
@@ -281,7 +364,6 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
@@ -325,7 +407,6 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
@@ -378,7 +459,7 @@
             "get": {
                 "description": "Version",
                 "tags": [
-                    "基本信息"
+                    "公共接口"
                 ],
                 "summary": "Version",
                 "operationId": "Version",
@@ -422,6 +503,52 @@
                 }
             }
         },
+        "com_model.PageData": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "description": "列表数据",
+                    "type": "object"
+                },
+                "page_info": {
+                    "description": "分页信息",
+                    "type": "object",
+                    "$ref": "#/definitions/com_model.PageInfo"
+                }
+            }
+        },
+        "com_model.PageInfo": {
+            "type": "object",
+            "properties": {
+                "page_num": {
+                    "type": "integer"
+                },
+                "page_size": {
+                    "type": "integer"
+                },
+                "total": {
+                    "description": "总数据条数",
+                    "type": "integer"
+                },
+                "total_page": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.Config": {
+            "type": "object",
+            "properties": {
+                "create_time": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
         "model.IcpInfo": {
             "type": "object",
             "properties": {
@@ -436,10 +563,33 @@
                 }
             }
         },
+        "model.QueryArticleModel": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "picture": {
+                    "type": "string"
+                },
+                "pv": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
         "model.UpdateArticleModel": {
             "type": "object",
             "properties": {
                 "content": {
+                    "type": "string"
+                },
+                "description": {
                     "type": "string"
                 },
                 "id": {
