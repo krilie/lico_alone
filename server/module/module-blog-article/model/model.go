@@ -24,3 +24,12 @@ type UpdateArticleModel struct {
 	Picture     string `json:"picture"`
 	Description string `json:"description"`
 }
+
+// QueryArticleModel 分页查询简单结果
+type QueryArticleModel struct {
+	Id          string `json:"id"`
+	Title       string `json:"title"`
+	Picture     string `json:"picture"`
+	Description string `json:"description"`
+	Pv          int    `json:"pv"`
+}
