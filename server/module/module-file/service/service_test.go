@@ -3,6 +3,7 @@ package service
 import (
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/dig"
+	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/prometheus/common/log"
 	"mime"
 	"strings"
@@ -12,7 +13,7 @@ import (
 func TestFileService_UploadFile(t *testing.T) {
 	dig.Container.MustInvoke(func(svc *FileService) {
 		uploadStr := "hello qiniu oss"
-		url, bucket, key, err := svc.UploadFile(context.NewContext(), "test", "test2.txt", strings.NewReader(uploadStr), len(uploadStr))
+		url, bucket, key, err := svc.UploadFile(context.NewContext(), "test", "tts/"+id_util.GetUuid()+"test2.txt", strings.NewReader(uploadStr), len(uploadStr))
 		t.Logf("%v %v %v %v", url, bucket, key, err)
 		if err != nil {
 			log.Error(err)

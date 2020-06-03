@@ -5,6 +5,7 @@ import (
 	"github.com/krilie/lico_alone/component/nlog"
 	service2 "github.com/krilie/lico_alone/module/module-blog-article/service"
 	ConfigService "github.com/krilie/lico_alone/module/module-config/service"
+	service3 "github.com/krilie/lico_alone/module/module-file/service"
 	MessageService "github.com/krilie/lico_alone/module/module-message/service"
 	"github.com/krilie/lico_alone/module/module-user/service"
 )
@@ -15,18 +16,21 @@ type UserService struct {
 	moduleMsg     *MessageService.MessageService
 	moduleConfig  *ConfigService.ConfigService
 	moduleArticle *service2.BlogArticleService
+	moduleFile    *service3.FileService
 }
 
 func (u *UserService) GetAuthFace() *service.UserService {
 	return u.moduleUser
 }
 
-func NewUserService(log *nlog.NLog, moduleConfig *ConfigService.ConfigService, moduleUser *service.UserService, moduleMsg *MessageService.MessageService) *UserService {
+func NewUserService(moduleArticle *service2.BlogArticleService, moduleFile *service3.FileService, log *nlog.NLog, moduleConfig *ConfigService.ConfigService, moduleUser *service.UserService, moduleMsg *MessageService.MessageService) *UserService {
 	log = log.WithField(context_enum.Module.Str(), "service user")
 	return &UserService{
-		log:          log,
-		moduleUser:   moduleUser,
-		moduleMsg:    moduleMsg,
-		moduleConfig: moduleConfig,
+		log:           log,
+		moduleUser:    moduleUser,
+		moduleMsg:     moduleMsg,
+		moduleConfig:  moduleConfig,
+		moduleArticle: moduleArticle,
+		moduleFile:    moduleFile,
 	}
 }
