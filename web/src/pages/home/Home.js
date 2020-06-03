@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {Col, Row} from "antd";
 import SlidePictures from "../../components/home/SlidePictures";
 import ArticleListPageRollView from "../../components/home/ArticleListPageRollView";
+import AppVersion from "../../components/app_version/AppVersion";
 
 /**
  * ================================================
@@ -29,9 +30,11 @@ class Home extends React.Component {
                     <SlidePictures/>
                 </Col>
             </Row>
-            <Row >
+            <Row className="main-home-area">
                 <Col span={16} className="article-area"><ArticleListPageRollView/></Col>
-                <Col span={8} className="status-area">sss</Col>
+                <Col span={8} className="status-area">
+                    <AppVersion/>
+                </Col>
             </Row>
         </div>);
     }

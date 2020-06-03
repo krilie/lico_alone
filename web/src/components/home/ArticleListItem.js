@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import "./ArticleListItem.less"
-import {Col, Row} from "antd";
+import {Card} from "antd";
 
 /**
  * --------------------------------------
@@ -14,28 +14,20 @@ import {Col, Row} from "antd";
 class ArticleListItem extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {};
-
     }
 
     render() {
         const {title, description, create_time, pv, short_content, picture} = this.props
         return (
-            <div className="article-item">
-                <Row>
-                    <Col span={4} className="article-picture" >
-                        {picture}
-                    </Col>
-                    <Col span={20}>
-                        <div>1{title}</div>
-                        <div>2{description}</div>
-                        <div>3{create_time}</div>
-                        <div>4{short_content}</div>
-                        <div>5{pv}</div>
-                    </Col>
-                </Row>
-            </div>
+            <Card className="article-item-card" bodyStyle={{padding:"0 0 0 0",margin:"0 0 0 0"}} style={{ width: 300 }}>
+                <p>{title}</p>
+                <p>{description}</p>
+                <p>{create_time}</p>
+                <p>{pv}</p>
+                <p>{short_content}</p>
+                <p>{picture}</p>
+            </Card>
         );
     }
 }

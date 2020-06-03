@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import 'antd/dist/antd.css';
 import {Menu, Row, Col, Divider, BackTop, Affix} from 'antd';
 import Logo from "../components/logo/Logo";
@@ -40,17 +40,17 @@ class App extends React.Component {
     };
 
     times = new RhythmStateHolder()
-    toManagePage = ()=>{
+    toManagePage = () => {
         if (this.times.PushStateOrReset() === true) {
             this.handleClick({key: "/management"})
-        }else{
+        } else {
 
         }
     }
 
     render() {
 
-       const style = {
+        const style = {
             height: 40,
             width: 40,
             lineHeight: '40px',
@@ -70,17 +70,18 @@ class App extends React.Component {
                             <Logo/>
                         </Col>
                         <Col className="fix-height-menu" flex="1 1 250px">
-                            <Menu className="Menu" onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
+                            <Menu className="Menu" onClick={this.handleClick} selectedKeys={[this.state.current]}
+                                  mode="horizontal">
                                 <Menu.Item key="/home">主页</Menu.Item>
                                 <Menu.Item key="/article">文章</Menu.Item>
                                 <Menu.Item key="/photos">图片</Menu.Item>
                                 <Menu.Item key="/share">动态</Menu.Item>
                             </Menu>
                         </Col>
-                        <Col flex="0 1 310px"  className="array-router" > <AppVersion/> </Col>
-                        <Col flex="10px"  className="array-router"/>
+                        <Col flex="0 1 310px" className="array-router"/>
+                        <Col flex="10px" className="array-router"/>
                         <Col flex="0 1 20px" className="array-router">
-                            <RightCircleTwoTone  className="array-router" onClick={()=>this.toManagePage()} />
+                            <RightCircleTwoTone className="array-router" onClick={() => this.toManagePage()}/>
                         </Col>
                     </Row>
                     <Divider orientation="left" className="div-line"/>
