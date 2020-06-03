@@ -37,6 +37,20 @@ definitions:
       total_page:
         type: integer
     type: object
+  model.Article:
+    properties:
+      content:
+        type: string
+      description:
+        description: 描述+关键值
+        type: string
+      picture:
+        type: string
+      pv:
+        type: integer
+      title:
+        type: string
+    type: object
   model.Config:
     properties:
       create_time:
@@ -88,6 +102,35 @@ info:
   title: Swagger Example API
   version: 0.0.1
 paths:
+  /api/common/article/get_article:
+    get:
+      description: 获取article
+      operationId: 获取article
+      parameters:
+      - description: 搜索内容
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Article'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 获取article
+      tags:
+      - 公共接口
   /api/common/article/query_sample:
     get:
       description: 查询文章列表
@@ -117,11 +160,11 @@ paths:
             allOf:
             - $ref: '#/definitions/com_model.CommonReturn'
             - properties:
-                Data:
+                data:
                   allOf:
                   - $ref: '#/definitions/com_model.PageData'
                   - properties:
-                      Data:
+                      data:
                         items:
                           $ref: '#/definitions/model.QueryArticleModel'
                         type: array
@@ -222,7 +265,7 @@ paths:
             allOf:
             - $ref: '#/definitions/com_model.CommonReturn'
             - properties:
-                Data:
+                data:
                   items:
                     $ref: '#/definitions/model.Config'
                   type: array

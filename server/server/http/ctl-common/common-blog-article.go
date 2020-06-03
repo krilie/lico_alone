@@ -16,7 +16,7 @@ import (
 // @Param search_key query string true "搜索内容"
 // @Param page_num query int true "页索引"
 // @Param page_size query int true "页大小"
-// @Success 200 {object} com_model.CommonReturn{Data=com_model.PageData{Data=[]model.QueryArticleModel}}
+// @Success 200 {object} com_model.CommonReturn{data=com_model.PageData{data=[]model.QueryArticleModel}}
 // @Failure 500 {string} errInfo
 // @Router /api/common/article/query_sample [GET]
 func (a *CommonCtrl) QueryArticleSample(c *gin.Context) {
@@ -38,5 +38,30 @@ func (a *CommonCtrl) QueryArticleSample(c *gin.Context) {
 		return
 	}
 	ginutil.ReturnData(c, com_model.NewSuccess(pageData))
+	return
+}
+
+// GetArticle 获取article
+// @Summary 获取article
+// @Description 获取article
+// @Tags 公共接口
+// @ID 获取article
+// @Produce json
+// @Param id query string true "搜索内容"
+// @Success 200 {object} com_model.CommonReturn{data=model.Article}
+// @Failure 500 {string} errInfo
+// @Router /api/common/article/get_article [GET]
+func (a *CommonCtrl) GetArticle(c *gin.Context) {
+	ctx := ginutil.MustGetAppCtx(c)
+	log := a.log.Get(ctx)
+	id := c.Query("id")
+
+	article, err := a.CommonService.QueryArticleById(ctx, id)
+	if err != nil {
+		log.Error(err)
+		ginutil.ReturnWithErr(c, err)
+		return
+	}
+	ginutil.ReturnData(c, article)
 	return
 }

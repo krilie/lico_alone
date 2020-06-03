@@ -92,6 +92,7 @@ func InitAndStartHttpServer(ctx context.Context, cfg *config.Config, runEnv *run
 	commonApi := apiGroup.Group("")
 	commonApi.GET("/common/icp_info", ctrl.commonCtrl.GetIcpInfo)
 	commonApi.GET("/common/article/query_sample", ctrl.commonCtrl.QueryArticleSample)
+	commonApi.GET("/common/article/get_article", ctrl.commonCtrl.GetArticle)
 	RootRouter.GET("/version", ctrl.commonCtrl.Version) // 版本号
 
 	// 开始服务

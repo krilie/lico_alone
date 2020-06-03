@@ -25,6 +25,54 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/common/article/get_article": {
+            "get": {
+                "description": "获取article",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "公共接口"
+                ],
+                "summary": "获取article",
+                "operationId": "获取article",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "搜索内容",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Article"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/common/article/query_sample": {
             "get": {
                 "description": "查询文章列表",
@@ -70,7 +118,7 @@ var doc = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Data": {
+                                        "data": {
                                             "allOf": [
                                                 {
                                                     "$ref": "#/definitions/com_model.PageData"
@@ -78,7 +126,7 @@ var doc = `{
                                                 {
                                                     "type": "object",
                                                     "properties": {
-                                                        "Data": {
+                                                        "data": {
                                                             "type": "array",
                                                             "items": {
                                                                 "$ref": "#/definitions/model.QueryArticleModel"
@@ -237,7 +285,7 @@ var doc = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Data": {
+                                        "data": {
                                             "type": "array",
                                             "items": {
                                                 "$ref": "#/definitions/model.Config"
@@ -549,6 +597,27 @@ var doc = `{
                 },
                 "total_page": {
                     "type": "integer"
+                }
+            }
+        },
+        "model.Article": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "description": {
+                    "description": "描述+关键值",
+                    "type": "string"
+                },
+                "picture": {
+                    "type": "string"
+                },
+                "pv": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
                 }
             }
         },
