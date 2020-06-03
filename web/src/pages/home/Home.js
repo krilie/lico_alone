@@ -31,8 +31,8 @@ class Home extends React.Component {
                 </Col>
             </Row>
             <Row className="main-home-area">
-                <Col span={16} className="article-area"><ArticleListPageRollView/></Col>
-                <Col span={8} className="status-area">
+                <Col sm={16} xs = {24} className="article-area"><ArticleListPageRollView/></Col>
+                <Col sm={8} xs={0} className="status-area">
                     <AppVersion/>
                 </Col>
             </Row>
