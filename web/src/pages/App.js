@@ -7,7 +7,6 @@ import Share from "./share/Share";
 import Photos from "./photos/Photos";
 import Article from "./article/Article";
 import IcpLabel from "../components/icp/IcpLabel";
-import AppVersion from "../components/app_version/AppVersion";
 import {withRouter, Redirect} from "react-router-dom";
 import "./App.less"
 import Home from "./home/Home";
@@ -66,22 +65,21 @@ class App extends React.Component {
             <div className="global-style">
                 <Affix className="menu-affix" offsetTop={0}>
                     <Row className="fix-height-menu menu-affix" justify="start" align="middle">
-                        <Col className="menu-logo" flex="0 1 150px">
+                        <Col className="menu-logo" flex="150px">
                             <Logo/>
                         </Col>
-                        <Col className="fix-height-menu" flex="1 1 250px">
-                            <Menu className="Menu" onClick={this.handleClick} selectedKeys={[this.state.current]}
+                        <Col className="fix-height-menu" flex="300px">
+                            <Menu className="Menu" onClick={this.handleClick}
+                                  selectedKeys={[this.state.current]}
                                   mode="horizontal">
                                 <Menu.Item key="/home">主页</Menu.Item>
                                 <Menu.Item key="/article">文章</Menu.Item>
                                 <Menu.Item key="/photos">图片</Menu.Item>
                                 <Menu.Item key="/share">动态</Menu.Item>
+                                <Menu.Item key="/management" onClick={() => this.toManagePage()}>
+                                    <RightCircleTwoTone className="array-router" />
+                                </Menu.Item>
                             </Menu>
-                        </Col>
-                        <Col flex="0 1 310px" className="array-router"/>
-                        <Col flex="10px" className="array-router"/>
-                        <Col flex="0 1 20px" className="array-router">
-                            <RightCircleTwoTone className="array-router" onClick={() => this.toManagePage()}/>
                         </Col>
                     </Row>
                     <Divider orientation="left" className="div-line"/>
