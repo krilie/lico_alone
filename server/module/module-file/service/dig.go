@@ -5,5 +5,5 @@ import (
 )
 
 func init() {
-	dig.Container.MustProvide(NewFileService)
+	dig.Container.MustProvide(NewFileModule)
 }

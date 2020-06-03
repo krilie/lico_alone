@@ -16,13 +16,13 @@ type IFileService interface {
 	GetBaseUrl(ctx context.Context) string
 }
 
-type FileService struct {
+type FileModule struct {
 	dao     *dao.FileDao
 	log     *nlog.NLog
 	fileApi file_api.FileOperator
 }
 
-func NewFileService(dao *dao.FileDao, log *nlog.NLog, cfgs *config.Config) *FileService {
+func NewFileModule(dao *dao.FileDao, log *nlog.NLog, cfgs *config.Config) *FileModule {
 	log = log.WithField(context_enum.Module.Str(), "module file service")
 	var fileApi file_api.FileOperator
 	cfg := &cfgs.FileSave
@@ -33,7 +33,7 @@ func NewFileService(dao *dao.FileDao, log *nlog.NLog, cfgs *config.Config) *File
 	} else {
 		panic("config error on file save " + cfg.SaveType)
 	}
-	return &FileService{
+	return &FileModule{
 		dao:     dao,
 		log:     log,
 		fileApi: fileApi,

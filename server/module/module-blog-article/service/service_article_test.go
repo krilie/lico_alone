@@ -9,12 +9,12 @@ import (
 )
 
 func TestBlogArticleService_QueryArticleSamplePage(t *testing.T) {
-	dig.Container.MustInvoke(func(svc *BlogArticleService) {
+	dig.Container.MustInvoke(func(svc *BlogArticleModule) {
 		ctx := context2.NewContext()
 		page, count, data, err := svc.QueryArticleSamplePage(ctx, com_model.PageParams{
-			PageIndex: 1,
-			PageSize:  10,
-		}, "")
+			PageNum:  1,
+			PageSize: 10,
+		}, "1")
 		t.Log(err)
 		t.Log(page)
 		t.Log(count)

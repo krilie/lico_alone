@@ -6,7 +6,7 @@ import (
 )
 
 // InitConfigData 初始化配置文件 不会删除原来的数据
-func (a *ConfigService) InitConfigData(ctx context.Context) error {
+func (a *ConfigModule) InitConfigData(ctx context.Context) error {
 	err := a.Dao.Transaction(ctx, func(ctx context.Context) error {
 		err := a.Dao.DeleteAllConfig(ctx)
 		if err != nil {

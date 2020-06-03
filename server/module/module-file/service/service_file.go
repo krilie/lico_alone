@@ -14,7 +14,7 @@ import (
 )
 
 // 内部有事务的存在
-func (a *FileService) UploadFile(ctx context.Context, userId, fileName string, file io.ReadSeeker, size int) (url, bucket, key string, err error) {
+func (a *FileModule) UploadFile(ctx context.Context, userId, fileName string, file io.ReadSeeker, size int) (url, bucket, key string, err error) {
 	err = a.dao.Transaction(ctx, func(ctx context.Context) error {
 		var content string
 		extension := file_util.GetFileExtension(fileName)
@@ -55,7 +55,7 @@ func (a *FileService) UploadFile(ctx context.Context, userId, fileName string, f
 }
 
 // 内部有事务的存在
-func (a *FileService) DeleteFile(ctx context.Context, bucket, key string) (err error) {
+func (a *FileModule) DeleteFile(ctx context.Context, bucket, key string) (err error) {
 	err = a.dao.Transaction(ctx, func(ctx context.Context) error {
 		if bucket == "" {
 			bucket = a.fileApi.GetBucketName(ctx)
@@ -73,6 +73,6 @@ func (a *FileService) DeleteFile(ctx context.Context, bucket, key string) (err e
 	return err
 }
 
-func (a *FileService) GetBaseUrl(ctx context.Context) string {
+func (a *FileModule) GetBaseUrl(ctx context.Context) string {
 	return a.fileApi.GetBaseUrl(ctx)
 }

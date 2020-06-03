@@ -5,5 +5,5 @@ import (
 )
 
 func init() {
-	dig.Container.MustProvide(NewService)
+	dig.Container.MustProvide(NewBlogArticleModule)
 }

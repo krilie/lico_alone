@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func (s *UserService) ChangeUserPassword(ctx context.Context, userId, oldPswd, newPswd string) error {
+func (s *UserModule) ChangeUserPassword(ctx context.Context, userId, oldPswd, newPswd string) error {
 	user, err := s.Dao.GetUserMasterById(ctx, userId)
 	if err != nil {
 		s.log.Get(ctx).Get(ctx).Errorf("change user password err:%v", err)
@@ -28,7 +28,7 @@ func (s *UserService) ChangeUserPassword(ctx context.Context, userId, oldPswd, n
 	return err
 }
 
-func (s *UserService) RegisterNewUser(ctx context.Context, phoneNum, password string) error {
+func (s *UserModule) RegisterNewUser(ctx context.Context, phoneNum, password string) error {
 	if phoneNum == "" {
 		return errs.NewNormal().WithMsg("手机号不能为空")
 	}
@@ -62,7 +62,7 @@ func (s *UserService) RegisterNewUser(ctx context.Context, phoneNum, password st
 	return err
 }
 
-func (s *UserService) UserLogin(ctx context.Context, phoneNum, password, clientId string) (jwtToken string, err error) {
+func (s *UserModule) UserLogin(ctx context.Context, phoneNum, password, clientId string) (jwtToken string, err error) {
 	userMaster, err := s.Dao.GetUserMasterByPhoneNum(ctx, phoneNum)
 	if userMaster == nil {
 		return "", errs.NewNormal().WithMsg("无此用户")

@@ -8,16 +8,16 @@ import (
 	"github.com/krilie/lico_alone/module/module-message/infra/sms"
 )
 
-type MessageService struct {
+type MessageModule struct {
 	Dao   *dao.MessageDao
 	log   *nlog.NLog
 	email email.IEmail
 	sms   sms.IAliSms
 }
 
-func NewMessageService(log *nlog.NLog, dao *dao.MessageDao, email email.IEmail, sms sms.IAliSms) *MessageService {
+func NewMessageModule(log *nlog.NLog, dao *dao.MessageDao, email email.IEmail, sms sms.IAliSms) *MessageModule {
 	log = log.WithField(context_enum.Module.Str(), "module message service")
-	return &MessageService{
+	return &MessageModule{
 		Dao:   dao,
 		log:   log,
 		email: email,

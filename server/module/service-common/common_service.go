@@ -2,16 +2,18 @@ package service_common
 
 import (
 	"context"
+	service2 "github.com/krilie/lico_alone/module/module-blog-article/service"
 	"github.com/krilie/lico_alone/module/module-config/model"
 	"github.com/krilie/lico_alone/module/module-config/service"
 )
 
 type CommonService struct {
-	configService *service.ConfigService
+	configService *service.ConfigModule
+	moduleArticle *service2.BlogArticleModule
 }
 
-func NewCommonService(configService *service.ConfigService) *CommonService {
-	return &CommonService{configService: configService}
+func NewCommonService(moduleArticle *service2.BlogArticleModule, configService *service.ConfigModule) *CommonService {
+	return &CommonService{configService: configService, moduleArticle: moduleArticle}
 }
 
 func (c *CommonService) GetIcpInfo(ctx context.Context) (info model.IcpInfo) {

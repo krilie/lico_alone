@@ -12,11 +12,11 @@ import (
 )
 
 type NotificationEmailService struct {
-	ModuleConfig  *ConfigService.ConfigService
-	ModuleMessage *MessageService.MessageService
+	ModuleConfig  *ConfigService.ConfigModule
+	ModuleMessage *MessageService.MessageModule
 }
 
-func NewNotificationEmailService(moduleConfig *ConfigService.ConfigService, moduleMessage *MessageService.MessageService) *NotificationEmailService {
+func NewNotificationEmailService(moduleConfig *ConfigService.ConfigModule, moduleMessage *MessageService.MessageModule) *NotificationEmailService {
 	return &NotificationEmailService{
 		ModuleConfig:  moduleConfig,
 		ModuleMessage: moduleMessage,

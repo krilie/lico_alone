@@ -5,5 +5,5 @@ import (
 )
 
 func init() {
-	dig.Container.MustProvide(NewUserService)
+	dig.Container.MustProvide(NewUserModule)
 }

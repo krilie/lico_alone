@@ -7,7 +7,7 @@ import (
 )
 
 func TestUserService_RegisterNewUser(t *testing.T) {
-	dig.Container.MustInvoke(func(svc *UserService) {
+	dig.Container.MustInvoke(func(svc *UserModule) {
 		err := svc.RegisterNewUser(context.NewContext(), "123", "123456")
 		t.Log(err)
 	})
