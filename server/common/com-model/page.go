@@ -6,6 +6,15 @@ type PageParams struct {
 	PageSize  int `json:"page_size" swaggo:"false,页大小"`  // 页大小
 }
 
+func (p *PageParams) CheckOkOrSetDefault() {
+	if p.PageSize <= 0 {
+		p.PageSize = 10
+	}
+	if p.PageIndex <= 0 {
+		p.PageIndex = 1
+	}
+}
+
 // PaginationResult 分页查询结果
 type PageInfo struct {
 	TotalCount int `json:"total" swaggo:"true,总条数"` // 总数据条数

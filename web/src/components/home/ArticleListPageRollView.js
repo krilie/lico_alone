@@ -1,7 +1,8 @@
 import React from "react";
-import { List, Avatar, Button, Skeleton } from 'antd';
+import { List, Button } from 'antd';
 import reqwest from 'reqwest';
 import "./ArticleListPageRollView.less"
+import ArticleListItem from "./ArticleListItem";
 
 const count = 3;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat&noinfo`;
@@ -88,20 +89,14 @@ class ArticleListPageRollView extends React.Component {
                 loadMore={loadMore}
                 dataSource={list}
                 renderItem={item => (
-                    <List.Item
-                        actions={[<Button>oneAction</Button>,<Button>twoAction</Button>]}
-                    >
-                        <Skeleton avatar title={false} loading={item.loading} active>
-                            <List.Item.Meta
-                                avatar={
-                                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                                }
-                                title={<a href="https://ant.design">{item.name.last}</a>}
-                                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                            />
-                            <div>content</div>
-                        </Skeleton>
-                    </List.Item>
+                    <ArticleListItem
+                        id={item.title}
+                        title={item.title}
+                        create_time={item.title}
+                        pv={item.title}
+                        short_content={item.title}
+                        picture="https://pic1.zhimg.com/80/v2-af6f3a9444c74d726c63ed5291f9e53d_720w.jpg"
+                        description={item.title}/>
                 )}
             />
         );
