@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func (s *MessageService) SendEmail(ctx context.Context, to, subject, content string) error {
+func (s *MessageModule) SendEmail(ctx context.Context, to, subject, content string) error {
 	email := &model.MessageEmail{
 		Model: com_model.Model{
 			Id:        id_util.GetUuid(),

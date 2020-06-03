@@ -7,14 +7,14 @@ import (
 )
 
 // 系统配置服务
-type BlogArticleService struct {
+type BlogArticleModule struct {
 	Dao *dao.BlogArticleDao
 	log *nlog.NLog
 }
 
-func NewService(log *nlog.NLog, dao *dao.BlogArticleDao) *BlogArticleService {
+func NewBlogArticleModule(log *nlog.NLog, dao *dao.BlogArticleDao) *BlogArticleModule {
 	log = log.WithField(context_enum.Module.Str(), "blog article service")
-	return &BlogArticleService{
+	return &BlogArticleModule{
 		Dao: dao,
 		log: log,
 	}

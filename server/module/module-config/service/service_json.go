@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func (a *ConfigService) GetJsonValue(ctx context.Context, name string, resOut interface{}) (content *model.Config, err error) {
+func (a *ConfigModule) GetJsonValue(ctx context.Context, name string, resOut interface{}) (content *model.Config, err error) {
 	config, err := a.Dao.GetConfigByName(ctx, name)
 	if err != nil {
 		return nil, errs.NewInternal().WithError(err)
@@ -23,7 +23,7 @@ func (a *ConfigService) GetJsonValue(ctx context.Context, name string, resOut in
 	}
 	return config, nil
 }
-func (a *ConfigService) SetJsonValue(ctx context.Context, name string, value interface{}) error {
+func (a *ConfigModule) SetJsonValue(ctx context.Context, name string, value interface{}) error {
 	config, err := a.Dao.GetConfigByName(ctx, name)
 	if err != nil {
 		return err

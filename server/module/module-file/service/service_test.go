@@ -11,7 +11,7 @@ import (
 )
 
 func TestFileService_UploadFile(t *testing.T) {
-	dig.Container.MustInvoke(func(svc *FileService) {
+	dig.Container.MustInvoke(func(svc *FileModule) {
 		uploadStr := "hello qiniu oss"
 		url, bucket, key, err := svc.UploadFile(context.NewContext(), "test", "tts/"+id_util.GetUuid()+"test2.txt", strings.NewReader(uploadStr), len(uploadStr))
 		t.Logf("%v %v %v %v", url, bucket, key, err)
@@ -22,7 +22,7 @@ func TestFileService_UploadFile(t *testing.T) {
 }
 
 func TestFileService_DeleteFile(t *testing.T) {
-	dig.Container.MustInvoke(func(svc *FileService) {
+	dig.Container.MustInvoke(func(svc *FileModule) {
 		err := svc.DeleteFile(context.NewContext(), "", "test")
 		if err != nil {
 			log.Error(err)

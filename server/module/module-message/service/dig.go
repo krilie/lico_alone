@@ -5,5 +5,5 @@ import (
 )
 
 func init() {
-	dig.Container.MustProvide(NewMessageService)
+	dig.Container.MustProvide(NewMessageModule)
 }

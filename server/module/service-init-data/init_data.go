@@ -11,15 +11,15 @@ import (
 
 type InitDataService struct {
 	log          *nlog.NLog
-	moduleConfig *ConfigService.ConfigService
-	moduleUser   *service.UserService
+	moduleConfig *ConfigService.ConfigModule
+	moduleUser   *service.UserModule
 }
 
 func (initData *InitDataService) GetNDb(ctx context.Context) *ndb.NDb {
 	return initData.moduleConfig.Dao.NDb
 }
 
-func NewInitDataService(log *nlog.NLog, moduleConfig *ConfigService.ConfigService, moduleUser *service.UserService) *InitDataService {
+func NewInitDataService(log *nlog.NLog, moduleConfig *ConfigService.ConfigModule, moduleUser *service.UserModule) *InitDataService {
 	log = log.WithField(context_enum.Module.Str(), "service init")
 	return &InitDataService{
 		log:          log,

@@ -7,14 +7,14 @@ import (
 )
 
 // 系统配置服务
-type ConfigService struct {
+type ConfigModule struct {
 	Dao *dao.ConfigDao
 	log *nlog.NLog
 }
 
-func NewService(log *nlog.NLog, dao *dao.ConfigDao) *ConfigService {
+func NewConfigModule(log *nlog.NLog, dao *dao.ConfigDao) *ConfigModule {
 	log = log.WithField(context_enum.Module.Str(), "config service")
-	return &ConfigService{
+	return &ConfigModule{
 		Dao: dao,
 		log: log,
 	}

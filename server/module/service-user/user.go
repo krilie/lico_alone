@@ -12,18 +12,18 @@ import (
 
 type UserService struct {
 	log           *nlog.NLog
-	moduleUser    *service.UserService
-	moduleMsg     *MessageService.MessageService
-	moduleConfig  *ConfigService.ConfigService
-	moduleArticle *service2.BlogArticleService
-	moduleFile    *service3.FileService
+	moduleUser    *service.UserModule
+	moduleMsg     *MessageService.MessageModule
+	moduleConfig  *ConfigService.ConfigModule
+	moduleArticle *service2.BlogArticleModule
+	moduleFile    *service3.FileModule
 }
 
-func (u *UserService) GetAuthFace() *service.UserService {
+func (u *UserService) GetAuthFace() *service.UserModule {
 	return u.moduleUser
 }
 
-func NewUserService(moduleArticle *service2.BlogArticleService, moduleFile *service3.FileService, log *nlog.NLog, moduleConfig *ConfigService.ConfigService, moduleUser *service.UserService, moduleMsg *MessageService.MessageService) *UserService {
+func NewUserService(moduleArticle *service2.BlogArticleModule, moduleFile *service3.FileModule, log *nlog.NLog, moduleConfig *ConfigService.ConfigModule, moduleUser *service.UserModule, moduleMsg *MessageService.MessageModule) *UserService {
 	log = log.WithField(context_enum.Module.Str(), "service user")
 	return &UserService{
 		log:           log,

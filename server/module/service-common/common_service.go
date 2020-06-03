@@ -7,10 +7,10 @@ import (
 )
 
 type CommonService struct {
-	configService *service.ConfigService
+	configService *service.ConfigModule
 }
 
-func NewCommonService(configService *service.ConfigService) *CommonService {
+func NewCommonService(configService *service.ConfigModule) *CommonService {
 	return &CommonService{configService: configService}
 }
 

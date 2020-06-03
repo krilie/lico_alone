@@ -9,7 +9,7 @@ import (
 )
 
 // InitData 初始化数据
-func (s *UserService) InitUserData(ctx context.Context) (err error) {
+func (s *UserModule) InitUserData(ctx context.Context) (err error) {
 	err = s.Dao.Transaction(ctx, func(ctx context.Context) error {
 		err = s.Dao.DeleteAllUserData(ctx)
 		if err != nil {

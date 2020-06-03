@@ -12,7 +12,7 @@ import (
 )
 
 // SendRegisterSms 发送注册短信
-func (s *MessageService) SendRegisterSms(ctx context.Context, phone, code string) error {
+func (s *MessageModule) SendRegisterSms(ctx context.Context, phone, code string) error {
 	sendErr := s.sms.SendRegisterSms(ctx, phone, code)
 	if sendErr != nil {
 		s.log.Get(ctx).Error(sendErr)
