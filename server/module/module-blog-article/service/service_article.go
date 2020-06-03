@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	common_model "github.com/krilie/lico_alone/common/com-model"
-	"github.com/krilie/lico_alone/common/errs"
+	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/module/module-blog-article/model"
 )
 
@@ -32,26 +32,14 @@ func (b *BlogArticleService) QueryArticleSamplePage(ctx context.Context, page co
 
 	page.CheckOkOrSetDefault()
 
-	data = make([]*model.QueryArticleModel, 0)
 	db := b.Dao.GetDb(ctx).Model(new(model.Article))
 	if searchKey != "" {
 		db = db.Or("title like ?", "%"+searchKey+"%")
 		db = db.Or("description like ?", "%"+searchKey+"%")
 	}
-	err = db.Count(&totalCount).Error
-	if err != nil {
-		return 0, 0, nil, errs.NewInternal().WithError(err)
-	}
-	if totalCount <= 0 {
-		return 0, 0, data, nil
-	}
-	totalPage = totalCount / page.PageSize
-	// 获取结果
-	db = db.Order("created_at desc")
-	db = db.Limit(page.PageSize).Offset((page.PageIndex - 1) * page.PageSize)
-	err = db.Find(&data).Error
-	if err != nil {
-		return 0, 0, nil, errs.NewInternal().WithError(err)
-	}
-	return totalPage, totalCount, data, nil
+	countDb := db
+	dataDb := db.Order("created_at desc")
+	data = make([]*model.QueryArticleModel, 0)
+	totalCount, totalPage, err = ndb.PageGetData(countDb, dataDb, page.PageIndex, page.PageSize, &data)
+	return totalCount, totalPage, data, err
 }
