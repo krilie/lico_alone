@@ -32,8 +32,8 @@ export default class ManagePage extends React.Component {
     render() {
         return (
             <Layout>
-                <Sider className="sider-layout-background">
-                    <Menu onClick={this.handleClick} selectedKeys={[this.state.currentPage]}  className="sider-layout-background" mode="inline" defaultSelectedKeys={['4']}>
+                <Sider className="sider-layout-background" width={"80px"}>
+                    <Menu onClick={this.handleClick} selectedKeys={[this.state.currentPage]} className="sider-layout-background" mode="inline" defaultSelectedKeys={['4']}>
                         <Menu.Item key="/management/manage/setting" icon={<UserOutlined />}>
                             设置
                         </Menu.Item>
