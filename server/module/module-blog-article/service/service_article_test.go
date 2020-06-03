@@ -14,7 +14,7 @@ func TestBlogArticleService_QueryArticleSamplePage(t *testing.T) {
 		page, count, data, err := svc.QueryArticleSamplePage(ctx, com_model.PageParams{
 			PageIndex: 1,
 			PageSize:  10,
-		}, "")
+		}, "1")
 		t.Log(err)
 		t.Log(page)
 		t.Log(count)

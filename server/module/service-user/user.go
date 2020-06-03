@@ -19,8 +19,8 @@ type UserService struct {
 	moduleFile    *service3.FileModule
 }
 
-func (u *UserService) GetAuthFace() *service.UserModule {
-	return u.moduleUser
+func (a *UserService) GetAuthFace() *service.UserModule {
+	return a.moduleUser
 }
 
 func NewUserService(moduleArticle *service2.BlogArticleModule, moduleFile *service3.FileModule, log *nlog.NLog, moduleConfig *ConfigService.ConfigModule, moduleUser *service.UserModule, moduleMsg *MessageService.MessageModule) *UserService {

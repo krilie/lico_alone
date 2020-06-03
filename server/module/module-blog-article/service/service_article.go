@@ -34,8 +34,8 @@ func (b *BlogArticleModule) QueryArticleSamplePage(ctx context.Context, page com
 
 	db := b.Dao.GetDb(ctx).Model(new(model.Article))
 	if searchKey != "" {
-		db = db.Or("title like ?", "%"+searchKey+"%")
-		db = db.Or("description like ?", "%"+searchKey+"%")
+		db = db.Or("title like ?", ndb.Like(searchKey))
+		db = db.Or("description like ?", ndb.Like(searchKey))
 	}
 	countDb := db
 	dataDb := db.Order("created_at desc")

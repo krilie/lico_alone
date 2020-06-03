@@ -20,11 +20,11 @@ func TestBlogArticleDao_CreateArticle(t *testing.T) {
 				UpdatedAt: time.Now(),
 				DeletedAt: nil,
 			},
-			Title:       "test",
+			Title:       "123" + id_util.NextSnowflake(),
 			Pv:          0,
-			Content:     "test",
-			Picture:     "test",
-			Description: "",
+			Content:     "123" + id_util.NextSnowflake(),
+			Picture:     "123" + id_util.NextSnowflake(),
+			Description: "123" + id_util.NextSnowflake(),
 		})
 		fmt.Println(err)
 	})
@@ -40,18 +40,19 @@ func TestBlogArticleDao_DeleteArticleById(t *testing.T) {
 
 func TestBlogArticleDao_UpdateArticle(t *testing.T) {
 	dig.Container.MustInvoke(func(dao *BlogArticleDao) {
-		err := dao.UpdateArticle(context.NewContext(), &model.Article{
+		ctx := context.NewContext()
+		err := dao.UpdateArticle(ctx, &model.Article{
 			Model: com_model.Model{
 				Id:        "b93b348a-0d93-45d9-9cc4-5b1e4fe5407b",
 				CreatedAt: time.Now(),
 				UpdatedAt: time.Now(),
 				DeletedAt: nil,
 			},
-			Title:       "123",
+			Title:       "123" + id_util.NextSnowflake(),
 			Pv:          10,
-			Content:     "231",
-			Picture:     "123",
-			Description: "",
+			Content:     "231" + id_util.NextSnowflake(),
+			Picture:     "123" + id_util.NextSnowflake(),
+			Description: "11234" + id_util.NextSnowflake(),
 		})
 		dao.log.Get(ctx).Info("info")
 		t.Log(err)

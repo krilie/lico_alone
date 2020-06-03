@@ -34,3 +34,7 @@ func PageGetData(countDb, dataDb *gorm.DB, pageNum, pageSize int, data interface
 	}
 	return count, page, nil
 }
+
+func Like(val string) string {
+	return "%" + val + "%"
+}
