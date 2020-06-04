@@ -87,6 +87,7 @@ func (a *UserCtrl) QueryArticle(c *gin.Context) {
 		return
 	}
 	// 查询
+	param.PageParams.CheckOkOrSetDefault()
 	page, count, data, err := a.userService.ModuleArticle.QueryArticlePage(ctx, param.PageParams, param.SearchKey)
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)

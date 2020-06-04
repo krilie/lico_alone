@@ -17,7 +17,7 @@ func (p *PageParams) CheckOkOrSetDefault() {
 
 // PaginationResult 分页查询结果
 type PageInfo struct {
-	TotalCount int `json:"total" swaggo:"true,总条数"` // 总数据条数
+	TotalCount int `json:"total_count" swaggo:"true,总条数"` // 总数据条数
 	TotalPage  int `json:"total_page" swaggo:"true,所有页数"`
 	PageNum    int `json:"page_num" swaggo:"true,当前页码"`
 	PageSize   int `json:"page_size" swggo:"true,页大小"`
