@@ -63,3 +63,17 @@ export function getArticleSampleList(pageNum, pageSize, searchKey, funcOk, funcF
         funcFinally()
     });
 }
+
+export function getArticleById(articleId, then) {
+    getQuery("/common/article/get_article", {article_id: articleId}).then(res => {
+        if (res.data.code !== 2000) {
+            message.warning(res.data.message);
+        } else {
+            then(res.data.data);
+        }
+    }).catch(err => {
+        message.error(err.toString());
+    })
+}
+
+// =============================================================
