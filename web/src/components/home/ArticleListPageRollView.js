@@ -1,7 +1,7 @@
 import React from "react";
 import {List, Button} from 'antd';
 import "./ArticleListPageRollView.less"
-import ArticleListItem from "./ArticleListItem";
+// import ArticleListItem from "./ArticleListItem";
 import {getArticleSampleList} from "../../api/common";
 import openNotification from "../../utils/MessageBoard";
 
