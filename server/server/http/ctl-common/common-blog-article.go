@@ -32,6 +32,7 @@ func (a *CommonCtrl) QueryArticleSample(c *gin.Context) {
 		ginutil.ReturnWithAppErr(c, errs.NewParamError().WithMsg(err.Error()))
 		return
 	}
+	param.PageParams.CheckOkOrSetDefault()
 	pageData, err := a.CommonService.QueryArticleSamplePage(ctx, param.PageParams, param.SearchKey)
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
