@@ -88,8 +88,9 @@ func InitAndStartHttpServer(ctx context.Context, cfg *config.Config, runEnv *run
 	checkToken.GET("/manage/setting/get_setting_all", ctrl.userCtrl.ManageGetConfigList)
 	checkToken.POST("/manage/setting/update_config", ctrl.userCtrl.ManageUpdateConfig)
 	checkToken.GET("/api/manage/article/query", ctrl.userCtrl.QueryArticle)
-	checkToken.GET("/api/manage/article/update", ctrl.userCtrl.UpdateArticle)
-	checkToken.GET("/api/manage/article/delete", ctrl.userCtrl.DeleteArticle)
+	checkToken.GET("/api/manage/article/get_by_id", ctrl.userCtrl.GetArticleById)
+	checkToken.POST("/api/manage/article/update", ctrl.userCtrl.UpdateArticle)
+	checkToken.POST("/api/manage/article/delete", ctrl.userCtrl.DeleteArticle)
 
 	// common 服务
 	commonApi := apiGroup.Group("")
