@@ -52,7 +52,7 @@ func (b *BlogArticleDao) UpdateArticle(ctx context.Context, article *model.Artic
 }
 
 func (b *BlogArticleDao) UpdateArticleSample(ctx context.Context, article *model.UpdateArticleModel) error {
-	result := b.GetDb(ctx).Model(new(model.Article)).Select("id,title,content,picture").Update(article)
+	result := b.GetDb(ctx).Model(new(model.Article)).Select("id,title,content,picture,sort").Update(article)
 	if result.Error != nil {
 		return result.Error
 	}
