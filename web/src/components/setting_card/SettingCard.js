@@ -1,8 +1,7 @@
 import React from "react";
 import "./SettingCard.less"
-import {Button, Card, Input} from "antd";
+import {Button, Card, Input, message} from "antd";
 import {updateSettingItem} from "../../api/SettingApi";
-import openNotification from "../../utils/MessageBoard";
 
 const {TextArea} = Input
 
@@ -31,7 +30,7 @@ export default class SettingCard extends React.Component {
         const {name} = this.props.data
         const {value} = this.state
         updateSettingItem(name, value).then(data => {
-            openNotification("保存成功")
+            message.info("保存成功");
         }).catch(err => {
             console.log("保存操作：" + name + value, err.status)
         })

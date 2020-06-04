@@ -1,8 +1,8 @@
 import axios from "axios";
-import openNotification from "../utils/MessageBoard";
 import {baseUrl} from "./baseUrl";
 import {getQuery} from "./api";
 import qs from 'qs'
+import {message} from "antd";
 
 // =====================================================================================================
 
@@ -25,11 +25,11 @@ const commonGet = (url, query) => {
 export const getIcpInfo = (then) => {
     commonGet("api/common/icp_info").then((res) => {
         if (res.data.code !== 2000) {
-            openNotification(res.data.message);
+            message.warning(res.data.message);
         }
         then(res.data.data);
     }).catch((error) => {
-        openNotification(error.toString());
+        message.error(error.toString());
     });
 }
 
@@ -37,7 +37,7 @@ export const getVersion = (then) => {
     commonGet("version").then((res) => {
         then(res.data)
     }).catch((error) => {
-        openNotification(error.toString());
+        message.error(error.toString());
     });
 }
 
@@ -52,13 +52,13 @@ export function getArticleSampleList(pageNum, pageSize, searchKey, funcOk, funcF
     }).then((res) => {
         // http 200
         if (res.data.code !== 2000) {
-            openNotification(res.data.message);
+            message.warning(res.data.message);
         } else {
             funcOk(res.data.data);
         }
     }).catch((error) => {
         // http !200
-        openNotification(error.toString());
+        message.error(error.toString());
     }).finally(() => {
         funcFinally()
     });
