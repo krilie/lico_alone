@@ -4,6 +4,7 @@ import "./ArticleListPageRollView.less"
 // import ArticleListItem from "./ArticleListItem";
 import {getArticleSampleList} from "../../api/common";
 import openNotification from "../../utils/MessageBoard";
+import ArticleListItem from "./ArticleListItem";
 
 const pageSize = 7;
 
@@ -42,6 +43,11 @@ class ArticleListPageRollView extends React.Component {
                     articleList: [...this.state.articleList, ...data.data],
                     loading: false,
                 })
+                if (data.data.length < pageSize) {
+                    this.setState({
+                        moreButtonText: "到底了"
+                    })
+                }
             }
         }, () => {
             this.setState({
@@ -79,15 +85,14 @@ class ArticleListPageRollView extends React.Component {
                 loadMore={loadMore}
                 dataSource={articleList}
                 renderItem={item => (
-                    <div>{item.title}</div>
-                    // <ArticleListItem
-                    //     id={item.title}
-                    //     title={item.title}
-                    //     create_time={item.title}
-                    //     pv={item.title}
-                    //     short_content={item.title}
-                    //     picture="https://pic1.zhimg.com/80/v2-af6f3a9444c74d726c63ed5291f9e53d_720w.jpg"
-                    //     description={item.title}/>
+                    <ArticleListItem
+                        id={item.title}
+                        title={item.title}
+                        create_time={item.title}
+                        pv={item.title}
+                        short_content={item.title}
+                        picture="https://pic1.zhimg.com/80/v2-af6f3a9444c74d726c63ed5291f9e53d_720w.jpg"
+                        description={item.title}/>
                 )}
             />
         );

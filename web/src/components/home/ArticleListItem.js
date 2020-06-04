@@ -20,7 +20,8 @@ class ArticleListItem extends React.Component {
     render() {
         const {title, description, create_time, pv, short_content, picture} = this.props
         return (
-            <Card className="article-item-card" bodyStyle={{padding:"0 0 0 0",margin:"0 0 0 0"}} style={{ width: 300 }}>
+            <Card className="article-item-card" bodyStyle={{padding:"0 0 0 0",margin:"0 0 0 0"}} style={{ minWidth: 400 }}>
+
                 <p>{title}</p>
                 <p>{description}</p>
                 <p>{create_time}</p>
