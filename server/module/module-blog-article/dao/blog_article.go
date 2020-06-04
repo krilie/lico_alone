@@ -14,7 +14,7 @@ type IBlogArticleDao interface {
 	DeleteArticleById(ctx context.Context, id string) (bool, error)
 	UpdateArticle(ctx context.Context, article *model.Article) error
 	UpdateArticleSample(ctx context.Context, article *model.UpdateArticleModel) error
-	QueryArticleById(ctx context.Context, id string) (*model.Article, error)
+	GetArticleById(ctx context.Context, id string) (*model.Article, error)
 }
 
 func (b *BlogArticleDao) CreateArticle(ctx context.Context, article *model.Article) error {
@@ -62,7 +62,7 @@ func (b *BlogArticleDao) UpdateArticleSample(ctx context.Context, article *model
 	return nil
 }
 
-func (b *BlogArticleDao) QueryArticleById(ctx context.Context, id string) (article *model.Article, err error) {
+func (b *BlogArticleDao) GetArticleById(ctx context.Context, id string) (article *model.Article, err error) {
 	article = new(model.Article)
 	err = b.GetDb(ctx).First(article, "id=?", id).Error
 	if err != nil {

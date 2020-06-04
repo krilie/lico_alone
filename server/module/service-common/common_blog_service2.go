@@ -3,6 +3,7 @@ package service_common
 import (
 	"context"
 	common_model "github.com/krilie/lico_alone/common/com-model"
+	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/module/module-blog-article/model"
 )
 
@@ -22,6 +23,13 @@ func (a *CommonService) QueryArticleSamplePage(ctx context.Context, page common_
 	}, nil
 }
 
-func (b *CommonService) QueryArticleById(ctx context.Context, id string) (*model.Article, error) {
-	return b.moduleArticle.QueryArticleById(ctx, id)
+func (b *CommonService) GetArticleById(ctx context.Context, id string) (*model.Article, error) {
+	article, err := b.moduleArticle.GetArticleById(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	if article == nil {
+		return nil, errs.NewNotExistsError().WithMsg("未找到")
+	}
+	return article, nil
 }

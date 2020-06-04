@@ -7,6 +7,8 @@
         "license": {},
         "version": "0.0.1"
     },
+    "host": "{{.Host}}",
+    "basePath": "{{.BasePath}}",
     "paths": {
         "/api/common/article/get_article": {
             "get": {
@@ -23,7 +25,7 @@
                     {
                         "type": "string",
                         "description": "搜索内容",
-                        "name": "id",
+                        "name": "article_id",
                         "in": "query",
                         "required": true
                     }
@@ -32,19 +34,8 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/com_model.CommonReturn"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/model.Article"
-                                        }
-                                    }
-                                }
-                            ]
+                            "type": "object",
+                            "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
                     "500": {
@@ -94,34 +85,8 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/com_model.CommonReturn"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "allOf": [
-                                                {
-                                                    "$ref": "#/definitions/com_model.PageData"
-                                                },
-                                                {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "data": {
-                                                            "type": "array",
-                                                            "items": {
-                                                                "$ref": "#/definitions/model.QueryArticleModel"
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                }
-                            ]
+                            "type": "object",
+                            "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
                     "500": {
@@ -145,6 +110,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
+                            "type": "object",
                             "$ref": "#/definitions/model.IcpInfo"
                         }
                     },
@@ -163,6 +129,43 @@
                 }
             }
         },
+        "/api/manage/article/delete": {
+            "post": {
+                "description": "删除文章",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "文章管理"
+                ],
+                "summary": "删除文章",
+                "operationId": "删除文章",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "文章id",
+                        "name": "article_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/com_model.CommonReturn"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/manage/article/get_by_id": {
             "get": {
                 "description": "获取一个文章信息",
@@ -170,7 +173,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "文章"
+                    "文章管理"
                 ],
                 "summary": "通过id获取文章",
                 "operationId": "获取一个文章信息",
@@ -187,6 +190,58 @@
                     "200": {
                         "description": "OK",
                         "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/com_model.CommonReturn"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/manage/article/query": {
+            "get": {
+                "description": "查询文章列表",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "文章管理"
+                ],
+                "summary": "查询文章列表",
+                "operationId": "查询文章列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "搜索内容",
+                        "name": "search_key",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页索引",
+                        "name": "page_num",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页大小",
+                        "name": "page_size",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
                             "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
@@ -206,7 +261,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "文章"
+                    "文章管理"
                 ],
                 "summary": "更新文章内容",
                 "operationId": "更新文章内容",
@@ -217,6 +272,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
+                            "type": "object",
                             "$ref": "#/definitions/model.UpdateArticleModel"
                         }
                     }
@@ -225,6 +281,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
+                            "type": "object",
                             "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
@@ -261,22 +318,8 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/com_model.CommonReturn"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/model.Config"
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
+                            "type": "object",
+                            "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
                     "500": {
@@ -319,6 +362,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
+                            "type": "object",
                             "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
@@ -362,6 +406,7 @@
                     "200": {
                         "description": "2000 {token:\"asb\"}",
                         "schema": {
+                            "type": "object",
                             "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
@@ -412,6 +457,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
+                            "type": "object",
                             "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
@@ -455,6 +501,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
+                            "type": "object",
                             "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     },
@@ -551,73 +598,6 @@
                 }
             }
         },
-        "com_model.PageData": {
-            "type": "object",
-            "properties": {
-                "data": {
-                    "description": "列表数据",
-                    "type": "object"
-                },
-                "page_info": {
-                    "description": "分页信息",
-                    "type": "object",
-                    "$ref": "#/definitions/com_model.PageInfo"
-                }
-            }
-        },
-        "com_model.PageInfo": {
-            "type": "object",
-            "properties": {
-                "page_num": {
-                    "type": "integer"
-                },
-                "page_size": {
-                    "type": "integer"
-                },
-                "total": {
-                    "description": "总数据条数",
-                    "type": "integer"
-                },
-                "total_page": {
-                    "type": "integer"
-                }
-            }
-        },
-        "model.Article": {
-            "type": "object",
-            "properties": {
-                "content": {
-                    "type": "string"
-                },
-                "description": {
-                    "description": "描述+关键值",
-                    "type": "string"
-                },
-                "picture": {
-                    "type": "string"
-                },
-                "pv": {
-                    "type": "integer"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.Config": {
-            "type": "object",
-            "properties": {
-                "create_time": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "value": {
-                    "type": "string"
-                }
-            }
-        },
         "model.IcpInfo": {
             "type": "object",
             "properties": {
@@ -628,26 +608,6 @@
                     "type": "string"
                 },
                 "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.QueryArticleModel": {
-            "type": "object",
-            "properties": {
-                "description": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "picture": {
-                    "type": "string"
-                },
-                "pv": {
-                    "type": "integer"
-                },
-                "title": {
                     "type": "string"
                 }
             }

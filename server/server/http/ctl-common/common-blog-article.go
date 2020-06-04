@@ -47,16 +47,16 @@ func (a *CommonCtrl) QueryArticleSample(c *gin.Context) {
 // @Tags 公共接口
 // @ID 获取article
 // @Produce json
-// @Param id query string true "搜索内容"
+// @Param article_id query string true "搜索内容"
 // @Success 200 {object} com_model.CommonReturn{data=model.Article}
 // @Failure 500 {string} errInfo
 // @Router /api/common/article/get_article [GET]
 func (a *CommonCtrl) GetArticle(c *gin.Context) {
 	ctx := ginutil.MustGetAppCtx(c)
 	log := a.log.Get(ctx)
-	id := c.Query("id")
+	articleId := c.Query("article_id")
 
-	article, err := a.CommonService.QueryArticleById(ctx, id)
+	article, err := a.CommonService.GetArticleById(ctx, articleId)
 	if err != nil {
 		log.Error(err)
 		ginutil.ReturnWithErr(c, err)
