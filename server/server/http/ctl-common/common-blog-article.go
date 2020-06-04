@@ -37,7 +37,7 @@ func (a *CommonCtrl) QueryArticleSample(c *gin.Context) {
 		ginutil.ReturnWithErr(c, err)
 		return
 	}
-	ginutil.ReturnData(c, com_model.NewSuccess(pageData))
+	ginutil.ReturnData(c, pageData)
 	return
 }
 
