@@ -13,6 +13,7 @@ import Home from "./home/Home";
 import RightCircleTwoTone from "@ant-design/icons/lib/icons/RightCircleTwoTone";
 import Management from "./management/Management";
 import RhythmStateHolder from "../utils/RhythmStateHolder";
+import ArticleDetailPage from "./article/ArticleDetailPage";
 
 class App extends React.Component {
 
@@ -90,6 +91,7 @@ class App extends React.Component {
                     <Route exact path="/share" component={Share}/>
                     <Route exact path="/photos" component={Photos}/>
                     <Route exact path="/article" component={Article}/>
+                    <Route exact path="/article/:articleId" component={ArticleDetailPage}/>
                     <Route exact={false} path="/management" component={Management}/>
                     <Redirect path="/" to={{pathname: '/home'}}/>
                 </Switch>

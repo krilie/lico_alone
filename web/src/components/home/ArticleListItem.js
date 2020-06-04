@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import "./ArticleListItem.less"
-import {Card, Layout, message} from "antd";
+import {Card, Layout} from "antd";
+import {withRouter} from "react-router-dom";
 
 /**
  * --------------------------------------
@@ -18,7 +19,7 @@ class ArticleListItem extends React.Component {
     }
 
     goDetailPage = (articleId) => {
-        message.info("go to article" + articleId)
+        this.props.history.push("/article/" + articleId);
     }
 
     render() {
@@ -38,9 +39,10 @@ class ArticleListItem extends React.Component {
                         <Layout.Content className="article-layout-content">
                             <Layout className="article-layout">
                                 <Layout.Header className="article-layout-content-real">
-                                        {description}
+                                    {description}
                                 </Layout.Header>
-                                <Layout.Footer className="article-layout-footer">create_time:{create_time} pv:{pv}</Layout.Footer>
+                                <Layout.Footer
+                                    className="article-layout-footer">create_time:{create_time} pv:{pv}</Layout.Footer>
                             </Layout>
                         </Layout.Content>
                     </Layout>
@@ -60,4 +62,4 @@ ArticleListItem.propTypes = {
     description: PropTypes.string.isRequired,
 };
 
-export default ArticleListItem;
+export default withRouter(ArticleListItem)
