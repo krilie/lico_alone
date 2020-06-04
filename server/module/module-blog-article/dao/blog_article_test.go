@@ -61,7 +61,7 @@ func TestBlogArticleDao_UpdateArticle(t *testing.T) {
 
 func TestBlogArticleDao_QueryArticleById(t *testing.T) {
 	dig.Container.MustInvoke(func(dao *BlogArticleDao) {
-		id, err := dao.QueryArticleById(context.NewContext(), "12")
+		id, err := dao.GetArticleById(context.NewContext(), "12")
 		t.Log(id, err)
 	})
 }

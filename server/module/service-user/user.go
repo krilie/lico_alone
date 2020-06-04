@@ -15,7 +15,7 @@ type UserService struct {
 	moduleUser    *service.UserModule
 	moduleMsg     *MessageService.MessageModule
 	moduleConfig  *ConfigService.ConfigModule
-	moduleArticle *service2.BlogArticleModule
+	ModuleArticle *service2.BlogArticleModule
 	moduleFile    *service3.FileModule
 }
 
@@ -30,7 +30,7 @@ func NewUserService(moduleArticle *service2.BlogArticleModule, moduleFile *servi
 		moduleUser:    moduleUser,
 		moduleMsg:     moduleMsg,
 		moduleConfig:  moduleConfig,
-		moduleArticle: moduleArticle,
+		ModuleArticle: moduleArticle,
 		moduleFile:    moduleFile,
 	}
 }

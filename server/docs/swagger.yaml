@@ -1,3 +1,4 @@
+basePath: '{{.BasePath}}'
 definitions:
   com_model.CommonReturn:
     properties:
@@ -15,51 +16,6 @@ definitions:
         example: 错误信息
         type: string
     type: object
-  com_model.PageData:
-    properties:
-      data:
-        description: 列表数据
-        type: object
-      page_info:
-        $ref: '#/definitions/com_model.PageInfo'
-        description: 分页信息
-        type: object
-    type: object
-  com_model.PageInfo:
-    properties:
-      page_num:
-        type: integer
-      page_size:
-        type: integer
-      total:
-        description: 总数据条数
-        type: integer
-      total_page:
-        type: integer
-    type: object
-  model.Article:
-    properties:
-      content:
-        type: string
-      description:
-        description: 描述+关键值
-        type: string
-      picture:
-        type: string
-      pv:
-        type: integer
-      title:
-        type: string
-    type: object
-  model.Config:
-    properties:
-      create_time:
-        type: string
-      name:
-        type: string
-      value:
-        type: string
-    type: object
   model.IcpInfo:
     properties:
       label:
@@ -67,19 +23,6 @@ definitions:
       link:
         type: string
       name:
-        type: string
-    type: object
-  model.QueryArticleModel:
-    properties:
-      description:
-        type: string
-      id:
-        type: string
-      picture:
-        type: string
-      pv:
-        type: integer
-      title:
         type: string
     type: object
   model.UpdateArticleModel:
@@ -95,6 +38,7 @@ definitions:
       title:
         type: string
     type: object
+host: '{{.Host}}'
 info:
   contact: {}
   description: This is a sample server Petstore server.
@@ -109,7 +53,7 @@ paths:
       parameters:
       - description: 搜索内容
         in: query
-        name: id
+        name: article_id
         required: true
         type: string
       produces:
@@ -118,12 +62,8 @@ paths:
         "200":
           description: OK
           schema:
-            allOf:
-            - $ref: '#/definitions/com_model.CommonReturn'
-            - properties:
-                data:
-                  $ref: '#/definitions/model.Article'
-              type: object
+            $ref: '#/definitions/com_model.CommonReturn'
+            type: object
         "500":
           description: Internal Server Error
           schema:
@@ -157,19 +97,8 @@ paths:
         "200":
           description: OK
           schema:
-            allOf:
-            - $ref: '#/definitions/com_model.CommonReturn'
-            - properties:
-                data:
-                  allOf:
-                  - $ref: '#/definitions/com_model.PageData'
-                  - properties:
-                      data:
-                        items:
-                          $ref: '#/definitions/model.QueryArticleModel'
-                        type: array
-                    type: object
-              type: object
+            $ref: '#/definitions/com_model.CommonReturn'
+            type: object
         "500":
           description: Internal Server Error
           schema:
@@ -186,6 +115,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/model.IcpInfo'
+            type: object
         "400":
           description: Bad Request
           schema:
@@ -197,6 +127,31 @@ paths:
       summary: Icp信息
       tags:
       - 公共接口
+  /api/manage/article/delete:
+    post:
+      description: 删除文章
+      operationId: 删除文章
+      parameters:
+      - description: 文章id
+        in: query
+        name: article_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 删除文章
+      tags:
+      - 文章管理
   /api/manage/article/get_by_id:
     get:
       description: 获取一个文章信息
@@ -214,13 +169,49 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/com_model.CommonReturn'
+            type: object
         "500":
           description: Internal Server Error
           schema:
             type: string
       summary: 通过id获取文章
       tags:
-      - 文章
+      - 文章管理
+  /api/manage/article/query:
+    get:
+      description: 查询文章列表
+      operationId: 查询文章列表
+      parameters:
+      - description: 搜索内容
+        in: query
+        name: search_key
+        required: true
+        type: string
+      - description: 页索引
+        in: query
+        name: page_num
+        required: true
+        type: integer
+      - description: 页大小
+        in: query
+        name: page_size
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 查询文章列表
+      tags:
+      - 文章管理
   /api/manage/article/update:
     post:
       description: 更新文章内容
@@ -232,6 +223,7 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/model.UpdateArticleModel'
+          type: object
       produces:
       - application/json
       responses:
@@ -239,13 +231,14 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/com_model.CommonReturn'
+            type: object
         "500":
           description: Internal Server Error
           schema:
             type: string
       summary: 更新文章内容
       tags:
-      - 文章
+      - 文章管理
   /api/manage/setting/get_setting_all:
     post:
       description: 获取所有配置项
@@ -262,14 +255,8 @@ paths:
         "200":
           description: OK
           schema:
-            allOf:
-            - $ref: '#/definitions/com_model.CommonReturn'
-            - properties:
-                data:
-                  items:
-                    $ref: '#/definitions/model.Config'
-                  type: array
-              type: object
+            $ref: '#/definitions/com_model.CommonReturn'
+            type: object
         "500":
           description: Internal Server Error
           schema:
@@ -299,6 +286,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/com_model.CommonReturn'
+            type: object
         "500":
           description: Internal Server Error
           schema:
@@ -328,6 +316,7 @@ paths:
           description: 2000 {token:"asb"}
           schema:
             $ref: '#/definitions/com_model.CommonReturn'
+            type: object
         "500":
           description: Internal Server Error
           schema:
@@ -362,6 +351,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/com_model.CommonReturn'
+            type: object
         "500":
           description: Internal Server Error
           schema:
@@ -391,6 +381,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/com_model.CommonReturn'
+            type: object
         "500":
           description: Internal Server Error
           schema:
