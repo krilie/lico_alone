@@ -48,5 +48,6 @@ func (common *CommonCtrl) Version(c *gin.Context) {
 		"build_time": common.runEnv.BuildTime,
 		"git_commit": common.runEnv.GitCommit,
 		"go_version": common.runEnv.GoVersion,
+		"host":       common.runEnv.AppHost,
 	})
 }
