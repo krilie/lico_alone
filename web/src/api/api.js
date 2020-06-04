@@ -1,6 +1,6 @@
 import axios from "axios";
 import qs from 'qs'
-import {GetUserToken,ClearToken} from "../utils/LocalStorageUtil";
+import {GetUserToken, ClearToken} from "../utils/LocalStorageUtil";
 import openNotification from "../utils/MessageBoard"
 import {baseUrl} from "./baseUrl";
 
@@ -27,16 +27,20 @@ apiRequest.interceptors.request.use(
 // 返回后拦截
 apiRequest.interceptors.response.use(
     data => {
-        if (data.data.code !== 2000) {
-            openNotification(data.data.message)
-            return Promise.reject(data)
+        // 请求成功
+        if (data.data.code === 2000) {
+            return data;
         }
-        if (data.data.code === 4002){
+        // token有误
+        if (data.data.code === 4002) {
             openNotification(data.data.message)
             ClearToken()
             window.location.reload()
+            return Promise.reject(data)
         }
-        return data;
+        // 其它错误
+        openNotification(data.data.message)
+        return Promise.reject(data)
     },
     err => {
         if (err.response.status === 504 || err.response.status === 404) {

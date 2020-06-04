@@ -15,7 +15,8 @@ class ArticleListPageRollView extends React.Component {
             initLoading: true,
             loading: false,
             nowPage: 1,
-            articleList: []
+            articleList: [],
+            moreButtonText: "加载更多..."
         };
 
     }
@@ -32,6 +33,9 @@ class ArticleListPageRollView extends React.Component {
         getArticleSampleList(pageNum, pageSize, "", (data) => {
             if (data.data.length <= 0) {
                 openNotification("没有更多了")
+                this.setState({
+                    moreButtonText: "到底了"
+                })
             } else {
                 this.setState({
                     nowPage: pageNum,
@@ -52,7 +56,7 @@ class ArticleListPageRollView extends React.Component {
     };
 
     render() {
-        const {initLoading, loading, articleList} = this.state;
+        const {initLoading, loading, articleList, moreButtonText} = this.state;
         const loadMore =
             !initLoading && !loading ? (
                 <div
@@ -63,7 +67,7 @@ class ArticleListPageRollView extends React.Component {
                         lineHeight: '32px',
                     }}
                 >
-                    <Button type="link" onClick={this.onLoadMore}>加载更多...</Button>
+                    <Button type="link" onClick={this.onLoadMore}>{moreButtonText}</Button>
                 </div>
             ) : null;
 
