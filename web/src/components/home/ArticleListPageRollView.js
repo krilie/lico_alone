@@ -84,13 +84,13 @@ class ArticleListPageRollView extends React.Component {
                 dataSource={articleList}
                 renderItem={item => (
                     <ArticleListItem
-                        id={item.title}
+                        id={item.id}
                         title={item.title}
-                        create_time={item.title}
-                        pv={item.title}
-                        short_content={item.title}
+                        create_time={item.create_time}
+                        pv={item.pv}
+                        short_content={item.content}
                         picture="https://pic1.zhimg.com/80/v2-af6f3a9444c74d726c63ed5291f9e53d_720w.jpg"
-                        description={item.title}/>
+                        description={item.description}/>
                 )}
             />
         );

@@ -35,9 +35,15 @@ class ArticleListItem extends React.Component {
                         <Layout.Sider width={100} className="article-layout-sider">
                             <img className="pic" src={picture} alt={"pic"}/>
                         </Layout.Sider>
-                        <Layout.Content className="article-layout-content">{description}</Layout.Content>
+                        <Layout.Content className="article-layout-content">
+                            <Layout className="article-layout">
+                                <Layout.Header className="article-layout-content-real">
+                                        {description}
+                                </Layout.Header>
+                                <Layout.Footer className="article-layout-footer">create_time:{create_time} pv:{pv}</Layout.Footer>
+                            </Layout>
+                        </Layout.Content>
                     </Layout>
-                    <Layout.Footer className="article-layout-footer">create_time:{create_time} pv:{pv}</Layout.Footer>
                 </Layout>
             </Card>
         );
