@@ -38,7 +38,7 @@ func (b *BlogArticleModule) QueryArticleSamplePage(ctx context.Context, page com
 		db = db.Or("description like ?", ndb.Like(searchKey))
 	}
 	countDb := db
-	dataDb := db.Order("created_at desc")
+	dataDb := db.Order("sort desc").Order("created_at desc")
 	data = make([]*model.QueryArticleModel, 0)
 	totalCount, totalPage, err = ndb.PageGetData(countDb, dataDb, page.PageNum, page.PageSize, &data)
 	return totalCount, totalPage, data, err
@@ -55,7 +55,7 @@ func (b *BlogArticleModule) QueryArticlePage(ctx context.Context, page common_mo
 		db = db.Or("description like ?", ndb.Like(searchKey))
 	}
 	countDb := db
-	dataDb := db.Order("created_at desc")
+	dataDb := db.Order("sort desc").Order("created_at desc")
 	data = make([]*model.Article, 0)
 	totalCount, totalPage, err = ndb.PageGetData(countDb, dataDb, page.PageNum, page.PageSize, &data)
 	return totalCount, totalPage, data, err
