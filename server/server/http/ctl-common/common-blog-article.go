@@ -24,9 +24,9 @@ func (a *CommonCtrl) QueryArticleSample(c *gin.Context) {
 	log := a.log.Get(ctx)
 	var param = &struct {
 		com_model.PageParams
-		SearchKey string `json:"search_key"`
+		SearchKey string `form:"search_key" json:"search_key" xml:"search_key"  binding:"required"`
 	}{}
-	err := c.ShouldBindQuery(param)
+	err := c.ShouldBindQuery(&param)
 	if err != nil {
 		log.Warn(err.Error())
 		ginutil.ReturnWithAppErr(c, errs.NewParamError().WithMsg(err.Error()))

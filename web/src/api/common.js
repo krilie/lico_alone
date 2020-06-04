@@ -44,28 +44,22 @@ export const getVersion = (then) => {
 // ===================================================================================================
 
 // 获取文章列表sample
-export function getArticleSampleList(searchKey, then) {
-    getQuery("/common/article/query_sample", {search_key: searchKey}).then((res) => {
+export function getArticleSampleList(pageNum, pageSize, searchKey, funcOk, funcFinally) {
+    getQuery("/common/article/query_sample", {
+        page_num: pageNum,
+        page_size: pageSize,
+        search_key: searchKey
+    }).then((res) => {
+        // http 200
         if (res.data.code !== 2000) {
             openNotification(res.data.message);
+        } else {
+            funcOk(res.data.data);
         }
-        then(res.data.data);
     }).catch((error) => {
+        // http !200
         openNotification(error.toString());
+    }).finally(() => {
+        funcFinally()
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

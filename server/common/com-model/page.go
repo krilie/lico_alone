@@ -2,8 +2,8 @@ package com_model
 
 // PaginationParam 分页查询条件
 type PageParams struct {
-	PageNum  int `json:"page_num" swaggo:"false,页索引"`  // 页索引
-	PageSize int `json:"page_size" swaggo:"false,页大小"` // 页大小
+	PageNum  int `form:"page_num" json:"page_num" xml:"page_num"  binding:"required"`    // 页索引
+	PageSize int `form:"page_size" json:"page_size" xml:"page_size"  binding:"required"` // 页大小
 }
 
 func (p *PageParams) CheckOkOrSetDefault() {

@@ -8,7 +8,7 @@ import (
 )
 
 func (a *CommonService) QueryArticleSamplePage(ctx context.Context, page common_model.PageParams, searchKey string) (pageData *common_model.PageData, err error) {
-	totalPage, totalCount, data, err := a.moduleArticle.QueryArticleSamplePage(ctx, page, searchKey)
+	totalCount, totalPage, data, err := a.moduleArticle.QueryArticleSamplePage(ctx, page, searchKey)
 	if err != nil {
 		return nil, err
 	}

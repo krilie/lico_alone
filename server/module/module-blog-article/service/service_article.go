@@ -28,7 +28,7 @@ func (b *BlogArticleModule) GetArticleById(ctx context.Context, id string) (*mod
 }
 
 // 分页查询
-func (b *BlogArticleModule) QueryArticleSamplePage(ctx context.Context, page common_model.PageParams, searchKey string) (totalPage, totalCount int, data []*model.QueryArticleModel, err error) {
+func (b *BlogArticleModule) QueryArticleSamplePage(ctx context.Context, page common_model.PageParams, searchKey string) (totalCount, totalPage int, data []*model.QueryArticleModel, err error) {
 
 	page.CheckOkOrSetDefault()
 

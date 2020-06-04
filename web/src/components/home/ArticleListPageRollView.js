@@ -1,72 +1,58 @@
 import React from "react";
-import { List, Button } from 'antd';
-import reqwest from 'reqwest';
+import {List, Button} from 'antd';
 import "./ArticleListPageRollView.less"
 import ArticleListItem from "./ArticleListItem";
+import {getArticleSampleList} from "../../api/common";
+import openNotification from "../../utils/MessageBoard";
 
-const count = 3;
-const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat&noinfo`;
+const pageSize = 7;
 
 class ArticleListPageRollView extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state =  {
+        this.state = {
             initLoading: true,
             loading: false,
-            data: [],
-            list: [],
+            nowPage: 1,
+            articleList: []
         };
 
     }
 
     componentDidMount() {
-        this.getData(res => {
-            this.setState({
-                initLoading: false,
-                data: res.results,
-                list: res.results,
-            });
-        });
+        this.getData(1)
+        this.setState({
+            initLoading: false,
+        })
     }
 
-    getData = callback => {
-        reqwest({
-            url: fakeDataUrl,
-            type: 'json',
-            method: 'get',
-            contentType: 'application/json',
-            success: res => {
-                callback(res);
-            },
-        });
+    getData = (pageNum) => {
+        this.setState({loading: true})
+        getArticleSampleList(pageNum, pageSize, "", (data) => {
+            if (data.data.length <= 0) {
+                openNotification("没有更多了")
+            } else {
+                this.setState({
+                    nowPage: pageNum,
+                    articleList: [...this.state.articleList, ...data.data],
+                    loading: false,
+                })
+            }
+        }, () => {
+            this.setState({
+                loading: false,
+            })
+        })
     };
 
     onLoadMore = () => {
-        this.setState({
-            loading: true,
-            list: this.state.data.concat([...new Array(count)].map(() => ({ loading: true, name: {} }))),
-        });
-        this.getData(res => {
-            const data = this.state.data.concat(res.results);
-            this.setState(
-                {
-                    data,
-                    list: data,
-                    loading: false,
-                },
-                () => {
-                    // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
-                    // In real scene, you can using public method of react-virtualized:
-                    // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
-                    window.dispatchEvent(new Event('resize'));
-                },
-            );
-        });
+        const {nowPage} = this.state
+        this.getData(nowPage + 1)
     };
 
     render() {
-        const { initLoading, loading, list } = this.state;
+        const {initLoading, loading, articleList} = this.state;
         const loadMore =
             !initLoading && !loading ? (
                 <div
@@ -77,7 +63,7 @@ class ArticleListPageRollView extends React.Component {
                         lineHeight: '32px',
                     }}
                 >
-                    <Button onClick={this.onLoadMore}>loading more</Button>
+                    <Button type="link" onClick={this.onLoadMore}>加载更多...</Button>
                 </div>
             ) : null;
 
@@ -87,20 +73,22 @@ class ArticleListPageRollView extends React.Component {
                 loading={initLoading}
                 itemLayout="horizontal"
                 loadMore={loadMore}
-                dataSource={list}
+                dataSource={articleList}
                 renderItem={item => (
-                    <ArticleListItem
-                        id={item.title}
-                        title={item.title}
-                        create_time={item.title}
-                        pv={item.title}
-                        short_content={item.title}
-                        picture="https://pic1.zhimg.com/80/v2-af6f3a9444c74d726c63ed5291f9e53d_720w.jpg"
-                        description={item.title}/>
+                    <div>{item.title}</div>
+                    // <ArticleListItem
+                    //     id={item.title}
+                    //     title={item.title}
+                    //     create_time={item.title}
+                    //     pv={item.title}
+                    //     short_content={item.title}
+                    //     picture="https://pic1.zhimg.com/80/v2-af6f3a9444c74d726c63ed5291f9e53d_720w.jpg"
+                    //     description={item.title}/>
                 )}
             />
         );
     }
 
 }
+
 export default ArticleListPageRollView;

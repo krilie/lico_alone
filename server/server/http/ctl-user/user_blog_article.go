@@ -78,7 +78,7 @@ func (a *UserCtrl) QueryArticle(c *gin.Context) {
 	// 参数
 	var param = &struct {
 		com_model.PageParams
-		SearchKey string `json:"search_key"`
+		SearchKey string `form:"search_key" json:"search_key" xml:"search_key"  binding:"required"`
 	}{}
 	err := c.ShouldBindQuery(param)
 	if err != nil {
