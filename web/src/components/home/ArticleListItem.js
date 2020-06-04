@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import "./ArticleListItem.less"
-import {Card} from "antd";
+import {Card, Layout, message} from "antd";
 
 /**
  * --------------------------------------
@@ -17,17 +17,28 @@ class ArticleListItem extends React.Component {
         this.state = {};
     }
 
-    render() {
-        const {title, description, create_time, pv, short_content, picture} = this.props
-        return (
-            <Card className="article-item-card" bodyStyle={{padding:"0 0 0 0",margin:"0 0 0 0"}} style={{ minWidth: 400 }}>
+    goDetailPage = (articleId) => {
+        message.info("go to article" + articleId)
+    }
 
-                <p>{title}</p>
-                <p>{description}</p>
-                <p>{create_time}</p>
-                <p>{pv}</p>
-                <p>{short_content}</p>
-                <p>{picture}</p>
+    render() {
+        const {title, description, create_time, pv, id, picture} = this.props
+        return (
+            <Card className="article-item-card"
+                  bodyStyle={{padding: "0 0 0 0", margin: "0 0 0 0"}}
+                  style={{minWidth: 400}}>
+                <Layout className="article-layout">
+                    <Layout.Header onClick={() => this.goDetailPage(id)} className="article-layout-header">
+                        <div style={{height: "48px", verticalAlign: "center"}}>{title}</div>
+                    </Layout.Header>
+                    <Layout className="article-layout">
+                        <Layout.Sider width={100} className="article-layout-sider">
+                            <img className="pic" src={picture} alt={"pic"}/>
+                        </Layout.Sider>
+                        <Layout.Content className="article-layout-content">{description}</Layout.Content>
+                    </Layout>
+                    <Layout.Footer className="article-layout-footer">create_time:{create_time} pv:{pv}</Layout.Footer>
+                </Layout>
             </Card>
         );
     }

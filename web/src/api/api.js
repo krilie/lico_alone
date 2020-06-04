@@ -1,7 +1,7 @@
 import axios from "axios";
+import {message} from "antd";
 import qs from 'qs'
 import {GetUserToken, ClearToken} from "../utils/LocalStorageUtil";
-import openNotification from "../utils/MessageBoard"
 import {baseUrl} from "./baseUrl";
 
 // api请求组 外层返回结构终一
@@ -33,22 +33,22 @@ apiRequest.interceptors.response.use(
         }
         // token有误
         if (data.data.code === 4002) {
-            openNotification(data.data.message)
+            message.warning(data.data.message)
             ClearToken()
             window.location.reload()
             return Promise.reject(data)
         }
         // 其它错误
-        openNotification(data.data.message)
+        message.error(data.data.message)
         return Promise.reject(data)
     },
     err => {
         if (err.response.status === 504 || err.response.status === 404) {
-            openNotification("服务器被吃了⊙﹏⊙∥");
+            message.error("服务器被吃了⊙﹏⊙∥");
         } else if (err.response.status === 401) {
-            openNotification("登录信息失效⊙﹏⊙∥");
+            message.error("登录信息失效⊙﹏⊙∥");
         } else if (err.response.status === 500) {
-            openNotification("服务器开小差了⊙﹏⊙∥");
+            message.error("服务器开小差了⊙﹏⊙∥");
         }
         return Promise.reject(err);
     }

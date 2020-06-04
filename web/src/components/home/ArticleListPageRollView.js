@@ -1,9 +1,7 @@
 import React from "react";
-import {List, Button} from 'antd';
+import {List, Button, message} from 'antd';
 import "./ArticleListPageRollView.less"
-// import ArticleListItem from "./ArticleListItem";
 import {getArticleSampleList} from "../../api/common";
-import openNotification from "../../utils/MessageBoard";
 import ArticleListItem from "./ArticleListItem";
 
 const pageSize = 7;
@@ -33,7 +31,7 @@ class ArticleListPageRollView extends React.Component {
         this.setState({loading: true})
         getArticleSampleList(pageNum, pageSize, "", (data) => {
             if (data.data.length <= 0) {
-                openNotification("没有更多了")
+                message.info("没有更多了");
                 this.setState({
                     moreButtonText: "到底了"
                 })
