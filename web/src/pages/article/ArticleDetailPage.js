@@ -39,7 +39,5 @@ export default class ArticleDetailPage extends React.Component {
                 </div>
             );
         }
-
-
     }
 }
