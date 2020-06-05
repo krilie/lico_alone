@@ -89,7 +89,7 @@ class ArticleListPageRollView extends React.Component {
                         create_time={item.create_time}
                         pv={item.pv}
                         short_content={item.content}
-                        picture="https://pic1.zhimg.com/80/v2-af6f3a9444c74d726c63ed5291f9e53d_720w.jpg"
+                        picture={item.picture}
                         description={item.description}/>
                 )}
             />
