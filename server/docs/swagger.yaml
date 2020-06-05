@@ -35,6 +35,8 @@ definitions:
         type: string
       picture:
         type: string
+      sort:
+        type: integer
       title:
         type: string
     type: object
@@ -239,6 +241,126 @@ paths:
       summary: 更新文章内容
       tags:
       - 文章管理
+  /api/manage/file/delete:
+    post:
+      description: 文件删除
+      operationId: 文件删除
+      parameters:
+      - description: 文件记录id
+        in: formData
+        name: file_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 文件删除
+      tags:
+      - 文件管理
+  /api/manage/file/query:
+    post:
+      description: 文件查询
+      operationId: 文件查询
+      parameters:
+      - description: page_num页索引
+        in: query
+        name: page_num
+        required: true
+        type: integer
+      - description: page_size页大小
+        in: query
+        name: page_size
+        required: true
+        type: integer
+      - description: key_name_like
+        in: formData
+        name: key_name_like
+        required: true
+        type: string
+      - description: bucket_name_like
+        in: formData
+        name: bucket_name_like
+        required: true
+        type: string
+      - description: url_like
+        in: formData
+        name: url_like
+        required: true
+        type: string
+      - description: user_id
+        in: formData
+        name: user_id
+        required: true
+        type: string
+      - description: biz_type
+        in: formData
+        name: biz_type
+        required: true
+        type: string
+      - description: content_type
+        in: formData
+        name: content_type
+        required: true
+        type: string
+      - description: created_at_begin
+        in: formData
+        name: created_at_begin
+        required: true
+        type: string
+      - description: created_at_end
+        in: formData
+        name: created_at_end
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 文件查询
+      tags:
+      - 文件管理
+  /api/manage/file/upload:
+    post:
+      description: 文件上传
+      operationId: 文件上传
+      parameters:
+      - description: 单个文件
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 文件上传
+      tags:
+      - 文件管理
   /api/manage/setting/get_setting_all:
     post:
       description: 获取所有配置项

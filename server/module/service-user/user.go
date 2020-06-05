@@ -16,7 +16,7 @@ type UserService struct {
 	moduleMsg     *MessageService.MessageModule
 	moduleConfig  *ConfigService.ConfigModule
 	ModuleArticle *service2.BlogArticleModule
-	moduleFile    *service3.FileModule
+	ModuleFile    *service3.FileModule
 }
 
 func (a *UserService) GetAuthFace() *service.UserModule {
@@ -31,6 +31,6 @@ func NewUserService(moduleArticle *service2.BlogArticleModule, moduleFile *servi
 		moduleMsg:     moduleMsg,
 		moduleConfig:  moduleConfig,
 		ModuleArticle: moduleArticle,
-		moduleFile:    moduleFile,
+		ModuleFile:    moduleFile,
 	}
 }

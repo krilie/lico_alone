@@ -25,7 +25,7 @@ func (a *FileModule) UploadFile(ctx context.Context, userId, fileName string, fi
 		} else {
 			content = content2
 		}
-		url, key, err = a.fileApi.UploadFile(ctx, fileName, file, int64(size))
+		url, key, err = a.fileApi.UploadFile(ctx, "static/"+id_util.NextSnowflake()+fileName, file, int64(size))
 		if err != nil {
 			return err
 		}
@@ -65,6 +65,28 @@ func (a *FileModule) DeleteFile(ctx context.Context, bucket, key string) (err er
 			return errs.NewInternal().WithError(err)
 		}
 		err = a.fileApi.DeleteFile(ctx, key)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+	return err
+}
+
+func (a *FileModule) DeleteFileById(ctx context.Context, fileId string) (err error) {
+	err = a.dao.Transaction(ctx, func(ctx context.Context) error {
+		file, err2 := a.dao.GetFileById(ctx, fileId)
+		if err2 != nil {
+			return err2
+		}
+		if file == nil {
+			return errs.NewNotExistsError().WithMsg("file not found")
+		}
+		err := a.dao.DeleteFileByBucketKey(ctx, file.BucketName, file.KeyName)
+		if err != nil {
+			return errs.NewInternal().WithError(err)
+		}
+		err = a.fileApi.DeleteFile(ctx, file.KeyName)
 		if err != nil {
 			return err
 		}

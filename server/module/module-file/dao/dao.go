@@ -2,6 +2,7 @@ package dao
 
 import (
 	"context"
+	"github.com/jinzhu/gorm"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/errs"
@@ -70,4 +71,15 @@ func (a *FileDao) DeleteFileByBucketKey(ctx context.Context, bucket, key string)
 		return errs.NewNormal().WithMsg("删除没有成功")
 	}
 	return nil
+}
+
+func (a *FileDao) GetFileById(ctx context.Context, fileId string) (file *model.FileMaster, err error) {
+	err = a.GetDb(ctx).Where("id=?", fileId).Find(&file).Error
+	if err != nil {
+		if gorm.IsRecordNotFoundError(err) {
+			return nil, nil
+		}
+		return nil, errs.NewInternal().WithError(err)
+	}
+	return file, nil
 }

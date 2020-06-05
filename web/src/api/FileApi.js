@@ -1,7 +1,7 @@
 import {getQuery} from "./api";
 import actions from "../redux/actions/ActionCreator";
 
-export const getFileListRudex = (path) => {
+export const getFilePage = (path) => {
     return (dispatch) => {
         getQuery("/file/get_file_list", {path: path})
             .then((res) => {
