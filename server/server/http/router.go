@@ -82,6 +82,7 @@ func InitAndStartHttpServer(ctx context.Context, cfg *config.Config, runEnv *run
 	noCheckToken.POST("/user/login", ctrl.userCtrl.UserLogin)
 	noCheckToken.POST("/user/register", ctrl.userCtrl.UserRegister)
 	noCheckToken.POST("/user/send_sms", ctrl.userCtrl.UserSendSms)
+
 	//检查权限的分组
 	checkToken := apiGroup.Group("")
 	checkToken.Use(middleware.CheckAuthToken(auth))
@@ -91,6 +92,9 @@ func InitAndStartHttpServer(ctx context.Context, cfg *config.Config, runEnv *run
 	checkToken.GET("/api/manage/article/get_by_id", ctrl.userCtrl.GetArticleById)
 	checkToken.POST("/api/manage/article/update", ctrl.userCtrl.UpdateArticle)
 	checkToken.POST("/api/manage/article/delete", ctrl.userCtrl.DeleteArticle)
+	checkToken.POST("/api/manage/file/upload", ctrl.userCtrl.UpdateFile)
+	checkToken.POST("/api/manage/file/delete", ctrl.userCtrl.DeleteFile)
+	checkToken.GET("/api/manage/file/query", ctrl.userCtrl.QueryFile)
 
 	// common 服务
 	commonApi := apiGroup.Group("")

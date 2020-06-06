@@ -4,6 +4,7 @@ import React from "react";
 import "./ManagePage.less"
 import { Route, Switch} from "react-router";
 import SettingPage from "./setting-page/SettingPage";
+import FilePage from "./file-page/FilePage";
 
 const { Sider } = Layout;
 
@@ -23,6 +24,7 @@ export default class ManagePage extends React.Component {
     goToPage = path => this.props.history.push(path)
 
     handleClick = e => {
+        console.log(e.key)
         this.props.history.push(e.key);
         this.setState({
             currentPage: e.key,
@@ -37,8 +39,8 @@ export default class ManagePage extends React.Component {
                         <Menu.Item key="/management/manage/setting" icon={<UserOutlined />}>
                             设置
                         </Menu.Item>
-                        <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-                            nav 2
+                        <Menu.Item key="/management/manage/files" icon={<VideoCameraOutlined />}>
+                            文件
                         </Menu.Item>
                         <Menu.Item key="3" icon={<UploadOutlined />}>
                             nav 3
@@ -51,6 +53,7 @@ export default class ManagePage extends React.Component {
                 <Layout  className="manage-layout">
                     <Switch>
                         <Route exact path="/management/manage/setting" component={SettingPage}/>
+                        <Route exact path="/management/manage/files" component={FilePage}/>
                     </Switch>
                 </Layout>
             </Layout>

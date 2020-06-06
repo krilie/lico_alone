@@ -38,6 +38,17 @@ func HandlerErrorOrReturnJson(c *gin.Context, err error, ret interface{}) {
 	}
 }
 
+// 处理错误 如果没有返回通用成功
+func HandlerErrorOrReturnData(c *gin.Context, err error, data interface{}) {
+	if err == nil {
+		ReturnData(c, data)
+		return
+	} else {
+		ReturnWithErr(c, err)
+		return
+	}
+}
+
 // abort with err use err's default http status
 func ReturnWithErr(c *gin.Context, err error) {
 	if nErr := errs.ToErrOrNil(err); nErr != nil {

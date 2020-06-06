@@ -1,6 +1,8 @@
 package com_model
 
 // PaginationParam 分页查询条件
+// @Param page_num query int true "page_num页索引"
+// @Param page_size query int true "page_size页大小"
 type PageParams struct {
 	PageNum  int `form:"page_num" json:"page_num" xml:"page_num"  binding:"required"`    // 页索引
 	PageSize int `form:"page_size" json:"page_size" xml:"page_size"  binding:"required"` // 页大小
