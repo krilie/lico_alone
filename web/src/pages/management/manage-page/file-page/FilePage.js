@@ -16,7 +16,6 @@ class FilePage extends Component {
         }
     }
 
-
     // 加载数据
     loadData = (page_num, page_size) => {
         this.setState({

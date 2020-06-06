@@ -1,13 +1,13 @@
 package model
 
 import (
-	common_model "github.com/krilie/lico_alone/common/com-model"
+	"github.com/krilie/lico_alone/common/com-model"
 	"time"
 )
 
 // 上传的文件的内容
 type FileMaster struct {
-	common_model.Model
+	com_model.Model
 	KeyName     string `json:"key_name" gorm:"column:key_name;type:varchar(200);unique_index;not null"`
 	BucketName  string `json:"bucket_name" gorm:"column:bucket_name;type:varchar(200);not null"`
 	Url         string `json:"url" gorm:"column:url;type:varchar(200);unique_index;not null"`
@@ -32,7 +32,7 @@ func (FileMaster) TableName() string {
 // @Param created_at_begin formData string true "created_at_begin"
 // @Param created_at_end formData string true "created_at_end"
 type QueryFileParam struct {
-	common_model.PageParams
+	com_model.PageParams
 	KeyNameLike    string     `json:"key_name_like" form:"key_name_like" xml:"key_name_like" `
 	BucketNameLike string     `json:"bucket_name_like" form:"bucket_name_like" xml:"bucket_name_like" `
 	UrlLike        string     `json:"url_like" form:"url_like" xml:"url_like" `
