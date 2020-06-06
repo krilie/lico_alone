@@ -1,5 +1,4 @@
-import "./api"
-import {postMultiForm} from "./api";
+import {postMultiForm} from "./ApiManage";
 
 // 用户登录
 export function userLogin({phone, password}) {

@@ -1,7 +1,7 @@
 import React from "react";
 import {List, Button, message} from 'antd';
 import "./ArticleListPageRollView.less"
-import {getArticleSampleList} from "../../api/common";
+import {getArticleSampleList} from "../../api/ApiCommon";
 import ArticleListItem from "./ArticleListItem";
 
 const pageSize = 7;

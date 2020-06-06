@@ -1,4 +1,4 @@
-import {getQuery} from "./api";
+import {getQuery} from "./ApiManage";
 import actions from "../redux/actions/ActionCreator";
 
 export const getFilePage = (path) => {
