@@ -90,6 +90,7 @@ func (a *UserCtrl) DeleteFile(c *gin.Context) {
 // @Param created_at_end formData string true "created_at_end"
 // @Success 200 {object} com_model.CommonReturn{data=com_model.PageData{data=[]model.FileMaster}}
 // @Failure 500 {string} errInfo
+// @Failure 500 {object} com_model.Model
 // @Router /api/manage/file/query [POST]
 func (a *UserCtrl) QueryFile(c *gin.Context) {
 	ctx := ginutil.MustGetAppCtx(c)

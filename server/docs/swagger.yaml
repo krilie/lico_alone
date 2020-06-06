@@ -15,6 +15,17 @@ definitions:
         example: 错误信息
         type: string
     type: object
+  com_model.Model:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: string
+      updated_at:
+        type: string
+    type: object
   com_model.PageData:
     properties:
       data:
@@ -50,8 +61,14 @@ definitions:
     properties:
       content:
         type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
       description:
         description: 描述+关键值
+        type: string
+      id:
         type: string
       picture:
         type: string
@@ -60,6 +77,8 @@ definitions:
       sort:
         type: integer
       title:
+        type: string
+      updated_at:
         type: string
     type: object
   model.Config:
@@ -79,10 +98,18 @@ definitions:
         type: string
       content_type:
         type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: string
       key_name:
         type: string
       size:
         type: integer
+      updated_at:
+        type: string
       url:
         type: string
       user_id:
@@ -449,7 +476,7 @@ paths:
         "500":
           description: Internal Server Error
           schema:
-            type: string
+            $ref: '#/definitions/com_model.Model'
       summary: 文件查询
       tags:
       - 文件管理

@@ -523,7 +523,7 @@ var doc = `{
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/com_model.Model"
                         }
                     }
                 }
@@ -891,6 +891,23 @@ var doc = `{
                 }
             }
         },
+        "com_model.Model": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
         "com_model.PageData": {
             "type": "object",
             "properties": {
@@ -943,8 +960,17 @@ var doc = `{
                 "content": {
                     "type": "string"
                 },
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
                 "description": {
                     "description": "描述+关键值",
+                    "type": "string"
+                },
+                "id": {
                     "type": "string"
                 },
                 "picture": {
@@ -957,6 +983,9 @@ var doc = `{
                     "type": "integer"
                 },
                 "title": {
+                    "type": "string"
+                },
+                "updated_at": {
                     "type": "string"
                 }
             }
@@ -987,11 +1016,23 @@ var doc = `{
                 "content_type": {
                     "type": "string"
                 },
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
                 "key_name": {
                     "type": "string"
                 },
                 "size": {
                     "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
                 },
                 "url": {
                     "type": "string"
