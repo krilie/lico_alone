@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import "./FilePage.less"
-import {Card, message, Pagination, Table, Tag} from "antd";
+import {Button, Card, message, Pagination, Table} from "antd";
 import {manageGetFilePage} from "../../../../api/ManageFileApi";
 
 class FilePage extends Component {
@@ -21,13 +21,12 @@ class FilePage extends Component {
         this.setState({
             loading: true
         })
-        manageGetFilePage().then(res => {
-            debugger
+        manageGetFilePage({page_num, page_size}).then(res => {
             this.setState({
-                files: {...res.data}
+                files: {...res.data.data}
             })
         }).catch(err => {
-            message.warning(err)
+            message.warning(err.str)
         }).finally(() => {
             this.setState({
                 loading: false
@@ -36,7 +35,7 @@ class FilePage extends Component {
     }
 
     componentWillMount() {
-        this.loadData(1,10)
+        this.loadData(1, 10)
     }
 
     // 分页修改当前页大小 回调
@@ -60,11 +59,15 @@ class FilePage extends Component {
                 total={total_count}/>
         return (
             <Card bodyStyle={{padding: "10px"}}>
-                <Table
-                    pagination={pagination}
-                    loading={loading}
-                    columns={columns}
-                    dataSource={data}/>
+                <Button type={"primary"}>添加</Button>
+                <div className="table">
+                    <Table
+                        bordered
+                        pagination={pagination}
+                        loading={loading}
+                        columns={columns}
+                        dataSource={data}/>
+                </div>
             </Card>
         );
     }
@@ -75,49 +78,29 @@ export default FilePage;
 
 const columns = [
     {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: text => <div>{text}</div>,
+        title: 'id',
+        key: 'id',
+        dataIndex: 'id'
     },
     {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
+        title: '创建时间',
+        key: 'created_at',
+        dataIndex: 'created_at',
     },
     {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
+        title: '地址',
+        key: 'url',
+        dataIndex: 'url',
+        render: text=><img height={"100px"} src={text} alt={"img"}/>
     },
     {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: tags => (
-            <>
-                {tags.map(tag => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
+        title: '用户ID',
+        key: 'user_id',
+        dataIndex: 'user_id'
     },
     {
-        title: 'Action',
-        key: 'action',
-        render: (text, record) => (
-            <div>
-                <div>Invite {record.name}</div>
-                <div>Delete</div>
-            </div>
-        ),
+        title: '大小',
+        key: 'size',
+        dataIndex: 'size'
     },
 ];
