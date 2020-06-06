@@ -2,7 +2,7 @@ import React from "react";
 import "./LoginPage.less"
 import {GetUserToken, SetUserToken} from "../../../utils/LocalStorageUtil";
 import {Button, Col, Form, Input, message, Row} from "antd";
-import {userLogin} from "../../../api/UserApi";
+import {userLogin} from "../../../api/ManageUserApi";
 
 /**
  * 1.检查token 如果token不为空或null 则跳转主管理页面

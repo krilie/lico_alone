@@ -1,6 +1,5 @@
 import axios from "axios";
-import {baseUrl} from "./baseUrl";
-import {getQuery} from "./api";
+import {apiBaseUrl} from "./ApiBaseUrl";
 import qs from 'qs'
 import {message} from "antd";
 
@@ -8,7 +7,7 @@ import {message} from "antd";
 
 // 非api 外层返回结构可能不统一
 const apiCommon = axios.create({
-    baseURL: baseUrl
+    baseURL: apiBaseUrl
 })
 
 const commonGet = (url, query) => {
@@ -19,11 +18,68 @@ const commonGet = (url, query) => {
     });
 };
 
+
+// @RequestBody请求
+export const commonPostJson = (url, params) => {
+    return apiCommon({
+        method: "post",
+        url: `${url}`,
+        data: params,
+        headers: {
+            "Content-Type": "application/json",
+            charset: "utf-8"
+        }
+    });
+};
+
+// @RequestParam请求
+export const commonPostQuery = (url, params) => {
+    return apiCommon({
+        params: params,
+        method: "post",
+        url: `${url}`,
+    });
+};
+
+
+// @RequestParam请求
+export const commonPostForm = (url, params) => {
+    return apiCommon({
+        method: "post",
+        url: `${url}`,
+        data: qs.stringify({...params}),
+        headers: {"Content-Type": "application/x-www-form-urlencoded"}
+    });
+};
+
+export const commonGetQuery = (url, query) => {
+    console.log(query)
+    return apiCommon({
+        method: "get",
+        url: query === undefined ? `${url}` : `${url}?${qs.stringify(query)}`,
+    });
+};
+
+export const commonPostMultiForm = (url, params) => {
+    let param = new window.FormData();
+    for (let i in params) {
+        param.append(i, params[i]);
+    }
+    return apiCommon({
+        method: 'post',
+        url: `${url}`,
+        data: param,
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+};
+
 // ====================================================================================================
 
 // {"code":2000,"message":"successful","data":{"name":"1","link":"2","label":"3"}}
 export const getIcpInfo = (then) => {
-    commonGet("api/common/icp_info").then((res) => {
+    commonGet("/api/common/icp_info").then((res) => {
         if (res.data.code !== 2000) {
             message.warning(res.data.message);
         }
@@ -34,7 +90,7 @@ export const getIcpInfo = (then) => {
 }
 
 export const getVersion = (then) => {
-    commonGet("version").then((res) => {
+    commonGet("/version").then((res) => {
         then(res.data)
     }).catch((error) => {
         message.error(error.toString());
@@ -45,7 +101,7 @@ export const getVersion = (then) => {
 
 // 获取文章列表sample
 export function getArticleSampleList(pageNum, pageSize, searchKey, funcOk, funcFinally) {
-    getQuery("/common/article/query_sample", {
+    commonGet("/api/common/article/query_sample", {
         page_num: pageNum,
         page_size: pageSize,
         search_key: searchKey
@@ -65,7 +121,7 @@ export function getArticleSampleList(pageNum, pageSize, searchKey, funcOk, funcF
 }
 
 export function getArticleById(articleId, then) {
-    getQuery("/common/article/get_article", {article_id: articleId}).then(res => {
+    commonGet("/api/common/article/get_article", {article_id: articleId}).then(res => {
         if (res.data.code !== 2000) {
             message.warning(res.data.message);
         } else {

@@ -1,7 +1,7 @@
 import React from "react";
 import "./SettingPage.less"
 import {connect} from "react-redux";
-import {getSettingListAllRedux} from "../../../../api/SettingApi";
+import {getSettingListAllRedux} from "../../../../api/ManageSettingApi";
 import store from "../../../../redux/RuduxIndex"
 import SettingCard from "../../../../components/setting_card/SettingCard";
 

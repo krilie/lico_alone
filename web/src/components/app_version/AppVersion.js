@@ -1,7 +1,7 @@
 import React from "react";
 import "./AppVersion.less"
 import {Row, Col, message} from "antd"
-import {getVersion} from "../../api/common";
+import {getVersion} from "../../api/ApiCommon";
 import CopyToBoard from "../../utils/CopyToBoard";
 
 export default class AppVersion extends React.Component {

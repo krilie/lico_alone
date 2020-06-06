@@ -1,7 +1,7 @@
 import React from "react";
 import "./SettingCard.less"
 import {Button, Card, Input, message} from "antd";
-import {updateSettingItem} from "../../api/SettingApi";
+import {updateSettingItem} from "../../api/ManageSettingApi";
 
 const {TextArea} = Input
 

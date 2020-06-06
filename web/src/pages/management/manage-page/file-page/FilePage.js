@@ -7,6 +7,7 @@ class FilePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: true,
             files: {
                 page_info: {total_count: 0, total_page: 0, page_num: 0, page_size: 0},
                 data: []

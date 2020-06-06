@@ -1,6 +1,6 @@
 import React from "react";
 import "./Article.less"
-import {getArticleById} from "../../api/common";
+import {getArticleById} from "../../api/ApiCommon";
 import ReactMarkdown from "react-markdown";
 import CodeBlock from "../../components/mark_down/CodeBlock";
 

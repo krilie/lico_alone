@@ -1,4 +1,4 @@
-import {getQuery, postForm} from "./api";
+import {getQuery, postForm} from "./ApiManage";
 import actions from "../redux/actions/ActionCreator";
 // 获取所有配置列表=>redux
 export const getSettingListAllRedux = () => {

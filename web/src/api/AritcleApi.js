@@ -1,1 +1,0 @@
-import {getQuery} from "./api";

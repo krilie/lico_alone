@@ -2,11 +2,11 @@ import axios from "axios";
 import {message} from "antd";
 import qs from 'qs'
 import {GetUserToken, ClearToken} from "../utils/LocalStorageUtil";
-import {baseUrl} from "./baseUrl";
+import {apiBaseUrl} from "./ApiBaseUrl";
 
 // api请求组 外层返回结构终一
 const apiRequest = axios.create({
-    baseURL: baseUrl
+    baseURL: apiBaseUrl
 })
 
 let base = "/api";
