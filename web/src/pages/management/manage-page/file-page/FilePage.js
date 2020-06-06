@@ -22,6 +22,7 @@ class FilePage extends Component {
             loading: true
         })
         manageGetFilePage().then(res => {
+            debugger
             this.setState({
                 files: {...res.data}
             })
