@@ -978,16 +978,16 @@ var doc = `{
         "model.FileMaster": {
             "type": "object",
             "properties": {
-                "bizType": {
+                "biz_type": {
                     "type": "string"
                 },
-                "bucketName": {
+                "bucket_name": {
                     "type": "string"
                 },
-                "contentType": {
+                "content_type": {
                     "type": "string"
                 },
-                "keyName": {
+                "key_name": {
                     "type": "string"
                 },
                 "size": {
@@ -996,7 +996,7 @@ var doc = `{
                 "url": {
                     "type": "string"
                 },
-                "userId": {
+                "user_id": {
                     "type": "string"
                 }
             }

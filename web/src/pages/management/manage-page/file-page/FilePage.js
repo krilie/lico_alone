@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import "./FilePage.less"
-import {Card, Table, Tag} from "antd";
+import {Card, message, Pagination, Table, Tag} from "antd";
+import {manageGetFilePage} from "../../../../api/ManageFileApi";
 
 class FilePage extends Component {
 
@@ -16,26 +17,60 @@ class FilePage extends Component {
     }
 
 
+    // 加载数据
+    loadData = (page_num, page_size) => {
+        this.setState({
+            loading: true
+        })
+        manageGetFilePage().then(res => {
+            this.setState({
+                files: {...res.data}
+            })
+        }).catch(err => {
+            message.warning(err)
+        }).finally(() => {
+            this.setState({
+                loading: false
+            })
+        })
+    }
 
+    componentWillMount() {
+        this.loadData(1,10)
+    }
 
-
-
+    // 分页修改当前页大小 回调
+    onLoadPageData = (page_num, page_size) => {
+        console.log(page_num, page_size);
+        this.loadData(page_num, page_size);
+    }
 
     render() {
+        const {data} = this.state.files
+        const {page_num, total_count} = this.state.files.page_info
+        // const { page_size, total_page} = this.state.files.page_info
+        const {loading} = this.state
+        const pagination =
+            <Pagination
+                showSizeChanger
+                onShowSizeChange={this.onLoadPageData}
+                onChange={this.onLoadPageData}
+                defaultCurrent={page_num}
+                defaultPageSize={7}
+                total={total_count}/>
         return (
-            <Card bodyStyle={{padding:"10px"}}>
-
+            <Card bodyStyle={{padding: "10px"}}>
                 <Table
+                    pagination={pagination}
+                    loading={loading}
                     columns={columns}
-
-                    dataSource={data} />
+                    dataSource={data}/>
             </Card>
         );
     }
 }
 
 export default FilePage;
-
 
 
 const columns = [
@@ -79,34 +114,10 @@ const columns = [
         title: 'Action',
         key: 'action',
         render: (text, record) => (
-            <div >
+            <div>
                 <div>Invite {record.name}</div>
                 <div>Delete</div>
             </div>
         ),
-    },
-];
-
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
     },
 ];
