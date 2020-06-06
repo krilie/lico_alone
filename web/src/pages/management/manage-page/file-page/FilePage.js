@@ -42,7 +42,7 @@ const columns = [
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: text => <a>{text}</a>,
+        render: text => <div>{text}</div>,
     },
     {
         title: 'Age',
@@ -79,8 +79,8 @@ const columns = [
         key: 'action',
         render: (text, record) => (
             <div >
-                <a>Invite {record.name}</a>
-                <a>Delete</a>
+                <div>Invite {record.name}</div>
+                <div>Delete</div>
             </div>
         ),
     },
