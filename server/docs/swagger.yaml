@@ -1,4 +1,3 @@
-basePath: '{{.BasePath}}'
 definitions:
   com_model.CommonReturn:
     properties:
@@ -16,6 +15,79 @@ definitions:
         example: 错误信息
         type: string
     type: object
+  com_model.PageData:
+    properties:
+      data:
+        description: 列表数据
+        type: object
+      page_info:
+        $ref: '#/definitions/com_model.PageInfo'
+        description: 分页信息
+        type: object
+    type: object
+  com_model.PageInfo:
+    properties:
+      page_num:
+        type: integer
+      page_size:
+        type: integer
+      total_count:
+        description: 总数据条数
+        type: integer
+      total_page:
+        type: integer
+    type: object
+  ctl_user.UpdateFileReturn:
+    properties:
+      bucket:
+        type: string
+      key:
+        type: string
+      url:
+        type: string
+    type: object
+  model.Article:
+    properties:
+      content:
+        type: string
+      description:
+        description: 描述+关键值
+        type: string
+      picture:
+        type: string
+      pv:
+        type: integer
+      sort:
+        type: integer
+      title:
+        type: string
+    type: object
+  model.Config:
+    properties:
+      create_time:
+        type: string
+      name:
+        type: string
+      value:
+        type: string
+    type: object
+  model.FileMaster:
+    properties:
+      bizType:
+        type: string
+      bucketName:
+        type: string
+      contentType:
+        type: string
+      keyName:
+        type: string
+      size:
+        type: integer
+      url:
+        type: string
+      userId:
+        type: string
+    type: object
   model.IcpInfo:
     properties:
       label:
@@ -23,6 +95,21 @@ definitions:
       link:
         type: string
       name:
+        type: string
+    type: object
+  model.QueryArticleModel:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      picture:
+        type: string
+      pv:
+        type: integer
+      sort:
+        type: integer
+      title:
         type: string
     type: object
   model.UpdateArticleModel:
@@ -40,7 +127,6 @@ definitions:
       title:
         type: string
     type: object
-host: '{{.Host}}'
 info:
   contact: {}
   description: This is a sample server Petstore server.
@@ -64,8 +150,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
-            type: object
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Article'
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -99,8 +189,19 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
-            type: object
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/com_model.PageData'
+                  - properties:
+                      data:
+                        items:
+                          $ref: '#/definitions/model.QueryArticleModel'
+                        type: array
+                    type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -117,7 +218,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/model.IcpInfo'
-            type: object
         "400":
           description: Bad Request
           schema:
@@ -146,7 +246,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/com_model.CommonReturn'
-            type: object
         "500":
           description: Internal Server Error
           schema:
@@ -171,7 +270,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/com_model.CommonReturn'
-            type: object
         "500":
           description: Internal Server Error
           schema:
@@ -205,8 +303,19 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
-            type: object
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/com_model.PageData'
+                  - properties:
+                      data:
+                        items:
+                          $ref: '#/definitions/model.Article'
+                        type: array
+                    type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -225,7 +334,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/model.UpdateArticleModel'
-          type: object
       produces:
       - application/json
       responses:
@@ -233,7 +341,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/com_model.CommonReturn'
-            type: object
         "500":
           description: Internal Server Error
           schema:
@@ -258,7 +365,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/com_model.CommonReturn'
-            type: object
         "500":
           description: Internal Server Error
           schema:
@@ -327,8 +433,19 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
-            type: object
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/com_model.PageData'
+                  - properties:
+                      data:
+                        items:
+                          $ref: '#/definitions/model.FileMaster'
+                        type: array
+                    type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -352,8 +469,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
-            type: object
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  $ref: '#/definitions/ctl_user.UpdateFileReturn'
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -377,8 +498,14 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
-            type: object
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Config'
+                  type: array
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -408,7 +535,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/com_model.CommonReturn'
-            type: object
         "500":
           description: Internal Server Error
           schema:
@@ -438,7 +564,6 @@ paths:
           description: 2000 {token:"asb"}
           schema:
             $ref: '#/definitions/com_model.CommonReturn'
-            type: object
         "500":
           description: Internal Server Error
           schema:
@@ -473,7 +598,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/com_model.CommonReturn'
-            type: object
         "500":
           description: Internal Server Error
           schema:
@@ -503,7 +627,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/com_model.CommonReturn'
-            type: object
         "500":
           description: Internal Server Error
           schema:
