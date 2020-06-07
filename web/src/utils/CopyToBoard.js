@@ -1,3 +1,6 @@
+import {message} from "antd";
+import {ScrollOptions} from "antd/es/form/interface";
+
 export default function copyToBoard(text) {
     let transfer = document.createElement('input');
     document.body.appendChild(transfer);
@@ -9,4 +12,6 @@ export default function copyToBoard(text) {
     }
     transfer.blur();
     document.body.removeChild(transfer);
+    message.info("copy ok")
+    // window.scrollTo(0,0)
 }

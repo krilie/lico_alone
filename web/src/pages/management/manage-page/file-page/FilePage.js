@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import "./FilePage.less"
-import {Button, Card, message, Modal, Table, Upload} from "antd";
+import {Button, Card, Col, message, Modal, Row, Table, Upload} from "antd";
 import {manageDeleteFile, manageGetFilePage} from "../../../../api/ManageFileApi";
 import UploadOutlined from "@ant-design/icons/lib/icons/UploadOutlined";
 import {GetUserToken} from "../../../../utils/LocalStorageUtil";
 import {apiBaseUrl} from "../../../../api/ApiBaseUrl";
+import CopyToBoard from "../../../../utils/CopyToBoard";
 
 class FilePage extends Component {
 
@@ -38,7 +39,19 @@ class FilePage extends Component {
         {
             title: '操作',
             key: 'operation',
-            render: file => <Button onClick={() => this.deleteFileItem(file.id)}>删除</Button>
+            render: file =>
+                <div className="table-file-operator">
+                    <Row>
+                        <Col style={{textAlign:"center",margin:"2px"}} span={24}>
+                            <Button onClick={() => CopyToBoard(file.url)}>复制地址</Button>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col style={{textAlign:"center",margin:"2px"}} span={24}>
+                            <Button onClick={() => this.deleteFileItem(file.id)}>删除</Button>
+                        </Col>
+                    </Row>
+                </div>
         }
     ];
 
@@ -95,16 +108,16 @@ class FilePage extends Component {
         })
     }
 
-    reloadFileItems = () =>{
+    reloadFileItems = () => {
         const {page_num, page_size} = this.state.files.page_info
-        this.loadFileItems(page_num,page_size)
+        this.loadFileItems(page_num, page_size)
     }
 
     uploadFileProps = {
         name: 'file',
         action: `${apiBaseUrl}/api/manage/file/upload`,
         headers: {
-            authorization: GetUserToken()
+            authorization: GetUserToken() + "121"
         },
         defaultFileList: false,
         showUploadList: false,
@@ -143,25 +156,26 @@ class FilePage extends Component {
     render() {
         const {data} = this.state.files
         const {page_num} = this.state.files.page_info
-        const { page_size} = this.state.files.page_info
+        const {page_size} = this.state.files.page_info
         const {loading} = this.state
         return (
             <Card bodyStyle={{padding: "10px"}}>
-                <Button type={"primary"} onClick={()=>this.uploadFileModalSetShow(true)}>添加</Button>
+                <Button type={"primary"} onClick={() => this.uploadFileModalSetShow(true)}>添加</Button>
                 <Upload{...this.uploadFileProps}>
                     <Button>
-                        <UploadOutlined /> 上传文件
+                        <UploadOutlined/> 上传文件
                     </Button>
                 </Upload>
                 <div className="table">
                     <Table
                         bordered
                         pagination={{
-                            current:page_num,
-                            pageSize:page_size,
-                            defaultCurrent:1,
-                            defaultPageSize:10,
-                            position:"buttom"}}
+                            current: page_num,
+                            pageSize: page_size,
+                            defaultCurrent: 1,
+                            defaultPageSize: 10,
+                            position: "buttom"
+                        }}
                         loading={loading}
                         columns={this.columns}
                         dataSource={data}/>
