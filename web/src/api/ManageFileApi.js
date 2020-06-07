@@ -6,7 +6,7 @@ export const manageGetFilePage = (querys) => {
     return getQuery("/manage/file/query", {...querys});
 }
 
-export const manageDeleteFile = (fileId, Ok) => {
+export const manageDeleteFile = (fileId) => {
     return postForm("/manage/file/delete", {file_id: fileId})
 }
 
