@@ -3,10 +3,12 @@ package ctl_health_check
 import (
 	"github.com/gin-gonic/gin"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
+	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/dig"
+	"github.com/krilie/lico_alone/common/utils/str_util"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
-	"github.com/prometheus/common/log"
+	"io/ioutil"
 	"net/http"
 	"time"
 )
@@ -19,7 +21,10 @@ import (
 // @Success 200 {string} string "hello"
 // @Router /health [get]
 func (h *HealthCheckCtrl) Hello(c *gin.Context) {
-	h.log.Trace("on health check")
+	log := h.log.Get(context.NewContext(), "HealthCheckCtrl", "Hello")
+	log.Trace("on health check")
+	log.Infof("headers: %v", str_util.ToJson(c.Request.Header))
+	log.Infof("body: %v", ioutil.ReadAll(c.Request.Body))
 	println("on health check")
 	c.String(http.StatusOK, "hello")
 }
@@ -32,6 +37,7 @@ func (h *HealthCheckCtrl) Hello(c *gin.Context) {
 // @Success 200 {string} string "pong start time up time"
 // @Router /health/ping [get]
 func (h *HealthCheckCtrl) Ping(c *gin.Context) {
+	log := h.log.Get(context.NewContext(), "HealthCheckCtrl", "Ping")
 	err := h.db.Ping()
 	if err != nil {
 		log.Errorf("health ping db error %v", err)
