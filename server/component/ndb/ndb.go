@@ -85,8 +85,3 @@ func NewNDb(dbCfg *config.Config, log *nlog.NLog) (ndb *NDb) {
 	ndb.Start()
 	return ndb
 }
-
-type Dao struct {
-	*NDb
-	log *nlog.NLog
-}
