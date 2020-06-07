@@ -24,7 +24,7 @@ class FilePage extends Component {
             title: '地址',
             key: 'url',
             dataIndex: 'url',
-            render: text => <img height={"100px"} src={text} alt={"img"}/>
+            render: text => <img src={text+"?imageView2/2/w/200/h/100"} alt={"img"}/>
         },
         {
             title: '用户ID',
