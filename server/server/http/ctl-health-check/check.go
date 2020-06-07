@@ -8,7 +8,6 @@ import (
 	"github.com/krilie/lico_alone/common/utils/str_util"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
-	"io/ioutil"
 	"net/http"
 	"time"
 )
@@ -24,7 +23,7 @@ func (h *HealthCheckCtrl) Hello(c *gin.Context) {
 	log := h.log.Get(context.NewContext(), "HealthCheckCtrl", "Hello")
 	log.Trace("on health check")
 	log.Infof("headers: %v", str_util.ToJson(c.Request.Header))
-	log.Infof("body: %v", ioutil.ReadAll(c.Request.Body))
+	log.Infof("remote addr: %v %v", c.Request.RemoteAddr)
 	println("on health check")
 	c.String(http.StatusOK, "hello")
 }
