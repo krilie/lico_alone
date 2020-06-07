@@ -8,8 +8,6 @@ import {apiBaseUrl} from "../../../../api/ApiBaseUrl";
 
 class FilePage extends Component {
 
-
-
     columns = [
         {
             title: 'id',
@@ -60,7 +58,6 @@ class FilePage extends Component {
 
     uploadFileModalSuccess = e => {
         this.uploadFileModalSetShow(false)
-        // todo: 刷新页面
     }
     uploadFileModalCancel = e => {
         this.uploadFileModalSetShow(false)

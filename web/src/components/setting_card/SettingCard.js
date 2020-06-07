@@ -38,14 +38,14 @@ export default class SettingCard extends React.Component {
 
     render() {
         const {name, create_time, value} = this.props.data
-        const extra = <Button type="primary" style={{margin: '0px 0px 0px 0px'}} size="large"
+        const extra = <Button type="primary"
+                              className="extra-area-button" size="large"
                               onClick={this.onCommitSetting}>保存</Button>
-        const title = <div style={{padding: "3px 3px 3px 3px", margin: "3px 3px 3px 3px"}}>项目:  {name} 创建时间: {create_time}</div>
-        return <Card bodyStyle={{padding: "3px 3px 3px 3px", margin: "3px 3px 3px 3px"}}
-                     headStyle={{padding: "0px 0px 0px 0px", margin: "0px 0px 0px 0px"}}
+        const title = <div className="setting-card-title">项目:{name} 创建时间:{create_time}</div>
+        return <Card className="setting-card-style"
                      title={title}>
-            <TextArea style={{fontSize: '20px'}} rows={2} onChange={(e) => this.upDataSetting(e)} defaultValue={value}/>
-            {extra}
+            <TextArea className="setting-text-area" rows={3} onChange={(e) => this.upDataSetting(e)} defaultValue={value}/>
+            <div style={{textAlign:"right"}}>{extra}</div>
         </Card>
     }
 }
