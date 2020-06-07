@@ -117,7 +117,7 @@ class FilePage extends Component {
         name: 'file',
         action: `${apiBaseUrl}/api/manage/file/upload`,
         headers: {
-            authorization: GetUserToken() + "121"
+            authorization: GetUserToken()
         },
         defaultFileList: false,
         showUploadList: false,

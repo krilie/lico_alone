@@ -1,5 +1,4 @@
 import {message} from "antd";
-import {ScrollOptions} from "antd/es/form/interface";
 
 export default function copyToBoard(text) {
     let transfer = document.createElement('input');
