@@ -91,6 +91,10 @@ func (nlog *NLog) WithField(key string, value interface{}) *NLog {
 	return &NLog{Entry: nlog.Entry.WithField(key, value), hook: nlog.hook}
 }
 
+func (nlog *NLog) WithFuncName(value interface{}) *NLog {
+	return &NLog{Entry: nlog.Entry.WithField(context_enum.Function.Str(), value), hook: nlog.hook}
+}
+
 func (nlog *NLog) CloseAndWait(ctx context.Context) {
 	nlog.hook.StopPushLogWorker(ctx)
 }

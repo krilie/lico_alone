@@ -1,9 +1,43 @@
 import React, {Component} from 'react';
 import "./FilePage.less"
 import {Button, Card, message, Pagination, Table} from "antd";
-import {manageGetFilePage} from "../../../../api/ManageFileApi";
+import {manageDeleteFile, manageGetFilePage} from "../../../../api/ManageFileApi";
 
 class FilePage extends Component {
+
+    columns = [
+        {
+            title: 'id',
+            key: 'id',
+            dataIndex: 'id'
+        },
+        {
+            title: '创建时间',
+            key: 'created_at',
+            dataIndex: 'created_at',
+        },
+        {
+            title: '地址',
+            key: 'url',
+            dataIndex: 'url',
+            render: text => <img height={"100px"} src={text} alt={"img"}/>
+        },
+        {
+            title: '用户ID',
+            key: 'user_id',
+            dataIndex: 'user_id'
+        },
+        {
+            title: '大小',
+            key: 'size',
+            dataIndex: 'size'
+        },
+        {
+            title: '操作',
+            key: 'operation',
+            render: file=><Button onClick={()=>this.deleteFileItem(file.id)}>删除</Button>
+        }
+    ];
 
     constructor(props) {
         super(props);
@@ -16,8 +50,14 @@ class FilePage extends Component {
         }
     }
 
+    deleteFileItem = (id) => {
+        manageDeleteFile(id).then(res=>{
+            message.info("delete success")
+        })
+    }
+
     // 加载数据
-    loadData = (page_num, page_size) => {
+    loadFileItems = (page_num, page_size) => {
         this.setState({
             loading: true
         })
@@ -35,13 +75,13 @@ class FilePage extends Component {
     }
 
     componentWillMount() {
-        this.loadData(1, 10)
+        this.loadFileItems(1, 10)
     }
 
     // 分页修改当前页大小 回调
     onLoadPageData = (page_num, page_size) => {
         console.log(page_num, page_size);
-        this.loadData(page_num, page_size);
+        this.loadFileItems(page_num, page_size);
     }
 
     render() {
@@ -65,7 +105,7 @@ class FilePage extends Component {
                         bordered
                         pagination={pagination}
                         loading={loading}
-                        columns={columns}
+                        columns={this.columns}
                         dataSource={data}/>
                 </div>
             </Card>
@@ -74,33 +114,3 @@ class FilePage extends Component {
 }
 
 export default FilePage;
-
-
-const columns = [
-    {
-        title: 'id',
-        key: 'id',
-        dataIndex: 'id'
-    },
-    {
-        title: '创建时间',
-        key: 'created_at',
-        dataIndex: 'created_at',
-    },
-    {
-        title: '地址',
-        key: 'url',
-        dataIndex: 'url',
-        render: text=><img height={"100px"} src={text} alt={"img"}/>
-    },
-    {
-        title: '用户ID',
-        key: 'user_id',
-        dataIndex: 'user_id'
-    },
-    {
-        title: '大小',
-        key: 'size',
-        dataIndex: 'size'
-    },
-];

@@ -62,8 +62,10 @@ type UpdateFileReturn struct {
 // @Router /api/manage/file/delete [POST]
 func (a *UserCtrl) DeleteFile(c *gin.Context) {
 	ctx := ginutil.MustGetAppCtx(c)
+	log := a.log.Get(ctx).WithFuncName("DeleteFile")
 	fileId := c.PostForm("file_id")
 	if fileId == "" {
+		log.Errorf("no file id found file_id %v", fileId)
 		ginutil.ReturnFailure(c, errs.ErrorParam, "no file id found")
 		return
 	}

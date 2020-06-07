@@ -3,11 +3,11 @@ package service
 import (
 	"context"
 	"github.com/krilie/lico_alone/common/com-model"
+	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/file_util"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-file/model"
-	"github.com/prometheus/common/log"
 	"io"
 	"mime"
 	"time"
@@ -15,6 +15,7 @@ import (
 
 // 内部有事务的存在
 func (a *FileModule) UploadFile(ctx context.Context, userId, fileName string, file io.ReadSeeker, size int) (url, bucket, key string, err error) {
+	log := a.log.Get(ctx).WithField(context_enum.Function.Str(), "UploadFile")
 	err = a.dao.Transaction(ctx, func(ctx context.Context) error {
 		var content string
 		extension := file_util.GetFileExtension(fileName)
@@ -74,20 +75,27 @@ func (a *FileModule) DeleteFile(ctx context.Context, bucket, key string) (err er
 }
 
 func (a *FileModule) DeleteFileById(ctx context.Context, fileId string) (err error) {
+	log := a.log.Get(ctx).
+		WithField(context_enum.Function.Str(), "DeleteFileById").
+		WithField("file_id", fileId)
 	err = a.dao.Transaction(ctx, func(ctx context.Context) error {
 		file, err2 := a.dao.GetFileById(ctx, fileId)
 		if err2 != nil {
+			log.WithField("err", err2).Error("get file item by id err")
 			return err2
 		}
 		if file == nil {
+			log.Error("file item not found")
 			return errs.NewNotExistsError().WithMsg("file not found")
 		}
 		err := a.dao.DeleteFileByBucketKey(ctx, file.BucketName, file.KeyName)
 		if err != nil {
+			log.WithField("err", err).Error("delete file item on db error")
 			return errs.NewInternal().WithError(err)
 		}
 		err = a.fileApi.DeleteFile(ctx, file.KeyName)
 		if err != nil {
+			log.WithField("err", err).Error("delete file from oss error")
 			return err
 		}
 		return nil
