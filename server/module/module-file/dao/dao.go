@@ -74,11 +74,13 @@ func (a *FileDao) DeleteFileByBucketKey(ctx context.Context, bucket, key string)
 }
 
 func (a *FileDao) GetFileById(ctx context.Context, fileId string) (file *model.FileMaster, err error) {
-	err = a.GetDb(ctx).Where("id=?", fileId).Find(&file).Error
+	file = new(model.FileMaster)
+	err = a.GetDb(ctx).Where("id=?", fileId).Find(file).Error
 	if err != nil {
 		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil
 		}
+		a.log.Get(ctx).WithFuncName("GetFileById").WithField("err", err).Error("get file error")
 		return nil, errs.NewInternal().WithError(err)
 	}
 	return file, nil
