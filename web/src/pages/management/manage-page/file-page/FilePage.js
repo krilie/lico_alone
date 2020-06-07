@@ -8,34 +8,7 @@ import {apiBaseUrl} from "../../../../api/ApiBaseUrl";
 
 class FilePage extends Component {
 
-    uploadFileProps = {
-        name: 'file',
-        action: `${apiBaseUrl}/api/manage/file/upload`,
-        headers: {
-            authorization: GetUserToken()
-        },
-        defaultFileList: false,
-        showUploadList: false,
-        onChange(info) {
-            if (info.file.status !== 'uploading') {
-                console.log(info.file, info.fileList);
-            }
-            if (info.file.status === 'done') {
-                message.success(`${info.file.name} file uploaded successfully`);
-                this.reloadFileItems()
-            } else if (info.file.status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        },
-        progress: {
-            strokeColor: {
-                '0%': '#108ee9',
-                '100%': '#87d068',
-            },
-            strokeWidth: 3,
-            format: percent => `${parseFloat(percent.toFixed(2))}%`,
-        },
-    };
+
 
     columns = [
         {
@@ -76,7 +49,7 @@ class FilePage extends Component {
         this.state = {
             loading: true,
             files: {
-                page_info: {total_count: 0, total_page: 0, page_num: 1, page_size: 7},
+                page_info: {total_count: 0, total_page: 0, page_num: 1, page_size: 2},
                 data: []
             },
             uploadModal: {
@@ -103,6 +76,7 @@ class FilePage extends Component {
     deleteFileItem = (id) => {
         manageDeleteFile(id).then(res => {
             message.info("delete success")
+            this.reloadFileItems()
         })
     }
 
@@ -129,8 +103,38 @@ class FilePage extends Component {
         this.loadFileItems(page_num,page_size)
     }
 
+    uploadFileProps = {
+        name: 'file',
+        action: `${apiBaseUrl}/api/manage/file/upload`,
+        headers: {
+            authorization: GetUserToken()
+        },
+        defaultFileList: false,
+        showUploadList: false,
+        onChange: (info) => {
+            if (info.file.status !== 'uploading') {
+                console.log(info.file, info.fileList);
+            }
+            if (info.file.status === 'done') {
+                message.success(`${info.file.name} file uploaded successfully`);
+                this.reloadFileItems()
+            } else if (info.file.status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        },
+        progress: {
+            strokeColor: {
+                '0%': '#108ee9',
+                '100%': '#87d068',
+            },
+            strokeWidth: 3,
+            format: percent => `${parseFloat(percent.toFixed(2))}%`,
+        },
+    };
+
+
     componentWillMount() {
-        this.loadFileItems(1, 7)
+        this.loadFileItems(1, 2)
     }
 
     // 分页修改当前页大小 回调
@@ -142,20 +146,21 @@ class FilePage extends Component {
     render() {
         const {data} = this.state.files
         const {page_num, total_count} = this.state.files.page_info
-        // const { page_size, total_page} = this.state.files.page_info
+        const { page_size} = this.state.files.page_info
         const {loading} = this.state
         const pagination =
             <Pagination
                 showSizeChanger
                 onShowSizeChange={this.onLoadPageData}
                 onChange={this.onLoadPageData}
-                defaultCurrent={page_num}
-                defaultPageSize={7}
-                total={total_count}/>
+                current={page_num}
+                pageSize={page_size}
+                total={total_count}
+                />
         return (
             <Card bodyStyle={{padding: "10px"}}>
                 <Button type={"primary"} onClick={()=>this.uploadFileModalSetShow(true)}>添加</Button>
-                <Upload {...this.uploadFileProps}>
+                <Upload{...this.uploadFileProps}>
                     <Button>
                         <UploadOutlined /> 上传文件
                     </Button>
