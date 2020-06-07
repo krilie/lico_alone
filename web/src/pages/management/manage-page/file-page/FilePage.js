@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import "./FilePage.less"
-import {Button, Card, message, Modal, Pagination, Table, Upload} from "antd";
+import {Button, Card, message, Modal, Table, Upload} from "antd";
 import {manageDeleteFile, manageGetFilePage} from "../../../../api/ManageFileApi";
 import UploadOutlined from "@ant-design/icons/lib/icons/UploadOutlined";
 import {GetUserToken} from "../../../../utils/LocalStorageUtil";
@@ -145,18 +145,9 @@ class FilePage extends Component {
 
     render() {
         const {data} = this.state.files
-        const {page_num, total_count} = this.state.files.page_info
+        const {page_num} = this.state.files.page_info
         const { page_size} = this.state.files.page_info
         const {loading} = this.state
-        const pagination =
-            <Pagination
-                showSizeChanger
-                onShowSizeChange={this.onLoadPageData}
-                onChange={this.onLoadPageData}
-                current={page_num}
-                pageSize={page_size}
-                total={total_count}
-                />
         return (
             <Card bodyStyle={{padding: "10px"}}>
                 <Button type={"primary"} onClick={()=>this.uploadFileModalSetShow(true)}>添加</Button>
@@ -168,7 +159,12 @@ class FilePage extends Component {
                 <div className="table">
                     <Table
                         bordered
-                        pagination={pagination}
+                        pagination={{
+                            current:page_num,
+                            pageSize:page_size,
+                            defaultCurrent:1,
+                            defaultPageSize:10,
+                            position:"buttom"}}
                         loading={loading}
                         columns={this.columns}
                         dataSource={data}/>
