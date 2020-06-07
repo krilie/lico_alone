@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import "./FilePage.less"
-import {Button, Card, message, Pagination, Table} from "antd";
+import {Button, Card, message, Modal, Pagination, Table} from "antd";
 import {manageDeleteFile, manageGetFilePage} from "../../../../api/ManageFileApi";
 
 class FilePage extends Component {
@@ -35,7 +35,7 @@ class FilePage extends Component {
         {
             title: '操作',
             key: 'operation',
-            render: file=><Button onClick={()=>this.deleteFileItem(file.id)}>删除</Button>
+            render: file => <Button onClick={() => this.deleteFileItem(file.id)}>删除</Button>
         }
     ];
 
@@ -46,12 +46,30 @@ class FilePage extends Component {
             files: {
                 page_info: {total_count: 0, total_page: 0, page_num: 0, page_size: 0},
                 data: []
+            },
+            uploadModal: {
+                show: false,
             }
         }
     }
 
+    uploadFileModalSuccess = e => {
+        this.uploadFileModalSetShow(false)
+        // todo: 刷新页面
+    }
+    uploadFileModalCancel = e => {
+        this.uploadFileModalSetShow(false)
+    }
+    uploadFileModalSetShow = (show) => {
+        this.setState({
+            uploadModal: {
+                show: show
+            }
+        })
+    }
+
     deleteFileItem = (id) => {
-        manageDeleteFile(id).then(res=>{
+        manageDeleteFile(id).then(res => {
             message.info("delete success")
         })
     }
@@ -99,7 +117,7 @@ class FilePage extends Component {
                 total={total_count}/>
         return (
             <Card bodyStyle={{padding: "10px"}}>
-                <Button type={"primary"}>添加</Button>
+                <Button type={"primary"} onClick={()=>this.uploadFileModalSetShow(true)}>添加</Button>
                 <div className="table">
                     <Table
                         bordered
@@ -108,6 +126,18 @@ class FilePage extends Component {
                         columns={this.columns}
                         dataSource={data}/>
                 </div>
+
+                <Modal
+                    title="Basic Modal"
+                    visible={this.state.uploadModal.show}
+                    onOk={this.uploadFileModalSuccess}
+                    onCancel={this.uploadFileModalCancel}
+                >
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                </Modal>
+
             </Card>
         );
     }
