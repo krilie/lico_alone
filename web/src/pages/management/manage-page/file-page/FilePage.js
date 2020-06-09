@@ -1,53 +1,41 @@
 import React, {Component} from 'react';
 import "./FilePage.less"
-import {Button, Card, Col, message, Modal, Row, Table, Upload} from "antd";
+import {Button, Card, Col, DatePicker, Form, message, Modal, Row, Table, Upload} from "antd";
 import {manageDeleteFile, manageGetFilePage} from "../../../../api/ManageFileApi";
 import UploadOutlined from "@ant-design/icons/lib/icons/UploadOutlined";
 import {GetUserToken} from "../../../../utils/LocalStorageUtil";
 import {apiBaseUrl} from "../../../../api/ApiBaseUrl";
 import CopyToBoard from "../../../../utils/CopyToBoard";
+import {Input} from 'antd';
 
 class FilePage extends Component {
-
+    // 表格列信息
     columns = [
+        {title: 'ID', key: 'id', dataIndex: 'id'},
+        {title: '创建时间', key: 'created_at', dataIndex: 'created_at', sorter: {multiple: 1,}},
         {
-            title: 'id',
-            key: 'id',
-            dataIndex: 'id'
+            title: '地址', key: 'url', dataIndex: 'url',
+            render: text => <img src={text + "?imageView2/2/w/200/h/100"} alt={"img"}/>
+        },
+        {title: '用户ID', key: 'user_id', dataIndex: 'user_id'},
+        {
+            title: '大小', key: 'size', dataIndex: 'size', sorter: {multiple: 2,},
+            render: val => {
+                const showVal = val / 1024 / 1024;
+                return <div>{showVal.toFixed(3)} Mb</div>
+            }
         },
         {
-            title: '创建时间',
-            key: 'created_at',
-            dataIndex: 'created_at',
-        },
-        {
-            title: '地址',
-            key: 'url',
-            dataIndex: 'url',
-            render: text => <img src={text+"?imageView2/2/w/200/h/100"} alt={"img"}/>
-        },
-        {
-            title: '用户ID',
-            key: 'user_id',
-            dataIndex: 'user_id'
-        },
-        {
-            title: '大小',
-            key: 'size',
-            dataIndex: 'size'
-        },
-        {
-            title: '操作',
-            key: 'operation',
+            title: '操作', key: 'operation',
             render: file =>
                 <div className="table-file-operator">
                     <Row>
-                        <Col style={{textAlign:"center",margin:"2px"}} span={24}>
+                        <Col style={{textAlign: "center", margin: "2px"}} span={24}>
                             <Button onClick={() => CopyToBoard(file.url)}>复制地址</Button>
                         </Col>
                     </Row>
                     <Row>
-                        <Col style={{textAlign:"center",margin:"2px"}} span={24}>
+                        <Col style={{textAlign: "center", margin: "2px"}} span={24}>
                             <Button onClick={() => this.deleteFileItem(file.id)}>删除</Button>
                         </Col>
                     </Row>
@@ -58,31 +46,23 @@ class FilePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: true,
+            initPageNum: 1, initPageSize: 5, loading: true,
             files: {
-                page_info: {total_count: 0, total_page: 0, page_num: 1, page_size: 2},
+                page_info: {total_count: 0, total_page: 0, page_num: 1, page_size: 5},
                 data: []
             },
             uploadModal: {
                 show: false,
-            }
+            },
         }
     }
 
-    uploadFileModalSuccess = e => {
-        this.uploadFileModalSetShow(false)
-    }
-    uploadFileModalCancel = e => {
-        this.uploadFileModalSetShow(false)
-    }
-    uploadFileModalSetShow = (show) => {
-        this.setState({
-            uploadModal: {
-                show: show
-            }
-        })
-    }
+    // 上传对话框
+    uploadFileModalSuccess = e => this.uploadFileModalSetShow(false) // 对话框 文件上传成功
+    uploadFileModalCancel = e =>  this.uploadFileModalSetShow(false)  // 对话框 文件上传对话框取消
+    uploadFileModalSetShow = (show) => this.setState({uploadModal: {show: show}}) // 对话框 设置显示或隐藏
 
+    // 根据id删除文件
     deleteFileItem = (id) => {
         manageDeleteFile(id).then(res => {
             message.info("delete success")
@@ -90,12 +70,13 @@ class FilePage extends Component {
         })
     }
 
-    // 加载数据
-    loadFileItems = (page_num, page_size) => {
+    // 基层 加载文件的分页数据
+    // page_num page_size key_name_like bucket_name_like url_like user_id biz_type content_type created_at_begin created_at_end
+    loadFileItems = (page_num, page_size, others) => {
         this.setState({
             loading: true
         })
-        manageGetFilePage({page_num, page_size}).then(res => {
+        manageGetFilePage({page_num, page_size, ...others}).then(res => {
             this.setState({
                 files: {...res.data.data}
             })
@@ -108,11 +89,13 @@ class FilePage extends Component {
         })
     }
 
+    // 重新加载列表
     reloadFileItems = () => {
         const {page_num, page_size} = this.state.files.page_info
-        this.loadFileItems(page_num, page_size)
+        this.onLoadPageData(page_num, page_size)
     }
 
+    // 上传文件属性
     uploadFileProps = {
         name: 'file',
         action: `${apiBaseUrl}/api/manage/file/upload`,
@@ -142,53 +125,146 @@ class FilePage extends Component {
         },
     };
 
-
+    // 初始加载数据
     componentWillMount() {
-        this.loadFileItems(1, 2)
+        const {initPageNum, initPageSize} = this.state
+        this.onLoadPageData(initPageNum, initPageSize)
     }
 
     // 分页修改当前页大小 回调
     onLoadPageData = (page_num, page_size) => {
         console.log(page_num, page_size);
-        this.loadFileItems(page_num, page_size);
+        // 获取所有可能的参数
+        var params = {
+            key_name_like: "",
+            bucket_name_like: "",
+            url_like: "",
+            user_id: "",
+            biz_type: "",
+            content_type: "",
+            created_at_begin: null,
+            created_at_end: null
+        }
+
+        if (this.formRef.current !== null) {
+            params.key_name_like = this.formRef.current.getFieldValue("key_name_like")
+            params.bucket_name_like = this.formRef.current.getFieldValue("bucket_name_like")
+            params.url_like = this.formRef.current.getFieldValue("url_like")
+            params.user_id = this.formRef.current.getFieldValue("user_id")
+            params.biz_type = this.formRef.current.getFieldValue("biz_type")
+            params.content_type = this.formRef.current.getFieldValue("content_type")
+            params.created_at_begin = this.formRef.current.getFieldValue("created_at_begin")
+            params.created_at_end = this.formRef.current.getFieldValue("created_at_end")
+        }
+
+        // todo: sorter 参数
+
+        this.loadFileItems(page_num, page_size, params);
     }
+
+    // 表格参数变化
+    onTableParamChange = (pagination, filters, sorter, extra) => {
+        this.sorter = sorter
+        const {current, pageSize} = pagination
+        this.onLoadPageData(current, pageSize)
+        console.log(sorter)
+    }
+
+    // form表单按钮搜索
+    formOnSearch = () => {
+        const {page_num, page_size} = this.state.files.page_info
+        this.onLoadPageData(page_num, page_size)
+    }
+
+    formRef = React.createRef();
+    sorter = null
 
     render() {
         const {data} = this.state.files
-        const {page_num} = this.state.files.page_info
-        const {page_size} = this.state.files.page_info
+        const {page_num, page_size, total_count} = this.state.files.page_info
         const {loading} = this.state
+        const {initPageNum, initPageSize} = this.state
+
+        // 查询form参数
+        const searchForm = <Form
+            layout={"inline"}
+            ref={this.formRef}
+        >
+            <Form.Item label="键名" name="key_name_like">
+                <Input defaultValue="" placeholder="请输入"/>
+            </Form.Item>
+            <Form.Item label="桶名" name="bucket_name_like">
+                <Input defaultValue="" placeholder="请输入"/>
+            </Form.Item>
+            <Form.Item label="Url" name="url_like">
+                <Input defaultValue="" placeholder="请输入"/>
+            </Form.Item>
+            <Form.Item label="用户Id" name="user_id">
+                <Input defaultValue="" placeholder="请输入"/>
+            </Form.Item>
+            <Form.Item label="业务类型" name="biz_type">
+                <Input defaultValue="" placeholder="请输入"/>
+            </Form.Item>
+            <Form.Item label="文件类型" name="content_type">
+                <Input defaultValue="" placeholder="请输入"/>
+            </Form.Item>
+            <Form.Item label="开始创建时间" name="created_at_begin">
+                <DatePicker
+                    format="YYYY-MM-DD HH:mm:ss"
+                    disabledDate={false}
+                    disabledTime={false}
+                    showTime={{defaultValue: null}}
+                />
+            </Form.Item>
+            <Form.Item label="结束创建时间" name="created_at_end">
+                <DatePicker
+                    format="YYYY-MM-DD HH:mm:ss"
+                    disabledDate={false}
+                    disabledTime={false}
+                    showTime={{defaultValue: null}}
+                />
+            </Form.Item>
+            <Form.Item>
+                <Button type="primary" onClick={this.formOnSearch}>Submit</Button>
+            </Form.Item>
+        </Form>
+
         return (
-            <Card bodyStyle={{padding: "10px"}}>
-                <Button type={"primary"} onClick={() => this.uploadFileModalSetShow(true)}>添加</Button>
-                <Upload{...this.uploadFileProps}>
-                    <Button>
-                        <UploadOutlined/> 上传文件
-                    </Button>
-                </Upload>
+            <Card bodyStyle={{padding: "10px"}} title={<div>文件</div>}>
+
+                <div style={{margin: "3px"}}>
+                    <div className="search-form">{searchForm}</div>
+                    <Button style={{margin: "3px"}}
+                            type={"primary"}
+                            onClick={() => this.uploadFileModalSetShow(true)}>添加</Button>
+                    <Upload {...this.uploadFileProps}>
+                        <Button><UploadOutlined/> 上传文件</Button>
+                    </Upload>
+                </div>
+
                 <div className="table">
                     <Table
                         bordered
                         pagination={{
+                            showSizeChanger: true,
+                            onShowSizeChange: this.onLoadPageData,
                             current: page_num,
                             pageSize: page_size,
-                            defaultCurrent: 1,
-                            defaultPageSize: 10,
-                            position: "buttom"
+                            defaultCurrent: initPageNum,
+                            defaultPageSize: initPageSize,
+                            position: "bottom",
+                            total: total_count,
+                            onChange: this.onLoadPageData,
                         }}
+                        rowKey={record => record.id}
                         loading={loading}
                         columns={this.columns}
+                        onChange={this.onTableParamChange}
                         dataSource={data}/>
                 </div>
 
-                <Modal
-                    title="Basic Modal"
-                    visible={this.state.uploadModal.show}
-                    onOk={this.uploadFileModalSuccess}
-                    onCancel={this.uploadFileModalCancel}
-                >
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
+                <Modal title="Basic Modal" visible={this.state.uploadModal.show} onOk={this.uploadFileModalSuccess}
+                       onCancel={this.uploadFileModalCancel}>
                     <p>Some contents...</p>
                 </Modal>
 

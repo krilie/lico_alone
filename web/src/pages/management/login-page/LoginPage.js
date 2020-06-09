@@ -26,16 +26,13 @@ export default class LoginPage extends React.Component {
 
 
     render() {
-        const
-            layout = {
-                labelCol: {span: 8},
-                wrapperCol: {span: 16},
-            };
-        const
-            tailLayout = {
-                wrapperCol: {offset: 12, span: 12},
-            };
-
+        const layout = {
+            labelCol: {span: 8},
+            wrapperCol: {span: 16},
+        };
+        const tailLayout = {
+            wrapperCol: {offset: 12, span: 12},
+        };
 
         const onFinish = values => {
             // 登录
@@ -49,7 +46,7 @@ export default class LoginPage extends React.Component {
             }).then(err => {
                 if (err !== undefined)
                     message.error(err.toString())
-            }).finally(()=>{
+            }).finally(() => {
 
             })
         };
