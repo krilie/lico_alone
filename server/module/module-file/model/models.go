@@ -39,6 +39,6 @@ type QueryFileParam struct {
 	UserId         string     `json:"user_id" form:"user_id" xml:"user_id" `
 	BizType        string     `json:"biz_type" form:"biz_type" xml:"biz_type" `
 	ContentType    string     `json:"content_type" form:"content_type" xml:"content_type" `
-	CreatedAtBegin *time.Time `json:"created_at_begin" form:"created_at_begin" xml:"created_at_begin" `
-	CreatedAtEnd   *time.Time `json:"created_at_end" form:"created_at_end" xml:"created_at_end" `
+	CreatedAtBegin *time.Time `json:"created_at_begin" form:"created_at_begin" xml:"created_at_begin" time_format:"2006-01-02T15:04:05Z07:00"` // rfc3339
+	CreatedAtEnd   *time.Time `json:"created_at_end" form:"created_at_end" xml:"created_at_end" time_format:"2006-01-02T15:04:05Z07:00"`       // rfc3339
 }

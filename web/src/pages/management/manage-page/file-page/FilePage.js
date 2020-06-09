@@ -59,7 +59,7 @@ class FilePage extends Component {
 
     // 上传对话框
     uploadFileModalSuccess = e => this.uploadFileModalSetShow(false) // 对话框 文件上传成功
-    uploadFileModalCancel = e =>  this.uploadFileModalSetShow(false)  // 对话框 文件上传对话框取消
+    uploadFileModalCancel = e => this.uploadFileModalSetShow(false)  // 对话框 文件上传对话框取消
     uploadFileModalSetShow = (show) => this.setState({uploadModal: {show: show}}) // 对话框 设置显示或隐藏
 
     // 根据id删除文件
@@ -134,27 +134,30 @@ class FilePage extends Component {
     // 分页修改当前页大小 回调
     onLoadPageData = (page_num, page_size) => {
         console.log(page_num, page_size);
-        // 获取所有可能的参数
-        var params = {
-            key_name_like: "",
-            bucket_name_like: "",
-            url_like: "",
-            user_id: "",
-            biz_type: "",
-            content_type: "",
-            created_at_begin: null,
-            created_at_end: null
-        }
 
+        // 获取所有可能的参数
+        let params = {
+            key_name_like: undefined,
+            bucket_name_like: undefined,
+            url_like: undefined,
+            user_id: undefined,
+            biz_type: undefined,
+            content_type: undefined,
+            created_at_begin: undefined,
+            created_at_end: undefined
+        }
+        const ResetToUndefined = (val) => (val === "" || val === null) ? undefined : val
         if (this.formRef.current !== null) {
-            params.key_name_like = this.formRef.current.getFieldValue("key_name_like")
-            params.bucket_name_like = this.formRef.current.getFieldValue("bucket_name_like")
-            params.url_like = this.formRef.current.getFieldValue("url_like")
-            params.user_id = this.formRef.current.getFieldValue("user_id")
-            params.biz_type = this.formRef.current.getFieldValue("biz_type")
-            params.content_type = this.formRef.current.getFieldValue("content_type")
-            params.created_at_begin = this.formRef.current.getFieldValue("created_at_begin")
-            params.created_at_end = this.formRef.current.getFieldValue("created_at_end")
+            params.key_name_like = ResetToUndefined(this.formRef.current.getFieldValue("key_name_like"))
+            params.bucket_name_like = ResetToUndefined(this.formRef.current.getFieldValue("bucket_name_like"))
+            params.url_like = ResetToUndefined(this.formRef.current.getFieldValue("url_like"))
+            params.user_id = ResetToUndefined(this.formRef.current.getFieldValue("user_id"))
+            params.biz_type = ResetToUndefined(this.formRef.current.getFieldValue("biz_type"))
+            params.content_type = ResetToUndefined(this.formRef.current.getFieldValue("content_type"))
+            params.created_at_begin = ResetToUndefined(this.formRef.current.getFieldValue("created_at_begin"))
+            if (params.created_at_begin !== undefined) params.created_at_begin = params.created_at_begin.format() // rfc3339
+            params.created_at_end = ResetToUndefined(this.formRef.current.getFieldValue("created_at_end"))
+            if (params.created_at_end !== undefined) params.created_at_end = params.created_at_end.format() // rfc3339
         }
 
         // todo: sorter 参数
