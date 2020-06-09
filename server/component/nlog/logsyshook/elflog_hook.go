@@ -86,7 +86,7 @@ func (e *ElfLogHook) PostLog(logData string) error {
 }
 
 // post方法
-func (e *ElfLogHook) postLogJson(url, key, sign, data string) error {
+func (e *ElfLogHook) postLogJson(url, key, sign, data string, timeStamp int64) error {
 	method := "POST"
 	payload := strings.NewReader(data)
 	req, err := http.NewRequest(method, url, payload)
@@ -96,6 +96,7 @@ func (e *ElfLogHook) postLogJson(url, key, sign, data string) error {
 	}
 	req.Header.Add("key", key)
 	req.Header.Add("sign", sign)
+	req.Header.Add("time_stamp", fmt.Sprintf("%v", timeStamp))
 	req.Header.Add("Content-Type", "application/json")
 
 	res, err := http.DefaultClient.Do(req)
@@ -147,7 +148,7 @@ func (e *ElfLogHook) StartPushLog(ctx context.Context) {
 								fmt.Printf("%v", pan)
 							}
 						}()
-						err := e.postLogJson(log.Url, log.Key, log.Sign, log.Data)
+						err := e.postLogJson(log.Url, log.Key, log.Sign, log.Data, log.TimeStamp)
 						if err != nil {
 							println(err.Error())
 						}
