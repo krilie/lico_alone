@@ -13,3 +13,10 @@ type Carousel struct {
 func (Carousel) TableName() string {
 	return "tb_carousel_master"
 }
+
+type UpdateCarouselModel struct {
+	Id       string `json:"id"`         // id
+	Message  string `json:"message"`    // 消息
+	Url      string `json:"url"`        // 图片地址
+	IsOnShow bool   `json:"is_on_show"` // 是否显示
+}

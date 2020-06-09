@@ -95,6 +95,10 @@ func InitAndStartHttpServer(ctx context.Context, cfg *config.Config, runEnv *run
 	checkToken.POST("/manage/file/upload", ctrl.userCtrl.UpdateFile)
 	checkToken.POST("/manage/file/delete", ctrl.userCtrl.DeleteFile)
 	checkToken.GET("/manage/file/query", ctrl.userCtrl.QueryFile)
+	checkToken.GET("/manage/carousel/query", ctrl.userCtrl.QueryCarousel)
+	checkToken.POST("/manage/carousel/create", ctrl.userCtrl.CreateCarousel)
+	checkToken.POST("/manage/carousel/update", ctrl.userCtrl.UpdateCarousel)
+	checkToken.POST("/manage/carousel/delete_by_id", ctrl.userCtrl.DeleteCarouselById)
 
 	// common 服务
 	commonApi := apiGroup.Group("")

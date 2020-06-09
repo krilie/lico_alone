@@ -19,6 +19,7 @@ func SqlStringOrEmpty(str sql.NullString) string {
 		return ""
 	}
 }
+
 func EmptyOrDefault(ori, def string) string {
 	if ori == "" {
 		return def
@@ -61,6 +62,7 @@ func JoinWith(set mapset.Set, sep string) string {
 func GetInt64(ori string) (int64, error) {
 	return strconv.ParseInt(ori, 10, 64)
 }
+
 func GetFloat64(ori string) (float64, error) {
 	return strconv.ParseFloat(ori, 64)
 }
@@ -73,6 +75,7 @@ func ToJson(o interface{}) string {
 		return string(jsonBytes)
 	}
 }
+
 func ToJsonPretty(o interface{}) string {
 	jsonBytes, err := json.MarshalIndent(o, "", "  ")
 	if err != nil {

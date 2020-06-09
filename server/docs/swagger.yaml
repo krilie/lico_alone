@@ -81,6 +81,26 @@ definitions:
       updated_at:
         type: string
     type: object
+  model.Carousel:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: string
+      is_on_show:
+        description: 是否显示
+        type: boolean
+      message:
+        description: 消息
+        type: string
+      updated_at:
+        type: string
+      url:
+        description: 图片地址
+        type: string
+    type: object
   model.Config:
     properties:
       create_time:
@@ -88,6 +108,21 @@ definitions:
       name:
         type: string
       value:
+        type: string
+    type: object
+  model.CreateCarouselModel:
+    properties:
+      id:
+        description: id
+        type: string
+      is_on_show:
+        description: 是否显示
+        type: boolean
+      message:
+        description: 消息
+        type: string
+      url:
+        description: 图片地址
         type: string
     type: object
   model.FileMaster:
@@ -154,12 +189,28 @@ definitions:
       title:
         type: string
     type: object
+  model.UpdateCarouselModel:
+    properties:
+      id:
+        description: id
+        type: string
+      is_on_show:
+        description: 是否显示
+        type: boolean
+      message:
+        description: 消息
+        type: string
+      url:
+        description: 图片地址
+        type: string
+    type: object
 info:
   contact: {}
-  description: This is a sample server Petstore server.
-  license: {}
-  title: Swagger Example API
-  version: 0.0.1
+  description: api docs for lizo_alone
+  license:
+    name: all right
+  title: lizo_alone
+  version: 1.0.0
 paths:
   /api/common/article/get_article:
     get:
@@ -375,6 +426,110 @@ paths:
       summary: 更新文章内容
       tags:
       - 文章管理
+  /api/manage/carousel/create:
+    post:
+      description: 管理员创建轮播图
+      operationId: 管理员创建轮播图
+      parameters:
+      - description: 单个文件
+        in: body
+        name: carousel
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateCarouselModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 管理员创建轮播图
+      tags:
+      - 轮播图
+  /api/manage/carousel/delete_by_id:
+    post:
+      description: 管理员删除轮播图
+      operationId: 管理员删除轮播图
+      parameters:
+      - description: id
+        in: formData
+        name: carousel_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 管理员删除轮播图
+      tags:
+      - 轮播图
+  /api/manage/carousel/query:
+    get:
+      description: 管理者查询轮播图
+      operationId: 管理者查询轮播图
+      parameters:
+      - description: 是否显示
+        in: query
+        name: is_on_show
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Carousel'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 管理者查询轮播图
+      tags:
+      - 轮播图
+  /api/manage/carousel/update:
+    post:
+      description: 管理员更新轮播图
+      operationId: 管理员更新轮播图
+      parameters:
+      - description: 更新结构
+        in: body
+        name: carousel
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateCarouselModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 管理员更新轮播图
+      tags:
+      - 轮播图
   /api/manage/file/delete:
     post:
       description: 文件删除
