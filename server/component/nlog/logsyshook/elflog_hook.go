@@ -4,12 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/config"
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
-	"github.com/krilie/lico_alone/common/utils/time_util"
 	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
@@ -33,7 +31,7 @@ func NewElfLogHook(cfg *config.Config) *ElfLogHook {
 		Secret: cfg.ElfLog.Secret,
 		Url:    cfg.ElfLog.Url,
 		jsonFormatter: &logrus.JSONFormatter{
-			TimestampFormat:  time_util.DefaultFormat,
+			TimestampFormat:  time.RFC3339Nano,
 			DisableTimestamp: false,
 			DataKey:          "",
 			FieldMap:         nil,
@@ -71,37 +69,18 @@ func (e *ElfLogHook) GetJsonContent(entry *logrus.Entry) string {
 }
 
 func (e *ElfLogHook) Fire(entry *logrus.Entry) error {
-	var logData = &CreateLogReqModel{
-		AppName:    GetLogStrValOrDefault(entry.Data, context_enum.AppName.Str(), ""),
-		AppVersion: GetLogStrValOrDefault(entry.Data, context_enum.AppVersion.Str(), ""),
-		AppHost:    GetLogStrValOrDefault(entry.Data, context_enum.AppHost.Str(), ""),
-		RemoteIp:   GetLogStrValOrDefault(entry.Data, context_enum.RemoteIp.Str(), ""),
-		ModuleName: GetLogStrValOrDefault(entry.Data, context_enum.Module.Str(), ""),
-		FuncName:   GetLogStrValOrDefault(entry.Data, context_enum.Function.Str(), ""),
-		ClientId:   GetLogStrValOrDefault(entry.Data, context_enum.ClientId.Str(), ""),
-		Time:       entry.Time,
-		TraceId:    GetLogStrValOrDefault(entry.Data, context_enum.TraceId.Str(), ""),
-		UserId:     GetLogStrValOrDefault(entry.Data, context_enum.UserId.Str(), ""),
-		Message:    entry.Message,
-		TimeStamp:  time.Now().Unix(),
-		Content:    e.GetJsonContent(entry),
-		Level:      int(entry.Level), // 0-6
-	}
-	return e.PostLog(logData)
+	return e.PostLog(e.GetJsonContent(entry))
 }
 
-func (e *ElfLogHook) PostLog(logModel *CreateLogReqModel) error {
-	jsonStr, err := json.Marshal(logModel)
-	if err != nil {
-		return errs.NewInternal().WithError(err)
-	}
-	jsonData := string(jsonStr)
-	sign := pswd_util.Md5(jsonData + e.Secret)
+func (e *ElfLogHook) PostLog(logData string) error {
+	timeStamp := time.Now().Unix()
+	sign := pswd_util.Md5(logData + fmt.Sprintf("%v", timeStamp) + e.Secret)
 	e.logChannel <- &logChannelReq{
-		Url:  e.Url,
-		Key:  e.Key,
-		Sign: sign,
-		Data: jsonData,
+		Url:       e.Url,
+		Key:       e.Key,
+		Sign:      sign,
+		TimeStamp: timeStamp,
+		Data:      logData,
 	}
 	return nil
 }
@@ -185,27 +164,10 @@ type ElfLogReturn struct {
 	Detail  string `json:"detail"`
 }
 
-// key sign ...
-type CreateLogReqModel struct {
-	AppName    string    `json:"app_name"`
-	AppVersion string    `json:"app_version"`
-	AppHost    string    `json:"app_host"`
-	RemoteIp   string    `json:"remote_ip"`
-	ModuleName string    `json:"module_name"`
-	FuncName   string    `json:"func_name"`
-	ClientId   string    `json:"client_id"`
-	Time       time.Time `json:"time"`
-	TraceId    string    `json:"trace_id"`
-	UserId     string    `json:"user_id"`
-	Message    string    `json:"message"`
-	TimeStamp  int64     `json:"time_stamp"` // unix 时间戳 防非法请求
-	Content    string    `json:"content"`    // 所有内容的json形式
-	Level      int       `json:"level"`      // level
-}
-
 type logChannelReq struct {
-	Url  string
-	Key  string
-	Sign string
-	Data string
+	Url       string
+	Key       string
+	Sign      string
+	TimeStamp int64
+	Data      string
 }
