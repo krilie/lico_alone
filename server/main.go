@@ -20,9 +20,10 @@ import (
 
 //go:generate swag init -g ./main.go
 
-// @title Swagger Example API
-// @version 0.0.1
-// @description  This is a sample server Petstore server.
+// @title lizo_alone
+// @version 1.0.0
+// @description  api docs for lizo_alone
+// @license.name all right
 func main() {
 	// 开始服务
 	dig.Container.MustInvoke(

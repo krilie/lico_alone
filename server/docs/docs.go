@@ -19,7 +19,9 @@ var doc = `{
         "description": "{{.Description}}",
         "title": "{{.Title}}",
         "contact": {},
-        "license": {},
+        "license": {
+            "name": "all right"
+        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -348,6 +350,168 @@ var doc = `{
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/model.UpdateArticleModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/com_model.CommonReturn"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/manage/carousel/create": {
+            "post": {
+                "description": "管理员创建轮播图",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "轮播图"
+                ],
+                "summary": "管理员创建轮播图",
+                "operationId": "管理员创建轮播图",
+                "parameters": [
+                    {
+                        "description": "单个文件",
+                        "name": "carousel",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.CreateCarouselModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/com_model.CommonReturn"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/manage/carousel/delete_by_id": {
+            "post": {
+                "description": "管理员删除轮播图",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "轮播图"
+                ],
+                "summary": "管理员删除轮播图",
+                "operationId": "管理员删除轮播图",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "carousel_id",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/com_model.CommonReturn"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/manage/carousel/query": {
+            "get": {
+                "description": "管理者查询轮播图",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "轮播图"
+                ],
+                "summary": "管理者查询轮播图",
+                "operationId": "管理者查询轮播图",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "是否显示",
+                        "name": "is_on_show",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.Carousel"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/manage/carousel/update": {
+            "post": {
+                "description": "管理员更新轮播图",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "轮播图"
+                ],
+                "summary": "管理员更新轮播图",
+                "operationId": "管理员更新轮播图",
+                "parameters": [
+                    {
+                        "description": "更新结构",
+                        "name": "carousel",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UpdateCarouselModel"
                         }
                     }
                 ],
@@ -990,6 +1154,35 @@ var doc = `{
                 }
             }
         },
+        "model.Carousel": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "is_on_show": {
+                    "description": "是否显示",
+                    "type": "boolean"
+                },
+                "message": {
+                    "description": "消息",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "url": {
+                    "description": "图片地址",
+                    "type": "string"
+                }
+            }
+        },
         "model.Config": {
             "type": "object",
             "properties": {
@@ -1000,6 +1193,27 @@ var doc = `{
                     "type": "string"
                 },
                 "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.CreateCarouselModel": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "id",
+                    "type": "string"
+                },
+                "is_on_show": {
+                    "description": "是否显示",
+                    "type": "boolean"
+                },
+                "message": {
+                    "description": "消息",
+                    "type": "string"
+                },
+                "url": {
+                    "description": "图片地址",
                     "type": "string"
                 }
             }
@@ -1101,6 +1315,27 @@ var doc = `{
                     "type": "string"
                 }
             }
+        },
+        "model.UpdateCarouselModel": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "id",
+                    "type": "string"
+                },
+                "is_on_show": {
+                    "description": "是否显示",
+                    "type": "boolean"
+                },
+                "message": {
+                    "description": "消息",
+                    "type": "string"
+                },
+                "url": {
+                    "description": "图片地址",
+                    "type": "string"
+                }
+            }
         }
     }
 }`
@@ -1116,12 +1351,12 @@ type swaggerInfo struct {
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
-	Version:     "0.0.1",
+	Version:     "1.0.0",
 	Host:        "",
 	BasePath:    "",
 	Schemes:     []string{},
-	Title:       "Swagger Example API",
-	Description: "This is a sample server Petstore server.",
+	Title:       "lizo_alone",
+	Description: "api docs for lizo_alone",
 }
 
 type s struct{}
