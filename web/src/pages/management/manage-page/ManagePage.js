@@ -5,6 +5,7 @@ import "./ManagePage.less"
 import { Route, Switch} from "react-router";
 import SettingPage from "./setting-page/SettingPage";
 import FilePage from "./file-page/FilePage";
+import CarouselPage from "./carousel-page/CarouselPage";
 
 const { Sider } = Layout;
 
@@ -42,8 +43,8 @@ export default class ManagePage extends React.Component {
                         <Menu.Item key="/management/manage/files" icon={<VideoCameraOutlined />}>
                             文件
                         </Menu.Item>
-                        <Menu.Item key="3" icon={<UploadOutlined />}>
-                            nav 3
+                        <Menu.Item key="/management/manage/carousel" icon={<UploadOutlined />}>
+                            轮播图
                         </Menu.Item>
                         <Menu.Item key="4" icon={<UserOutlined />}>
                             nav 4
@@ -54,6 +55,7 @@ export default class ManagePage extends React.Component {
                     <Switch>
                         <Route exact path="/management/manage/setting" component={SettingPage}/>
                         <Route exact path="/management/manage/files" component={FilePage}/>
+                        <Route exact path="/management/manage/carousel" component={CarouselPage}/>
                     </Switch>
                 </Layout>
             </Layout>

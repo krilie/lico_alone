@@ -90,7 +90,7 @@ export const getIcpInfo = (then) => {
 }
 
 export const getVersion = (then) => {
-    commonGet("/version").then((res) => {
+    commonGet("/api/common/version").then((res) => {
         then(res.data)
     }).catch((error) => {
         message.error(error.toString());
