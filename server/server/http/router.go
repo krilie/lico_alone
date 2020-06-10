@@ -105,7 +105,6 @@ func InitAndStartHttpServer(ctx context.Context, cfg *config.Config, runEnv *run
 	commonApi.GET("/common/icp_info", ctrl.commonCtrl.GetIcpInfo)
 	commonApi.GET("/common/article/query_sample", ctrl.commonCtrl.QueryArticleSample)
 	commonApi.GET("/common/article/get_article", ctrl.commonCtrl.GetArticle)
-	commonApi.GET("/common/article/get_article", ctrl.commonCtrl.GetArticle)
 	commonApi.GET("/common/carousel/query", ctrl.commonCtrl.QueryCarousel)
 	commonApi.GET("/version", ctrl.commonCtrl.Version) // 版本号
 
