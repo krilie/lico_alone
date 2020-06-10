@@ -152,6 +152,48 @@ var doc = `{
                 }
             }
         },
+        "/api/common/carousel/query": {
+            "get": {
+                "description": "common查询轮播图",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "公共接口"
+                ],
+                "summary": "common查询轮播图",
+                "operationId": "common查询轮播图",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.Carousel"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/common/icp_info": {
             "get": {
                 "description": "Icp信息",

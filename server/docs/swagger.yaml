@@ -287,6 +287,31 @@ paths:
       summary: 查询文章列表
       tags:
       - 公共接口
+  /api/common/carousel/query:
+    get:
+      description: common查询轮播图
+      operationId: common查询轮播图
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Carousel'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: common查询轮播图
+      tags:
+      - 公共接口
   /api/common/icp_info:
     get:
       description: Icp信息
