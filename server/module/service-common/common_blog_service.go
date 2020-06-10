@@ -23,8 +23,8 @@ func (a *CommonService) QueryArticleSamplePage(ctx context.Context, page common_
 	}, nil
 }
 
-func (b *CommonService) GetArticleById(ctx context.Context, id string) (*model.Article, error) {
-	article, err := b.moduleArticle.GetArticleById(ctx, id)
+func (a *CommonService) GetArticleById(ctx context.Context, id string) (*model.Article, error) {
+	article, err := a.moduleArticle.GetArticleById(ctx, id)
 	if err != nil {
 		return nil, err
 	}
