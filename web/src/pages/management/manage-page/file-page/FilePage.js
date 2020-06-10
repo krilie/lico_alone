@@ -31,12 +31,12 @@ class FilePage extends Component {
                 <div className="table-file-operator">
                     <Row>
                         <Col style={{textAlign: "center", margin: "2px"}} span={24}>
-                            <Button onClick={() => CopyToBoard(file.url)}>复制地址</Button>
+                            <Button type={"primary"} onClick={() => CopyToBoard(file.url)}>复制地址</Button>
                         </Col>
                     </Row>
                     <Row>
                         <Col style={{textAlign: "center", margin: "2px"}} span={24}>
-                            <Button onClick={() => this.deleteFileItem(file.id)}>删除</Button>
+                            <Button type={"danger"} onClick={() => this.deleteFileItem(file.id)}>删除</Button>
                         </Col>
                     </Row>
                 </div>
