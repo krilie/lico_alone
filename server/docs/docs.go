@@ -1242,10 +1242,6 @@ var doc = `{
         "model.CreateCarouselModel": {
             "type": "object",
             "properties": {
-                "id": {
-                    "description": "id",
-                    "type": "string"
-                },
                 "is_on_show": {
                     "description": "是否显示",
                     "type": "boolean"

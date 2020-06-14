@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	com_model "github.com/krilie/lico_alone/common/com-model"
+	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-carousel/model"
 	"time"
 )
@@ -14,7 +15,7 @@ func (c *CarouselModule) QueryCarousel(ctx context.Context, isOnShow *bool) (lis
 func (c *CarouselModule) CreateCarousel(ctx context.Context, item *model.CreateCarouselModel) error {
 	return c.Dao.CreateCarousel(ctx, &model.Carousel{
 		Model: com_model.Model{
-			Id:        item.Id,
+			Id:        id_util.GetUuid(),
 			CreatedAt: time.Now(),
 			UpdatedAt: time.Now(),
 			DeletedAt: nil,
