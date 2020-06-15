@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Form, Input, Modal} from "antd";
+import {Form, Input, Modal, Select} from "antd";
 
 class CarouselCreateUpdateModal extends Component {
 
@@ -12,8 +12,8 @@ class CarouselCreateUpdateModal extends Component {
     }
 
     render() {
-        const {isShow, cancel, isCreate} = this.props
-        const titleText = isCreate ? "创建" : "修改"
+        let {isShow, cancel, isCreate} = this.props
+        let titleText = isCreate ? "创建" : "修改"
         let {data} = this.props
         if (isCreate) {
             data = {id: "", is_on_show: false, message: "", url: ""}
@@ -29,18 +29,26 @@ class CarouselCreateUpdateModal extends Component {
                 {...layout}
                 ref={this.formRef}
             >
-                <Form.Item label="id" name="id">
-                    <Input contentEditable={"false"} defaultValue={data.id} placeholder="请输入"/>
+                <div hidden={isCreate}>
+                    <Form.Item label="键" name="id">
+                        <Input disabled={true} defaultValue={data.id} placeholder="请输入"/>
+                    </Form.Item>
+                </div>
+                <Form.Item label="显示" name="is_on_show">
+                    <Select
+                        defaultValue={true}
+                        placeholder="Select a option and change input text above"
+                    >
+                        <Select.Option  value={true}>true</Select.Option>
+                        <Select.Option value={false}>false</Select.Option>
+                    </Select>
                 </Form.Item>
-                <Form.Item label="is_on_show" name="is_on_show">
-                    <Input defaultValue={data.is_on_show} placeholder="请输入"/>
-                </Form.Item>
-                <Form.Item label="message" name="message">
+                <Form.Item label="信息" name="message">
                     <Input defaultValue={data.message} placeholder="请输入"/>
                 </Form.Item>
-                <Form.Item label="url" name="url">
+                <Form.Item label="图址" name="url">
                     <Input defaultValue={data.url} placeholder="请输入"/>
-                </Form.Item>,
+                </Form.Item>
             </Form>
 
         return (
