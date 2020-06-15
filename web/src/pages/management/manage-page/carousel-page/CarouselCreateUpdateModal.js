@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input, Modal} from "antd";
+import {Form, Input, Modal} from "antd";
 
 class CarouselCreateUpdateModal extends Component {
 
@@ -12,29 +12,19 @@ class CarouselCreateUpdateModal extends Component {
     }
 
     render() {
-        let {data, isShow, cancel,isCreate} = this.props
+        const {isShow, cancel, isCreate} = this.props
         const titleText = isCreate ? "创建" : "修改"
+        let {data} = this.props
+        if (isCreate) {
+            data = {id: "", is_on_show: false, message: "", url: ""}
+        }
+
         const layout = {
             labelCol: {span: 4},
             wrapperCol: {span: 20}
         };
 
-        const formShow = isCreate ?
-            <Form
-                {...layout}
-                ref={this.formRef}
-            >
-                <Form.Item label="is_on_show" name="is_on_show">
-                    <Input defaultValue="" placeholder="请输入"/>
-                </Form.Item>
-                <Form.Item label="message" name="message">
-                    <Input defaultValue="" placeholder="请输入"/>
-                </Form.Item>
-                <Form.Item label="url" name="url">
-                    <Input defaultValue="" placeholder="请输入"/>
-                </Form.Item>
-            </Form>
-            :
+        const formShow =
             <Form
                 {...layout}
                 ref={this.formRef}
@@ -56,7 +46,7 @@ class CarouselCreateUpdateModal extends Component {
         return (
             <Modal title={titleText}
                    visible={isShow}
-                   onOk={()=>this.onDialogOk(isCreate)}
+                   onOk={() => this.onDialogOk(isCreate)}
                    onCancel={() => cancel()}>
                 {formShow}
             </Modal>
