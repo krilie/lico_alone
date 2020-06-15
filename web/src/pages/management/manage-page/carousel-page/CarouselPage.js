@@ -26,7 +26,7 @@ class CarouselPage extends Component {
         this.setState({
             createUpdateDialog: {
                 ...createUpdateDialog,
-                data: {},
+                data: {id:"",is_on_show: false,message:"",url:""},
                 isCreate: true,
                 isShow: true,
             }
