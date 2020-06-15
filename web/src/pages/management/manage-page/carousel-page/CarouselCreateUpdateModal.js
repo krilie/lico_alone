@@ -4,11 +4,23 @@ import {Form, Input, Modal, Select} from "antd";
 
 class CarouselCreateUpdateModal extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = props
+    }
+
+
     formRef = React.createRef();
 
     onDialogOk(isCreate) {
         const {success} = this.props
         success();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        this.formRef.setFieldsValue({
+           ...this.props.data
+        });
     }
 
     render() {
