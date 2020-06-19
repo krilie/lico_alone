@@ -3,6 +3,7 @@ package dao
 import (
 	"context"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
@@ -15,7 +16,7 @@ type UserDao struct {
 }
 
 func NewUserDao(db *ndb.NDb, log *nlog.NLog) *UserDao {
-
+	log = log.WithField(context_enum.Module.Str(), "module user dao")
 	db.GetDb(context2.NewContext()).AutoMigrate(
 		&model.Permission{},
 		&model.RolePermission{},

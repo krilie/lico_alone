@@ -1,16 +1,36 @@
-#components-layout-demo-responsive .logo {
-  height: 32px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px;
-}
 
 .site-layout-sub-header-background {
   background: #fff;
 }
 
 .sider-layout-background {
+  text-align: left;
   background: aliceblue;
+  min-width: 80px;
+  max-width: 80px;
+  margin: 0 0 0 0;
+  padding: 0;
 }
-.manage-layout{
-  min-height: 1000px;
+
+.manage-layout {
+  min-height: 800px;
+}
+
+.sider-layout-menu {
+  background: aliceblue;
+  max-width: 40px;
+  margin: 0 0 0 0;
+}
+
+.menu-item {
+  .ant-menu-item {
+    padding: 0;
+  }
+}
+
+.v-center {
+  display: flex; /*Flex布局*/
+  display: -webkit-flex; /* Safari */
+  align-items: center; /*指定垂直居中*/
+  justify-content: flex-start;
 }

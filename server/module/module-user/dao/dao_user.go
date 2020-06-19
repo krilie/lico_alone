@@ -18,6 +18,7 @@ type IUser interface {
 	UpdateUserPassword(ctx context.Context, userId, md5edPswd, salt string) error
 	IsPhoneNumExists(ctx context.Context, phoneNum string) (bool, error)
 	GetAllValidUserId(ctx context.Context) ([]string, error)
+	DeleteUserByPhone(ctx context.Context, phone string) error
 }
 
 func (d *UserDao) GetUserMasterById(ctx context.Context, userId string) (*model.UserMaster, error) {
@@ -59,7 +60,7 @@ func (d *UserDao) GetUserMasterByLoginName(ctx context.Context, loginName string
 func (d *UserDao) CreateUserMaster(ctx context.Context, master *model.UserMaster) error {
 	err := d.GetDb(ctx).Model(&model.UserMaster{}).Create(master).Error
 	if err != nil {
-		d.log.Errorf("create user master db err:%v", err)
+		d.log.Get(ctx).Errorf("create user master db err:%v", err)
 		return errs.NewInternal().WithError(err)
 	}
 	return nil
@@ -69,7 +70,7 @@ func (d *UserDao) UpdateUserMaster(ctx context.Context, user *model.UserMaster) 
 	if user.Id == "" {
 		return errs.NewNormal().WithMsg("no primary key on update user master.")
 	}
-	user.UpdateTime = time.Now()
+	user.UpdatedAt = time.Now()
 	err := d.GetDb(ctx).Model(&model.UserMaster{}).Save(user).Error
 	if err != nil {
 		return errs.NewInternal().WithError(err)
@@ -113,4 +114,11 @@ func (d *UserDao) UpdateUserPassword(ctx context.Context, userId, md5edPswd, sal
 		return errs.NewInternal().WithError(err)
 	}
 	return nil
+}
+
+func (d *UserDao) DeleteUserByPhone(ctx context.Context, phone string) error {
+	err := d.GetDb(ctx).Model(new(model.UserMaster)).Delete(&model.UserMaster{
+		PhoneNum: phone,
+	}).Error
+	return err
 }

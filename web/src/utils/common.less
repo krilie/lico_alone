@@ -1,0 +1,21 @@
+.vertical-center {
+  display: flex; /*Flex布局*/
+  display: -webkit-flex; /* Safari */
+  align-items: center; /*指定垂直居中*/
+  justify-content: flex-start;
+}
+
+.multi-line {
+  padding: 0 0 0 0;
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box; //将对象作为弹性伸缩盒子模型显示
+  -webkit-line-clamp: 3; //控制显示几行文字
+  -webkit-box-orient: vertical; //设置伸缩盒对象的子元素排列方式
+  word-wrap: break-word;
+  word-break: break-all;
+  line-height: unset;
+}

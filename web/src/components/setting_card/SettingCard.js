@@ -1,8 +1,7 @@
 import React from "react";
 import "./SettingCard.less"
-import {Button, Card, Input} from "antd";
-import {updateSettingItem} from "../../api/SettingApi";
-import openNotification from "../../utils/MessageBoard";
+import {Button, Card, Col, Input, message, Row} from "antd";
+import {updateSettingItem} from "../../api/ManageSettingApi";
 
 const {TextArea} = Input
 
@@ -31,7 +30,7 @@ export default class SettingCard extends React.Component {
         const {name} = this.props.data
         const {value} = this.state
         updateSettingItem(name, value).then(data => {
-            openNotification("保存成功")
+            message.info("保存成功");
         }).catch(err => {
             console.log("保存操作：" + name + value, err.status)
         })
@@ -39,14 +38,19 @@ export default class SettingCard extends React.Component {
 
     render() {
         const {name, create_time, value} = this.props.data
-        const extra = <Button type="primary" style={{margin: '0px 0px 0px 0px'}} size="large"
+        const extra = <Button type="primary"
+                              className="extra-area-button" size="large"
                               onClick={this.onCommitSetting}>保存</Button>
-        const title = <div style={{padding: "3px 3px 3px 3px", margin: "3px 3px 3px 3px"}}>项目:  {name} 创建时间: {create_time}</div>
-        return <Card bodyStyle={{padding: "3px 3px 3px 3px", margin: "3px 3px 3px 3px"}}
-                     headStyle={{padding: "0px 0px 0px 0px", margin: "0px 0px 0px 0px"}}
+        const title = <div className="setting-card-title">
+            <Row>
+                <Col span={12}>项目:{name}</Col>
+                <Col span={12} style={{textAlign:"right"}}>创建时间:{create_time}</Col>
+            </Row>
+        </div>
+        return <Card className="setting-card-style"
                      title={title}>
-            <TextArea style={{fontSize: '20px'}} rows={2} onChange={(e) => this.upDataSetting(e)} defaultValue={value}/>
-            {extra}
+            <TextArea className="setting-text-area" rows={3} onChange={(e) => this.upDataSetting(e)} defaultValue={value}/>
+            <div style={{textAlign:"right"}}>{extra}</div>
         </Card>
     }
 }

@@ -1,13 +1,17 @@
 package ctl_user
 
 import (
-	"github.com/krilie/lico_alone/service/user-service"
+	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
+	"github.com/krilie/lico_alone/component/nlog"
+	"github.com/krilie/lico_alone/module/service-user"
 )
 
 type UserCtrl struct {
-	userService *user_service.UserService
+	userService *service_user.UserService
+	log         *nlog.NLog
 }
 
-func NewUserCtrl(userService *user_service.UserService) *UserCtrl {
-	return &UserCtrl{userService: userService}
+func NewUserCtrl(userService *service_user.UserService, log *nlog.NLog) *UserCtrl {
+	log = log.WithField(context_enum.Module.Str(), "user controller")
+	return &UserCtrl{userService: userService, log: log}
 }

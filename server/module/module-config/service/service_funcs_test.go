@@ -8,7 +8,7 @@ import (
 )
 
 func TestAddItems(t *testing.T) {
-	dig.Container.MustInvoke(func(svc *ConfigService) error {
+	dig.Container.MustInvoke(func(svc *ConfigModule) error {
 		return svc.SetJsonValue(context.NewContext(), model.ConfigItemsIcpInfo.Val(), model.IcpInfo{
 			Name:  "1",
 			Link:  "2",

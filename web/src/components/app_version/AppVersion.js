@@ -1,9 +1,8 @@
 import React from "react";
 import "./AppVersion.less"
-import {Row, Col} from "antd"
-import {getVersion} from "../../api/common";
+import {Row, Col, message} from "antd"
+import {getVersion} from "../../api/ApiCommon";
 import CopyToBoard from "../../utils/CopyToBoard";
-import openNotification from "../../utils/MessageBoard";
 
 export default class AppVersion extends React.Component {
 
@@ -25,7 +24,7 @@ export default class AppVersion extends React.Component {
 
     copyText = (text)=>{
         CopyToBoard(text)
-        openNotification("copy success")
+        message.info("copy success");
     }
 
     render() {

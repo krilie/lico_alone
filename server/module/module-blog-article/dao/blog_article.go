@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/com-model"
+	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-blog-article/model"
 )
@@ -12,12 +13,13 @@ type IBlogArticleDao interface {
 	CreateArticle(ctx context.Context, article *model.Article) error
 	DeleteArticleById(ctx context.Context, id string) (bool, error)
 	UpdateArticle(ctx context.Context, article *model.Article) error
-	QueryArticleById(ctx context.Context, id string) (*model.Article, error)
+	UpdateArticleSample(ctx context.Context, article *model.UpdateArticleModel) error
+	GetArticleById(ctx context.Context, id string) (*model.Article, error)
 }
 
 func (b *BlogArticleDao) CreateArticle(ctx context.Context, article *model.Article) error {
-	if article.ID == "" {
-		article.ID = id_util.GetUuid()
+	if article.Id == "" {
+		article.Id = id_util.GetUuid()
 	}
 	err := b.GetDb(ctx).Model(new(model.Article)).Create(article).Error
 	return err
@@ -26,7 +28,7 @@ func (b *BlogArticleDao) CreateArticle(ctx context.Context, article *model.Artic
 func (b *BlogArticleDao) DeleteArticleById(ctx context.Context, id string) (bool, error) {
 	err := b.GetDb(ctx).Delete(&model.Article{
 		Model: com_model.Model{
-			ID: id,
+			Id: id,
 		},
 	}).Error
 	if gorm.IsRecordNotFoundError(err) {
@@ -39,9 +41,35 @@ func (b *BlogArticleDao) DeleteArticleById(ctx context.Context, id string) (bool
 }
 
 func (b *BlogArticleDao) UpdateArticle(ctx context.Context, article *model.Article) error {
-	panic("implement me")
+	result := b.GetDb(ctx).Model(new(model.Article)).Select("*").Update(article)
+	if result.Error != nil {
+		return result.Error
+	}
+	if result.RowsAffected <= 0 {
+		return errs.NewNotExistsError().WithMsg("记录不存在")
+	}
+	return nil
 }
 
-func (b *BlogArticleDao) QueryArticleById(ctx context.Context, id string) (*model.Article, error) {
-	panic("implement me")
+func (b *BlogArticleDao) UpdateArticleSample(ctx context.Context, article *model.UpdateArticleModel) error {
+	result := b.GetDb(ctx).Model(new(model.Article)).Select("id,title,content,picture,sort").Update(article)
+	if result.Error != nil {
+		return result.Error
+	}
+	if result.RowsAffected <= 0 {
+		return errs.NewNotExistsError().WithMsg("记录不存在")
+	}
+	return nil
+}
+
+func (b *BlogArticleDao) GetArticleById(ctx context.Context, id string) (article *model.Article, err error) {
+	article = new(model.Article)
+	err = b.GetDb(ctx).First(article, "id=?", id).Error
+	if err != nil {
+		if gorm.IsRecordNotFoundError(err) {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return article, err
 }

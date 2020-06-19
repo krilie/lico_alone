@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (a *ConfigService) GetValueStr(ctx context.Context, name string) (*string, error) {
+func (a *ConfigModule) GetValueStr(ctx context.Context, name string) (*string, error) {
 	config, err := a.Dao.GetConfigByName(ctx, name)
 	if err != nil {
 		return nil, errs.NewInternal().WithError(err)
@@ -17,7 +17,7 @@ func (a *ConfigService) GetValueStr(ctx context.Context, name string) (*string, 
 	}
 	return &config.Value, nil
 }
-func (a *ConfigService) SetValueStr(ctx context.Context, name string, value string) error {
+func (a *ConfigModule) SetValueStr(ctx context.Context, name string, value string) error {
 	config, err := a.Dao.GetConfigByName(ctx, name)
 	if err != nil {
 		return err

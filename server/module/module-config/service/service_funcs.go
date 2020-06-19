@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func (a *ConfigService) GetValueInt(ctx context.Context, name string) (*int, error) {
+func (a *ConfigModule) GetValueInt(ctx context.Context, name string) (*int, error) {
 	valueStr, err := a.GetValueStr(ctx, name)
 	if err != nil {
 		return nil, err
@@ -20,11 +20,11 @@ func (a *ConfigService) GetValueInt(ctx context.Context, name string) (*int, err
 	}
 	return &val, nil
 }
-func (a *ConfigService) SetValueInt(ctx context.Context, name string, value int) error {
+func (a *ConfigModule) SetValueInt(ctx context.Context, name string, value int) error {
 	return a.SetValueStr(ctx, name, strconv.Itoa(value))
 }
 
-func (a *ConfigService) GetValueBool(ctx context.Context, name string) (*bool, error) {
+func (a *ConfigModule) GetValueBool(ctx context.Context, name string) (*bool, error) {
 	str, err := a.GetValueStr(ctx, name)
 	if err != nil {
 		return nil, err
@@ -38,6 +38,6 @@ func (a *ConfigService) GetValueBool(ctx context.Context, name string) (*bool, e
 	}
 	return &b, err
 }
-func (a *ConfigService) SetValueBool(ctx context.Context, name string, value bool) error {
+func (a *ConfigModule) SetValueBool(ctx context.Context, name string, value bool) error {
 	return a.SetValueStr(ctx, name, strconv.FormatBool(value))
 }

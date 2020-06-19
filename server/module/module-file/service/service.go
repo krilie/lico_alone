@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/module-file/dao"
@@ -15,22 +16,24 @@ type IFileService interface {
 	GetBaseUrl(ctx context.Context) string
 }
 
-type FileService struct {
+type FileModule struct {
 	dao     *dao.FileDao
 	log     *nlog.NLog
 	fileApi file_api.FileOperator
 }
 
-func NewFileService(dao *dao.FileDao, log *nlog.NLog, cfg *config.FileSave) *FileService {
+func NewFileModule(dao *dao.FileDao, log *nlog.NLog, cfgs *config.Config) *FileModule {
+	log = log.WithField(context_enum.Module.Str(), "module file service")
 	var fileApi file_api.FileOperator
+	cfg := &cfgs.FileSave
 	if cfg.SaveType == "local" {
 		fileApi = file_api.NewLocalFileSave(cfg.LocalFileSaveDir, cfg.LocalFileSaveUrl)
 	} else if cfg.SaveType == "qiniuOss" {
-		fileApi = file_api.NewOssQiNiu(cfg)
+		fileApi = file_api.NewOssQiNiu(cfgs)
 	} else {
 		panic("config error on file save " + cfg.SaveType)
 	}
-	return &FileService{
+	return &FileModule{
 		dao:     dao,
 		log:     log,
 		fileApi: fileApi,

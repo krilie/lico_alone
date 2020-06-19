@@ -9,9 +9,14 @@ import (
 	"time"
 )
 
-func (s *MessageService) SendEmail(ctx context.Context, to, subject, content string) error {
+func (s *MessageModule) SendEmail(ctx context.Context, to, subject, content string) error {
 	email := &model.MessageEmail{
-		Model:     com_model.Model{Id: id_util.GetUuid(), CreateTime: time.Now()},
+		Model: com_model.Model{
+			Id:        id_util.GetUuid(),
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
+			DeletedAt: nil,
+		},
 		SendTime:  time.Now(),
 		From:      "sys",
 		To:        to,
@@ -22,19 +27,19 @@ func (s *MessageService) SendEmail(ctx context.Context, to, subject, content str
 	}
 	err := s.email.SendEmail(ctx, to, subject, content)
 	if err != nil {
-		s.log.Error(err)
+		s.log.Get(ctx).Error(err)
 		email.IsSuccess = false
 		email.Other = err.Error()
 		err = s.Dao.CreateMessageEmail(ctx, email)
 		if err != nil {
-			s.log.Error(err)
+			s.log.Get(ctx).Error(err)
 			return err
 		}
 		return errs.NewInternal().WithError(err)
 	}
 	err = s.Dao.CreateMessageEmail(ctx, email)
 	if err != nil {
-		s.log.Error(err)
+		s.log.Get(ctx).Error(err)
 		return err
 	}
 	return nil

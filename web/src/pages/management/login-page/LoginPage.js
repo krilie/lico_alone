@@ -1,9 +1,8 @@
 import React from "react";
 import "./LoginPage.less"
 import {GetUserToken, SetUserToken} from "../../../utils/LocalStorageUtil";
-import {Button, Col, Form, Input, Row} from "antd";
-import {userLogin} from "../../../api/UserApi";
-import openNotification from "../../../utils/MessageBoard";
+import {Button, Col, Form, Input, message, Row} from "antd";
+import {userLogin} from "../../../api/ManageUserApi";
 
 /**
  * 1.检查token 如果token不为空或null 则跳转主管理页面
@@ -27,16 +26,13 @@ export default class LoginPage extends React.Component {
 
 
     render() {
-        const
-            layout = {
-                labelCol: {span: 8},
-                wrapperCol: {span: 16},
-            };
-        const
-            tailLayout = {
-                wrapperCol: {offset: 12, span: 12},
-            };
-
+        const layout = {
+            labelCol: {span: 8},
+            wrapperCol: {span: 16},
+        };
+        const tailLayout = {
+            wrapperCol: {offset: 12, span: 12},
+        };
 
         const onFinish = values => {
             // 登录
@@ -45,12 +41,12 @@ export default class LoginPage extends React.Component {
                     this.setToken(res.data.data.token)
                     this.goToPage("/management/manage")
                 } else {
-                    openNotification(res.data.message + res.data.detail)
+                    message.error(res.data.message + res.data.detail)
                 }
             }).then(err => {
                 if (err !== undefined)
-                    openNotification(err)
-            }).finally(()=>{
+                    message.error(err.toString())
+            }).finally(() => {
 
             })
         };

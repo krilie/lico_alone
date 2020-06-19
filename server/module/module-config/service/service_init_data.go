@@ -6,7 +6,7 @@ import (
 )
 
 // InitConfigData 初始化配置文件 不会删除原来的数据
-func (a *ConfigService) InitConfigData(ctx context.Context) error {
+func (a *ConfigModule) InitConfigData(ctx context.Context) error {
 	err := a.Dao.Transaction(ctx, func(ctx context.Context) error {
 		err := a.Dao.DeleteAllConfig(ctx)
 		if err != nil {
@@ -20,7 +20,7 @@ func (a *ConfigService) InitConfigData(ctx context.Context) error {
 		if err != nil {
 			return err
 		}
-		err = a.SetJsonValue(ctx, model.ConfigItemsNotificationEmail.Val(), model.IcpInfo{Name: "1", Label: "2", Link: "3"})
+		err = a.SetJsonValue(ctx, model.ConfigItemsIcpInfo.Val(), model.IcpInfo{Name: "1", Label: "2", Link: "3"})
 		if err != nil {
 			return err
 		}

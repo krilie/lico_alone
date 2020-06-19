@@ -2,6 +2,8 @@ package dao
 
 import (
 	"context"
+	"github.com/jinzhu/gorm"
+	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/component/ndb"
@@ -15,6 +17,7 @@ type FileDao struct {
 }
 
 func NewFileDao(db *ndb.NDb, log *nlog.NLog) *FileDao {
+	log = log.WithField(context_enum.Module.Str(), "module file dao")
 	err := db.GetDb(context2.NewContext()).
 		AutoMigrate(&model.FileMaster{}).Error
 	if err != nil {
@@ -68,4 +71,17 @@ func (a *FileDao) DeleteFileByBucketKey(ctx context.Context, bucket, key string)
 		return errs.NewNormal().WithMsg("删除没有成功")
 	}
 	return nil
+}
+
+func (a *FileDao) GetFileById(ctx context.Context, fileId string) (file *model.FileMaster, err error) {
+	file = new(model.FileMaster)
+	err = a.GetDb(ctx).Where("id=?", fileId).Find(file).Error
+	if err != nil {
+		if gorm.IsRecordNotFoundError(err) {
+			return nil, nil
+		}
+		a.log.Get(ctx).WithFuncName("GetFileById").WithField("err", err).Error("get file error")
+		return nil, errs.NewInternal().WithError(err)
+	}
+	return file, nil
 }

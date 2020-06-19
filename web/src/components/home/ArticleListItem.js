@@ -1,38 +1,65 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import "./ArticleListItem.less.less"
-import {Col, Row} from "antd";
+import "./ArticleListItem.less"
+import {Card, Layout} from "antd";
+import {withRouter} from "react-router-dom";
 
+/**
+ * --------------------------------------
+ * =================title=================
+ * | ******  ---------------------------|
+ * | *图片*  ------description----------|
+ * | ******  ---------------------pv:6--|
+ * --------------------------------------
+ */
 class ArticleListItem extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {};
+    }
 
+    goDetailPage = (articleId) => {
+        this.props.history.push("/article/" + articleId);
     }
 
     render() {
-        const {title, create_time, pv, short_content, picture} = this.props
+        const {title, description, create_time, pv, id, picture} = this.props
         return (
-            <Row>
-                <Col span={4}>{picture}</Col>
-                <Col span={20}>
-                    <Row><Col span={20}>{title}</Col><Col span={4}>{create_time}</Col></Row>
-                    <Row><Col span={24}>{short_content}</Col></Row>
-                    <Row><Col span={18}/><Col span={6}>pv:{pv}</Col></Row>
-                </Col>
-            </Row>
+            <Card className="article-item-card"
+                  bodyStyle={{padding: "0 0 0 0", margin: "0 0 0 0"}}
+                  style={{minWidth: 400}}>
+                <Layout className="article-layout">
+                    <Layout.Header onClick={() => this.goDetailPage(id)} className="article-layout-header">
+                        <div style={{height: "48px", verticalAlign: "center"}}>{title}</div>
+                    </Layout.Header>
+                    <Layout className="article-layout">
+                        <Layout.Sider width={100} className="article-layout-sider">
+                            <img className="pic" src={picture} alt={"pic"}/>
+                        </Layout.Sider>
+                        <Layout.Content className="article-layout-content">
+                            <Layout className="article-layout">
+                                <Layout.Header className="article-layout-content-real">
+                                    {description}
+                                </Layout.Header>
+                                <Layout.Footer
+                                    className="article-layout-footer">create_time:{create_time} pv:{pv}</Layout.Footer>
+                            </Layout>
+                        </Layout.Content>
+                    </Layout>
+                </Layout>
+            </Card>
         );
     }
 }
 
 ArticleListItem.propTypes = {
-    id:  PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     create_time: PropTypes.string.isRequired,
     pv: PropTypes.number.isRequired,
     short_content: PropTypes.string.isRequired,
     picture: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
 };
 
-export default ArticleListItem;
+export default withRouter(ArticleListItem)

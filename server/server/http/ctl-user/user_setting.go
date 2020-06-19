@@ -12,7 +12,7 @@ import (
 // @ID 获取所有配置项
 // @Produce  json
 // @Param searchKey query string true "搜索值"
-// @Success 200 {object} com_model.CommonReturn{data=[]model.config}
+// @Success 200 {object} com_model.CommonReturn{data=[]model.Config}
 // @Failure 500 {string} errInfo
 // @Router /api/manage/setting/get_setting_all [post]
 func (a *UserCtrl) ManageGetConfigList(c *gin.Context) {

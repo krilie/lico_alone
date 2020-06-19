@@ -5,13 +5,10 @@ import (
 	"fmt"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/common/dig"
+	"github.com/krilie/lico_alone/common/config"
+	"github.com/krilie/lico_alone/common/run_env"
 	_ "github.com/krilie/lico_alone/docs"
-	ctl_common "github.com/krilie/lico_alone/server/http/ctl-common"
-	"github.com/krilie/lico_alone/server/http/ctl-health-check"
-	"github.com/krilie/lico_alone/server/http/ctl-user"
 	"github.com/krilie/lico_alone/server/http/middleware"
-	"github.com/krilie/lico_alone/service"
 	"github.com/prometheus/common/log"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
@@ -22,33 +19,27 @@ import (
 	"time"
 )
 
-func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown func(waitSec time.Duration) error) {
+func InitAndStartHttpServer(ctx context.Context, cfg *config.Config, runEnv *run_env.RunEnv, auth middleware.IAuth, ctrl *Controllers) (shutDown func(waitSec time.Duration) error) {
 	// 设置gin mode
-	gin.SetMode(app.Cfg.GinMode)
+	gin.SetMode(cfg.GinMode)
 	// 路径设置 根路径
 	RootRouter := gin.Default() // logger recover
 	// 跨域
-	//var theCors = cors.DefaultConfig()
-	//theCors.AllowAllOrigins = true
-	//theCors.AddAllowHeaders("Content-Type", "X-CSRF-Token", "Authorization", "Token")
-	//theCors.AllowCredentials = true
-	//RootRouter.Use(cors.New(theCors))
 	RootRouter.Use(Cors())
 	// 静态文件 图片等
-	RootRouter.StaticFile("/files", app.Cfg.FileSave.LocalFileSaveDir)
+	RootRouter.StaticFile("/files", cfg.FileSave.LocalFileSaveDir)
 	// swagger + gzip压缩
-	if app.Cfg.EnableSwagger {
+	if cfg.EnableSwagger {
 		RootRouter.GET("/swagger/*any", gzip.Gzip(gzip.DefaultCompression), ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
+
 	// 健康检查
-	ctl_health_check.Init(RootRouter)
-	// 版本号
-	RootRouter.GET("/version", Version(app.Version, app.BuildTime, app.GitCommit, app.GoVersion))
+	RootRouter.GET("health/", ctrl.healthCheckCtrl.Hello)
+	RootRouter.GET("health/ping", ctrl.healthCheckCtrl.Ping)
+
 	// web 网页
-	// web 站点
 	webRouter := RootRouter.Group("/")
 	webRouter.Use(gzip.Gzip(gzip.DefaultCompression)) // 开启gzip压缩
-
 	dir, err := ioutil.ReadDir("./www")
 	if err != nil {
 		panic(err)
@@ -63,37 +54,68 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown fun
 			}
 		}
 	}
+	// 重定向
+	RootRouter.NoRoute(func(c *gin.Context) {
+		if c.Request.Method != "GET" {
+			c.String(404, "page not found")
+			return
+		}
+		path := c.Request.URL.Path
+		prefix := []string{"/api", "/files", "/swagger", "/health", "/version"}
+		for i := range prefix {
+			if strings.HasPrefix(path, prefix[i]) {
+				c.String(404, "page not found")
+				return
+			}
+		}
+		c.Request.URL.Path = "/"
+		RootRouter.HandleContext(c)
+		return
+	})
+
 	// api路由 + 中间件
 	apiGroup := RootRouter.Group("/api")
 	apiGroup.Use(middleware.BuildContext())
 
 	// 不检查权限的分组
 	noCheckToken := apiGroup.Group("")
-	userCtrl := ctl_user.NewUserCtrl(app.UserService)
-	noCheckToken.POST("/user/login", userCtrl.UserLogin)
-	noCheckToken.POST("/user/register", userCtrl.UserRegister)
-	noCheckToken.POST("/user/send_sms", userCtrl.UserSendSms)
+	noCheckToken.POST("/user/login", ctrl.userCtrl.UserLogin)
+	noCheckToken.POST("/user/register", ctrl.userCtrl.UserRegister)
+	noCheckToken.POST("/user/send_sms", ctrl.userCtrl.UserSendSms)
 
 	//检查权限的分组
 	checkToken := apiGroup.Group("")
-	checkToken.Use(middleware.CheckAuthToken(app.UnionService.ModuleUser))
-	checkToken.GET("/manage/setting/get_setting_all", userCtrl.ManageGetConfigList)
-	checkToken.POST("/manage/setting/update_config", userCtrl.ManageUpdateConfig)
+	checkToken.Use(middleware.CheckAuthToken(auth))
+	checkToken.GET("/manage/setting/get_setting_all", ctrl.userCtrl.ManageGetConfigList)
+	checkToken.POST("/manage/setting/update_config", ctrl.userCtrl.ManageUpdateConfig)
+	checkToken.GET("/manage/article/query", ctrl.userCtrl.QueryArticle)
+	checkToken.GET("/manage/article/get_by_id", ctrl.userCtrl.GetArticleById)
+	checkToken.POST("/manage/article/update", ctrl.userCtrl.UpdateArticle)
+	checkToken.POST("/manage/article/delete", ctrl.userCtrl.DeleteArticle)
+	checkToken.POST("/manage/file/upload", ctrl.userCtrl.UpdateFile)
+	checkToken.POST("/manage/file/delete", ctrl.userCtrl.DeleteFile)
+	checkToken.GET("/manage/file/query", ctrl.userCtrl.QueryFile)
+	checkToken.GET("/manage/carousel/query", ctrl.userCtrl.QueryCarousel)
+	checkToken.POST("/manage/carousel/create", ctrl.userCtrl.CreateCarousel)
+	checkToken.POST("/manage/carousel/update", ctrl.userCtrl.UpdateCarousel)
+	checkToken.POST("/manage/carousel/delete_by_id", ctrl.userCtrl.DeleteCarouselById)
 
 	// common 服务
-	dig.Container.MustInvoke(func(commonCtl *ctl_common.CommonCtrl) {
-		commonApi := apiGroup.Group("")
-		commonApi.GET("/common/icp_info", commonCtl.GetIcpInfo)
-	})
+	commonApi := apiGroup.Group("")
+	commonApi.GET("/common/icp_info", ctrl.commonCtrl.GetIcpInfo)
+	commonApi.GET("/common/article/query_sample", ctrl.commonCtrl.QueryArticleSample)
+	commonApi.GET("/common/article/get_article", ctrl.commonCtrl.GetArticle)
+	commonApi.GET("/common/carousel/query", ctrl.commonCtrl.QueryCarousel)
+	commonApi.GET("/common/version", ctrl.commonCtrl.Version) // 版本号
 
 	// 开始服务
 	srv := &http.Server{
-		Addr:    ":" + strconv.Itoa(app.Cfg.HttpPort),
+		Addr:    ":" + strconv.Itoa(cfg.HttpPort),
 		Handler: RootRouter,
 	}
 	//是否有ssl.public_key ssl.private_key
-	pubKey := app.Cfg.SslPub
-	priKey := app.Cfg.SslPri
+	pubKey := cfg.SslPub
+	priKey := cfg.SslPri
 	if pubKey == "" || priKey == "" {
 		go func() {
 			if err := srv.ListenAndServe(); err != nil {
@@ -121,25 +143,6 @@ func InitAndStartHttpServer(ctx context.Context, app *service.App) (shutDown fun
 			log.Info("end of service...")
 			return nil
 		}
-	}
-}
-
-// UserLogin Version
-// @Summary Version
-// @Description Version
-// @Tags 基本信息
-// @ID Version
-// @Success 200 {string} string "version build_time git_commit go_version"
-// @Failure 500 {string} string ""
-// @Router /version [get]
-func Version(version, buildTime, gitCommit, goVersion string) func(c *gin.Context) {
-	return func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"version":    version,
-			"build_time": buildTime,
-			"git_commit": gitCommit,
-			"go_version": goVersion,
-		})
 	}
 }
 
