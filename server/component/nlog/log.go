@@ -4,9 +4,8 @@ import (
 	"context"
 	"fmt"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
-	"github.com/krilie/lico_alone/common/config"
 	context2 "github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/run_env"
+	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/krilie/lico_alone/component/nlog/logsyshook"
 	"github.com/sirupsen/logrus"
 	"os"
@@ -17,21 +16,28 @@ type NLog struct {
 	hook *logsyshook.ElfLogHook
 }
 
-func NewLogger(runEnv *run_env.RunEnv, cfg *config.Config, hook *logsyshook.ElfLogHook) *NLog {
+func NewLogger(cfg *ncfg.NConfig) *NLog {
+
+	logCfg := cfg.Cfg.Log
+
 	var Log = logrus.NewEntry(logrus.New())
 	Log.Logger.SetFormatter(&logrus.TextFormatter{})
-	Log.Logger.SetLevel(logrus.Level(cfg.LogLevel))
-	Log.Logger.AddHook(hook)
+	Log.Logger.SetLevel(logrus.Level(logCfg.LogLevel))
 	Log.Logger.SetOutput(os.Stdout)
 	Log = Log.
-		WithField(context_enum.AppName.Str(), runEnv.AppName).
-		WithField(context_enum.AppVersion.Str(), runEnv.Version).
-		WithField(context_enum.AppHost.Str(), runEnv.AppHost).
-		WithField(context_enum.CommitSha.Str(), runEnv.GetShortGitCommitSha()).
+		WithField(context_enum.AppName.Str(), cfg.RunEnv.AppName).
+		WithField(context_enum.AppVersion.Str(), cfg.RunEnv.Version).
+		WithField(context_enum.AppHost.Str(), cfg.RunEnv.AppHost).
+		WithField(context_enum.CommitSha.Str(), cfg.RunEnv.GetShortGitCommitSha()).
 		WithField(context_enum.TraceId.Str(), "")
 	Log.Infoln("log init ok")
-	log := &NLog{Entry: Log, hook: hook}
-	log.SetUpLogFile(cfg.LogFile)
+	log := &NLog{Entry: Log, hook: nil}
+	if cfg.Cfg.Log.ElfLog.Url != "" {
+		hook := logsyshook.NewElfLogHook(logCfg.ElfLog.Key, logCfg.ElfLog.Secret, logCfg.ElfLog.Url)
+		Log.Logger.AddHook(hook)
+		log.hook = hook
+	}
+	log.SetUpLogFile(cfg.Cfg.Log.LogFile)
 	return log
 }
 
@@ -96,5 +102,7 @@ func (nlog *NLog) WithFuncName(value interface{}) *NLog {
 }
 
 func (nlog *NLog) CloseAndWait(ctx context.Context) {
-	nlog.hook.StopPushLogWorker(ctx)
+	if nlog.hook != nil {
+		nlog.hook.StopPushLogWorker(ctx)
+	}
 }

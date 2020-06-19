@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/krilie/lico_alone/common/config"
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
@@ -25,11 +24,11 @@ type ElfLogHook struct {
 	onceStop         sync.Once
 }
 
-func NewElfLogHook(cfg *config.Config) *ElfLogHook {
+func NewElfLogHook(key, secret, url string) *ElfLogHook {
 	var elflog = &ElfLogHook{
-		Key:    cfg.ElfLog.Key,
-		Secret: cfg.ElfLog.Secret,
-		Url:    cfg.ElfLog.Url,
+		Key:    key,
+		Secret: secret,
+		Url:    url,
 		jsonFormatter: &logrus.JSONFormatter{
 			TimestampFormat:  time.RFC3339Nano,
 			DisableTimestamp: false,

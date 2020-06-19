@@ -5,8 +5,14 @@ import (
 	"github.com/krilie/lico_alone/common/dig"
 )
 
+type Broker struct {
+	*go_smq.Smq
+}
+
+func NewBroker() *Broker {
+	return &Broker{Smq: go_smq.NewSmq()}
+}
+
 func init() {
-	dig.Container.MustProvide(func() *go_smq.Smq {
-		return Smq
-	})
+	dig.Container.MustProvide(NewBroker)
 }

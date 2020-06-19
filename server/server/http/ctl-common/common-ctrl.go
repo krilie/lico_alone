@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/run_env"
+	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/krilie/lico_alone/component/nlog"
 	common_service "github.com/krilie/lico_alone/module/service-common"
 	"github.com/krilie/lico_alone/server/http/ginutil"
@@ -15,9 +16,9 @@ type CommonCtrl struct {
 	log           *nlog.NLog
 }
 
-func NewCommonCtrl(log *nlog.NLog, common *common_service.CommonService, env *run_env.RunEnv) *CommonCtrl {
+func NewCommonCtrl(log *nlog.NLog, common *common_service.CommonService, cfg *ncfg.NConfig) *CommonCtrl {
 	log = log.WithField(context_enum.Module.Str(), "common controller")
-	return &CommonCtrl{CommonService: common, runEnv: env, log: log}
+	return &CommonCtrl{CommonService: common, runEnv: cfg.RunEnv, log: log}
 }
 
 // Health Icp信息

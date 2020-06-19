@@ -3,6 +3,7 @@ module github.com/krilie/lico_alone
 go 1.14
 
 require (
+	github.com/BurntSushi/toml v0.3.1
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/aliyun/alibaba-cloud-sdk-go v0.0.0-20190909094631-44ff19b8cdcb
 	github.com/asaskevich/govalidator v0.0.0-20190424111038-f61b66f89f4a

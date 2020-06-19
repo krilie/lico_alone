@@ -16,7 +16,6 @@
 .idea/
 vendor/
 server.iml
-config.yaml
 static_files/
 log.txt
 

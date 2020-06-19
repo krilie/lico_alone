@@ -6,8 +6,8 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
-	"github.com/krilie/lico_alone/common/config"
 	context2 "github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/krilie/lico_alone/component/nlog"
 	"runtime/debug"
 	"sync"
@@ -17,7 +17,12 @@ import (
 const gormTransConDb = "gormTransConDb"
 
 type NDb struct {
-	cfg         config.DB
+	cfg struct {
+		ConnStr         string
+		MaxOpenConn     int
+		MaxIdleConn     int
+		ConnMaxLeftTime int
+	}
 	log         *nlog.NLog
 	onceStartDb sync.Once
 	onceStopDb  sync.Once
@@ -43,15 +48,8 @@ func (ndb *NDb) Ping() error {
 
 func (ndb *NDb) Start() {
 	ndb.onceStartDb.Do(func() {
-		connStr := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True",
-			ndb.cfg.User,
-			ndb.cfg.Password,
-			ndb.cfg.Host,
-			ndb.cfg.Port,
-			ndb.cfg.DbName,
-		)
 		var err error
-		if ndb.db, err = gorm.Open("mysql", connStr+"&loc=Asia%2FShanghai"); err != nil {
+		if ndb.db, err = gorm.Open("mysql", ndb.cfg.ConnStr); err != nil {
 			fmt.Println(err.Error())
 			ndb.log.Fatal(err, string(debug.Stack())) // 报错退出程序
 			return
@@ -59,7 +57,7 @@ func (ndb *NDb) Start() {
 			ndb.db.DB().SetMaxOpenConns(ndb.cfg.MaxOpenConn)
 			ndb.db.DB().SetMaxIdleConns(ndb.cfg.MaxIdleConn)
 			ndb.db.DB().SetConnMaxLifetime(time.Second * time.Duration(ndb.cfg.ConnMaxLeftTime))
-			ndb.log.Info("db init done. params:", connStr+"&loc=Asia%2FShanghai") // 数据库初始化成功
+			ndb.log.Info("db init done. params:", ndb.cfg.ConnStr) // 数据库初始化成功
 			ndb.db = ndb.db.Debug()
 			ndb.db.LogMode(true)
 			ndb.db.SetLogger(ndb.log)
@@ -78,10 +76,14 @@ func (ndb *NDb) CloseDb() {
 	})
 }
 
-func NewNDb(dbCfg *config.Config, log *nlog.NLog) (ndb *NDb) {
+func NewNDb(dbCfg *ncfg.NConfig, log *nlog.NLog) (ndb *NDb) {
 	log = log.WithField(context_enum.Module.Str(), "ndb")
 	log.Info("no ndb created")
-	ndb = &NDb{log: log, cfg: dbCfg.DB}
+	ndb = &NDb{log: log}
+	ndb.cfg.ConnStr = dbCfg.Cfg.DB.ConnStr
+	ndb.cfg.MaxOpenConn = dbCfg.Cfg.DB.MaxOpenConn
+	ndb.cfg.MaxIdleConn = dbCfg.Cfg.DB.MaxIdleConn
+	ndb.cfg.ConnMaxLeftTime = dbCfg.Cfg.DB.ConnMaxLeftTime
 	ndb.Start()
 	return ndb
 }

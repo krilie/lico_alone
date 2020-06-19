@@ -74,11 +74,11 @@ func (s *UserModule) UserLogin(ctx context.Context, phoneNum, password, clientId
 		ClientId: clientId,
 		UserId:   userMaster.Id,
 		Iat:      time.Now().Unix(),
-		Exp:      time.Now().Add(time.Hour * 24 * 7).Unix(),
+		Exp:      time.Now().Add(s.jwtExpDuration).Unix(),
 		Jti:      id_util.GetUuid(),
 		Iss:      "sys",
 	}
-	jwtToken, err = jwt.GetNewJwtToken(&claims)
+	jwtToken, err = jwt.GetNewJwtToken(s.jwtSecret, &claims)
 	if err != nil {
 		return "", errs.NewInternal().WithError(err).WithMsg("凭证生成失败")
 	}

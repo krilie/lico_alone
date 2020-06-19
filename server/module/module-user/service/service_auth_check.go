@@ -1,6 +1,9 @@
 package service
 
-import "context"
+import (
+	"context"
+	"github.com/krilie/lico_alone/common/utils/jwt"
+)
 
 // 权限接口 动态加载
 
@@ -35,4 +38,8 @@ func (s *UserModule) HasRole(ctx context.Context, userId, roleName string) (bool
 		return false, nil
 	}
 	return true, nil
+}
+
+func (s *UserModule) CheckJwtToken(tokenStr string) (userClaims jwt.UserClaims, err error) {
+	return jwt.CheckJwtToken(s.jwtSecret, tokenStr)
 }

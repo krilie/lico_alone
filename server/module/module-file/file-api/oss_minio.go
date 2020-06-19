@@ -3,10 +3,10 @@ package file_api
 import (
 	"context"
 	"fmt"
-	"github.com/krilie/lico_alone/common/config"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/file_util"
 	"github.com/krilie/lico_alone/common/utils/id_util"
+	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/minio/minio-go"
 	"io"
 )
@@ -61,11 +61,11 @@ func (o *OssMinio) GetBaseUrl(ctx context.Context) string {
 	return o.Url
 }
 
-func NewOssClient(cfg config.Config) *OssMinio {
-	minioClient, err := minio.New(cfg.FileSave.OssEndPoint, cfg.FileSave.OssKey, cfg.FileSave.OssSecret, true) //endpoint, accessKeyID, secretAccessKey string, secure bool
+func NewOssMinioClient(cfg *ncfg.FileSave) *OssMinio {
+	minioClient, err := minio.New(cfg.OssEndPoint, cfg.OssKey, cfg.OssSecret, true) //endpoint, accessKeyID, secretAccessKey string, secure bool
 	if err != nil {
 		panic(errs.NewInternal().WithError(err))
 	}
-	url := fmt.Sprintf("%v%v%v", cfg.FileSave.OssEndPoint, "/", cfg.FileSave.OssBucket)
-	return &OssMinio{Client: minioClient, BucketName: cfg.FileSave.OssBucket, Url: url}
+	url := fmt.Sprintf("%v%v%v", cfg.OssEndPoint, "/", cfg.OssBucket)
+	return &OssMinio{Client: minioClient, BucketName: cfg.OssBucket, Url: url}
 }
