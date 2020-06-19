@@ -16,6 +16,7 @@ type IAuth interface {
 	HasUser(ctx context.Context, userId string) (bool, error)
 	HasPermission(ctx context.Context, userId, method, path string) (bool, error)
 	HasRole(ctx context.Context, userId, roleName string) (bool, error)
+	CheckJwtToken(tokenStr string) (userClaims jwt.UserClaims, err error)
 }
 
 // check user is login and auth token validation
@@ -28,7 +29,7 @@ func CheckAuthToken(auth IAuth) gin.HandlerFunc {
 		}
 		headerAuth := c.GetHeader(ginutil.HeaderAuthorization)
 
-		var claims, err = jwt.CheckJwtToken(headerAuth)
+		var claims, err = auth.CheckJwtToken(headerAuth)
 		if err != nil {
 			if errors.As(err, &jwt2.ValidationError{}) {
 				validateErr := err.(*jwt2.ValidationError)

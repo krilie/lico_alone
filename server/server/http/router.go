@@ -5,8 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/common/config"
-	"github.com/krilie/lico_alone/common/run_env"
+	"github.com/krilie/lico_alone/component/ncfg"
 	_ "github.com/krilie/lico_alone/docs"
 	"github.com/krilie/lico_alone/server/http/middleware"
 	"github.com/prometheus/common/log"
@@ -19,17 +18,21 @@ import (
 	"time"
 )
 
-func InitAndStartHttpServer(ctx context.Context, cfg *config.Config, runEnv *run_env.RunEnv, auth middleware.IAuth, ctrl *Controllers) (shutDown func(waitSec time.Duration) error) {
+func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middleware.IAuth, ctrl *Controllers) (shutDown func(waitSec time.Duration) error) {
+	httpCfg := &cfg.Cfg.Http
+	fileCfg := &cfg.Cfg.FileSave
 	// 设置gin mode
-	gin.SetMode(cfg.GinMode)
+	gin.SetMode(httpCfg.GinMode)
 	// 路径设置 根路径
 	RootRouter := gin.Default() // logger recover
 	// 跨域
 	RootRouter.Use(Cors())
 	// 静态文件 图片等
-	RootRouter.StaticFile("/files", cfg.FileSave.LocalFileSaveDir)
+	if fileCfg.Channel == "local" {
+		RootRouter.StaticFile("/files", fileCfg.OssBucket)
+	}
 	// swagger + gzip压缩
-	if cfg.EnableSwagger {
+	if httpCfg.EnableSwagger {
 		RootRouter.GET("/swagger/*any", gzip.Gzip(gzip.DefaultCompression), ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 
@@ -110,12 +113,12 @@ func InitAndStartHttpServer(ctx context.Context, cfg *config.Config, runEnv *run
 
 	// 开始服务
 	srv := &http.Server{
-		Addr:    ":" + strconv.Itoa(cfg.HttpPort),
+		Addr:    ":" + strconv.Itoa(httpCfg.Port),
 		Handler: RootRouter,
 	}
 	//是否有ssl.public_key ssl.private_key
-	pubKey := cfg.SslPub
-	priKey := cfg.SslPri
+	pubKey := httpCfg.SslPub
+	priKey := httpCfg.SslPri
 	if pubKey == "" || priKey == "" {
 		go func() {
 			if err := srv.ListenAndServe(); err != nil {

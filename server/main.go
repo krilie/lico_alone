@@ -3,12 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/krilie/lico_alone/common/config"
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/dig"
 	run_env "github.com/krilie/lico_alone/common/run_env"
 	"github.com/krilie/lico_alone/component/broker"
 	cron2 "github.com/krilie/lico_alone/component/cron"
+	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/module-user/service"
@@ -27,7 +27,7 @@ import (
 func main() {
 	// 开始服务
 	dig.Container.MustInvoke(
-		func(log *nlog.NLog, cfg *config.Config, runEnv *run_env.RunEnv, auth *service.UserModule, nCron *cron2.NCron, db *ndb.NDb, ctrl *http.Controllers) {
+		func(log *nlog.NLog, broker *broker.Broker, cfg *ncfg.NConfig, auth *service.UserModule, nCron *cron2.NCron, db *ndb.NDb, ctrl *http.Controllers) {
 
 			ctx := context2.NewContext()
 			ctx.Module = "main"
@@ -36,10 +36,10 @@ func main() {
 			defer log.CloseAndWait(ctx)
 			defer db.CloseDb()
 			defer nCron.StopAndWait(ctx)
-			defer func() { broker.Smq.Close(); log.Get(ctx).Infof("消息队列退出") }()
+			defer func() { broker.Close(); log.Get(ctx).Infof("消息队列退出") }()
 
 			// 最后初始化为开启http服务
-			shutDownApi := http.InitAndStartHttpServer(ctx, cfg, runEnv, auth, ctrl)
+			shutDownApi := http.InitAndStartHttpServer(ctx, cfg, auth, ctrl)
 			// 收尾工作
 			WaitSignalAndExit(ctx, func() {
 				err := shutDownApi(30)

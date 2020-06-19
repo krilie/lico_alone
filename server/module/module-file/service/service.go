@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
-	"github.com/krilie/lico_alone/common/config"
+	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/module-file/dao"
 	"github.com/krilie/lico_alone/module/module-file/file-api"
@@ -22,16 +22,18 @@ type FileModule struct {
 	fileApi file_api.FileOperator
 }
 
-func NewFileModule(dao *dao.FileDao, log *nlog.NLog, cfgs *config.Config) *FileModule {
+func NewFileModule(dao *dao.FileDao, log *nlog.NLog, cfgs *ncfg.NConfig) *FileModule {
 	log = log.WithField(context_enum.Module.Str(), "module file service")
 	var fileApi file_api.FileOperator
-	cfg := &cfgs.FileSave
-	if cfg.SaveType == "local" {
-		fileApi = file_api.NewLocalFileSave(cfg.LocalFileSaveDir, cfg.LocalFileSaveUrl)
-	} else if cfg.SaveType == "qiniuOss" {
-		fileApi = file_api.NewOssQiNiu(cfgs)
+	cfg := &cfgs.Cfg.FileSave
+	if cfg.Channel == "local" {
+		fileApi = file_api.NewLocalFileSave(cfg.OssBucket, cfg.OssEndPoint)
+	} else if cfg.Channel == "qiniu" {
+		fileApi = file_api.NewOssQiNiu(cfg)
+	} else if cfg.Channel == "minio" {
+		fileApi = file_api.NewOssMinioClient(cfg)
 	} else {
-		panic("config error on file save " + cfg.SaveType)
+		panic("config error on file save " + cfg.Channel)
 	}
 	return &FileModule{
 		dao:     dao,

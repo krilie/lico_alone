@@ -20,7 +20,7 @@ type RunEnv struct {
 }
 
 var RunEnvLocal = &RunEnv{
-	AppName:   "lico_alone",
+	AppName:   "myapp",
 	AppHost:   GetHostName(),
 	Version:   VERSION,
 	BuildTime: BUILD_TIME,

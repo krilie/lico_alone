@@ -2,7 +2,7 @@ package file_api
 
 import (
 	"context"
-	"github.com/krilie/lico_alone/common/config"
+	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/qiniu/api.v7/v7/auth/qbox"
 	"github.com/qiniu/api.v7/v7/storage"
 	"io"
@@ -93,13 +93,12 @@ func (o *OssQiNiu) GetBucketName(ctx context.Context) string {
 	return o.BucketName
 }
 
-func NewOssQiNiu(cfg *config.Config) *OssQiNiu {
-	cfgFile := cfg.FileSave
+func NewOssQiNiu(cfg *ncfg.FileSave) *OssQiNiu {
 	return &OssQiNiu{
-		AccessKey:  cfgFile.OssKey,
-		SecretKey:  cfgFile.OssSecret,
-		BucketName: cfgFile.OssBucket,
-		BaseUrl:    cfgFile.OssEndPoint,
-		qboxMac:    qbox.NewMac(cfgFile.OssKey, cfgFile.OssSecret),
+		AccessKey:  cfg.OssKey,
+		SecretKey:  cfg.OssSecret,
+		BucketName: cfg.OssBucket,
+		BaseUrl:    cfg.OssEndPoint,
+		qboxMac:    qbox.NewMac(cfg.OssKey, cfg.OssSecret),
 	}
 }
