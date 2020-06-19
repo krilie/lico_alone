@@ -7,6 +7,7 @@ import (
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-blog-article/model"
+	"time"
 )
 
 type IBlogArticleDao interface {
@@ -46,18 +47,26 @@ func (b *BlogArticleDao) UpdateArticle(ctx context.Context, article *model.Artic
 		return result.Error
 	}
 	if result.RowsAffected <= 0 {
-		return errs.NewNotExistsError().WithMsg("记录不存在")
+		return errs.NewNotExistsError().WithMsg("没有作出修改")
 	}
 	return nil
 }
 
 func (b *BlogArticleDao) UpdateArticleSample(ctx context.Context, article *model.UpdateArticleModel) error {
-	result := b.GetDb(ctx).Model(new(model.Article)).Select("id,title,content,picture,sort").Update(article)
+	result := b.GetDb(ctx).Model(new(model.Article)).Where("id=?", article.Id).
+		UpdateColumns(map[string]interface{}{
+			"title":       article.Title,
+			"content":     article.Content,
+			"picture":     article.Picture,
+			"sort":        article.Sort,
+			"description": article.Description,
+			"updated_at":  time.Now(),
+		})
 	if result.Error != nil {
 		return result.Error
 	}
 	if result.RowsAffected <= 0 {
-		return errs.NewNotExistsError().WithMsg("记录不存在")
+		return errs.NewNotExistsError().WithMsg("没有作出修改")
 	}
 	return nil
 }

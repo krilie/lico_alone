@@ -97,7 +97,7 @@ func (cfg *NConfig) LoadDefaultConfig() error {
 	cfg.v.SetDefault("http.ssl_pri", "")
 	cfg.v.SetDefault("http.ssl_pub", "")
 	cfg.v.SetDefault("http.url", "http://localhost")
-	cfg.v.SetDefault("log.log_file", "log.txt")
+	cfg.v.SetDefault("log.log_file", "")
 	cfg.v.SetDefault("log.log_level", 5)
 	cfg.v.SetDefault("log.elf_log.key", "")
 	cfg.v.SetDefault("log.elf_log.secret", "")

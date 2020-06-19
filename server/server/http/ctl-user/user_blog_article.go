@@ -78,7 +78,7 @@ func (a *UserCtrl) QueryArticle(c *gin.Context) {
 	// 参数
 	var param = &struct {
 		com_model.PageParams
-		SearchKey string `form:"search_key" json:"search_key" xml:"search_key"  binding:"required"`
+		SearchKey string `form:"search_key" json:"search_key" xml:"search_key"`
 	}{}
 	err := c.ShouldBindQuery(param)
 	if err != nil {
@@ -115,8 +115,41 @@ func (a *UserCtrl) QueryArticle(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/article/delete [POST]
 func (a *UserCtrl) DeleteArticle(c *gin.Context) {
-	articleId := c.Query("article_id")
+	articleId := c.PostForm("article_id")
+	if articleId == "" {
+		ginutil.ReturnWithErr(c, errs.NewParamError().WithMsg("no id find on post form"))
+		return
+	}
 	_, err := a.userService.DeleteArticleById(ginutil.MustGetAppCtx(c), articleId)
+	if err != nil {
+		ginutil.ReturnWithErr(c, err)
+		return
+	}
+	ginutil.ReturnOk(c)
+	return
+}
+
+// DeleteArticle 创建文章
+// @Summary 创建文章
+// @Description 创建文章
+// @Tags 文章管理
+// @ID 创建文章
+// @Produce  json
+// @Param article body model.CreateArticleModel true "文章"
+// @Success 200 {object} com_model.CommonReturn
+// @Failure 500 {string} errInfo
+// @Router /api/manage/article/create [POST]
+func (a *UserCtrl) CreateArticle(c *gin.Context) {
+	ctx := ginutil.MustGetAppCtx(c)
+	log := a.log.Get(ctx)
+	var param = &model.CreateArticleModel{}
+	err := c.ShouldBindJSON(param)
+	if err != nil {
+		log.Warn(err.Error())
+		ginutil.ReturnWithAppErr(c, errs.NewParamError().WithMsg(err.Error()))
+		return
+	}
+	err = a.userService.CreateArticle(ctx, param)
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return

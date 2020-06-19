@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/krilie/lico_alone/component/nlog"
@@ -77,7 +76,10 @@ func (ndb *NDb) CloseDb() {
 }
 
 func NewNDb(dbCfg *ncfg.NConfig, log *nlog.NLog) (ndb *NDb) {
-	log = log.WithField(context_enum.Module.Str(), "ndb")
+	ctx := context2.NewContext()
+	ctx.Module = "ndb"
+	ctx.Function = "dbfunc"
+	log = log.Get(ctx)
 	log.Info("no ndb created")
 	ndb = &NDb{log: log}
 	ndb.cfg.ConnStr = dbCfg.Cfg.DB.ConnStr

@@ -12,8 +12,8 @@ FROM alpine:3.11
 MAINTAINER livo
 RUN apk update && apk add curl bash tree tzdata \
     && cp -r -f /usr/share/zoneinfo/Hongkong /etc/localtime
-COPY --from=goBuilder /myapp/server/elflog /
+COPY --from=goBuilder /myapp/server/myapp /
 COPY --from=webBuilder /myapp/web/dist /www
-RUN chmod u+x /elflog
+RUN chmod u+x /myapp
 EXPOSE 80
-CMD ["/elflog"]
+CMD ["/myapp"]

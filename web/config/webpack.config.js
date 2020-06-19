@@ -1,5 +1,6 @@
 'use strict';
 
+const UselessFile = require('useless-files-webpack-plugin')
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
@@ -668,6 +669,12 @@ module.exports = function (webpackEnv) {
                 // The formatter is invoked directly in WebpackDevServerUtils during development
                 formatter: isEnvProduction ? typescriptFormatter : undefined,
             }),
+            new UselessFile({
+                root: './src', // 项目目录
+                out: './fileList.json', // 输出文件列表
+                clean: false, // 删除文件,
+                exclude: path // 排除文件列表, 格式为文件路径数组
+            })
         ].filter(Boolean),
         // Some libraries import Node modules but don't use them in the browser.
         // Tell webpack to provide empty mocks for them so importing them works.

@@ -5,6 +5,7 @@ import {Route, Switch} from "react-router";
 import SettingPage from "./setting-page/SettingPage";
 import FilePage from "./file-page/FilePage";
 import CarouselPage from "./carousel-page/CarouselPage";
+import ArticleHomePage from "./article-page/ArticleHomePage";
 
 const {Sider} = Layout;
 
@@ -34,7 +35,7 @@ export default class ManagePage extends React.Component {
     render() {
         return (
             <Layout>
-                <Sider className="sider-layout-background" style={{paddingLeft: "0"}} width={"80px"}>
+                <Sider className="sider-layout-background" width={"60px"}>
                     <Menu onClick={this.handleClick}
                           selectedKeys={[this.state.currentPage]}
                           className="sider-layout-background"
@@ -49,8 +50,8 @@ export default class ManagePage extends React.Component {
                         <Menu.Item className="v-center" key="/management/manage/carousel">
                             轮播图
                         </Menu.Item>
-                        <Menu.Item className="v-center" key="4">
-                            nav 4
+                        <Menu.Item className="v-center" key="/management/manage/article">
+                            Article
                         </Menu.Item>
                     </Menu>
                 </Sider>
@@ -59,6 +60,7 @@ export default class ManagePage extends React.Component {
                         <Route exact path="/management/manage/setting" component={SettingPage}/>
                         <Route exact path="/management/manage/files" component={FilePage}/>
                         <Route exact path="/management/manage/carousel" component={CarouselPage}/>
+                        <Route path="/management/manage/article" component={ArticleHomePage}/>
                     </Switch>
                 </Layout>
             </Layout>

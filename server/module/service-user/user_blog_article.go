@@ -2,18 +2,34 @@ package service_user
 
 import (
 	"context"
+	com_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
+	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-blog-article/model"
+	"time"
 )
 
 // 文章管理
 
-func (a *UserService) CreateArticle(ctx context.Context, article *model.Article) error {
-	return a.ModuleArticle.Dao.CreateArticle(ctx, article)
+func (a *UserService) CreateArticle(ctx context.Context, article *model.CreateArticleModel) error {
+	return a.ModuleArticle.Dao.CreateArticle(ctx, &model.Article{
+		Model: com_model.Model{
+			Id:        id_util.GetUuid(),
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
+			DeletedAt: nil,
+		},
+		Title:       article.Title,
+		Pv:          0,
+		Content:     article.Content,
+		Picture:     article.Picture,
+		Description: article.Description,
+		Sort:        article.Sort,
+	})
 }
 
 func (a *UserService) DeleteArticleById(ctx context.Context, id string) (bool, error) {
-	return a.ModuleArticle.Dao.DeleteArticleById(ctx, id)
+	return a.ModuleArticle.DeleteArticleById(ctx, id)
 }
 
 func (a *UserService) UpdateArticle(ctx context.Context, article *model.Article) error {

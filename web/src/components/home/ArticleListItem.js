@@ -23,14 +23,17 @@ class ArticleListItem extends React.Component {
     }
 
     render() {
-        const {title, description, create_time, pv, id, picture} = this.props
+        const {title, description, pv, id, picture} = this.props
+        const url = "/article/" + id;
         return (
             <Card className="article-item-card"
                   bodyStyle={{padding: "0 0 0 0", margin: "0 0 0 0"}}
                   style={{minWidth: 400}}>
                 <Layout className="article-layout">
-                    <Layout.Header onClick={() => this.goDetailPage(id)} className="article-layout-header">
-                        <div style={{height: "48px", verticalAlign: "center"}}>{title}</div>
+                    <Layout.Header className="article-layout-header">
+                        <div style={{height:"unset",verticalAlign: "center"}}>
+                            <a href={url}>{title}</a>
+                        </div>
                     </Layout.Header>
                     <Layout className="article-layout">
                         <Layout.Sider width={100} className="article-layout-sider">
@@ -39,10 +42,13 @@ class ArticleListItem extends React.Component {
                         <Layout.Content className="article-layout-content">
                             <Layout className="article-layout">
                                 <Layout.Header className="article-layout-content-real">
-                                    {description}
+                                    <a href={url} style={{color: "black"}}>{description}</a>
                                 </Layout.Header>
-                                <Layout.Footer
-                                    className="article-layout-footer">create_time:{create_time} pv:{pv}</Layout.Footer>
+                                <Layout.Footer className="article-layout-footer">
+                                    <div style={{textAlign:"right",fontWeight:"600"}}>
+                                       访问量:&nbsp;{pv}&nbsp;次
+                                    </div>
+                                </Layout.Footer>
                             </Layout>
                         </Layout.Content>
                     </Layout>
@@ -55,9 +61,7 @@ class ArticleListItem extends React.Component {
 ArticleListItem.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    create_time: PropTypes.string.isRequired,
     pv: PropTypes.number.isRequired,
-    short_content: PropTypes.string.isRequired,
     picture: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
 };

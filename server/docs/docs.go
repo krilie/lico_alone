@@ -224,6 +224,68 @@ var doc = `{
                 }
             }
         },
+        "/api/common/version": {
+            "get": {
+                "description": "Version",
+                "tags": [
+                    "公共接口"
+                ],
+                "summary": "Version",
+                "operationId": "Version",
+                "responses": {
+                    "200": {
+                        "description": "version build_time git_commit go_version",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/manage/article/create": {
+            "post": {
+                "description": "创建文章",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "文章管理"
+                ],
+                "summary": "创建文章",
+                "operationId": "创建文章",
+                "parameters": [
+                    {
+                        "description": "文章",
+                        "name": "article",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.CreateArticleModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/com_model.CommonReturn"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/manage/article/delete": {
             "post": {
                 "description": "删除文章",
@@ -1048,30 +1110,6 @@ var doc = `{
                     }
                 }
             }
-        },
-        "/version": {
-            "get": {
-                "description": "Version",
-                "tags": [
-                    "公共接口"
-                ],
-                "summary": "Version",
-                "operationId": "Version",
-                "responses": {
-                    "200": {
-                        "description": "version build_time git_commit go_version",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
         }
     },
     "definitions": {
@@ -1235,6 +1273,26 @@ var doc = `{
                     "type": "string"
                 },
                 "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.CreateArticleModel": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "picture": {
+                    "type": "string"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "title": {
                     "type": "string"
                 }
             }

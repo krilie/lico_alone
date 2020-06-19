@@ -144,6 +144,7 @@ class CarouselPage extends Component {
                 <CarouselCreateUpdateModal {...createUpdateDialog} />
                 <Table
                     bordered
+                    scroll={{x: "400px", scrollToFirstRowOnChange: true}}
                     pagination={false}
                     rowKey={record => record.id}
                     loading={loading}

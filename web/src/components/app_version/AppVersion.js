@@ -1,6 +1,6 @@
 import React from "react";
 import "./AppVersion.less"
-import {Row, Col, message} from "antd"
+import {Row, Col} from "antd"
 import {getVersion} from "../../api/ApiCommon";
 import CopyToBoard from "../../utils/CopyToBoard";
 
@@ -24,29 +24,30 @@ export default class AppVersion extends React.Component {
 
     copyText = (text)=>{
         CopyToBoard(text)
-        message.info("copy success");
     }
 
     render() {
         const {build_time, git_commit, go_version, version} = this.state;
         const buildTime = <Row>
-            <Col flex="auto" className="text-left ellipsis text-size-small" title={build_time}>构建时间: {build_time}</Col>
+            <Col flex="auto" className="text-left ellipsis text-size-small" title={build_time}>构建时间:&nbsp;&nbsp;{build_time}</Col>
         </Row>
         const gitCommit = <Row>
             <Col flex="auto"  className="text-left ellipsis text-size" title={git_commit}>
-                <div style={{cursor:"pointer"}} onClick={()=>this.copyText(git_commit)}> 散列值 : {git_commit}</div>
+                <div style={{cursor:"pointer"}} onClick={()=>this.copyText(git_commit)}>散列值:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{git_commit}</div>
             </Col>
         </Row>
         const goVersion = <Row>
-            <Col flex="auto" className="text-size text-left ellipsis" title={go_version}>Go版本 : {go_version}</Col>
+            <Col flex="auto" className="text-size text-left ellipsis" title={go_version}>Go版本:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{go_version}</Col>
         </Row>
         const appVersion = <Row>
-            <Col flex="auto" className="text-size-small text-left ellipsis" title={version}>App版本 : {version}</Col>
+            <Col flex="auto" className="text-size-small text-left ellipsis" title={version}>App版本:&nbsp;&nbsp;&nbsp;{version}</Col>
         </Row>
         return (
             <div className="appVersion">
-                <Row><Col span={13}>{buildTime}</Col><Col span={11}>{gitCommit}</Col></Row>
-                <Row><Col span={13}>{appVersion}</Col><Col span={11}>{goVersion}</Col></Row>
+                <Row><Col span={24}>{buildTime}</Col></Row>
+                <Row><Col span={24}>{appVersion}</Col></Row>
+                <Row><Col span={24}>{gitCommit}</Col></Row>
+                <Row><Col span={24}>{goVersion}</Col></Row>
             </div>
         );
     }

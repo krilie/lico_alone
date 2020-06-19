@@ -95,6 +95,7 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 	checkToken.GET("/manage/article/get_by_id", ctrl.userCtrl.GetArticleById)
 	checkToken.POST("/manage/article/update", ctrl.userCtrl.UpdateArticle)
 	checkToken.POST("/manage/article/delete", ctrl.userCtrl.DeleteArticle)
+	checkToken.POST("/manage/article/create", ctrl.userCtrl.CreateArticle)
 	checkToken.POST("/manage/file/upload", ctrl.userCtrl.UpdateFile)
 	checkToken.POST("/manage/file/delete", ctrl.userCtrl.DeleteFile)
 	checkToken.GET("/manage/file/query", ctrl.userCtrl.QueryFile)
