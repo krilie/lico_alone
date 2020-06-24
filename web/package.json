@@ -156,6 +156,7 @@
   "devDependencies": {
     "highlight.js": "^10.0.3",
     "less": "^3.11.1",
+    "lodash-webpack-plugin": "^0.11.5",
     "prop-types": "^15.7.2",
     "react-router-dom": "^5.1.2",
     "reqwest": "^2.0.5",
