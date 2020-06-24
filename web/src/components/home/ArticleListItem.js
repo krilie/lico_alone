@@ -36,16 +36,16 @@ class ArticleListItem extends React.Component {
                         </div>
                     </Layout.Header>
                     <Layout className="article-layout">
-                        <Layout.Sider width={100} className="article-layout-sider">
+                        <Layout.Sider width={140} className="article-layout-sider">
                             <img className="pic" src={picture} alt={"pic"}/>
                         </Layout.Sider>
                         <Layout.Content className="article-layout-content">
                             <Layout className="article-layout">
-                                <Layout.Header className="article-layout-content-real">
+                                <Layout.Header style={{minHeight:"70px"}} className="article-layout-content-real">
                                     <a href={url} style={{color: "black"}}>{description}</a>
                                 </Layout.Header>
                                 <Layout.Footer className="article-layout-footer">
-                                    <div style={{textAlign:"right",fontWeight:"600"}}>
+                                    <div style={{textAlign:"left",fontWeight:"600"}}>
                                        访问量:&nbsp;{pv}&nbsp;次
                                     </div>
                                 </Layout.Footer>

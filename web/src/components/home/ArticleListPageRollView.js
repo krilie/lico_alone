@@ -71,7 +71,7 @@ class ArticleListPageRollView extends React.Component {
                         lineHeight: '32px',
                     }}
                 >
-                    <Button type="link" onClick={this.onLoadMore}>{moreButtonText}</Button>
+                    <Button type="link" size={"large"} onClick={this.onLoadMore}>{moreButtonText}</Button>
                 </div>
             ) : null;
 
