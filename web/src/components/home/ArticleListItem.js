@@ -31,9 +31,11 @@ class ArticleListItem extends React.Component {
                   style={{minWidth: 400}}>
                 <Layout className="article-layout">
                     <Layout.Header className="article-layout-header">
-                        <div style={{height:"unset",verticalAlign: "center"}}>
-                            <a href={url}>{title}</a>
-                        </div>
+                        <a href={url}>
+                            <div style={{height: "unset", verticalAlign: "center"}}>
+                                {title}
+                            </div>
+                        </a>
                     </Layout.Header>
                     <Layout className="article-layout">
                         <Layout.Sider width={140} className="article-layout-sider">
@@ -41,12 +43,12 @@ class ArticleListItem extends React.Component {
                         </Layout.Sider>
                         <Layout.Content className="article-layout-content">
                             <Layout className="article-layout">
-                                <Layout.Header style={{minHeight:"70px"}} className="article-layout-content-real">
-                                    <a href={url} style={{color: "black"}}>{description}</a>
+                                <Layout.Header style={{minHeight: "70px"}} className="article-layout-content-real">
+                                    <a href={url} className="article-description-view">{description}</a>
                                 </Layout.Header>
                                 <Layout.Footer className="article-layout-footer">
-                                    <div style={{textAlign:"left",fontWeight:"600"}}>
-                                       访问量:&nbsp;{pv}&nbsp;次
+                                    <div style={{textAlign: "left", fontWeight: "600"}}>
+                                        访问量:&nbsp;{pv}&nbsp;次
                                     </div>
                                 </Layout.Footer>
                             </Layout>
