@@ -35,3 +35,16 @@ func TestCarouselDao_QueryCarousel(t *testing.T) {
 		t.Log(err)
 	})
 }
+
+func TestCarouselDao_UpdateCarousel(t *testing.T) {
+	dig.Container.MustInvoke(func(dao *CarouselDao) {
+		ctx := context.NewContext()
+		err := dao.UpdateCarousel(ctx, &model.UpdateCarouselModel{
+			Id:       "2e415049-feaa-45fe-8482-22712155253b",
+			Message:  "333333333333344444444433333333333",
+			Url:      "4444443244444444444444444444444444",
+			IsOnShow: false,
+		})
+		t.Log(err)
+	})
+}

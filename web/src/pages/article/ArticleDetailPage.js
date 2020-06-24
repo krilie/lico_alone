@@ -1,10 +1,10 @@
 import React from "react";
 import "./Article.less"
 import {getArticleById} from "../../api/ApiCommon";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown from "react-markdown/with-html";
+import "github-markdown-css"
+import "highlight.js/styles/github.css"
 import CodeBlock from "../../components/mark_down/CodeBlock";
-
-const toc = require('remark-toc')
 
 export default class ArticleDetailPage extends React.Component {
 
@@ -37,11 +37,13 @@ export default class ArticleDetailPage extends React.Component {
         } else {
             return (
                 <div style={{ padding: "20px", maxWidth: "1000px", textAlign: "center", margin: "auto"}}>
-                    <ReactMarkdown className="markdown-content"
-                                   skipHtml={true}
-                                   renderers={{code: CodeBlock}}
-                                   plugins={[toc]}
+                    <ReactMarkdown className="markdown-body markdown-content"
+                                   renderers={{
+                                       code: CodeBlock,
+                                       // heading: HeadingBlock
+                                   }}
                                    escapeHtml={false}
+                                   skipHtml={false}
                                    source={article.content}
                     />
                 </div>

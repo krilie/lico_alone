@@ -42,7 +42,7 @@ func (common *CommonCtrl) GetIcpInfo(c *gin.Context) {
 // @ID Version
 // @Success 200 {string} string "version build_time git_commit go_version"
 // @Failure 500 {string} string ""
-// @Router /version [get]
+// @Router /api/common/version [get]
 func (common *CommonCtrl) Version(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"version":    common.runEnv.Version,

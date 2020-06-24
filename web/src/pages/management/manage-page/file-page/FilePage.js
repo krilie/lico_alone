@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import "./FilePage.less"
 import {Button, Card, Col, DatePicker, Form, message, Modal, Row, Table, Upload} from "antd";
-import {manageDeleteFile, manageGetFilePage} from "../../../../api/ManageFileApi";
+import {manageDeleteFile, manageGetFilePage, manageUpdateFile} from "../../../../api/ManageFileApi";
 import UploadOutlined from "@ant-design/icons/lib/icons/UploadOutlined";
-import {GetUserToken} from "../../../../utils/LocalStorageUtil";
-import {apiBaseUrl} from "../../../../api/ApiBaseUrl";
 import CopyToBoard from "../../../../utils/CopyToBoard";
 import {Input} from 'antd';
 
@@ -54,6 +52,7 @@ class FilePage extends Component {
             uploadModal: {
                 show: false,
             },
+            isUploading: false
         }
     }
 
@@ -95,40 +94,32 @@ class FilePage extends Component {
         this.onLoadPageData(page_num, page_size)
     }
 
+    uploadFile = (file) => {
+        this.setState({isUploading: true})
+        manageUpdateFile(file).then(res => {
+            this.reloadFileItems()
+        }).finally(() => {
+            this.setState({isUploading: false})
+        })
+    }
+
     // 上传文件属性
     uploadFileProps = {
-        name: 'file',
-        action: `${apiBaseUrl}/api/manage/file/upload`,
-        headers: {
-            authorization: GetUserToken()
-        },
         defaultFileList: false,
         showUploadList: false,
-        onChange: (info) => {
-            if (info.file.status !== 'uploading') {
-                console.log(info.file, info.fileList);
-            }
-            if (info.file.status === 'done') {
-                message.success(`${info.file.name} file uploaded successfully`);
-                this.reloadFileItems()
-            } else if (info.file.status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        },
-        progress: {
-            strokeColor: {
-                '0%': '#108ee9',
-                '100%': '#87d068',
-            },
-            strokeWidth: 3,
-            format: percent => `${parseFloat(percent.toFixed(2))}%`,
+        beforeUpload: file => {
+            this.uploadFile(file)
+            console.log(file)
+            return false;
         },
     };
 
     // 初始加载数据
     componentWillMount() {
-        const {initPageNum, initPageSize} = this.state
-        this.onLoadPageData(initPageNum, initPageSize)
+        process.nextTick(() => {
+            const {initPageNum, initPageSize} = this.state
+            this.onLoadPageData(initPageNum, initPageSize)
+        })
     }
 
     // 分页修改当前页大小 回调
@@ -147,18 +138,17 @@ class FilePage extends Component {
             created_at_end: undefined
         }
         const ResetToUndefined = (val) => (val === "" || val === null) ? undefined : val
-        if (this.formRef.current !== null) {
-            params.key_name_like = ResetToUndefined(this.formRef.current.getFieldValue("key_name_like"))
-            params.bucket_name_like = ResetToUndefined(this.formRef.current.getFieldValue("bucket_name_like"))
-            params.url_like = ResetToUndefined(this.formRef.current.getFieldValue("url_like"))
-            params.user_id = ResetToUndefined(this.formRef.current.getFieldValue("user_id"))
-            params.biz_type = ResetToUndefined(this.formRef.current.getFieldValue("biz_type"))
-            params.content_type = ResetToUndefined(this.formRef.current.getFieldValue("content_type"))
-            params.created_at_begin = ResetToUndefined(this.formRef.current.getFieldValue("created_at_begin"))
-            if (params.created_at_begin !== undefined) params.created_at_begin = params.created_at_begin.format() // rfc3339
-            params.created_at_end = ResetToUndefined(this.formRef.current.getFieldValue("created_at_end"))
-            if (params.created_at_end !== undefined) params.created_at_end = params.created_at_end.format() // rfc3339
-        }
+
+        params.key_name_like = ResetToUndefined(this.formRef.current.getFieldValue("key_name_like"))
+        params.bucket_name_like = ResetToUndefined(this.formRef.current.getFieldValue("bucket_name_like"))
+        params.url_like = ResetToUndefined(this.formRef.current.getFieldValue("url_like"))
+        params.user_id = ResetToUndefined(this.formRef.current.getFieldValue("user_id"))
+        params.biz_type = ResetToUndefined(this.formRef.current.getFieldValue("biz_type"))
+        params.content_type = ResetToUndefined(this.formRef.current.getFieldValue("content_type"))
+        params.created_at_begin = ResetToUndefined(this.formRef.current.getFieldValue("created_at_begin"))
+        if (params.created_at_begin !== undefined) params.created_at_begin = params.created_at_begin.format() // rfc3339
+        params.created_at_end = ResetToUndefined(this.formRef.current.getFieldValue("created_at_end"))
+        if (params.created_at_end !== undefined) params.created_at_end = params.created_at_end.format() // rfc3339
 
         // todo: sorter 参数
 
@@ -185,7 +175,7 @@ class FilePage extends Component {
     render() {
         const {data} = this.state.files
         const {page_num, page_size, total_count} = this.state.files.page_info
-        const {loading} = this.state
+        const {loading, isUploading} = this.state
         const {initPageNum, initPageSize} = this.state
 
         // 查询form参数
@@ -228,7 +218,7 @@ class FilePage extends Component {
                 />
             </Form.Item>
             <Form.Item>
-                <Button type="primary" onClick={this.formOnSearch}>Submit</Button>
+                <Button type="primary" onClick={this.formOnSearch}>搜索</Button>
             </Form.Item>
         </Form>
 
@@ -241,13 +231,14 @@ class FilePage extends Component {
                             type={"primary"}
                             onClick={() => this.uploadFileModalSetShow(true)}>添加</Button>
                     <Upload {...this.uploadFileProps}>
-                        <Button><UploadOutlined/> 上传文件</Button>
+                        <Button disabled={isUploading}><UploadOutlined/>{isUploading ? "上传中..." : "点击上传"}</Button>
                     </Upload>
                 </div>
 
                 <div className="table">
                     <Table
                         bordered
+                        scroll={{x: "400px", scrollToFirstRowOnChange: true}}
                         pagination={{
                             showSizeChanger: true,
                             onShowSizeChange: this.onLoadPageData,

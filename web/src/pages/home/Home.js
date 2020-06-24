@@ -25,15 +25,18 @@ import AppVersion from "../../components/app_version/AppVersion";
 class Home extends React.Component {
     render() {
         return (<div className="home">
-            <Row >
+            <Row>
                 <Col span={24} className="slide-picture">
                     <SlidePictures/>
                 </Col>
             </Row>
             <Row className="main-home-area">
-                <Col sm={16} xs = {24} className="article-area"><ArticleListPageRollView/></Col>
-                <Col sm={8} xs={0} className="status-area">
-                    <AppVersion/>
+                <Col sm={18} xs={24} className="article-area">
+                    <ArticleListPageRollView/>
+                </Col>
+                <Col sm={6} xs={0} className="status-area">
+                    <div><AppVersion/></div>
+                    <div style={{margin:"3px"}}><a href="/article">->文章区</a></div>
                 </Col>
             </Row>
         </div>);

@@ -72,8 +72,9 @@ func (c *Context) SetClientId(clientId string) {
 func (c *Context) SetUserId(userId string) {
 	c.UserId = userId
 }
-func (c *Context) SetTx(tx interface{}) {
+func (c *Context) SetTx(tx interface{}) *Context {
 	c.Tx = tx
+	return c
 }
 func (c *Context) GetTx() interface{} {
 	return c.Tx

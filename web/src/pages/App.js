@@ -3,8 +3,6 @@ import 'antd/dist/antd.css';
 import {Menu, Row, Col, Divider, BackTop, Affix} from 'antd';
 import Logo from "../components/logo/Logo";
 import {Route, Switch} from "react-router-dom";
-import Share from "./share/Share";
-import Photos from "./photos/Photos";
 import Article from "./article/Article";
 import IcpLabel from "../components/icp/IcpLabel";
 import {withRouter, Redirect} from "react-router-dom";
@@ -69,14 +67,14 @@ class App extends React.Component {
                         <Col className="menu-logo" flex="150px">
                             <Logo/>
                         </Col>
-                        <Col className="fix-height-menu" flex="300px">
+                        <Col className="fix-height-menu" flex="auto">
                             <Menu className="Menu" onClick={this.handleClick}
                                   selectedKeys={[this.state.current]}
                                   mode="horizontal">
                                 <Menu.Item key="/home">主页</Menu.Item>
                                 <Menu.Item key="/article">文章</Menu.Item>
-                                <Menu.Item key="/photos">图片</Menu.Item>
-                                <Menu.Item key="/share">动态</Menu.Item>
+                                {/*<Menu.Item key="/photos">图片</Menu.Item>*/}
+                                {/*<Menu.Item key="/share">动态</Menu.Item>*/}
                                 <Menu.Item key="/management" onClick={() => this.toManagePage()}>
                                     <RightCircleTwoTone className="array-router" />
                                 </Menu.Item>
@@ -88,8 +86,8 @@ class App extends React.Component {
 
                 <Switch>
                     <Route exact path="/home" component={Home}/>
-                    <Route exact path="/share" component={Share}/>
-                    <Route exact path="/photos" component={Photos}/>
+                    {/*<Route exact path="/share" component={Share}/>*/}
+                    {/*<Route exact path="/photos" component={Photos}/>*/}
                     <Route exact path="/article" component={Article}/>
                     <Route exact path="/article/:articleId" component={ArticleDetailPage}/>
                     <Route exact={false} path="/management" component={Management}/>

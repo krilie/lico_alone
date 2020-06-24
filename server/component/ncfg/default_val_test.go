@@ -19,7 +19,7 @@ func TestNewNConfig(t *testing.T) {
 		Log: Log{
 			LogFile:  "log.txt",
 			LogLevel: 5,
-			ElfLog: &ElfLog{
+			ElfLog: ElfLog{
 				Key:    "",
 				Secret: "",
 				Url:    "",

@@ -43,12 +43,16 @@ apiRequest.interceptors.response.use(
         return Promise.reject(data)
     },
     err => {
-        if (err.response.status === 504 || err.response.status === 404) {
-            message.error("服务器被吃了⊙﹏⊙∥");
-        } else if (err.response.status === 401) {
-            message.error("登录信息失效⊙﹏⊙∥");
-        } else if (err.response.status === 500) {
-            message.error("服务器开小差了⊙﹏⊙∥");
+        if (err.response !== undefined && err.response !== null){
+            if (err.response.status === 504 || err.response.status === 404) {
+                message.error("服务器被吃了⊙﹏⊙∥");
+            } else if (err.response.status === 401) {
+                message.error("登录信息失效⊙﹏⊙∥");
+            } else if (err.response.status === 500) {
+                message.error("服务器开小差了⊙﹏⊙∥");
+            }
+        }else{
+            message.error(err.toString())
         }
         return Promise.reject(err);
     }
@@ -62,7 +66,6 @@ export const postJson = (url, params) => {
         data: params,
         headers: {
             "Content-Type": "application/json",
-            charset: "utf-8"
         }
     });
 };

@@ -133,3 +133,15 @@ export function getArticleById(articleId, then) {
 }
 
 // =============================================================
+
+export function GetCarouselPicData(then) {
+    commonGet("/api/common/carousel/query").then(res => {
+        if (res.data.code !== 2000) {
+            message.warning(res.data.message);
+        } else {
+            then(res.data.data);
+        }
+    }).catch(err => {
+        message.error(err.toString());
+    })
+}

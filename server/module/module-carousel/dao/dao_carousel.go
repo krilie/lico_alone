@@ -2,7 +2,6 @@ package dao
 
 import (
 	"context"
-	"github.com/jinzhu/gorm"
 	com_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
@@ -45,23 +44,20 @@ func (a *CarouselDao) CreateCarousel(ctx context.Context, item *model.Carousel) 
 
 func (a *CarouselDao) UpdateCarousel(ctx context.Context, item *model.UpdateCarouselModel) error {
 	log := a.log.Get(ctx).WithFuncName("UpdateCarousel")
-	var m = new(model.Carousel)
-	err := a.GetDb(ctx).Model(new(model.Carousel)).Where("id=?", item.Id).Find(&m).Error
-	if err != nil {
-		if gorm.IsRecordNotFoundError(err) {
-			return errs.NewNotExistsError().WithError(err).WithMsg("not found")
-		}
-		log.Error(err)
-		return err
+	result := a.GetDb(ctx).Model(new(model.Carousel)).
+		Where("id=?", item.Id).
+		UpdateColumns(map[string]interface{}{
+			"updated_at": time.Now(),
+			"message":    item.Message,
+			"is_on_show": item.IsOnShow,
+			"url":        item.Url,
+		})
+	if result.Error != nil {
+		log.Error(result.Error)
+		return result.Error
 	}
-	m.UpdatedAt = time.Now()
-	m.Message = item.Message
-	m.Url = item.Url
-	m.IsOnShow = item.IsOnShow
-	err = a.GetDb(ctx).Update(m).Error
-	if err != nil {
-		log.Error(err)
-		return err
+	if result.RowsAffected <= 0 {
+		return errs.NewNotExistsError().WithMsg("not modify")
 	}
 	return nil
 }

@@ -110,6 +110,19 @@ definitions:
       value:
         type: string
     type: object
+  model.CreateArticleModel:
+    properties:
+      content:
+        type: string
+      description:
+        type: string
+      picture:
+        type: string
+      sort:
+        type: integer
+      title:
+        type: string
+    type: object
   model.CreateCarouselModel:
     properties:
       is_on_show:
@@ -329,6 +342,47 @@ paths:
       summary: Icp信息
       tags:
       - 公共接口
+  /api/common/version:
+    get:
+      description: Version
+      operationId: Version
+      responses:
+        "200":
+          description: version build_time git_commit go_version
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Version
+      tags:
+      - 公共接口
+  /api/manage/article/create:
+    post:
+      description: 创建文章
+      operationId: 创建文章
+      parameters:
+      - description: 文章
+        in: body
+        name: article
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateArticleModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 创建文章
+      tags:
+      - 文章管理
   /api/manage/article/delete:
     post:
       description: 删除文章
@@ -862,20 +916,4 @@ paths:
       summary: 健康检查Ping
       tags:
       - 健康检查
-  /version:
-    get:
-      description: Version
-      operationId: Version
-      responses:
-        "200":
-          description: version build_time git_commit go_version
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error
-          schema:
-            type: string
-      summary: Version
-      tags:
-      - 公共接口
 swagger: "2.0"
