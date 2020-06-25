@@ -97,6 +97,14 @@ export const getVersion = (then) => {
     });
 }
 
+export const postVisited = (traceId, then) => {
+    commonPostForm("/api/common/visited", {traceId: traceId}).then((res) => {
+        then(res.data)
+    }).catch((error) => {
+        message.error(error.toString());
+    });
+}
+
 // ===================================================================================================
 
 // 获取文章列表sample
