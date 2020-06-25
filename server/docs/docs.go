@@ -248,6 +248,30 @@ var doc = `{
                 }
             }
         },
+        "/api/common/visited": {
+            "post": {
+                "description": "WebVisited",
+                "tags": [
+                    "公共接口"
+                ],
+                "summary": "WebVisited",
+                "operationId": "WebVisited",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/manage/article/create": {
             "post": {
                 "description": "创建文章",
@@ -1211,7 +1235,7 @@ var doc = `{
                     "type": "string"
                 },
                 "description": {
-                    "description": "描述+关键值",
+                    "description": "描述+关键值+标签",
                     "type": "string"
                 },
                 "id": {
