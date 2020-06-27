@@ -27,7 +27,13 @@ import (
 func main() {
 	// 开始服务
 	dig.Container.MustInvoke(
-		func(log *nlog.NLog, broker *broker.Broker, cfg *ncfg.NConfig, auth *service.UserModule, nCron *cron2.NCron, db *ndb.NDb, ctrl *http.Controllers) {
+		func(log *nlog.NLog,
+			broker *broker.Broker,
+			cfg *ncfg.NConfig,
+			auth *service.UserModule,
+			nCron *cron2.NCron,
+			db *ndb.NDb,
+			ctrl *http.Controllers) {
 
 			ctx := context2.NewContext()
 			ctx.Module = "main"

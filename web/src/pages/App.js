@@ -12,6 +12,8 @@ import RightCircleTwoTone from "@ant-design/icons/lib/icons/RightCircleTwoTone";
 import Management from "./management/Management";
 import RhythmStateHolder from "../utils/RhythmStateHolder";
 import ArticleDetailPage from "./article/ArticleDetailPage";
+import {postVisited} from "../api/ApiCommon";
+import {GetCustomerTraceId} from "../utils/LocalStorageUtil";
 
 class App extends React.Component {
 
@@ -28,6 +30,10 @@ class App extends React.Component {
         this.setState({
             current: pathname,
         });
+
+        postVisited(GetCustomerTraceId(), (res) => {
+        })
+
     }
 
     handleClick = e => {
@@ -76,7 +82,7 @@ class App extends React.Component {
                                 {/*<Menu.Item key="/photos">图片</Menu.Item>*/}
                                 {/*<Menu.Item key="/share">动态</Menu.Item>*/}
                                 <Menu.Item key="/management" onClick={() => this.toManagePage()}>
-                                    <RightCircleTwoTone className="array-router" />
+                                    <RightCircleTwoTone className="array-router"/>
                                 </Menu.Item>
                             </Menu>
                         </Col>

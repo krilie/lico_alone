@@ -93,23 +93,21 @@ class ArticleListPage extends Component {
      */
     columns = [
         {title: 'ID', key: 'id', dataIndex: 'id'},
-        {title: '创建时间', key: 'created_at', dataIndex: 'created_at', sorter: {multiple: 1,}},
-        {title: '更新时间', key: 'updated_at', dataIndex: 'updated_at', sorter: {multiple: 1,}},
         {
             title: '图片', key: 'picture', dataIndex: 'picture',
             render: text => <img src={text + "?imageView2/2/w/200/h/100"} height={100} width={200} alt={"img"}/>
         },
         {title: '标题', key: 'title', dataIndex: 'title', render: val => <div>{val}</div>},
         {
-            title: '内容',
-            key: 'content',
-            dataIndex: 'content',
-            render: val => <div className="article-layout-content-real">{val}</div>
-        },
-        {
             title: '描述',
             key: 'description',
             dataIndex: 'description',
+            render: val => <div className="article-layout-content-real">{val}</div>
+        },
+        {
+            title: '内容',
+            key: 'content',
+            dataIndex: 'content',
             render: val => <div className="article-layout-content-real">{val}</div>
         },
         {title: 'PV', key: 'pv', dataIndex: 'pv', render: val => <div>{val}</div>},

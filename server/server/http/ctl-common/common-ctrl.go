@@ -52,3 +52,18 @@ func (common *CommonCtrl) Version(c *gin.Context) {
 		"host":       common.runEnv.AppHost,
 	})
 }
+
+// WebVisited WebVisited
+// @Summary WebVisited
+// @Description WebVisited
+// @Tags 公共接口
+// @ID WebVisited
+// @Success 200 {string} string ""
+// @Failure 500 {string} string ""
+// @Router /api/common/visited [post]
+func (common *CommonCtrl) WebVisited(c *gin.Context) {
+	ctx := ginutil.MustGetAppCtx(c)
+	traceId := c.PostForm("traceId")
+	common.CommonService.WebVisited(ctx, ctx.RemoteIp, traceId)
+	ginutil.ReturnOk(c)
+}
