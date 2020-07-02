@@ -79,35 +79,35 @@ export default class Article extends React.Component {
             );
 
         return (<div className="article-page-view">
-            <div style={{textAlign: "right", paddingTop: "10px"}}>
-                <Input name="search_key"
-                       onChange={event => this.updateSearchKey(event.target.value)}
-                       onPressEnter={() => this.loadData(true)}
-                       style={{marginTop: "0px", margin: "0px", width: "250px"}}
-                       placeholder="输入关键字并按回车进行搜索"/>
+                <div style={{textAlign: "right", paddingTop: "10px"}}>
+                    <Input name="search_key"
+                           onChange={event => this.updateSearchKey(event.target.value)}
+                           onPressEnter={() => this.loadData(true)}
+                           style={{marginTop: "0px", margin: "0px", width: "250px"}}
+                           placeholder="输入关键字并按回车进行搜索"/>
+                    <div style={{marginTop: "10px"}}/>
+                </div>
+                <List
+                    loading={loading}
+                    itemLayout="horizontal"
+                    loadMore={loadMore}
+                    dataSource={articleList}
+                    renderItem={item => {
+                        const link = "/article/" + item.id
+                        return <div className="article-item-view">
+                            <Row> <Col span={20}>
+                                <a href={link}>
+                                    * &nbsp;&nbsp;{item.title}&nbsp;{item.description}
+                                </a>
+                            </Col>
+                                <Col style={{textAlign: "right"}} span={4}>PV:{item.pv}</Col>
+                            </Row>
+                        </div>
+                    }
+                    }
+                />
             </div>
-            <List
-                loading={loading}
-                itemLayout="horizontal"
-                loadMore={loadMore}
-                dataSource={articleList}
-                renderItem={item => {
-                    const link = "/article/" + item.id
-                    return <div className="article-item-view">
-                        <Row> <Col span={20}>
-                            <a href={link}>
-                                *&nbsp;&nbsp;{item.title}&nbsp;{item.description}
-                            </a>
-                        </Col>
-                            <Col style={{textAlign:"right"}} span={4}>PV:{item.pv}</Col>
-                        </Row>
-                    </div>
-                }
-            }
-        />
-    </div>
-    )
-        ;
+        );
     }
 
 }
