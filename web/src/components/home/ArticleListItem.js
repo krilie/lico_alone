@@ -38,12 +38,12 @@ class ArticleListItem extends React.Component {
                         </a>
                     </Layout.Header>
                     <Layout className="article-layout">
-                        <Layout.Sider width={140} className="article-layout-sider">
+                        <Layout.Sider width={100} className="article-layout-sider">
                             <img className="pic" src={picture} alt={"pic"}/>
                         </Layout.Sider>
                         <Layout.Content className="article-layout-content">
                             <Layout className="article-layout">
-                                <Layout.Header style={{minHeight: "70px"}} className="article-layout-content-real">
+                                <Layout.Header style={{minHeight: "30px",maxHeight:"30px"}} className="article-layout-content-real">
                                     <a href={url} className="article-description-view">{description}</a>
                                 </Layout.Header>
                                 <Layout.Footer className="article-layout-footer">
