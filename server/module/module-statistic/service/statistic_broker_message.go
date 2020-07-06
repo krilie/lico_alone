@@ -10,11 +10,21 @@ func (a *StatisticService) HandleBrokerWebStationVisited(msg *messages.WebStatio
 	ctx := context.NewContext()
 	ctx.Module = "StatisticService"
 	ctx.Function = "HandleBrokerWebStationVisited"
-	err := a.Dao.AddStatVisitorLogs(ctx, &model.AddStatVisitorLogsModel{
+	var vLogs = &model.AddStatVisitorLogsModel{
 		AccessTime: msg.AccessTime,
 		Ip:         msg.Ip,
 		TraceId:    msg.TraceId,
-	})
+		RegionName: "",
+		CityName:   "",
+		Memo:       "",
+	}
+	info, err2 := a.ipInfoApi.GetIpInfo(ctx, msg.Ip)
+	if err2 != nil {
+		vLogs.RegionName = info.RegionName
+		vLogs.CityName = info.City
+		vLogs.Memo = info.RawResponse
+	}
+	err := a.Dao.AddStatVisitorLogs(ctx, vLogs)
 	if err != nil {
 		a.log.Get(ctx).WithField("err", err).Error("add stat visitor error")
 	}
