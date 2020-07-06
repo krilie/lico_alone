@@ -21,7 +21,7 @@ func (a *StatisticDao) AddStatVisitorLogs(ctx context.Context, item *model.AddSt
 		Ip:         item.Ip,
 		TraceId:    item.TraceId,
 		RegionName: item.RegionName,
-		CityName:   item.CityName,
+		City:       item.CityName,
 		Memo:       item.Memo,
 	}).Error
 	if err != nil {

@@ -19,7 +19,7 @@ func (a *StatisticService) HandleBrokerWebStationVisited(msg *messages.WebStatio
 		Memo:       "",
 	}
 	info, err2 := a.ipInfoApi.GetIpInfo(ctx, msg.Ip)
-	if err2 != nil {
+	if err2 == nil {
 		vLogs.RegionName = info.RegionName
 		vLogs.CityName = info.City
 		vLogs.Memo = info.RawResponse

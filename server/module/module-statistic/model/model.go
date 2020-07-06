@@ -12,7 +12,7 @@ type StatVisitorLogs struct {
 	Ip         string    `json:"ip" gorm:"column:ip;type:nvarchar(64);index;not null"`
 	TraceId    string    `json:"trace_id" gorm:"column:trace_id;type:nvarchar(64);index;not null"`
 	RegionName string    `json:"region_name" gorm:"column:region_name;type:nvarchar(128);index;not null"`
-	CityName   string    `json:"city" gorm:"column:city;type:nvarchar(128);index;not null"`
+	City       string    `json:"city" gorm:"column:city;type:nvarchar(128);index;not null"`
 	Memo       string    `json:"memo" gorm:"column:memo;type:nvarchar(512);not null"`
 }
 
