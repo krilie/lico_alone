@@ -20,6 +20,9 @@ func (a *StatisticDao) AddStatVisitorLogs(ctx context.Context, item *model.AddSt
 		AccessTime: item.AccessTime,
 		Ip:         item.Ip,
 		TraceId:    item.TraceId,
+		RegionName: item.RegionName,
+		City:       item.CityName,
+		Memo:       item.Memo,
 	}).Error
 	if err != nil {
 		log.WithField("err", err).Error("err on save stat visitor logs")
