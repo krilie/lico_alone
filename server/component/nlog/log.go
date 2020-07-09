@@ -9,6 +9,7 @@ import (
 	"github.com/krilie/lico_alone/component/nlog/logsyshook"
 	"github.com/sirupsen/logrus"
 	"os"
+	"path/filepath"
 )
 
 type NLog struct {
@@ -46,6 +47,14 @@ func (nlog *NLog) SetUpLogFile(f string) {
 		nlog.Logger.SetOutput(os.Stdout)
 		nlog.Warnln("set log out file to stdout")
 		return
+	}
+	dir := filepath.Dir(f)
+	if !(dir == "." || dir == "" || dir == "/") {
+		err := os.MkdirAll(dir, os.ModePerm)
+		if err != nil {
+			panic(err)
+			return
+		}
 	}
 	file, e := os.OpenFile(f, os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	if e != nil {
