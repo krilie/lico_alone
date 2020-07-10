@@ -10,6 +10,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 type NLog struct {
@@ -22,7 +23,14 @@ func NewLogger(cfg *ncfg.NConfig) *NLog {
 	logCfg := cfg.Cfg.Log
 
 	var Log = logrus.NewEntry(logrus.New())
-	Log.Logger.SetFormatter(&logrus.JSONFormatter{})
+	Log.Logger.SetFormatter(&logrus.JSONFormatter{
+		TimestampFormat:  time.RFC3339Nano,
+		DisableTimestamp: false,
+		DataKey:          "",
+		FieldMap:         nil,
+		CallerPrettyfier: nil,
+		PrettyPrint:      false,
+	})
 	Log.Logger.SetLevel(logrus.Level(logCfg.LogLevel))
 	Log.Logger.SetOutput(os.Stdout)
 	Log = Log.
