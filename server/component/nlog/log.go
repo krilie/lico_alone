@@ -22,7 +22,7 @@ func NewLogger(cfg *ncfg.NConfig) *NLog {
 	logCfg := cfg.Cfg.Log
 
 	var Log = logrus.NewEntry(logrus.New())
-	Log.Logger.SetFormatter(&logrus.TextFormatter{})
+	Log.Logger.SetFormatter(&logrus.JSONFormatter{})
 	Log.Logger.SetLevel(logrus.Level(logCfg.LogLevel))
 	Log.Logger.SetOutput(os.Stdout)
 	Log = Log.
