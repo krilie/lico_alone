@@ -19,6 +19,7 @@ import (
 )
 
 //go:generate swag init -g ./main.go
+//go:generate go test -tags "auto_test" -v ./...
 
 // @title lizo_alone
 // @version 1.0.0

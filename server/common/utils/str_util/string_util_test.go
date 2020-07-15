@@ -1,3 +1,5 @@
+// +build auto_test
+
 package str_util
 
 import "testing"
