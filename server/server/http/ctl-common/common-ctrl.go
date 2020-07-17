@@ -63,7 +63,6 @@ func (common *CommonCtrl) Version(c *gin.Context) {
 // @Router /api/common/visited [post]
 func (common *CommonCtrl) WebVisited(c *gin.Context) {
 	ctx := ginutil.MustGetAppCtx(c)
-	traceId := c.PostForm("traceId")
-	common.CommonService.WebVisited(ctx, ctx.RemoteIp, traceId)
+	common.CommonService.WebVisited(ctx, ctx.RemoteIp, ctx.CustomerTraceId)
 	ginutil.ReturnOk(c)
 }
