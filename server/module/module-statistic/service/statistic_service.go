@@ -26,6 +26,7 @@ func NewStatisticService(broker *broker.Broker, Dao *dao.StatisticDao, log *nlog
 		ipInfoApi: infra_ip.NewIpInfoApiOne(),
 	}
 	broker.MustRegister(context.NewContext(), svc.HandleBrokerWebStationVisited)
+	broker.MustRegister(context.NewContext(), svc.HandleBrokerArticleVisitorMessage)
 	return svc
 }
 
