@@ -30,3 +30,28 @@ func (a *StatisticDao) AddStatVisitorLogs(ctx context.Context, item *model.AddSt
 	}
 	return nil
 }
+
+func (a *StatisticDao) AddStatArticleVisitorLogs(ctx context.Context, item *model.AddStatArticleVisitorModel) error {
+	log := a.log.Get(ctx).WithFuncName("AddStatArticleVisitorLogs")
+	err := a.GetDb(ctx).Model(new(model.StatArticleVisitorLogs)).Save(&model.StatArticleVisitorLogs{
+		Model: com_model.Model{
+			Id:        id_util.GetUuid(),
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
+			DeletedAt: nil,
+		},
+		AccessTime:      item.AccessTime,
+		Ip:              item.Ip,
+		CustomerTraceId: item.CustomerTraceId,
+		ArticleId:       item.ArticleId,
+		ArticleTitle:    item.ArticleTitle,
+		RegionName:      item.RegionName,
+		City:            item.CityName,
+		Memo:            item.Memo,
+	}).Error
+	if err != nil {
+		log.WithField("err", err).Error("err on save stat visitor logs")
+		return err
+	}
+	return nil
+}
