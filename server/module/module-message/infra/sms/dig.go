@@ -5,9 +5,16 @@ import (
 	"github.com/krilie/lico_alone/component/ncfg"
 )
 
+func NewAliSms2(cfg *ncfg.NConfig) IAliSms {
+	smsCfg := cfg.Cfg.AliSms
+	return NewAliSms(smsCfg.Key, smsCfg.Secret)
+}
+
 func init() {
-	dig.Container.MustProvide(func(cfg *ncfg.NConfig) IAliSms {
-		smsCfg := cfg.Cfg.AliSms
-		return NewAliSms(smsCfg.Key, smsCfg.Secret)
-	})
+	dig.Container.MustProvide(NewAliSms2)
+}
+
+// DigProvider provider
+func DigProvider() {
+	dig.Container.MustProvide(NewAliSms2)
 }

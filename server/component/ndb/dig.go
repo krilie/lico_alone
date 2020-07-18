@@ -7,3 +7,8 @@ import (
 func init() {
 	dig.Container.MustProvide(NewNDb)
 }
+
+// DigProvider provider
+func DigProvider() {
+	dig.Container.MustProvide(NewNDb)
+}

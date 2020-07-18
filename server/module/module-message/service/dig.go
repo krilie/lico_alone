@@ -7,3 +7,8 @@ import (
 func init() {
 	dig.Container.MustProvide(NewMessageModule)
 }
+
+// DigProvider provider
+func DigProvider() {
+	dig.Container.MustProvide(NewMessageModule)
+}

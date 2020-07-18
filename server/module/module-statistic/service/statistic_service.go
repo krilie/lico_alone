@@ -33,3 +33,8 @@ func NewStatisticService(broker *broker.Broker, Dao *dao.StatisticDao, log *nlog
 func init() {
 	dig.Container.MustProvide(NewStatisticService)
 }
+
+// DigProvider provider
+func DigProvider() {
+	dig.Container.MustProvide(NewStatisticService)
+}

@@ -62,3 +62,8 @@ func NewHealthCheckCtl(db *ndb.NDb, log *nlog.NLog) *HealthCheckCtrl {
 func init() {
 	dig.Container.MustProvide(NewHealthCheckCtl)
 }
+
+// DigProvider provider
+func DigProvider() {
+	dig.Container.MustProvide(NewHealthCheckCtl)
+}

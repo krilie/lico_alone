@@ -7,3 +7,8 @@ import (
 func init() {
 	dig.Container.MustProvide(NewCommonService)
 }
+
+// DigProvider provider
+func DigProvider() {
+	dig.Container.MustProvide(NewCommonService)
+}
