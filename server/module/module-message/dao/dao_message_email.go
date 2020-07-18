@@ -32,7 +32,7 @@ func (d *messageEmail) CreateMessageEmail(ctx context.Context, item *model.Messa
 }
 
 func (d *messageEmail) UpdateMessageEmail(ctx context.Context, item *model.MessageEmail) error {
-	err := d.GetDb(ctx).Omit("create_time").Where("id=?", item.Id).Update(item).Error
+	err := d.GetDb(ctx).Omit("create_time").Where("id=?", item.Id).Updates(item).Error
 	if err != nil {
 		d.log.Get(ctx).Error(err)
 		return errs.NewInternal().WithError(err)

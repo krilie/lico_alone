@@ -2,6 +2,7 @@ package dao
 
 import (
 	"context"
+	"errors"
 	common_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
@@ -21,11 +22,10 @@ type IUserRole interface {
 }
 
 func (d *UserDao) HasUserRoleByName(ctx context.Context, userId string, roleName string) (bool, error) {
-	userRoleCount := 0
-	err := d.GetDb(ctx).Model(&model.UserRole{}).Where("user_id=? and role_id=?",
-		userId,
-		d.GetDb(ctx).Model(&model.Role{}).Where("name=?", roleName).Select("id").SubQuery(),
-	).Count(&userRoleCount).Error
+	var userRoleCount int64 = 0
+	err := d.GetDb(ctx).
+		Raw("select id from tb_user_role where user_id=? and role_id=(select id from tb_role where name=?)", userId, roleName).
+		Count(&userRoleCount).Error
 	if err != nil {
 		return false, errs.NewInternal().WithError(err)
 	}
@@ -37,11 +37,11 @@ func (d *UserDao) HasUserRoleByName(ctx context.Context, userId string, roleName
 
 func (d *UserDao) GetUserRoleByName(ctx context.Context, userId string, roleName string) (*model.UserRole, error) {
 	userRole := new(model.UserRole)
-	err := d.GetDb(ctx).Model(userRole).Where("user_id=? and role_id=?",
-		userId,
-		d.GetDb(ctx).Model(&model.Role{}).Where("name=?", roleName).Select("id").SubQuery(),
-	).Find(userRole).Error
-	if err != nil && gorm.IsRecordNotFoundError(err) {
+	err := d.GetDb(ctx).
+		Raw("select * from tb_user_role where user_id=? and role_id=(select id from tb_role where name=?)", userId, roleName).
+		Find(userRole).
+		Error
+	if err != nil && errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, nil
 	}
 	if err != nil {

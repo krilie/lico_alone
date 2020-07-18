@@ -2,12 +2,12 @@ package dao
 
 import (
 	"context"
+	_ "github.com/go-sql-driver/mysql"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/module-user/model"
-	_ "gorm.io/gorm/dialects/mysql"
 )
 
 type UserDao struct {

@@ -2,6 +2,7 @@ package dao
 
 import (
 	"context"
+	"errors"
 	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/module/module-user/model"
@@ -25,7 +26,7 @@ func (d *UserDao) GetUserMasterById(ctx context.Context, userId string) (*model.
 	var user model.UserMaster
 	err := d.GetDb(ctx).Model(new(model.UserMaster)).Where("id=?", userId).Find(&user).Error
 	if err != nil {
-		if gorm.IsRecordNotFoundError(err) {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
 		return nil, errs.NewInternal().WithError(err)
@@ -37,7 +38,7 @@ func (d *UserDao) GetUserMasterByPhoneNum(ctx context.Context, phoneNum string) 
 	var user model.UserMaster
 	err := d.GetDb(ctx).Where("phone_num=?", phoneNum).Find(&user).Error
 	if err != nil {
-		if gorm.IsRecordNotFoundError(err) {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
 		return nil, errs.NewInternal().WithError(err)
@@ -49,7 +50,7 @@ func (d *UserDao) GetUserMasterByLoginName(ctx context.Context, loginName string
 	var user model.UserMaster
 	err := d.GetDb(ctx).Model(new(model.UserMaster)).Where(&model.UserMaster{LoginName: loginName}).Find(&user).Error
 	if err != nil {
-		if gorm.IsRecordNotFoundError(err) {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
 		return nil, errs.NewInternal().WithError(err)
@@ -79,7 +80,7 @@ func (d *UserDao) UpdateUserMaster(ctx context.Context, user *model.UserMaster) 
 }
 
 func (d *UserDao) IsPhoneNumExists(ctx context.Context, phoneNum string) (bool, error) {
-	count := 0
+	var count int64 = 0
 	err := d.GetDb(ctx).Model(&model.UserMaster{}).Where(&model.UserMaster{PhoneNum: phoneNum}).Count(&count).Error
 	if err != nil {
 		return false, errs.NewInternal().WithError(err)

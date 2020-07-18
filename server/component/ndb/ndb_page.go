@@ -6,10 +6,12 @@ import (
 )
 
 func pageGetCount(db *gorm.DB, pageSize int) (totalCount, totalPage int, err error) {
-	err = db.Count(&totalCount).Error
+	var totalCount64 int64
+	err = db.Count(&totalCount64).Error
 	if err != nil {
 		return 0, 0, errs.NewInternal().WithError(err)
 	}
+	totalCount = int(totalCount64)
 	if totalCount <= 0 {
 		return 0, 0, nil
 	}
