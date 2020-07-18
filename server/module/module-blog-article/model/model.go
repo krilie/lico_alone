@@ -7,11 +7,11 @@ import (
 type Article struct {
 	com_model.Model
 	Title       string `json:"title" gorm:"column:title;type:varchar(256);not null"`
-	Pv          int    `json:"pv" gorm:"column:pv;type:int;not null"`
+	Description string `json:"description" gorm:"column:description;type:varchar(512);not null"` // 描述+关键值+标签
 	Content     string `json:"content" gorm:"column:content;type:text;not null"`
 	Picture     string `json:"picture" gorm:"column:picture;type:varchar(512);not null"`
-	Description string `json:"description" gorm:"column:description;type:varchar(512);not null"` // 描述+关键值+标签
 	Sort        int    `json:"sort" gorm:"column:sort;type:int;not null;index"`
+	Pv          int    `json:"pv" gorm:"column:pv;type:int;not null"`
 }
 
 func (Article) TableName() string {

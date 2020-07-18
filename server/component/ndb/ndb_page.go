@@ -1,8 +1,8 @@
 package ndb
 
 import (
-	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/errs"
+	"gorm.io/gorm"
 )
 
 func pageGetCount(db *gorm.DB, pageSize int) (totalCount, totalPage int, err error) {

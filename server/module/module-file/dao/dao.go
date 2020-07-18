@@ -2,13 +2,13 @@ package dao
 
 import (
 	"context"
-	"github.com/jinzhu/gorm"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/module-file/model"
+	"gorm.io/gorm"
 )
 
 type FileDao struct {

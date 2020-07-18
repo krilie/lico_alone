@@ -3,11 +3,11 @@ package ndb
 import (
 	"context"
 	"fmt"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/krilie/lico_alone/component/nlog"
+	"gorm.io/gorm"
+	_ "gorm.io/gorm/dialects/mysql"
 	"runtime/debug"
 	"sync"
 	"time"

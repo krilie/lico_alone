@@ -3,11 +3,11 @@ package dao
 import (
 	"context"
 	"errors"
-	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/module-message/model"
+	"gorm.io/gorm"
 )
 
 type messageValidCode struct {

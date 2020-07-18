@@ -2,10 +2,10 @@ package dao
 
 import (
 	"context"
-	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/module/module-user/model"
+	"gorm.io/gorm"
 	"time"
 )
 
