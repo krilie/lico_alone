@@ -1,6 +1,9 @@
 package ncfg
 
-import "github.com/krilie/lico_alone/common/dig"
+import (
+	"github.com/krilie/lico_alone/common/dig"
+	"os"
+)
 
 // DigProvider provider
 func DigProvider() {
@@ -8,11 +11,23 @@ func DigProvider() {
 }
 
 func DigProviderByCfgStr(cfgStr string) {
-	dig.Container.MustProvide(NewNConfig)
-	dig.Container.MustInvoke(func(nCfg *NConfig) {
-		err := nCfg.LoadFromConfigTomlStr(cfgStr)
+	dig.Container.MustProvide(func() *NConfig {
+		cfg := NewNConfig()
+		err := cfg.LoadFromConfigTomlStr(cfgStr)
 		if err != nil {
 			panic(err)
 		}
+		return cfg
+	})
+}
+func DigProviderByCfgStrFromEnv() {
+	dig.Container.MustProvide(func() *NConfig {
+		cfg := NewNConfig()
+		cfgStr := os.Getenv("MYAPP_TEST_CONFIG")
+		err := cfg.LoadFromConfigTomlStr(cfgStr)
+		if err != nil {
+			panic(err)
+		}
+		return cfg
 	})
 }
