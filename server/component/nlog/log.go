@@ -47,6 +47,7 @@ func NewLogger(cfg *ncfg.NConfig) *NLog {
 		log.hook = hook
 	}
 	log.SetUpLogFile(cfg.Cfg.Log.LogFile)
+	GLog = log
 	return log
 }
 

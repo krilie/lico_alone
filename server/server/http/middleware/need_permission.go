@@ -12,7 +12,7 @@ func NeedPermission(auth IAuth) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		method := c.Request.Method
 		path := c.Request.URL.Path
-		nlog.Log.Infof("%v %v", method, path)
+		nlog.GLog.Infof("%v %v", method, path)
 		// get user id from context
 		userId := ginutil.GetUserIdOrAbort(c)
 		if userId == "" {

@@ -38,7 +38,7 @@ var defaultCfg = `
   normal_exp_duration = 604800
 
 [log]
-  log_file = "log.txt"
+  log_file = ""
   log_level = 5
 
   [log.elf_log]

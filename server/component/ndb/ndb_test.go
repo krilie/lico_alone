@@ -1,22 +1,25 @@
+// +build !auto_test
+
 package ndb
 
 import (
 	"github.com/krilie/lico_alone/common/dig"
-	"gorm.io/gorm"
+	"github.com/krilie/lico_alone/component/ncfg"
+	"github.com/krilie/lico_alone/component/nlog"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
-type TestDb struct {
-	gorm.Model
+func TestMain(m *testing.M) {
+	ncfg.DigProvider()
+	nlog.DigProvider()
+	DigProvider()
+	m.Run()
 }
 
-func (TestDb) TableName() string {
-	return "tb_test_db"
-}
-
-func TestNDb_Start(t *testing.T) {
-	dig.Container.MustInvoke(func(ndb *NDb) {
-		err := ndb.db.AutoMigrate(&TestDb{})
-		t.Log(err)
+func TestNewNDb(t *testing.T) {
+	dig.Container.MustInvoke(func(db *NDb) {
+		err := db.Ping()
+		assert.Equal(t, nil, err, "should not err")
 	})
 }
