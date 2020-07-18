@@ -2,13 +2,14 @@ package dao
 
 import (
 	"context"
-	"github.com/jinzhu/gorm"
+	"errors"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/module-file/model"
+	"gorm.io/gorm"
 )
 
 type FileDao struct {
@@ -19,7 +20,7 @@ type FileDao struct {
 func NewFileDao(db *ndb.NDb, log *nlog.NLog) *FileDao {
 	log = log.WithField(context_enum.Module.Str(), "module file dao")
 	err := db.GetDb(context2.NewContext()).
-		AutoMigrate(&model.FileMaster{}).Error
+		AutoMigrate(&model.FileMaster{})
 	if err != nil {
 		panic(err)
 	}
@@ -46,7 +47,7 @@ func (a *FileDao) SaveFile(ctx context.Context, file *model.FileMaster) error {
 }
 
 func (a *FileDao) UpdateFile(ctx context.Context, file *model.FileMaster) error {
-	err := a.GetDb(ctx).Update(file).Error
+	err := a.GetDb(ctx).Updates(file).Error
 	if err != nil {
 		return errs.NewInternal().WithError(err)
 	}
@@ -77,7 +78,7 @@ func (a *FileDao) GetFileById(ctx context.Context, fileId string) (file *model.F
 	file = new(model.FileMaster)
 	err = a.GetDb(ctx).Where("id=?", fileId).Find(file).Error
 	if err != nil {
-		if gorm.IsRecordNotFoundError(err) {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
 		a.log.Get(ctx).WithFuncName("GetFileById").WithField("err", err).Error("get file error")

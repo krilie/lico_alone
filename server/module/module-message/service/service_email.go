@@ -6,6 +6,7 @@ import (
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-message/model"
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -15,7 +16,7 @@ func (s *MessageModule) SendEmail(ctx context.Context, to, subject, content stri
 			Id:        id_util.GetUuid(),
 			CreatedAt: time.Now(),
 			UpdatedAt: time.Now(),
-			DeletedAt: nil,
+			DeletedAt: gorm.DeletedAt{},
 		},
 		SendTime:  time.Now(),
 		From:      "sys",

@@ -17,7 +17,7 @@ type StatisticDao struct {
 
 func NewStatisticDao(db *ndb.NDb, log *nlog.NLog) *StatisticDao {
 	log = log.WithField(context_enum.Module.Str(), "StatisticDao")
-	err := db.GetDb(context.NewContext()).AutoMigrate(new(model.StatVisitorLogs), new(model.StatArticleVisitorLogs)).Error
+	err := db.GetDb(context.NewContext()).AutoMigrate(new(model.StatVisitorLogs), new(model.StatArticleVisitorLogs))
 	if err != nil {
 		panic(err)
 	}

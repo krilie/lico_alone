@@ -15,7 +15,7 @@ type ConfigDao struct {
 
 func NewConfigDao(ndb *ndb.NDb, log *nlog.NLog) *ConfigDao {
 	log = log.WithField(context_enum.Module.Str(), "config dao")
-	err := ndb.GetDb(context.NewContext()).AutoMigrate(&model.Config{}).Error
+	err := ndb.GetDb(context.NewContext()).AutoMigrate(&model.Config{})
 	if err != nil {
 		panic(err)
 	}

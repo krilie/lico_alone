@@ -3,11 +3,11 @@ package dao
 import (
 	"context"
 	"errors"
-	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/module-message/model"
+	"gorm.io/gorm"
 )
 
 type messageEmail struct {
@@ -32,7 +32,7 @@ func (d *messageEmail) CreateMessageEmail(ctx context.Context, item *model.Messa
 }
 
 func (d *messageEmail) UpdateMessageEmail(ctx context.Context, item *model.MessageEmail) error {
-	err := d.GetDb(ctx).Omit("create_time").Where("id=?", item.Id).Update(item).Error
+	err := d.GetDb(ctx).Omit("create_time").Where("id=?", item.Id).Updates(item).Error
 	if err != nil {
 		d.log.Get(ctx).Error(err)
 		return errs.NewInternal().WithError(err)

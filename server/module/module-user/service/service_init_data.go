@@ -5,6 +5,7 @@ import (
 	com_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
 	"github.com/krilie/lico_alone/module/module-user/model"
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -71,7 +72,7 @@ func NewPerm(name, method, path, desc string, sort int) model.Permission {
 func getInitAdminUserData() initAdminUserStruct {
 	return initAdminUserStruct{
 		user: model.UserMaster{
-			Model:     com_model.Model{Id: "00001", CreatedAt: time.Now(), UpdatedAt: time.Now(), DeletedAt: nil},
+			Model:     com_model.Model{Id: "00001", CreatedAt: time.Now(), UpdatedAt: time.Now(), DeletedAt: gorm.DeletedAt{}},
 			LoginName: "admin", PhoneNum: "123456", Email: "",
 			Password: pswd_util.GetMd5Password("123456", "2345r"),
 			Picture:  "", Salt: "2345r",

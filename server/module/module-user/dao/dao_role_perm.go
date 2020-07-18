@@ -2,11 +2,12 @@ package dao
 
 import (
 	"context"
-	"github.com/jinzhu/gorm"
+	"errors"
 	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-user/model"
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -24,7 +25,7 @@ func (d *UserDao) CreateRolePerm(ctx context.Context, roleName, permName string)
 			Id:        id_util.NextSnowflake(),
 			CreatedAt: time.Now(),
 			UpdatedAt: time.Now(),
-			DeletedAt: nil,
+			DeletedAt: gorm.DeletedAt{},
 		},
 		RoleName:       roleName,
 		PermissionName: permName,
@@ -47,7 +48,7 @@ func (d *UserDao) DeleteRolePerm(ctx context.Context, roleName, permName string)
 }
 
 func (d *UserDao) HasRolePerm(ctx context.Context, roleName, permName string) (bool, error) {
-	count := 0
+	var count int64 = 0
 	err := d.GetDb(ctx).Model(&model.RolePermission{}).Where(&model.RolePermission{RoleName: roleName, PermissionName: permName}).Count(&count).Error
 	if err != nil {
 		return false, errs.NewInternal().WithError(err)
@@ -62,7 +63,7 @@ func (d *UserDao) GetRolePerm(ctx context.Context, roleName, permName string) (*
 		PermissionName: permName,
 	}).Find(item).Error
 	if err != nil {
-		if gorm.IsRecordNotFoundError(err) {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
 		return nil, errs.NewInternal().WithError(err)

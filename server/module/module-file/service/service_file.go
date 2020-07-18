@@ -8,6 +8,7 @@ import (
 	"github.com/krilie/lico_alone/common/utils/file_util"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-file/model"
+	"gorm.io/gorm"
 	"io"
 	"mime"
 	"time"
@@ -35,7 +36,7 @@ func (a *FileModule) UploadFile(ctx context.Context, userId, fileName string, fi
 				Id:        id_util.GetUuid(),
 				CreatedAt: time.Now(),
 				UpdatedAt: time.Now(),
-				DeletedAt: nil,
+				DeletedAt: gorm.DeletedAt{},
 			},
 			KeyName:     key,
 			BucketName:  bucket,

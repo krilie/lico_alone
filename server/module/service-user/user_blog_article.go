@@ -6,6 +6,7 @@ import (
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-blog-article/model"
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -17,7 +18,7 @@ func (a *UserService) CreateArticle(ctx context.Context, article *model.CreateAr
 			Id:        id_util.GetUuid(),
 			CreatedAt: time.Now(),
 			UpdatedAt: time.Now(),
-			DeletedAt: nil,
+			DeletedAt: gorm.DeletedAt{},
 		},
 		Title:       article.Title,
 		Pv:          0,

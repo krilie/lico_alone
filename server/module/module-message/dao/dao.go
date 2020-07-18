@@ -14,8 +14,7 @@ func NewMessageDao(db *ndb.NDb, log *nlog.NLog) *MessageDao {
 		AutoMigrate(
 			new(model.MessageEmail),
 			new(model.MessageSms),
-			new(model.MessageValidCode)).
-		Error
+			new(model.MessageValidCode))
 	if err != nil {
 		panic(err)
 	}

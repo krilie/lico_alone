@@ -8,6 +8,7 @@ import (
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-message/model"
 	"github.com/prometheus/common/log"
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -22,7 +23,7 @@ func (s *MessageModule) SendRegisterSms(ctx context.Context, phone, code string)
 				Id:        id_util.GetUuid(),
 				CreatedAt: time.Now(),
 				UpdatedAt: time.Now(),
-				DeletedAt: nil,
+				DeletedAt: gorm.DeletedAt{},
 			},
 			SendTime:  time.Now(),
 			Name:      "",
@@ -43,7 +44,7 @@ func (s *MessageModule) SendRegisterSms(ctx context.Context, phone, code string)
 				Id:        id_util.GetUuid(),
 				CreatedAt: time.Now(),
 				UpdatedAt: time.Now(),
-				DeletedAt: nil,
+				DeletedAt: gorm.DeletedAt{},
 			},
 			SendTime:  time.Now(),
 			Name:      "",
@@ -62,7 +63,7 @@ func (s *MessageModule) SendRegisterSms(ctx context.Context, phone, code string)
 				Id:        id_util.GetUuid(),
 				CreatedAt: time.Now(),
 				UpdatedAt: time.Now(),
-				DeletedAt: nil,
+				DeletedAt: gorm.DeletedAt{},
 			},
 			SendTime: time.Now(),
 			PhoneNum: phone,

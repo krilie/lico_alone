@@ -8,6 +8,7 @@ import (
 	"github.com/krilie/lico_alone/common/utils/jwt"
 	"github.com/krilie/lico_alone/common/utils/pswd_util"
 	"github.com/krilie/lico_alone/module/module-user/model"
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -49,7 +50,7 @@ func (s *UserModule) RegisterNewUser(ctx context.Context, phoneNum, password str
 			Id:        id_util.GetUuid(),
 			CreatedAt: time.Now(),
 			UpdatedAt: time.Now(),
-			DeletedAt: nil,
+			DeletedAt: gorm.DeletedAt{},
 		},
 		LoginName: phoneNum,
 		PhoneNum:  phoneNum,

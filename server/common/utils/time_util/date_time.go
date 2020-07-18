@@ -1,6 +1,7 @@
 package time_util
 
 import (
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -19,4 +20,17 @@ func GetBeijingLastDateOfMonth(d time.Time) time.Time {
 func GetBeijingZeroTime(d time.Time) time.Time {
 	d = d.In(BeijingZone)
 	return time.Date(d.Year(), d.Month(), d.Day(), 0, 0, 0, 0, d.Location())
+}
+
+func SqlNullTime(t *time.Time) gorm.DeletedAt {
+	if t != nil {
+		return gorm.DeletedAt{
+			Time:  *t,
+			Valid: true,
+		}
+	}
+	return gorm.DeletedAt{
+		Time:  time.Time{},
+		Valid: false,
+	}
 }

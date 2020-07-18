@@ -5,6 +5,7 @@ import (
 	com_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-carousel/model"
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -18,7 +19,7 @@ func (c *CarouselModule) CreateCarousel(ctx context.Context, item *model.CreateC
 			Id:        id_util.GetUuid(),
 			CreatedAt: time.Now(),
 			UpdatedAt: time.Now(),
-			DeletedAt: nil,
+			DeletedAt: gorm.DeletedAt{},
 		},
 		Message:  item.Message,
 		Url:      item.Url,

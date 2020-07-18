@@ -5,6 +5,7 @@ import (
 	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-statistic/model"
+	"gorm.io/gorm"
 	"time"
 )
 
@@ -15,7 +16,7 @@ func (a *StatisticDao) AddStatVisitorLogs(ctx context.Context, item *model.AddSt
 			Id:        id_util.GetUuid(),
 			CreatedAt: time.Now(),
 			UpdatedAt: time.Now(),
-			DeletedAt: nil,
+			DeletedAt: gorm.DeletedAt{},
 		},
 		AccessTime: item.AccessTime,
 		Ip:         item.Ip,
@@ -38,7 +39,7 @@ func (a *StatisticDao) AddStatArticleVisitorLogs(ctx context.Context, item *mode
 			Id:        id_util.GetUuid(),
 			CreatedAt: time.Now(),
 			UpdatedAt: time.Now(),
-			DeletedAt: nil,
+			DeletedAt: gorm.DeletedAt{},
 		},
 		AccessTime:      item.AccessTime,
 		Ip:              item.Ip,

@@ -16,7 +16,7 @@ type CarouselDao struct {
 
 func NewCarouseDao(db *ndb.NDb, log *nlog.NLog) *CarouselDao {
 	log = log.WithField(context_enum.Module.Str(), "CarouselDao")
-	err := db.GetDb(context.NewContext()).AutoMigrate(&model.Carousel{}).Error
+	err := db.GetDb(context.NewContext()).AutoMigrate(&model.Carousel{})
 	if err != nil {
 		panic(err)
 	}
