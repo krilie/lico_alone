@@ -28,3 +28,9 @@ func init() {
 func DigProvider() {
 	dig.Container.MustProvide(NewCarouselModule)
 }
+
+// DigProvider provider
+func DigProviderWithDao() {
+	dao.DigProvider()
+	dig.Container.MustProvide(NewCarouselModule)
+}
