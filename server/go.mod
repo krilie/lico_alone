@@ -38,7 +38,7 @@ require (
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
 	github.com/stretchr/testify v1.4.0
 	github.com/swaggo/gin-swagger v1.2.0
-	github.com/swaggo/swag v1.6.6
+	github.com/swaggo/swag v1.6.7
 	go.uber.org/dig v1.9.0
 	golang.org/x/net v0.0.0-20200602114024-627f9648deb9 // indirect
 	golang.org/x/tools v0.0.0-20200603131921-a45abac6c9c7 // indirect
