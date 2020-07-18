@@ -92,16 +92,20 @@ export default class Article extends React.Component {
                     itemLayout="horizontal"
                     loadMore={loadMore}
                     dataSource={articleList}
-                    renderItem={item => {
+                    renderItem={(item,index) => {
                         const link = "/article/" + item.id
                         return <div className="article-item-view">
-                            <Row> <Col span={20}>
-                                <a href={link}>
-                                    * &nbsp;&nbsp;{item.title}&nbsp;{item.description}
-                                </a>
-                            </Col>
-                                <Col style={{textAlign: "right"}} span={4}>PV:{item.pv}</Col>
+                            <Row>
+                                <Col span={1} style={{color:"#3f6600",fontWeight:700}}><div>#{index}</div></Col>
+                                <Col span={21} >
+                                    <a href={link} style={{color:"#3f6600",fontWeight:400,fontSize:"15px"}}>
+                                        <Row><Col span={24}>{item.title} </Col></Row>
+                                        <Row><Col span={24}>{item.description} </Col></Row>
+                                    </a>
+                                </Col>
+                                <Col style={{textAlign: "right",color:"#3f6600",fontWeight:400}} span={2}><div>pv:&nbsp;{item.pv}</div></Col>
                             </Row>
+                            <div style={{marginTop: "2px"}}/>
                         </div>
                     }
                     }
