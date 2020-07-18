@@ -10,7 +10,7 @@ func DigProvider() {
 func DigProviderByCfgStr(cfgStr string) {
 	dig.Container.MustProvide(NewNConfig)
 	dig.Container.MustInvoke(func(nCfg *NConfig) {
-		err := nCfg.LoadFromConfigYamlStr(cfgStr)
+		err := nCfg.LoadFromConfigTomlStr(cfgStr)
 		if err != nil {
 			panic(err)
 		}

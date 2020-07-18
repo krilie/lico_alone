@@ -90,7 +90,7 @@ func (cfg *NConfig) LoadConfigByFile(name string) error {
 	}
 }
 
-func (cfg *NConfig) LoadFromConfigYamlStr(cfgStr string) error {
+func (cfg *NConfig) LoadFromConfigTomlStr(cfgStr string) error {
 	cfg.V.SetConfigType("toml")
 	if err := cfg.V.MergeConfig(strings.NewReader(cfgStr)); err != nil {
 		switch err.(type) {
@@ -110,7 +110,7 @@ func (cfg *NConfig) LoadFromConfigYamlStr(cfgStr string) error {
 }
 
 func (cfg *NConfig) LoadDefaultConfig() error {
-	err2 := cfg.LoadFromConfigYamlStr(defaultCfg)
+	err2 := cfg.LoadFromConfigTomlStr(defaultCfg)
 	if err2 != nil {
 		return err2
 	}
