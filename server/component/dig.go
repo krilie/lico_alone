@@ -18,3 +18,13 @@ func DigProvider() {
 	cache.DigProvider()
 	cron.DigProvider()
 }
+
+// dig provider
+func DigProviderTest() {
+	ncfg.DigProviderByCfgStrFromEnv()
+	nlog.DigProvider()
+	ndb.DigProvider()
+	broker.DigProvider()
+	cache.DigProvider()
+	cron.DigProvider()
+}

@@ -1,3 +1,5 @@
+// +build !auto_test
+
 package dao
 
 import (
@@ -6,10 +8,18 @@ import (
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/common/utils/id_util"
+	"github.com/krilie/lico_alone/component"
 	"github.com/krilie/lico_alone/module/module-blog-article/model"
+	"gorm.io/gorm"
 	"testing"
 	"time"
 )
+
+func TestMain(m *testing.M) {
+	component.DigProviderTest()
+	DigProvider()
+	m.Run()
+}
 
 func TestBlogArticleDao_CreateArticle(t *testing.T) {
 	dig.Container.MustInvoke(func(dao *BlogArticleDao) {
@@ -18,7 +28,7 @@ func TestBlogArticleDao_CreateArticle(t *testing.T) {
 				Id:        id_util.GetUuid(),
 				CreatedAt: time.Now(),
 				UpdatedAt: time.Now(),
-				DeletedAt: nil,
+				DeletedAt: gorm.DeletedAt{},
 			},
 			Title:       "123" + id_util.NextSnowflake(),
 			Pv:          0,
@@ -46,7 +56,7 @@ func TestBlogArticleDao_UpdateArticle(t *testing.T) {
 				Id:        "b93b348a-0d93-45d9-9cc4-5b1e4fe5407b",
 				CreatedAt: time.Now(),
 				UpdatedAt: time.Now(),
-				DeletedAt: nil,
+				DeletedAt: gorm.DeletedAt{},
 			},
 			Title:       "123" + id_util.NextSnowflake(),
 			Pv:          10,
