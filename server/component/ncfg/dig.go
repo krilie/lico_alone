@@ -2,11 +2,17 @@ package ncfg
 
 import "github.com/krilie/lico_alone/common/dig"
 
-func init() {
-	dig.Container.MustProvide(NewNConfig)
-}
-
 // DigProvider provider
 func DigProvider() {
 	dig.Container.MustProvide(NewNConfig)
+}
+
+func DigProviderByCfgStr(cfgStr string) {
+	dig.Container.MustProvide(NewNConfig)
+	dig.Container.MustInvoke(func(nCfg *NConfig) {
+		err := nCfg.LoadFromConfigYamlStr(cfgStr)
+		if err != nil {
+			panic(err)
+		}
+	})
 }
