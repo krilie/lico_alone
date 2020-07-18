@@ -2,10 +2,9 @@ package dao
 
 import (
 	"context"
-	"errors"
+	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/module/module-user/model"
-	"gorm.io/gorm"
 )
 
 type IRole interface {
@@ -18,7 +17,7 @@ type IRole interface {
 func (d *UserDao) GetRoleByName(ctx context.Context, name string) (*model.Role, error) {
 	role := new(model.Role)
 	err := d.GetDb(ctx).Model(role).Where("name=?", name).Find(role).Error
-	if err != nil && errors.Is(err, gorm.ErrRecordNotFound) {
+	if err != nil && gorm.IsRecordNotFoundError(err) {
 		return nil, nil
 	}
 	if err != nil {
@@ -30,7 +29,7 @@ func (d *UserDao) GetRoleByName(ctx context.Context, name string) (*model.Role, 
 func (d *UserDao) GetRolesByParentName(ctx context.Context, pName string) ([]*model.Role, error) {
 	role := new([]*model.Role)
 	err := d.GetDb(ctx).Model(role).Where("parent_name=?", pName).Find(role).Error
-	if err != nil && errors.Is(err, gorm.ErrRecordNotFound) {
+	if err != nil && gorm.IsRecordNotFoundError(err) {
 		return nil, nil
 	}
 	if err != nil {

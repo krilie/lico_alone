@@ -2,17 +2,16 @@ package dao
 
 import (
 	"context"
-	"errors"
+	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/module/module-config/model"
-	"gorm.io/gorm"
 )
 
 func (a *ConfigDao) GetConfigByName(ctx context.Context, name string) (*model.Config, error) {
 	config := new(model.Config)
 	err := a.GetDb(ctx).Where("name=?", name).Find(config).Error
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
+		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil
 		}
 		return nil, errs.NewInternal().WithError(err)
@@ -45,7 +44,7 @@ func (a *ConfigDao) DeleteAllConfig(ctx context.Context) error {
 }
 
 func (a *ConfigDao) UpdateConfig(ctx context.Context, config *model.Config) error {
-	err := a.GetDb(ctx).Model(config).Where("name=?", config.Name).Omit("create_time").Updates(config).Error
+	err := a.GetDb(ctx).Model(config).Where("name=?", config.Name).Omit("create_time").Update(config).Error
 	if err != nil {
 		return errs.NewInternal().WithError(err)
 	}

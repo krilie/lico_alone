@@ -3,13 +3,11 @@ package ndb
 import (
 	"context"
 	"fmt"
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/krilie/lico_alone/component/nlog"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 	"runtime/debug"
 	"sync"
 	"time"
@@ -44,44 +42,31 @@ func (ndb *NDb) GetDb(ctx context.Context) *gorm.DB {
 }
 
 func (ndb *NDb) Ping() error {
-	db, err := ndb.db.DB()
-	if err != nil {
-		panic(err)
-	}
-	return db.Ping()
+	return ndb.db.DB().Ping()
 }
 
 func (ndb *NDb) Start() {
 	ndb.onceStartDb.Do(func() {
 		var err error
-		if ndb.db, err = gorm.Open(mysql.Open(ndb.cfg.ConnStr), &gorm.Config{}); err != nil {
+		if ndb.db, err = gorm.Open("mysql", ndb.cfg.ConnStr); err != nil {
 			fmt.Println(err.Error())
 			ndb.log.Fatal(err, string(debug.Stack())) // 报错退出程序
 			return
 		} else {
-			db, err := ndb.db.DB()
-			if err != nil {
-				panic(err)
-				return
-			}
-			db.SetMaxOpenConns(ndb.cfg.MaxOpenConn)
-			db.SetMaxIdleConns(ndb.cfg.MaxIdleConn)
-			db.SetConnMaxLifetime(time.Second * time.Duration(ndb.cfg.ConnMaxLeftTime))
+			ndb.db.DB().SetMaxOpenConns(ndb.cfg.MaxOpenConn)
+			ndb.db.DB().SetMaxIdleConns(ndb.cfg.MaxIdleConn)
+			ndb.db.DB().SetConnMaxLifetime(time.Second * time.Duration(ndb.cfg.ConnMaxLeftTime))
 			ndb.log.Info("db init done. params:", ndb.cfg.ConnStr) // 数据库初始化成功
 			ndb.db = ndb.db.Debug()
-			ndb.db.Logger = &ndbLogger{NLog: ndb.log.WithField("ndb", "ndb")}
-			ndb.db.Logger.LogMode(logger.Info)
+			ndb.db.LogMode(true)
+			ndb.db.SetLogger(ndb.log)
 		}
 	})
 }
 
 func (ndb *NDb) CloseDb() {
 	ndb.onceStopDb.Do(func() {
-		db, err2 := ndb.db.DB()
-		if err2 != nil {
-			panic(err2)
-		}
-		err := db.Close()
+		err := ndb.db.Close()
 		if err != nil {
 			ndb.log.Warn(err)
 		} else {

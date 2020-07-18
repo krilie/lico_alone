@@ -1,17 +1,15 @@
 package ndb
 
 import (
+	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/errs"
-	"gorm.io/gorm"
 )
 
 func pageGetCount(db *gorm.DB, pageSize int) (totalCount, totalPage int, err error) {
-	var totalCount64 int64
-	err = db.Count(&totalCount64).Error
+	err = db.Count(&totalCount).Error
 	if err != nil {
 		return 0, 0, errs.NewInternal().WithError(err)
 	}
-	totalCount = int(totalCount64)
 	if totalCount <= 0 {
 		return 0, 0, nil
 	}

@@ -2,12 +2,11 @@ package dao
 
 import (
 	"context"
-	"errors"
+	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-user/model"
-	"gorm.io/gorm"
 	"time"
 )
 
@@ -48,7 +47,7 @@ func (d *UserDao) DeleteRolePerm(ctx context.Context, roleName, permName string)
 }
 
 func (d *UserDao) HasRolePerm(ctx context.Context, roleName, permName string) (bool, error) {
-	var count int64 = 0
+	count := 0
 	err := d.GetDb(ctx).Model(&model.RolePermission{}).Where(&model.RolePermission{RoleName: roleName, PermissionName: permName}).Count(&count).Error
 	if err != nil {
 		return false, errs.NewInternal().WithError(err)
@@ -63,7 +62,7 @@ func (d *UserDao) GetRolePerm(ctx context.Context, roleName, permName string) (*
 		PermissionName: permName,
 	}).Find(item).Error
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
+		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil
 		}
 		return nil, errs.NewInternal().WithError(err)

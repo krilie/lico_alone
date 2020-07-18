@@ -2,12 +2,11 @@ package dao
 
 import (
 	"context"
-	"errors"
+	"github.com/jinzhu/gorm"
 	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-blog-article/model"
-	"gorm.io/gorm"
 	"time"
 )
 
@@ -33,7 +32,7 @@ func (b *BlogArticleDao) DeleteArticleById(ctx context.Context, id string) (bool
 			Id: id,
 		},
 	}).Error
-	if errors.Is(err, gorm.ErrRecordNotFound) {
+	if gorm.IsRecordNotFoundError(err) {
 		return false, nil
 	} else if err != nil {
 		return false, err
@@ -43,7 +42,7 @@ func (b *BlogArticleDao) DeleteArticleById(ctx context.Context, id string) (bool
 }
 
 func (b *BlogArticleDao) UpdateArticle(ctx context.Context, article *model.Article) error {
-	result := b.GetDb(ctx).Model(new(model.Article)).Select("*").Updates(article)
+	result := b.GetDb(ctx).Model(new(model.Article)).Select("*").Update(article)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -76,7 +75,7 @@ func (b *BlogArticleDao) GetArticleById(ctx context.Context, id string) (article
 	article = new(model.Article)
 	err = b.GetDb(ctx).First(article, "id=?", id).Error
 	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
+		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil
 		}
 		return nil, err

@@ -3,8 +3,8 @@ package ndb
 import (
 	"context"
 	"errors"
+	"github.com/jinzhu/gorm"
 	context2 "github.com/krilie/lico_alone/common/context"
-	"gorm.io/gorm"
 )
 
 func GetTxFromCtx(ctx context.Context) *gorm.DB {
