@@ -23,6 +23,7 @@ require (
 	github.com/krilie/go-smq v0.0.0-20200426063429-520e51d883e3
 	github.com/krilie/s-file v0.0.0-20190906025558-22dc46235d3b
 	github.com/leodido/go-urn v1.2.0 // indirect
+	github.com/magiconair/properties v1.8.0
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/mikespook/gorbac v2.1.0+incompatible
 	github.com/minio/minio-go v6.0.14+incompatible

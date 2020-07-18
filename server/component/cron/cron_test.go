@@ -1,3 +1,5 @@
+// +build !auto_test
+
 package cron
 
 import (
@@ -7,6 +9,11 @@ import (
 	"time"
 )
 
+func TestMain(m *testing.M) {
+	DigProvider()
+	m.Run()
+}
+
 func TestCron(t *testing.T) {
 	c := NewCrone()
 	_, _ = c.AddFunc("*/1 * * * * *", func() {
@@ -15,6 +22,6 @@ func TestCron(t *testing.T) {
 	_, _ = c.AddFunc("@every 2s", func() {
 		fmt.Println("ok 2")
 	})
-	time.Sleep(time.Minute)
+	time.Sleep(time.Second * 10)
 	c.StopAndWait(context.NewContext())
 }
