@@ -2,9 +2,10 @@ package dao
 
 import (
 	"context"
-	"github.com/jinzhu/gorm"
+	"errors"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/module/module-user/model"
+	"gorm.io/gorm"
 )
 
 type IPerm interface {
@@ -21,7 +22,7 @@ func (d *UserDao) GetPermByName(ctx context.Context, name string) (*model.Permis
 		Name: name,
 	}).Find(perm).Error
 	if err != nil {
-		if gorm.IsRecordNotFoundError(err) {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
 		return nil, errs.NewInternal().WithError(err)
@@ -64,7 +65,7 @@ func (d *UserDao) GetPermByMethodPath(ctx context.Context, method, path string) 
 		RefPath:   path,
 	}).Find(perm).Error
 	if err != nil {
-		if gorm.IsRecordNotFoundError(err) {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
 		return nil, errs.NewInternal().WithError(err)
