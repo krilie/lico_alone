@@ -1,3 +1,5 @@
+// +build !auto_test
+
 package file_api
 
 import (
