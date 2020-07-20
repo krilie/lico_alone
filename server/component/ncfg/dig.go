@@ -20,11 +20,13 @@ func DigProviderByCfgStr(cfgStr string) {
 		return cfg
 	})
 }
+
+// json config
 func DigProviderByCfgStrFromEnv() {
 	dig.Container.MustProvide(func() *NConfig {
 		cfg := NewNConfig()
 		cfgStr := os.Getenv("MYAPP_TEST_CONFIG")
-		err := cfg.LoadFromConfigTomlStr(cfgStr)
+		err := cfg.LoadFromConfigJsonStr(cfgStr)
 		if err != nil {
 			panic(err)
 		}

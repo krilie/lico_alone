@@ -109,6 +109,26 @@ func (cfg *NConfig) LoadFromConfigTomlStr(cfgStr string) error {
 	}
 }
 
+func (cfg *NConfig) LoadFromConfigJsonStr(cfgStr string) error {
+	log.Println("================ " + cfgStr)
+	cfg.V.SetConfigType("json")
+	if err := cfg.V.MergeConfig(strings.NewReader(cfgStr)); err != nil {
+		switch err.(type) {
+		case viper.ConfigFileNotFoundError:
+			log.Println("no config find on cfg str gen and use default:", err)
+		default:
+			log.Println(err)
+		}
+		return err
+	} else {
+		err := cfg.V.Unmarshal(cfg.Cfg)
+		if err != nil {
+			return err
+		}
+		return nil
+	}
+}
+
 func (cfg *NConfig) LoadDefaultConfig() error {
 	err2 := cfg.LoadFromConfigTomlStr(defaultCfg)
 	if err2 != nil {
