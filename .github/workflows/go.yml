@@ -28,12 +28,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
+      # 自动化测试时使用的配置信息
       - name: go build and test
         env:
           CGO_ENABLED: 0
         run: |
           cd server
-#           自动化测试时使用的配置信息
           export MYAPP_TEST_CONFIG='${{ secrets.TEST_CONFIG }}'
           export TZ='Asia/Shanghai'
           env
