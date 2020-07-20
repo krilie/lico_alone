@@ -3,25 +3,15 @@
 package service_user
 
 import (
-	"fmt"
 	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-message/model"
 	"github.com/stretchr/testify/assert"
+	"gorm.io/gorm"
 	"testing"
 	"time"
 )
-
-var userService *UserService
-
-func init() {
-	dig.Container.MustInvoke(func(service *UserService) {
-		userService = service
-		fmt.Println("get user service ok")
-	})
-}
 
 func TestUserService_UserRegister(t *testing.T) {
 	err := userService.UserRegister(context.NewContext(), "mobile", "123", "123", "123")
@@ -35,7 +25,7 @@ func TestUserService_UserRegister2(t *testing.T) {
 	phone := id_util.NextSnowflake()
 	code := "123"
 	err := userService.moduleMsg.Dao.CreateMessageValidCode(ctx, &model.MessageValidCode{
-		Model:    com_model.Model{Id: id, CreatedAt: time.Now(), UpdatedAt: time.Now(), DeletedAt: nil},
+		Model:    com_model.Model{Id: id, CreatedAt: time.Now(), UpdatedAt: time.Now(), DeletedAt: gorm.DeletedAt{}},
 		SendTime: time.Now(), PhoneNum: phone, Code: code, Type: model.MessageValidCodeTypeRegister.ToInt(),
 	})
 	CheckErr(t, err)
