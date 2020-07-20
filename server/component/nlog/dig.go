@@ -4,11 +4,9 @@ import (
 	"github.com/krilie/lico_alone/common/dig"
 )
 
-var Log *NLog
+var GLog *NLog
 
-func init() {
+// DigProvider provider
+func DigProvider() {
 	dig.Container.MustProvide(NewLogger)
-	dig.Container.MustInvoke(func(log *NLog) {
-		Log = log
-	})
 }

@@ -30,6 +30,12 @@ func NewStatisticService(broker *broker.Broker, Dao *dao.StatisticDao, log *nlog
 	return svc
 }
 
-func init() {
+// DigProvider provider
+func DigProvider() {
 	dig.Container.MustProvide(NewStatisticService)
+}
+
+func DigProviderAll() {
+	dao.DigProvider()
+	DigProvider()
 }

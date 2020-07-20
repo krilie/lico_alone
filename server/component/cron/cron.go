@@ -2,7 +2,6 @@ package cron
 
 import (
 	"context"
-	"github.com/krilie/lico_alone/common/dig"
 	"github.com/robfig/cron/v3"
 )
 
@@ -29,8 +28,4 @@ func (c *NCron) MustAddFunc(ctx context.Context, spec string, f func()) {
 	if err != nil {
 		panic(err)
 	}
-}
-
-func init() {
-	dig.Container.MustProvide(NewCrone)
 }

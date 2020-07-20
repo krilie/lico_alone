@@ -20,6 +20,13 @@ func NewCarouselModule(dao *dao.CarouselDao, log *nlog.NLog) *CarouselModule {
 	}
 }
 
-func init() {
+// DigProvider provider
+func DigProvider() {
+	dig.Container.MustProvide(NewCarouselModule)
+}
+
+// DigProvider provider
+func DigProviderWithDao() {
+	dao.DigProvider()
 	dig.Container.MustProvide(NewCarouselModule)
 }

@@ -27,6 +27,7 @@ func NewStatisticDao(db *ndb.NDb, log *nlog.NLog) *StatisticDao {
 	}
 }
 
-func init() {
+// DigProvider provider
+func DigProvider() {
 	dig.Container.MustProvide(NewStatisticDao)
 }

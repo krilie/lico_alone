@@ -6,12 +6,15 @@ import (
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/dig"
 	run_env "github.com/krilie/lico_alone/common/run_env"
+	"github.com/krilie/lico_alone/component"
 	"github.com/krilie/lico_alone/component/broker"
 	cron2 "github.com/krilie/lico_alone/component/cron"
 	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
+	"github.com/krilie/lico_alone/module/module"
 	"github.com/krilie/lico_alone/module/module-user/service"
+	service2 "github.com/krilie/lico_alone/module/service"
 	"github.com/krilie/lico_alone/server/http"
 	"os"
 	"os/signal"
@@ -26,7 +29,12 @@ import (
 // @description  api docs for lizo_alone
 // @license.name all right
 func main() {
-	// 开始服务
+	// dig config
+	component.DigProvider()
+	module.DigProviderModule()
+	service2.DigProviderService()
+	http.DigProviderController()
+	// begin service
 	dig.Container.MustInvoke(
 		func(log *nlog.NLog,
 			broker *broker.Broker,

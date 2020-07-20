@@ -4,6 +4,7 @@ import (
 	"github.com/krilie/lico_alone/common/dig"
 )
 
-func init() {
+// DigProvider provider
+func DigProvider() {
 	dig.Container.MustProvide(NewNDb)
 }

@@ -1,3 +1,5 @@
+// +build !auto_test
+
 package service
 
 import (
@@ -5,8 +7,15 @@ import (
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/common/utils/str_util"
+	"github.com/krilie/lico_alone/component"
 	"testing"
 )
+
+func TestMain(m *testing.M) {
+	component.DigProviderTest()
+	DigProviderWithDao()
+	m.Run()
+}
 
 func TestBlogArticleService_QueryArticleSamplePage(t *testing.T) {
 	dig.Container.MustInvoke(func(svc *BlogArticleModule) {

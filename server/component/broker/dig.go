@@ -27,6 +27,7 @@ func (broker *Broker) MustRegister(ctx context.Context, f interface{}) {
 	}
 }
 
-func init() {
+// dig provider
+func DigProvider() {
 	dig.Container.MustProvide(NewBroker)
 }

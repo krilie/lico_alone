@@ -1,3 +1,5 @@
+// +build !auto_test
+
 package ncfg
 
 import (
@@ -7,9 +9,15 @@ import (
 	"testing"
 )
 
+func TestMain(m *testing.M) {
+	DigProvider()
+	m.Run()
+}
+
 func TestGetString(t *testing.T) {
 	dig.Container.MustInvoke(func(cfg *NConfig) {
-		t.Log(cfg.v.WriteConfig())
+		t.Log(cfg.V.WriteConfig())
+		t.Log(str_util.ToJson(cfg.Cfg))
 	})
 }
 
@@ -22,8 +30,8 @@ func TestGetInt(t *testing.T) {
 
 func TestSaveToFile(t *testing.T) {
 	dig.Container.MustInvoke(func(cfg *NConfig) {
-		cfg.v.SetConfigFile("./config.toml")
-		err := cfg.v.WriteConfig()
+		cfg.V.SetConfigFile("./config.toml")
+		err := cfg.V.WriteConfig()
 		t.Log(err)
 	})
 }

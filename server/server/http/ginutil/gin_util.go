@@ -21,13 +21,13 @@ var (
 func GetAppCtxOrAbort(c *gin.Context) *context.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
-		nlog.Log.Error("GetAppCtxOrAbort", "can not get service context for next step")
+		nlog.GLog.Error("GetAppCtxOrAbort", "can not get service context for next step")
 		c.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
 		return nil
 	}
 	contextOrNil := context.GetContextOrNil(value)
 	if contextOrNil == nil {
-		nlog.Log.Error("GetAppCtxOrAbort", "internal err on cast context to app context")
+		nlog.GLog.Error("GetAppCtxOrAbort", "internal err on cast context to app context")
 		c.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
 		return nil
 	}
@@ -51,13 +51,13 @@ func GetUserIdOrAbort(c *gin.Context) string {
 func GetAppCtxOrReturn(c *gin.Context) *context.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
-		nlog.Log.Error("GetAppCtxOrReturn", "can not get service context for next step")
+		nlog.GLog.Error("GetAppCtxOrReturn", "can not get service context for next step")
 		c.JSON(200, com_model.NewRet(errs.NewInternal().WithMsg("ctx not get")))
 		return nil
 	}
 	contextOrNil := context.GetContextOrNil(value)
 	if contextOrNil == nil {
-		nlog.Log.Error("GetAppCtxOrReturn", "internal err on cast context to app context")
+		nlog.GLog.Error("GetAppCtxOrReturn", "internal err on cast context to app context")
 		c.JSON(200, com_model.NewRet(errs.NewInternal().WithMsg("ctx not get is nil")))
 		return nil
 	}
@@ -67,7 +67,7 @@ func GetAppCtxOrReturn(c *gin.Context) *context.Context {
 func MustGetAppCtx(c *gin.Context) *context.Context {
 	value, exists := c.Get(GinKeyAppContext)
 	if !exists {
-		nlog.Log.Panic("GetAppCtxOrReturn", "can not get service context for next step")
+		nlog.GLog.Panic("GetAppCtxOrReturn", "can not get service context for next step")
 		return nil
 	}
 	return context.MustGetContext(value)
@@ -78,7 +78,7 @@ func MustGetUserId(c *gin.Context) string {
 	if ctx.GetUserId() != "" {
 		return ctx.GetUserId()
 	} else {
-		nlog.Log.Panic("must get user id can not get user id.")
+		nlog.GLog.Panic("must get user id can not get user id.")
 		return ""
 	}
 }

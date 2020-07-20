@@ -1,50 +1,50 @@
 package ncfg
 
 var defaultCfg = `
-[http]
-enable_swagger = false
-gin_mode = "debug"
-port = 80
-ssl_pri = ""
-ssl_pub = ""
-url = "http://localhost"
-
-[log]
-log_file = "log.txt"
-log_level = 5
-
-  [log.elf_log]
+[ali_sms]
   key = ""
   secret = ""
-  url = ""
 
 [db]
-conn_str = "root:123456@tcp(localhost:3306)/myapp?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai"
-max_open_conn = 5
-max_idle_conn = 10
-conn_max_left_time = 14400
-
-[file_save]
-oss_key = ""
-oss_secret = ""
-oss_end_point = "http://localhost/static"
-oss_bucket = "static"
-channel = "local"
-
-[jwt]
-normal_exp_duration = 604800
-hs_256_key = "wDcD3LZl*3L$gmsDd#qSXZ2eMPcM#ps^sWWrt5*zsOoZ5hKAzrsm4&$^Tpg2PIDGoh76hEWVWkCv%cSi%aZXnyXJYC#WxWhuMBp"
+  conn_max_left_time = 14400
+  conn_str = "root:123456@tcp(localhost:3306)/myapp?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai"
+  max_idle_conn = 10
+  max_open_conn = 5
 
 [email]
-address = ""
-host = ""
-port = 465
-user_name = ""
-password = ""
+  address = ""
+  host = ""
+  password = ""
+  port = 465
+  user_name = ""
 
-[ali_sms]
-key = ""
-secret = ""
+[file_save]
+  channel = "local"
+  oss_bucket = "static"
+  oss_end_point = "http://localhost/static"
+  oss_key = ""
+  oss_secret = ""
+
+[http]
+  enable_swagger = false
+  gin_mode = "debug"
+  port = 80
+  ssl_pri = ""
+  ssl_pub = ""
+  url = "http://localhost"
+
+[jwt]
+  hs_256_key = "wDcD3LZl*3L$gmsDd#qSXZ2eMPcM#ps^sWWrt5*zsOoZ5hKAzrsm4&$^Tpg2PIDGoh76hEWVWkCv%cSi%aZXnyXJYC#WxWhuMBp"
+  normal_exp_duration = 604800
+
+[log]
+  log_file = ""
+  log_level = 5
+
+  [log.elf_log]
+    key = ""
+    secret = ""
+    url = ""
 `
 
 /**

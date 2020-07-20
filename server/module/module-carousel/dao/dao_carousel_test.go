@@ -1,3 +1,5 @@
+// +build !auto_test
+
 package dao
 
 import (
@@ -5,10 +7,18 @@ import (
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/common/utils/str_util"
+	"github.com/krilie/lico_alone/component"
 	"github.com/krilie/lico_alone/module/module-carousel/model"
+	"gorm.io/gorm"
 	"testing"
 	"time"
 )
+
+func TestMain(m *testing.M) {
+	component.DigProviderTest()
+	DigProvider()
+	m.Run()
+}
 
 func TestCarouselDao_QueryCarousel(t *testing.T) {
 	dig.Container.MustInvoke(func(dao *CarouselDao) {
@@ -18,7 +28,7 @@ func TestCarouselDao_QueryCarousel(t *testing.T) {
 				Id:        "",
 				CreatedAt: time.Time{},
 				UpdatedAt: time.Time{},
-				DeletedAt: &time.Time{},
+				DeletedAt: gorm.DeletedAt{},
 			},
 			Message:  "",
 			Url:      "",
