@@ -16,6 +16,7 @@ import (
 	"github.com/krilie/lico_alone/module/module-user/service"
 	service2 "github.com/krilie/lico_alone/module/service"
 	"github.com/krilie/lico_alone/server/http"
+	_ "go.uber.org/automaxprocs"
 	"os"
 	"os/signal"
 	"syscall"
