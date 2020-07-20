@@ -110,7 +110,6 @@ func (cfg *NConfig) LoadFromConfigTomlStr(cfgStr string) error {
 }
 
 func (cfg *NConfig) LoadFromConfigJsonStr(cfgStr string) error {
-	log.Println("================ " + cfgStr)
 	cfg.V.SetConfigType("json")
 	if err := cfg.V.MergeConfig(strings.NewReader(cfgStr)); err != nil {
 		switch err.(type) {
