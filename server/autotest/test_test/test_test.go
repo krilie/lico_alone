@@ -1,3 +1,5 @@
+// +build auto_test
+
 package test_test
 
 import (
@@ -8,7 +10,7 @@ import (
 )
 
 func TestMain(t *testing.M) {
-	fmt.Println("for test begin")
+	fmt.Println("自动测试dig测试main")
 	dig.Container.MustProvide(func() *int {
 		var i = 2
 		return &i

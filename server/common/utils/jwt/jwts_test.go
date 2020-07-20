@@ -1,3 +1,5 @@
+// +build !auto_test
+
 package jwt
 
 import (
@@ -17,13 +19,13 @@ func TestNewJwtToken(t *testing.T) {
 	userClaims.Iat = time.Now().Unix()
 	//userClaims.Exp = time.Now().Add(time.Hour).Unix()
 	userClaims.Exp = time.Now().Unix() + -1
-	jwtToken, e := GetNewJwtToken(&userClaims)
+	jwtToken, e := GetNewJwtToken([]byte{0x234534}, &userClaims)
 	if e != nil {
 		t.Error(e)
 	} else {
 		t.Log(jwtToken)
 	}
-	claims, e := CheckJwtToken(jwtToken)
+	claims, e := CheckJwtToken([]byte{0x234534}, jwtToken)
 	if e != nil {
 		t.Error(e)
 		eV := e.(*jwt.ValidationError)
@@ -38,7 +40,7 @@ func TestNewJwtToken(t *testing.T) {
 }
 
 func TestCheckJwtToken2(t *testing.T) {
-	claims, err := CheckJwtToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiIiLCJ1c2VyX2lkIjoiMTI1OTQ5MTY2MTA1MDgxMDM2OCIsImlhdCI6MTU4OTIwMzYxOSwiZXhwIjoxNTg5ODA4NDE5LCJqdGkiOiI0N2Q3NzQ0NDcxYTk0Njk2YThlOWQ3MjM0MTljYjdmMSIsImlzcyI6InN5cyJ9.ggFsvQS5WOPLHImsPmiJswrVx6fE7HGrgq9KSIdHRo0")
+	claims, err := CheckJwtToken([]byte{0x34}, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiIiLCJ1c2VyX2lkIjoiMTI1OTQ5MTY2MTA1MDgxMDM2OCIsImlhdCI6MTU4OTIwMzYxOSwiZXhwIjoxNTg5ODA4NDE5LCJqdGkiOiI0N2Q3NzQ0NDcxYTk0Njk2YThlOWQ3MjM0MTljYjdmMSIsImlzcyI6InN5cyJ9.ggFsvQS5WOPLHImsPmiJswrVx6fE7HGrgq9KSIdHRo0")
 	println(str_util.ToJson(claims))
 	println(str_util.ToJson(err.Error()))
 	err1 := err.(*jwt.ValidationError)

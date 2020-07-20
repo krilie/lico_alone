@@ -1,4 +1,4 @@
-// +build !auto_test
+// +build auto_test
 
 package autotest
 
@@ -12,7 +12,7 @@ import (
 //go:generate go test -tags "auto_test" -v ./...
 
 func TestMain(t *testing.M) {
-	fmt.Println("begin auto test")
+	fmt.Println("自动测试外层TestMain")
 	dig.Container.MustProvide(func() *int {
 		var i = 1
 		return &i
@@ -21,8 +21,8 @@ func TestMain(t *testing.M) {
 }
 
 func TestTest(t *testing.T) {
-	t.Log("auto test one")
+	t.Log("自动测试外层测试")
 	dig.Container.MustInvoke(func(i *int) {
-		fmt.Println("auto test one " + strconv.Itoa(*i))
+		fmt.Println("自动测试外层测试一 " + strconv.Itoa(*i))
 	})
 }
