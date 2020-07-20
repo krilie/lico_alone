@@ -1,4 +1,4 @@
-// +build auto_test
+// +build !auto_test
 
 package str_util
 
