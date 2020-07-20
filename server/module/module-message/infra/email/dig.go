@@ -10,10 +10,6 @@ func NewIEmail(cfg *ncfg.NConfig) IEmail {
 	return NewEmail(eCfg.Address, eCfg.Host, eCfg.Port, eCfg.UserName, eCfg.Password)
 }
 
-func init() {
-	dig.Container.MustProvide(NewIEmail)
-}
-
 // DigProvider provider
 func DigProvider() {
 	dig.Container.MustProvide(NewIEmail)

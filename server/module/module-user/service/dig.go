@@ -2,13 +2,15 @@ package service
 
 import (
 	"github.com/krilie/lico_alone/common/dig"
+	"github.com/krilie/lico_alone/module/module-user/dao"
 )
-
-func init() {
-	dig.Container.MustProvide(NewUserModule)
-}
 
 // DigProvider provider
 func DigProvider() {
 	dig.Container.MustProvide(NewUserModule)
+}
+
+func DigProviderAll() {
+	dao.DigProvider()
+	DigProvider()
 }

@@ -10,10 +10,6 @@ func NewAliSms2(cfg *ncfg.NConfig) IAliSms {
 	return NewAliSms(smsCfg.Key, smsCfg.Secret)
 }
 
-func init() {
-	dig.Container.MustProvide(NewAliSms2)
-}
-
 // DigProvider provider
 func DigProvider() {
 	dig.Container.MustProvide(NewAliSms2)

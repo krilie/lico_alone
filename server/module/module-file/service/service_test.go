@@ -1,14 +1,23 @@
+// +build !auto_test
+
 package service
 
 import (
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/common/utils/id_util"
+	"github.com/krilie/lico_alone/component"
 	"github.com/prometheus/common/log"
 	"mime"
 	"strings"
 	"testing"
 )
+
+func TestMain(m *testing.M) {
+	component.DigProviderTest()
+	DigProviderWithDao()
+	m.Run()
+}
 
 func TestFileService_UploadFile(t *testing.T) {
 	dig.Container.MustInvoke(func(svc *FileModule) {

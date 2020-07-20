@@ -21,10 +21,6 @@ func NewController(commonCtrl *ctl_common.CommonCtrl, userCtrl *ctl_user.UserCtr
 	}
 }
 
-func init() {
-	dig.Container.MustProvide(NewController)
-}
-
 // DigProvider provider
 func DigProvider() {
 	dig.Container.MustProvide(NewController)
