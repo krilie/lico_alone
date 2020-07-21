@@ -51,6 +51,15 @@ func TestCustomerDao_GetCustomerByCustomerTraceId(t *testing.T) {
 		customerInfo, err := dao.GetCustomerByCustomerTraceId(context2.NewContext(), test.CustomerTraceId)
 		assert.Equal(t, nil, err, "should no err")
 		assert.NotNil(t, customerInfo, "should not nil")
+		assert.Equal(t, test.CustomerTraceId, customerInfo.CustomerTraceId, "should same")
+	})
+}
+
+func TestCustomerDao_IncreaseAccessTimes(t *testing.T) {
+	dig.Container.MustInvoke(func(dao *CustomerDao) {
+		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
+		err := dao.IncreaseAccessTimes(context2.NewContext(), test.Id, "123", "1234")
+		assert.Nil(t, err, "should not nil")
 	})
 }
 
