@@ -17,7 +17,7 @@ func (a *CarouselDao) QueryCarousel(ctx context.Context, isOnShow *bool) (list [
 	if isOnShow != nil {
 		db = db.Where("is_on_show=?", isOnShow)
 	}
-	db.Order("is_on_show,created_at desc")
+	db.Order("is_on_show desc")
 	list = make([]*model.Carousel, 0)
 	err = db.Find(&list).Error
 	if err != nil {
