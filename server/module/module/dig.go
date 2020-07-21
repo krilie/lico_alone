@@ -4,6 +4,7 @@ import (
 	article_module "github.com/krilie/lico_alone/module/module-blog-article/service"
 	carousel_module "github.com/krilie/lico_alone/module/module-carousel/service"
 	config_module "github.com/krilie/lico_alone/module/module-config/service"
+	customer_module "github.com/krilie/lico_alone/module/module-customer/service"
 	file_module "github.com/krilie/lico_alone/module/module-file/service"
 	message_module "github.com/krilie/lico_alone/module/module-message/service"
 	statistic_module "github.com/krilie/lico_alone/module/module-statistic/service"
@@ -18,4 +19,5 @@ func DigProviderModule() {
 	file_module.DigProviderWithDao()
 	message_module.DigProviderAll()
 	statistic_module.DigProviderAll()
+	customer_module.DigProviderAll()
 }

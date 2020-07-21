@@ -8,6 +8,7 @@ import (
 	service3 "github.com/krilie/lico_alone/module/module-carousel/service"
 	"github.com/krilie/lico_alone/module/module-config/model"
 	"github.com/krilie/lico_alone/module/module-config/service"
+	service4 "github.com/krilie/lico_alone/module/module-customer/service"
 	"time"
 )
 
@@ -15,14 +16,16 @@ type CommonService struct {
 	configService  *service.ConfigModule
 	moduleArticle  *service2.BlogArticleModule
 	moduleCarousel *service3.CarouselModule
+	moduleCustomer *service4.CustomerModule
 	broker         *broker.Broker
 }
 
-func NewCommonService(broker *broker.Broker, moduleArticle *service2.BlogArticleModule, configService *service.ConfigModule, moduleCarousel *service3.CarouselModule) *CommonService {
+func NewCommonService(broker *broker.Broker, moduleCustomer *service4.CustomerModule, moduleArticle *service2.BlogArticleModule, configService *service.ConfigModule, moduleCarousel *service3.CarouselModule) *CommonService {
 	return &CommonService{
 		configService:  configService,
 		moduleArticle:  moduleArticle,
 		moduleCarousel: moduleCarousel,
+		moduleCustomer: moduleCustomer,
 		broker:         broker,
 	}
 }
