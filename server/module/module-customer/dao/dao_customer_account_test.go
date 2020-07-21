@@ -51,6 +51,7 @@ func TestCustomerDao_GetCustomerByCustomerTraceId(t *testing.T) {
 		customerInfo, err := dao.GetCustomerByCustomerTraceId(context2.NewContext(), test.CustomerTraceId)
 		assert.Equal(t, nil, err, "should no err")
 		assert.NotNil(t, customerInfo, "should not nil")
+		assert.Equal(t, test.CustomerTraceId, customerInfo.CustomerTraceId, "should same")
 	})
 }
 

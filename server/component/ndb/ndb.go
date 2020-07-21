@@ -68,9 +68,9 @@ func (ndb *NDb) Start() {
 			db.SetMaxIdleConns(ndb.cfg.MaxIdleConn)
 			db.SetConnMaxLifetime(time.Second * time.Duration(ndb.cfg.ConnMaxLeftTime))
 			ndb.log.Info("db init done. params:", ndb.cfg.ConnStr) // 数据库初始化成功
-			ndb.db = ndb.db.Debug()
-			ndb.db.Logger = &ndbLogger{NLog: ndb.log.WithField("ndb", "ndb")}
+			ndb.db.Logger = &ndbLogger{NLog: ndb.log.WithField("gorm", "gorm-inner")}
 			ndb.db.Logger.LogMode(logger.Info)
+			ndb.db = ndb.db.Debug()
 		}
 	})
 }
