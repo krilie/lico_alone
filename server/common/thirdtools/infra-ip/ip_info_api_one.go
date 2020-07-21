@@ -49,6 +49,14 @@ type IpInfoApiOne struct {
 	Url string
 }
 
+func (i *IpInfoApiOne) GetIpInfoRegionCityOrEmpty(ctx context.Context, ip string) string {
+	info, err := i.GetIpInfo(ctx, ip)
+	if err != nil {
+		return ""
+	}
+	return info.RegionName + "-" + info.City
+}
+
 func NewIpInfoApiOne() *IpInfoApiOne {
 	return &IpInfoApiOne{Url: "http://ip-api.com/json"}
 }

@@ -4,10 +4,10 @@ import (
 	"github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/dig"
+	infra_ip "github.com/krilie/lico_alone/common/thirdtools/infra-ip"
 	"github.com/krilie/lico_alone/component/broker"
 	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/module-statistic/dao"
-	infra_ip "github.com/krilie/lico_alone/module/module-statistic/infra-ip"
 )
 
 type StatisticService struct {

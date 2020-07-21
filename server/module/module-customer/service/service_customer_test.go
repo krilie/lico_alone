@@ -46,3 +46,10 @@ func TestCustomerModule_GetOrCreateCustomerAccountByTraceId(t *testing.T) {
 		assert.Equal(t, "123", account.LastAccessIp, "应该有值")
 	})
 }
+
+func TestCustomerModule_IncreaseCustomerAccessTimesByTraceId(t *testing.T) {
+	dig.Container.MustInvoke(func(svc *CustomerModule) {
+		err := svc.IncreaseCustomerAccessTimesByTraceId(context2.NewContext(), id_util.NextSnowflake(), "4432")
+		assert.Nil(t, err, "should nil")
+	})
+}

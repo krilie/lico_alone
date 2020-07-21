@@ -55,6 +55,14 @@ func TestCustomerDao_GetCustomerByCustomerTraceId(t *testing.T) {
 	})
 }
 
+func TestCustomerDao_IncreaseAccessTimes(t *testing.T) {
+	dig.Container.MustInvoke(func(dao *CustomerDao) {
+		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
+		err := dao.IncreaseAccessTimes(context2.NewContext(), test.Id, "123", "1234")
+		assert.Nil(t, err, "should not nil")
+	})
+}
+
 func AddCustomerDataForTest(t *testing.T, ctx context.Context, dao *CustomerDao) *model.CustomerAccount {
 	customerModel := &model.CustomerAccount{
 		Model: com_model.Model{

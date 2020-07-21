@@ -13,4 +13,5 @@ type IpInfoCommon struct {
 
 type IIpInfo interface {
 	GetIpInfo(ctx context.Context, ip string) (*IpInfoCommon, error)
+	GetIpInfoRegionCityOrEmpty(ctx context.Context, ip string) string
 }

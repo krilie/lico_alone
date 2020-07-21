@@ -14,21 +14,12 @@ func (svc *CustomerModule) CreateCustomerAccount(ctx context.Context, item *mode
 	id = id_util.GetUuid()
 	err = svc.Dao.CreateCustomerAccount(ctx, &model.CustomerAccount{
 		Model: com_model.Model{
-			Id:        id,
-			CreatedAt: time.Now(),
-			UpdatedAt: time.Now(),
-			DeletedAt: gorm.DeletedAt{
-				Time:  time.Time{},
-				Valid: false,
-			},
+			Id: id, CreatedAt: time.Now(), UpdatedAt: time.Now(),
+			DeletedAt: gorm.DeletedAt{Time: time.Time{}, Valid: false},
 		},
-		CustomerTraceId: item.CustomerTraceId,
-		LoginName:       item.LoginName,
-		Password:        item.Password,
-		LastAccessIp:    item.LastAccessIp,
-		Mobile:          item.Mobile,
-		Email:           item.Email,
-		Other:           item.Other,
+		CustomerTraceId: item.CustomerTraceId, LoginName: item.LoginName, Password: item.Password,
+		LastAccessIp: item.LastAccessIp, LastAccessAddr: svc.ipApi.GetIpInfoRegionCityOrEmpty(ctx, item.LastAccessIp), AccessTimes: 0,
+		Mobile: item.Mobile, Email: item.Email, Other: item.Other,
 	})
 	return id, err
 }
@@ -54,4 +45,13 @@ func (svc *CustomerModule) GetOrCreateCustomerAccountByTraceId(ctx context.Conte
 		return nil, err
 	}
 	return svc.Dao.GetCustomerByCustomerId(ctx, customerId)
+}
+
+func (svc *CustomerModule) IncreaseCustomerAccessTimesByTraceId(ctx context.Context, traceId, ip string) error {
+	customer, err := svc.GetOrCreateCustomerAccountByTraceId(ctx, traceId, ip)
+	if err != nil {
+		return err
+	}
+	err = svc.Dao.IncreaseAccessTimes(ctx, customer.Id, ip, svc.ipApi.GetIpInfoRegionCityOrEmpty(ctx, ip))
+	return err
 }
