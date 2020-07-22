@@ -1,6 +1,6 @@
 import React from "react";
 import "./SlidePictures.less"
-import {Carousel, Col, Row} from "antd";
+import {Carousel} from "antd";
 import {GetCarouselPicData} from "../../api/ApiCommon";
 import CodeBlock from "../mark_down/CodeBlock";
 import ReactMarkdown from "react-markdown";
@@ -34,31 +34,22 @@ class SlidePictures extends React.Component {
 
     render() {
         const {data} = this.state
-        // height 250
-        const dataView = data.map(val => <div key={val.id}>
-            <Row>
-                <Col flex="2">
-                    <img src={val.url + "?imageView2/2/h/250"} height="250px" width="auto" alt={"img"}/>
-                </Col>
-                <Col flex="3">
-                    <div style={{textAlign: "center", color: "white"}}>
-                        <ReactMarkdown className="markdown-content2 markdown-body"
-                                       renderers={{
-                                           code: CodeBlock,
-                                           // heading: HeadingBlock
-                                       }}
-                                       escapeHtml={false}
-                                       skipHtml={false}
-                                       source={val.message}
-                        />
-                    </div>
-                </Col>
-            </Row>
-        </div>)
-
+        const dataView3 = data.map(val =>
+            <div className="div-relative">
+                <img src={val.url + "?imageView2/3/w/400/h/225"} alt={"img"}/>
+                <div className="div-text-area">
+                    <ReactMarkdown
+                        className="markdown-content-carousel-view markdown-body"
+                        renderers={{code: CodeBlock,}}
+                        escapeHtml={false}
+                        skipHtml={false}
+                        source={val.message}
+                    />
+                </div>
+            </div>)
         return (
-            <Carousel className="carousels" autoplay dotPosition='bottom'>
-                {dataView}
+            <Carousel className="carousels" autoplay dotPosition='top'>
+                {dataView3}
             </Carousel>
         );
     }

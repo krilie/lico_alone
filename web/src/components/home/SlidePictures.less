@@ -1,37 +1,57 @@
+@import "../../utils/common";
 
-.onlypushimgsrc {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.carousels{
-  div{
-    height: 250px;
-    width: 100%;
+.carousels {
+  background-color: rgba(243, 233, 219, 0.2);
+  .div {
+    height: 225px;
+    width: 400px;
   }
-  .ant-carousel{
-    height: 100%;
-    width: 100%;
+  .img {
+    max-width: 400px;
+    max-height: 225px;
   }
-}
 
-.v-center {
-  text-align: center;
-  vertical-align: center;
-}
+  .ant-carousel {
+    height: 225px;
+    width: 400px;
+  }
 
-.markdown-content2{
-  h1 {color: white !important;}
-  h2 {color: white !important;}
-  h3 {color: white !important;}
-  h4 {color: white !important;}
-  h5 {color: white !important;}
-  h6 {color: white !important;}
-  padding-top: 10px;
-  padding-left: 10px;
-  text-align: left;
-  font-weight: normal;
-  color: white !important;
+  .markdown-content-carousel-view {
+
+    h1 {
+      color: white !important;
+    }
+
+    h2 {
+      color: white !important;
+    }
+
+    h3 {
+      color: white !important;
+    }
+
+    h4 {
+      color: white !important;
+    }
+
+    h5 {
+      color: white !important;
+    }
+
+    h6 {
+      color: white !important;
+    }
+    padding: 3px;
+    color: white !important;
+    .font-big;
+    .text-left
+  }
+
+  .div-relative {
+    position:relative;
+  }
+  .div-text-area{
+    background-color: rgba(0, 0, 0, 0.25);
+    position:absolute; z-index:2; left:10px; top:10px
+  }
 }

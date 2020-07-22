@@ -181,7 +181,6 @@ class ArticleEditPage extends Component {
                         </Form.Item>
                     </div>
                 </Col>
-
             </Row>
         </Form>
 

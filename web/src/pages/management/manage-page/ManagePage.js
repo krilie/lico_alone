@@ -41,18 +41,10 @@ export default class ManagePage extends React.Component {
                           className="sider-layout-background"
                           mode="inline"
                           defaultSelectedKeys={['4']}>
-                        <Menu.Item className="v-center" key="/management/manage/setting">
-                            设置
-                        </Menu.Item>
-                        <Menu.Item className="v-center" key="/management/manage/files">
-                            文件
-                        </Menu.Item>
-                        <Menu.Item className="v-center" key="/management/manage/carousel">
-                            轮播图
-                        </Menu.Item>
-                        <Menu.Item className="v-center" key="/management/manage/article">
-                            Article
-                        </Menu.Item>
+                        <Menu.Item className="v-center" key="/management/manage/setting">设置</Menu.Item>
+                        <Menu.Item className="v-center" key="/management/manage/files">文件</Menu.Item>
+                        <Menu.Item className="v-center" key="/management/manage/carousel">轮播图</Menu.Item>
+                        <Menu.Item className="v-center" key="/management/manage/article">Article</Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout className="manage-layout">

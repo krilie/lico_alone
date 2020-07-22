@@ -1,3 +1,5 @@
+@import "../../utils/common";
+
 .setting-text-area {
   font-size: 18px;
 }
@@ -5,25 +7,29 @@
 .extra-area-button {
   margin: 10px;
 }
+
 .setting-card-title {
-  padding: 3px;
-  margin: 3px;
+  .margin-padding-3
 }
+
 .setting-card-style {
-  .ant-card-head-title{
-    padding: 0;
-    margin: 0;
-  }
-  .ant-card-head{
-    min-height: unset;
-    padding: 0;
-    margin: 0;
-  }
-  .ant-card-body {
-    padding: 0;
-    margin: 0;
+  .ant-card-head-title {
+    .no-margin-padding
   }
 
+  .ant-card-head {
+    min-height: unset;
+    .no-margin-padding
+  }
+
+  .ant-card-body {
+    .no-margin-padding
+  }
+
+  .margin-padding-3
+}
+
+.margin-padding-3 {
   padding: 3px;
   margin: 3px;
 }
