@@ -4,6 +4,7 @@ import (
 	"github.com/krilie/lico_alone/common/com-model"
 )
 
+// Article 标签实现太麻烦
 type Article struct {
 	com_model.Model
 	Title       string `json:"title" gorm:"column:title;type:varchar(256);not null"`
