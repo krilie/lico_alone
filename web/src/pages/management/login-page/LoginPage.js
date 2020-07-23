@@ -12,18 +12,12 @@ export default class LoginPage extends React.Component {
 
     componentDidMount() {
         const token = GetUserToken();
-        if (token !== "")
-            this.goToPage("/management/manage");
+        if (token !== "") this.goToPage("/management/manage");
     }
+    goToPage = path => this.props.history.push(path);
 
-    goToPage = path => {
-        this.props.history.push(path);
-    };
 
-    setToken(token) {
-        SetUserToken(token)
-    }
-
+    setToken(token) {SetUserToken(token)}
 
     render() {
         const layout = {
@@ -46,14 +40,10 @@ export default class LoginPage extends React.Component {
             }).then(err => {
                 if (err !== undefined)
                     message.error(err.toString())
-            }).finally(() => {
-
-            })
+            }).finally(() => {})
         };
 
-        const onFinishFailed = errorInfo => {
-            console.log('Failed:', errorInfo);
-        };
+        const onFinishFailed = errorInfo => console.log('Failed:', errorInfo);
 
         const form = <Form
             {...layout}

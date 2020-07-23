@@ -43,7 +43,6 @@ class CarouselCreateUpdateModal extends Component {
     // 更新Carousel
     updateCarousel = () => {
         const {success} = this.props
-        // id is_on_show message url
         const data = {
             id: this.formRef.current.getFieldValue("id"),
             is_on_show: this.formRef.current.getFieldValue("is_on_show"),
@@ -63,8 +62,6 @@ class CarouselCreateUpdateModal extends Component {
     // 创建
     createCarousel = () => {
         const {success} = this.props
-        // is_on_show message url
-        // id is_on_show message url
         const data = {
             is_on_show: this.formRef.current.getFieldValue("is_on_show"),
             message: this.formRef.current.getFieldValue("message"),

@@ -1,5 +1,5 @@
 import React from "react";
-import "./Article.less"
+import "./ArticleDetailPage.less"
 import {getArticleById} from "../../api/ApiCommon";
 import ReactMarkdown from "react-markdown/with-html";
 import "github-markdown-css"
@@ -27,7 +27,6 @@ export default class ArticleDetailPage extends React.Component {
                 article: data
             })
         })
-
     }
 
     render() {
@@ -36,19 +35,16 @@ export default class ArticleDetailPage extends React.Component {
             return <div> {articleId} wait...</div>
         } else {
             return (
-                <div style={{ padding: "20px", maxWidth: "1000px", textAlign: "center", margin: "auto"}}>
-
+                <div className="article-detail"
+                     style={{padding: "20px", maxWidth: "1000px", textAlign: "center", margin: "auto"}}>
                     <ReactMarkdown className="markdown-body markdown-content"
-                                   renderers={{
-                                       code: CodeBlock,
-                                       // heading: HeadingBlock
-                                   }}
+                                   renderers={{code: CodeBlock,}}
                                    escapeHtml={false}
                                    skipHtml={false}
                                    source={article.content}
                     />
-                    <div style={{textAlign:"right",color:"#ff9900"}}>
-                        标题:&nbsp;{article.title}&nbsp;&nbsp;创建时间:&nbsp;{article.created_at}&nbsp;共访问{article.pv}次
+                    <div className="article-foot-info">
+                        {article.title}&nbsp;{article.created_at}&nbsp;共访问{article.pv}次
                     </div>
                 </div>
             );

@@ -66,14 +66,12 @@ export default class Article extends React.Component {
         const {loading, articleList, moreButtonText} = this.state;
         const loadMore =
             (
-                <div
-                    style={{
-                        textAlign: 'center',
-                        marginTop: 12,
-                        height: 32,
-                        lineHeight: '32px',
-                    }}
-                >
+                <div style={{
+                    textAlign: 'center',
+                    marginTop: 12,
+                    height: 32,
+                    lineHeight: '32px',
+                }}>
                     <Button type="link" onClick={this.loadData}>{moreButtonText}</Button>
                 </div>
             );
@@ -92,18 +90,22 @@ export default class Article extends React.Component {
                     itemLayout="horizontal"
                     loadMore={loadMore}
                     dataSource={articleList}
-                    renderItem={(item,index) => {
+                    renderItem={(item, index) => {
                         const link = "/article/" + item.id
                         return <div className="article-item-view">
                             <Row>
-                                <Col span={1} style={{color:"#3f6600",fontWeight:700}}><div>#{index}</div></Col>
-                                <Col span={21} >
-                                    <a href={link} style={{color:"#3f6600",fontWeight:400,fontSize:"15px"}}>
+                                <Col span={1} style={{minWidth:"20px",color: "#3f6600", fontWeight: 700}}>
+                                    <div>#{index}</div>
+                                </Col>
+                                <Col span={21}>
+                                    <a href={link} style={{color: "#3f6600", fontWeight: 400, fontSize: "15px"}}>
                                         <Row><Col span={24}>{item.title} </Col></Row>
                                         <Row><Col span={24}>{item.description} </Col></Row>
                                     </a>
                                 </Col>
-                                <Col style={{textAlign: "right",color:"#3f6600",fontWeight:400}} span={2}><div>pv:&nbsp;{item.pv}</div></Col>
+                                <Col style={{textAlign: "right", color: "#3f6600", fontWeight: 400}} span={2}>
+                                    <div>pv:&nbsp;{item.pv}</div>
+                                </Col>
                             </Row>
                             <div style={{marginTop: "2px"}}/>
                         </div>

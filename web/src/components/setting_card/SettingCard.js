@@ -41,16 +41,17 @@ export default class SettingCard extends React.Component {
         const extra = <Button type="primary"
                               className="extra-area-button" size="large"
                               onClick={this.onCommitSetting}>保存</Button>
-        const title = <div className="setting-card-title">
-            <Row>
-                <Col span={12}>项目:{name}</Col>
-                <Col span={12} style={{textAlign:"right"}}>创建时间:{create_time}</Col>
+        const title =
+            <Row className="setting-card-title">
+                <Col span={12}>{name}</Col>
+                <Col span={12} style={{textAlign: "right"}}>创建时间:{create_time}</Col>
             </Row>
-        </div>
-        return <Card className="setting-card-style"
-                     title={title}>
-            <TextArea className="setting-text-area" rows={3} onChange={(e) => this.upDataSetting(e)} defaultValue={value}/>
-            <div style={{textAlign:"right"}}>{extra}</div>
+        return <Card className="setting-card-style" title={title}>
+            <TextArea className="setting-text-area"
+                      rows={3}
+                      onChange={(e) => this.upDataSetting(e)}
+                      defaultValue={value}/>
+            <div className="text-right">{extra}</div>
         </Card>
     }
 }
