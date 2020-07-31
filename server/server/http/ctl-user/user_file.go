@@ -2,10 +2,12 @@ package ctl_user
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/juju/ratelimit"
 	com_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/module/module-file/model"
 	"github.com/krilie/lico_alone/server/http/ginutil"
+	"io/ioutil"
 )
 
 // 文件上传
@@ -23,6 +25,12 @@ import (
 // @Failure 500 {string} errInfo
 // @Router /api/manage/file/upload [POST]
 func (a *UserCtrl) UpdateFile(c *gin.Context) {
+	// 限制速度 150kb/s
+	oriBody := c.Request.Body
+	limitBucket := ratelimit.NewBucketWithRate(150*1024, 150*1024)
+	c.Request.Body = ioutil.NopCloser(ratelimit.Reader(oriBody, limitBucket))
+	defer func() { c.Request.Body = oriBody }()
+	// 请求
 	ctx := ginutil.MustGetAppCtx(c)
 	file, err := c.FormFile("file")
 	if err != nil {

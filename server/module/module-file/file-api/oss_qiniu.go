@@ -2,7 +2,6 @@ package file_api
 
 import (
 	"context"
-	"github.com/juju/ratelimit"
 	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/qiniu/api.v7/v7/auth/qbox"
 	"github.com/qiniu/api.v7/v7/storage"
@@ -39,11 +38,8 @@ func (o *OssQiNiu) UploadFile(ctx context.Context, fileName string, fileStream i
 			"x:name": "github logo",
 		},
 	}
-	// 限制速度 150kb/s
-	bucket := ratelimit.NewBucketWithRate(150*1024, 150*1024)
-	limitReader := ratelimit.Reader(fileStream, bucket)
 	// 上传
-	err = formUploader.Put(ctx, &ret, upToken, fileName, limitReader, fileSize, &putExtra)
+	err = formUploader.Put(ctx, &ret, upToken, fileName, fileStream, fileSize, &putExtra)
 	if err != nil {
 		return "", "", err
 	}
