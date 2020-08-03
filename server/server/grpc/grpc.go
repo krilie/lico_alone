@@ -10,5 +10,6 @@ import (
 type GRpcService struct{}
 
 func (G *GRpcService) Search(ctx context.Context, test *proto.Test) (*proto.Test, error) {
+	println("在服务端 有请求。。")
 	return test, nil
 }
