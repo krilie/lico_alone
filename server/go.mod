@@ -19,6 +19,7 @@ require (
 	github.com/go-redis/redis/v7 v7.0.0-beta.5
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gomodule/redigo v2.0.0+incompatible
+	github.com/juju/ratelimit v1.0.1
 	github.com/krilie/go-smq v0.0.0-20200426063429-520e51d883e3
 	github.com/krilie/s-file v0.0.0-20190906025558-22dc46235d3b
 	github.com/leodido/go-urn v1.2.0 // indirect
@@ -49,5 +50,5 @@ require (
 	gopkg.in/ini.v1 v1.46.0 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 	gorm.io/driver/mysql v0.3.0
-	gorm.io/gorm v0.2.20
+	gorm.io/gorm v0.2.24
 )

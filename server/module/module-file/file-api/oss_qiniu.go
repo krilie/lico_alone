@@ -38,6 +38,7 @@ func (o *OssQiNiu) UploadFile(ctx context.Context, fileName string, fileStream i
 			"x:name": "github logo",
 		},
 	}
+	// 上传
 	err = formUploader.Put(ctx, &ret, upToken, fileName, fileStream, fileSize, &putExtra)
 	if err != nil {
 		return "", "", err
