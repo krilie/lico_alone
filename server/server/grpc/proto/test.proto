@@ -25,3 +25,7 @@ message Test {
     Child child = 9;
     map<string, string> dict = 10;
 }
+
+service SearchService {
+    rpc Search (Test) returns (Test) {}
+}
