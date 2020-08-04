@@ -18,6 +18,7 @@ require (
 	github.com/go-playground/locales v0.13.0 // indirect
 	github.com/go-redis/redis/v7 v7.0.0-beta.5
 	github.com/go-sql-driver/mysql v1.5.0
+	github.com/golang/protobuf v1.4.2
 	github.com/gomodule/redigo v2.0.0+incompatible
 	github.com/juju/ratelimit v1.0.1
 	github.com/krilie/go-smq v0.0.0-20200426063429-520e51d883e3
@@ -41,8 +42,13 @@ require (
 	github.com/swaggo/swag v1.6.7
 	go.uber.org/automaxprocs v1.3.0
 	go.uber.org/dig v1.9.0
-	golang.org/x/net v0.0.0-20200602114024-627f9648deb9 // indirect
+	golang.org/x/net v0.0.0-20200707034311-ab3426394381 // indirect
+	golang.org/x/sys v0.0.0-20200802091954-4b90ce9b60b3 // indirect
+	golang.org/x/text v0.3.3 // indirect
 	golang.org/x/tools v0.0.0-20200603131921-a45abac6c9c7 // indirect
+	google.golang.org/genproto v0.0.0-20200731012542-8145dea6a485 // indirect
+	google.golang.org/grpc v1.31.0
+	google.golang.org/protobuf v1.25.0
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/go-playground/validator.v8 v8.18.2
 	gopkg.in/go-playground/validator.v9 v9.30.0
