@@ -2,6 +2,7 @@ package service_user
 
 import (
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
+	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/krilie/lico_alone/component/nlog"
 	service2 "github.com/krilie/lico_alone/module/module-blog-article/service"
 	service4 "github.com/krilie/lico_alone/module/module-carousel/service"
@@ -21,6 +22,7 @@ type UserService struct {
 	ModuleFile      *service3.FileModule
 	ModuleCarousel  *service4.CarouselModule
 	ModuleStatistic *service5.StatisticService
+	NCfg            *ncfg.NConfig
 }
 
 func (a *UserService) GetAuthFace() *service.UserModule {
@@ -36,6 +38,7 @@ func NewUserService(
 	moduleMsg *MessageService.MessageModule,
 	moduleCarousel *service4.CarouselModule,
 	moduleStatistic *service5.StatisticService,
+	nCfg *ncfg.NConfig,
 ) *UserService {
 	log = log.WithField(context_enum.Module.Str(), "service user")
 	return &UserService{
@@ -47,5 +50,6 @@ func NewUserService(
 		ModuleFile:      moduleFile,
 		ModuleCarousel:  moduleCarousel,
 		ModuleStatistic: moduleStatistic,
+		NCfg:            nCfg,
 	}
 }

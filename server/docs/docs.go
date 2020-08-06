@@ -963,6 +963,45 @@ var doc = `{
                 }
             }
         },
+        "/api/user/init_app": {
+            "get": {
+                "description": "用户初始化数据",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户"
+                ],
+                "summary": "用户初始化",
+                "operationId": "用户初始化",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/service_user.InitAppData"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/login": {
             "post": {
                 "description": "用户用密码登录",
@@ -1453,6 +1492,20 @@ var doc = `{
                 },
                 "url": {
                     "description": "图片地址",
+                    "type": "string"
+                }
+            }
+        },
+        "service_user.InitAppData": {
+            "type": "object",
+            "properties": {
+                "build_time": {
+                    "type": "string"
+                },
+                "git_sha": {
+                    "type": "string"
+                },
+                "version": {
                     "type": "string"
                 }
             }
