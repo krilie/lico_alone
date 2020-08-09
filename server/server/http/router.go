@@ -89,6 +89,7 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 	//检查权限的分组
 	checkToken := apiGroup.Group("")
 	checkToken.Use(middleware.CheckAuthToken(auth))
+	checkToken.GET("/user/init_app", ctrl.userCtrl.InitApp)
 	checkToken.GET("/manage/setting/get_setting_all", ctrl.userCtrl.ManageGetConfigList)
 	checkToken.POST("/manage/setting/update_config", ctrl.userCtrl.ManageUpdateConfig)
 	checkToken.GET("/manage/article/query", ctrl.userCtrl.QueryArticle)
