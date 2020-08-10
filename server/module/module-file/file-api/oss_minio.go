@@ -29,7 +29,7 @@ func (f *OssMinio) GetBucketName(ctx context.Context) string {
 	return f.BucketName
 }
 
-func (f *OssMinio) UploadFile(ctx context.Context, name string, file io.ReadSeeker, size int64) (url string, key string, err error) {
+func (f *OssMinio) UploadFile(ctx context.Context, fileName string, fileStream io.Reader, fileSize int64) (url, key string, err error) {
 	content, err := file_util.GetContentType(file)
 	if err != nil {
 		return "", "", err

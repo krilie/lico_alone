@@ -19,7 +19,7 @@ type OssQiNiu struct {
 	qboxMac    *qbox.Mac
 }
 
-func (o *OssQiNiu) UploadFile(ctx context.Context, fileName string, fileStream io.ReadSeeker, fileSize int64) (url, key string, err error) {
+func (o *OssQiNiu) UploadFile(ctx context.Context, fileName string, fileStream io.Reader, fileSize int64) (url, key string, err error) {
 	putPolicy := storage.PutPolicy{
 		Scope: o.BucketName,
 	}

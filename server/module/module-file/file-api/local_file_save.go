@@ -20,7 +20,7 @@ func (o *LocalFileSave) GetBucketName(ctx context.Context) string {
 	return ""
 }
 
-func (o *LocalFileSave) UploadFile(ctx context.Context, fileName string, fileStream io.ReadSeeker, fileSize int64) (url, key string, err error) {
+func (o *LocalFileSave) UploadFile(ctx context.Context, fileName string, fileStream io.Reader, fileSize int64) (url, key string, err error) {
 	_, key, err = o.File.SaveFile(ctx, fileName, fileStream)
 	if err != nil {
 		return "", "", err

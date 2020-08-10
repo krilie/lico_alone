@@ -25,23 +25,40 @@ import (
 func (a *UserCtrl) UploadFile(c *gin.Context) {
 	// 请求
 	ctx := ginutil.MustGetAppCtx(c)
-	err := c.Request.ParseMultipartForm(1024 * 1024 * 5) // 5mb放在内存中 超过放在临时文件中
+
+	////NOTE: 使用临时文件缓存
+	//err := c.Request.ParseMultipartForm(1024 * 1024 * 5) // 5mb放在内存中 超过放在临时文件中
+	//if err != nil {
+	//	ginutil.ReturnFailure(c, errs.ErrorInternal, err.Error())
+	//	return
+	//}
+	//file, err := c.FormFile("file")
+	//if err != nil {
+	//	ginutil.ReturnFailure(c, errs.ErrorParam, "no file found")
+	//	return
+	//}
+	//f, err := file.Open()
+	//if err != nil {
+	//	ginutil.ReturnFailure(c, errs.ErrorInternal, err.Error())
+	//	return
+	//}
+	//defer f.Close()
+
+	reader, err := c.Request.MultipartReader()
 	if err != nil {
-		ginutil.ReturnFailure(c, errs.ErrorInternal, err.Error())
+		ginutil.ReturnWithErr(c, err)
 		return
 	}
-	file, err := c.FormFile("file")
+	part, err := reader.NextPart()
 	if err != nil {
-		ginutil.ReturnFailure(c, errs.ErrorParam, "no file found")
+		ginutil.ReturnWithErr(c, err)
 		return
 	}
-	f, err := file.Open()
-	if err != nil {
-		ginutil.ReturnFailure(c, errs.ErrorInternal, err.Error())
-		return
+	if part.FileName() != "file" {
+		ginutil.ReturnWithAppErr(c, errs.NewParamError().WithMsg("no file found check your param name"))
 	}
-	defer f.Close()
-	url, bucket, key, err := a.userService.UploadFile(ctx, ctx.UserId, file.Filename, f, int(file.Size))
+
+	url, bucket, key, err := a.userService.UploadFile(ctx, ctx.UserId, part.FileName(), part, int(part.Header.Get("size")))
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return
