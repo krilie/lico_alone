@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/gin-contrib/gzip"
+	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/component/ncfg"
 	_ "github.com/krilie/lico_alone/docs"
@@ -24,24 +25,25 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 	// 设置gin mode
 	gin.SetMode(httpCfg.GinMode)
 	// 路径设置 根路径
-	RootRouter := gin.Default() // logger recover
+	rootRouter := gin.Default()         // logger recover
+	pprof.Register(rootRouter, "pprof") // 性能
 	// 跨域
-	RootRouter.Use(Cors())
+	rootRouter.Use(Cors())
 	// 静态文件 图片等
 	if fileCfg.Channel == "local" {
-		RootRouter.StaticFile("/files", fileCfg.OssBucket)
+		rootRouter.StaticFile("/files", fileCfg.OssBucket)
 	}
 	// swagger + gzip压缩
 	if httpCfg.EnableSwagger {
-		RootRouter.GET("/swagger/*any", gzip.Gzip(gzip.DefaultCompression), ginSwagger.WrapHandler(swaggerFiles.Handler))
+		rootRouter.GET("/swagger/*any", gzip.Gzip(gzip.DefaultCompression), ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 
 	// 健康检查
-	RootRouter.GET("health/", ctrl.healthCheckCtrl.Hello)
-	RootRouter.GET("health/ping", ctrl.healthCheckCtrl.Ping)
+	rootRouter.GET("health/", ctrl.healthCheckCtrl.Hello)
+	rootRouter.GET("health/ping", ctrl.healthCheckCtrl.Ping)
 
 	// web 网页
-	webRouter := RootRouter.Group("/")
+	webRouter := rootRouter.Group("/")
 	webRouter.Use(gzip.Gzip(gzip.DefaultCompression)) // 开启gzip压缩
 	dir, err := ioutil.ReadDir("./www")
 	if err != nil {
@@ -58,7 +60,7 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 		}
 	}
 	// 重定向
-	RootRouter.NoRoute(func(c *gin.Context) {
+	rootRouter.NoRoute(func(c *gin.Context) {
 		if c.Request.Method != "GET" {
 			c.String(404, "page not found")
 			return
@@ -72,12 +74,12 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 			}
 		}
 		c.Request.URL.Path = "/"
-		RootRouter.HandleContext(c)
+		rootRouter.HandleContext(c)
 		return
 	})
 
 	// api路由 + 中间件
-	apiGroup := RootRouter.Group("/api")
+	apiGroup := rootRouter.Group("/api")
 	apiGroup.Use(middleware.BuildContext())
 
 	// 不检查权限的分组
@@ -89,6 +91,7 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 	//检查权限的分组
 	checkToken := apiGroup.Group("")
 	checkToken.Use(middleware.CheckAuthToken(auth))
+	checkToken.GET("/user/init_app", ctrl.userCtrl.InitApp)
 	checkToken.GET("/manage/setting/get_setting_all", ctrl.userCtrl.ManageGetConfigList)
 	checkToken.POST("/manage/setting/update_config", ctrl.userCtrl.ManageUpdateConfig)
 	checkToken.GET("/manage/article/query", ctrl.userCtrl.QueryArticle)
@@ -96,7 +99,7 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 	checkToken.POST("/manage/article/update", ctrl.userCtrl.UpdateArticle)
 	checkToken.POST("/manage/article/delete", ctrl.userCtrl.DeleteArticle)
 	checkToken.POST("/manage/article/create", ctrl.userCtrl.CreateArticle)
-	checkToken.POST("/manage/file/upload", middleware.OpsLimit(1), middleware.RateLimit(), ctrl.userCtrl.UploadFile)
+	checkToken.POST("/manage/file/upload", middleware.OpsLimit(1), ctrl.userCtrl.UploadFile)
 	checkToken.POST("/manage/file/delete", ctrl.userCtrl.DeleteFile)
 	checkToken.GET("/manage/file/query", ctrl.userCtrl.QueryFile)
 	checkToken.GET("/manage/carousel/query", ctrl.userCtrl.QueryCarousel)
@@ -116,7 +119,7 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 	// 开始服务
 	srv := &http.Server{
 		Addr:    ":" + strconv.Itoa(httpCfg.Port),
-		Handler: RootRouter,
+		Handler: rootRouter,
 	}
 	//是否有ssl.public_key ssl.private_key
 	pubKey := httpCfg.SslPub

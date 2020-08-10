@@ -214,6 +214,15 @@ definitions:
         description: 图片地址
         type: string
     type: object
+  service_user.InitAppData:
+    properties:
+      build_time:
+        type: string
+      git_sha:
+        type: string
+      version:
+        type: string
+    type: object
 info:
   contact: {}
   description: api docs for lizo_alone
@@ -816,6 +825,29 @@ paths:
       summary: 更新配置项
       tags:
       - 配置项
+  /api/user/init_app:
+    get:
+      description: 用户初始化数据
+      operationId: 用户初始化
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  $ref: '#/definitions/service_user.InitAppData'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 用户初始化
+      tags:
+      - 用户
   /api/user/login:
     post:
       description: 用户用密码登录

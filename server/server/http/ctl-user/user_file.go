@@ -25,6 +25,11 @@ import (
 func (a *UserCtrl) UploadFile(c *gin.Context) {
 	// 请求
 	ctx := ginutil.MustGetAppCtx(c)
+	err := c.Request.ParseMultipartForm(1024 * 1024 * 5) // 5mb放在内存中 超过放在临时文件中
+	if err != nil {
+		ginutil.ReturnFailure(c, errs.ErrorInternal, err.Error())
+		return
+	}
 	file, err := c.FormFile("file")
 	if err != nil {
 		ginutil.ReturnFailure(c, errs.ErrorParam, "no file found")
