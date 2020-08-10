@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"bufio"
 	"github.com/gin-gonic/gin"
 	"github.com/juju/ratelimit"
 	"github.com/krilie/lico_alone/common/errs"
@@ -15,7 +14,7 @@ func RateLimit() gin.HandlerFunc {
 		// 限制速度 100kb/s
 		oriBody := c.Request.Body
 		limitBucket := ratelimit.NewBucketWithRate(100*1024, 100*1024)
-		c.Request.Body = ioutil.NopCloser(ratelimit.Reader(bufio.NewReaderSize(oriBody, 100*1024), limitBucket)) // 100kb
+		c.Request.Body = ioutil.NopCloser(ratelimit.Reader(oriBody, limitBucket)) // 100kb
 		defer func() { c.Request.Body = oriBody }()
 		c.Next()
 	}

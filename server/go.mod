@@ -11,11 +11,11 @@ require (
 	github.com/deckarep/golang-set v1.7.1
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/gzip v0.0.1
-	github.com/gin-gonic/gin v1.5.0
+	github.com/gin-contrib/pprof v1.3.0
+	github.com/gin-gonic/gin v1.6.2
 	github.com/go-ini/ini v1.46.0 // indirect
 	github.com/go-openapi/spec v0.19.8 // indirect
 	github.com/go-openapi/swag v0.19.9 // indirect
-	github.com/go-playground/locales v0.13.0 // indirect
 	github.com/go-redis/redis/v7 v7.0.0-beta.5
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.4.2
@@ -23,7 +23,6 @@ require (
 	github.com/juju/ratelimit v1.0.1
 	github.com/krilie/go-smq v0.0.0-20200426063429-520e51d883e3
 	github.com/krilie/s-file v0.0.0-20190906025558-22dc46235d3b
-	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/mikespook/gorbac v2.1.0+incompatible
 	github.com/minio/minio-go v6.0.14+incompatible
