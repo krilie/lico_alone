@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/server/http/ginutil"
+	"io"
 	"io/ioutil"
 	"testing"
 )
@@ -52,6 +53,45 @@ func TestRateLimit(t *testing.T) {
 		defer open.Close()
 		all, err := ioutil.ReadAll(open)
 		t.Log(string(all))
+	})
+	err := engine.Run(":80")
+	t.Log(err)
+}
+
+func TestRateLimit2(t *testing.T) {
+	engine := gin.New()
+	engine.POST("/upload", RateLimit(), func(c *gin.Context) {
+		reader, err := c.Request.MultipartReader()
+		if err != nil {
+			ginutil.ReturnWithErr(c, err)
+			return
+		}
+		for {
+			p, err := reader.NextPart()
+			if err == io.EOF {
+				ginutil.ReturnWithErr(c, errs.NewParamError().WithMsg("no file"))
+				return
+			}
+			if err != nil {
+				ginutil.ReturnWithErr(c, err)
+				return
+			}
+
+			name := p.FormName()
+			if name == "" {
+				continue
+			}
+			if name != "file" {
+				continue
+			}
+
+			filename := p.FileName()
+			if filename == "" {
+				continue
+			}
+
+			return
+		}
 	})
 	err := engine.Run(":80")
 	t.Log(err)

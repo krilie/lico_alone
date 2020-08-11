@@ -30,18 +30,18 @@ func (f *OssMinio) GetBucketName(ctx context.Context) string {
 }
 
 func (f *OssMinio) UploadFile(ctx context.Context, fileName string, fileStream io.Reader, fileSize int64) (url, key string, err error) {
-	content, err := file_util.GetContentType(file)
+	content, reader, err := file_util.GetContentType2(fileStream)
 	if err != nil {
 		return "", "", err
 	}
-	key = id_util.GetUuid() + name
+	key = id_util.GetUuid() + fileName
 	userMate := make(map[string]string)
 	userMate["user_id"] = "userId"
-	n, err := f.Client.PutObject(f.BucketName, key, file, size, minio.PutObjectOptions{ContentType: content, UserMetadata: userMate})
+	n, err := f.Client.PutObject(f.BucketName, key, reader, fileSize, minio.PutObjectOptions{ContentType: content, UserMetadata: userMate})
 	if err != nil {
 		_ = f.Client.RemoveIncompleteUpload(f.BucketName, key) // 删除可能存在的不完整文件
 		return f.BucketName, key, errs.NewInternal().WithError(err)
-	} else if n != size {
+	} else if fileSize != -1 && n != fileSize {
 		_ = f.Client.RemoveIncompleteUpload(f.BucketName, key) // 删除可能存在的不完整文件
 		return f.BucketName, key, errs.NewInternal().WithMsg("un completed upload please check")
 	} else {

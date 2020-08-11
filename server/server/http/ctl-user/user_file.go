@@ -4,8 +4,10 @@ import (
 	"github.com/gin-gonic/gin"
 	com_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
+	"github.com/krilie/lico_alone/common/utils/str_util"
 	"github.com/krilie/lico_alone/module/module-file/model"
 	"github.com/krilie/lico_alone/server/http/ginutil"
+	"io"
 )
 
 // 文件上传
@@ -49,22 +51,42 @@ func (a *UserCtrl) UploadFile(c *gin.Context) {
 		ginutil.ReturnWithErr(c, err)
 		return
 	}
-	part, err := reader.NextPart()
-	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+	for {
+		p, err := reader.NextPart()
+		if err == io.EOF {
+			ginutil.ReturnWithErr(c, errs.NewParamError().WithMsg("no file"))
+			return
+		}
+		if err != nil {
+			ginutil.ReturnWithErr(c, err)
+			return
+		}
+
+		name := p.FormName()
+		if name == "" {
+			continue
+		}
+
+		if name != "file" {
+			continue
+		}
+
+		filename := p.FileName()
+		if filename == "" {
+			continue
+		}
+
+		size := str_util.GetIntOrDef(p.Header.Get("size"), -1)
+
+		url, bucket, key, err := a.userService.UploadFile(ctx, ctx.UserId, p.FileName(), p, size)
+		if err != nil {
+			ginutil.ReturnWithErr(c, err)
+			return
+		}
+		ginutil.ReturnData(c, &UpdateFileReturn{Url: url, Bucket: bucket, Key: key})
 		return
-	}
-	if part.FileName() != "file" {
-		ginutil.ReturnWithAppErr(c, errs.NewParamError().WithMsg("no file found check your param name"))
 	}
 
-	url, bucket, key, err := a.userService.UploadFile(ctx, ctx.UserId, part.FileName(), part, int(part.Header.Get("size")))
-	if err != nil {
-		ginutil.ReturnWithErr(c, err)
-		return
-	}
-	ginutil.ReturnData(c, &UpdateFileReturn{Url: url, Bucket: bucket, Key: key})
-	return
 }
 
 type UpdateFileReturn struct {
