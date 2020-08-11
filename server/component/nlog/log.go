@@ -5,11 +5,13 @@ import (
 	"fmt"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	context2 "github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/krilie/lico_alone/component/nlog/logsyshook"
 	"github.com/sirupsen/logrus"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -65,6 +67,9 @@ func (nlog *NLog) SetUpLogFile(f string) {
 			return
 		}
 	}
+	hostname, _ := os.Hostname()
+	var tagStr = hostname + id_util.NextSnowflake()
+	f = strings.ReplaceAll(f, "*", tagStr)
 	file, e := os.OpenFile(f, os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	if e != nil {
 		panic(e)
