@@ -63,6 +63,14 @@ func GetInt64(ori string) (int64, error) {
 	return strconv.ParseInt(ori, 10, 64)
 }
 
+func GetIntOrDef(ori string, def int) int {
+	parseInt, err := strconv.ParseInt(ori, 10, 32)
+	if err != nil {
+		return def
+	}
+	return int(parseInt)
+}
+
 func GetFloat64(ori string) (float64, error) {
 	return strconv.ParseFloat(ori, 64)
 }

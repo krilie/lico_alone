@@ -15,19 +15,22 @@ import (
 )
 
 // 内部有事务的存在
-func (a *FileModule) UploadFile(ctx context.Context, userId, fileName string, file io.ReadSeeker, size int) (url, bucket, key string, err error) {
+func (a *FileModule) UploadFile(ctx context.Context, userId, fileName string, file io.Reader, size int) (url, bucket, key string, err error) {
 	log := a.log.Get(ctx).WithField(context_enum.Function.Str(), "UploadFile")
 	err = a.dao.Transaction(ctx, func(ctx context.Context) error {
 		var content string
 		extension := file_util.GetFileExtension(fileName)
 		content1 := mime.TypeByExtension(extension)
-		content2, _ := file_util.GetContentType(file)
+		content2, newReader, err := file_util.GetContentType2(file)
+		if err != nil {
+			panic(err)
+		}
 		if content1 != "" {
 			content = content1
 		} else {
 			content = content2
 		}
-		url, key, err = a.fileApi.UploadFile(ctx, "static/"+id_util.NextSnowflake()+fileName, file, int64(size))
+		url, key, err = a.fileApi.UploadFile(ctx, "static/"+id_util.NextSnowflake()+fileName, newReader, int64(size))
 		if err != nil {
 			return err
 		}

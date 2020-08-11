@@ -11,7 +11,7 @@ import (
 )
 
 type IFileService interface {
-	UploadFile(ctx context.Context, userId, fileName string, file io.ReadSeeker, size int) (url, bucket, key string, err error)
+	UploadFile(ctx context.Context, userId, fileName string, file io.Reader, size int) (url, bucket, key string, err error)
 	DeleteFile(ctx context.Context, bucket, key string) (err error)
 	GetBaseUrl(ctx context.Context) string
 }

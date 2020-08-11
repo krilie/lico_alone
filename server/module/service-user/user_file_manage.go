@@ -5,7 +5,7 @@ import (
 	"io"
 )
 
-func (a *UserService) UploadFile(ctx context.Context, userId, fileName string, file io.ReadSeeker, size int) (url, bucket, key string, err error) {
+func (a *UserService) UploadFile(ctx context.Context, userId, fileName string, file io.Reader, size int) (url, bucket, key string, err error) {
 	return a.ModuleFile.UploadFile(ctx, userId, fileName, file, size)
 }
 

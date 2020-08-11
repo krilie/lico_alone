@@ -11,7 +11,7 @@ func (o *OssAliyun) DeleteFileByUrl(ctx context.Context, url string) error {
 	panic("implement me")
 }
 
-func (o *OssAliyun) UploadFile(ctx context.Context, fileName string, fileStream io.ReadSeeker, fileSize int64) (url, key string, err error) {
+func (o *OssAliyun) UploadFile(ctx context.Context, fileName string, fileStream io.Reader, fileSize int64) (url, key string, err error) {
 	panic("implement me")
 }
 
