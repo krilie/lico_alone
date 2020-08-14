@@ -21,3 +21,4 @@ log.txt
 
 www
 !www/.gitignore
+/node_modules/

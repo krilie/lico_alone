@@ -10,7 +10,7 @@ import "./App.less"
 import Home from "./home/Home";
 import RightCircleTwoTone from "@ant-design/icons/lib/icons/RightCircleTwoTone";
 import Management from "./management/Management";
-import ArticleDetailPage from "./article/ArticleDetailPage";
+// import ArticleDetailPage from "./article/ArticleDetailPage";
 import {postVisited} from "../api/ApiCommon";
 import {GetCustomerTraceId} from "../utils/LocalStorageUtil";
 
@@ -58,7 +58,7 @@ class App extends React.Component {
                 <Switch>
                     <Route exact path="/home" component={Home}/>
                     <Route exact path="/article" component={Article}/>
-                    <Route exact path="/article/:articleId" component={ArticleDetailPage}/>
+                    {/*<Route exact path="/article/:articleId" component={ArticleDetailPage}/>*/}
                     <Route exact={false} path="/management" component={Management}/>
                     <Redirect path="/" to={{pathname: '/home'}}/>
                 </Switch>
