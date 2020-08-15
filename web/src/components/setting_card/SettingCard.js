@@ -13,8 +13,14 @@ export default class SettingCard extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            value: this.props.data.value,
+        try {
+            this.state = {
+                value: JSON.stringify(JSON.parse(this.props.data.value), null, 2),
+            }
+        } catch (e) {
+            this.state = {
+                value: this.props.data.value,
+            }
         }
     }
 
@@ -29,7 +35,11 @@ export default class SettingCard extends React.Component {
     onCommitSetting = () => {
         const {name} = this.props.data
         let {value} = this.state
-        value = JSON.stringify(JSON.parse(value))
+        try {
+            value = JSON.stringify(JSON.parse(value))
+        } catch (e) {
+            value = this.state.value
+        }
         updateSettingItem(name, value).then(data => {
             message.info("保存成功");
         }).catch(err => {
@@ -38,7 +48,8 @@ export default class SettingCard extends React.Component {
     }
 
     render() {
-        const {name, create_time, value} = this.props.data
+        const {name, create_time} = this.props.data
+        const {value} = this.state
         const extra = <Button type="primary"
                               className="extra-area-button" size="large"
                               onClick={this.onCommitSetting}>保存</Button>
@@ -51,7 +62,7 @@ export default class SettingCard extends React.Component {
             <TextArea className="setting-text-area"
                       rows={3}
                       onChange={(e) => this.upDataSetting(e)}
-                      defaultValue={JSON.stringify(JSON.parse(value), null, 2)}/>
+                      defaultValue={value}/>
             <div className="text-right">{extra}</div>
         </Card>
     }
