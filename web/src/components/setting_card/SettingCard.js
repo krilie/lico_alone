@@ -14,7 +14,7 @@ export default class SettingCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: JSON.stringify(JSON.parse(this.props.data.value), null, 4),
+            value: this.props.data.value,
         }
     }
 
@@ -29,7 +29,7 @@ export default class SettingCard extends React.Component {
     onCommitSetting = () => {
         const {name} = this.props.data
         let {value} = this.state
-        value = JSON.stringify(JSON.parse(value), null)
+        value = JSON.stringify(JSON.parse(value))
         updateSettingItem(name, value).then(data => {
             message.info("保存成功");
         }).catch(err => {
@@ -51,7 +51,7 @@ export default class SettingCard extends React.Component {
             <TextArea className="setting-text-area"
                       rows={3}
                       onChange={(e) => this.upDataSetting(e)}
-                      defaultValue={value}/>
+                      defaultValue={JSON.stringify(JSON.parse(value), null, 2)}/>
             <div className="text-right">{extra}</div>
         </Card>
     }
