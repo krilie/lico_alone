@@ -18,7 +18,7 @@ class SettingPage extends React.Component {
     render() {
         const {settings} = this.props
         return (
-            <Card bodyStyle={{padding: "10px"}} title={<div>配置</div>}>
+            <Card className="setting-card" title={<div>配置</div>}>
                 {settings.map(val => <SettingCard key={val.name} data={val}/>)}
             </Card>
         );
