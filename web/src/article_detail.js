@@ -12,4 +12,4 @@ ReactDOM.render((
             <Route path={`/article_detail`} component={ArticleDetailPage}/>
         </BrowserRouter>
     </Provider>
-), document.getElementById('article_detail'));
+), document.getElementById('articleDetail'));
