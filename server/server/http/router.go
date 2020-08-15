@@ -43,40 +43,7 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 	rootRouter.GET("health/ping", ctrl.healthCheckCtrl.Ping)
 
 	// web 网页
-	webRouter := rootRouter.Group("/")
-	webRouter.Use(gzip.Gzip(gzip.DefaultCompression)) // 开启gzip压缩
-	dir, err := ioutil.ReadDir("./www")
-	if err != nil {
-		panic(err)
-	}
-	for _, info := range dir {
-		if info.IsDir() {
-			webRouter.Static("/"+info.Name(), "./www/"+info.Name())
-		} else {
-			webRouter.StaticFile("/"+info.Name(), "./www/"+info.Name())
-			if info.Name() == "index.html" {
-				webRouter.StaticFile("/", "./www/"+info.Name())
-			}
-		}
-	}
-	// 重定向
-	rootRouter.NoRoute(func(c *gin.Context) {
-		if c.Request.Method != "GET" {
-			c.String(404, "page not found")
-			return
-		}
-		path := c.Request.URL.Path
-		prefix := []string{"/api", "/files", "/swagger", "/health", "/version"}
-		for i := range prefix {
-			if strings.HasPrefix(path, prefix[i]) {
-				c.String(404, "page not found")
-				return
-			}
-		}
-		c.Request.URL.Path = "/"
-		rootRouter.HandleContext(c)
-		return
-	})
+	InitStaticWeb(ctx, rootRouter)
 
 	// api路由 + 中间件
 	apiGroup := rootRouter.Group("/api")
@@ -152,6 +119,59 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 			return nil
 		}
 	}
+}
+
+func InitStaticWeb(ctx context.Context, rootRouter *gin.Engine) {
+	// web 网页
+	webRouter := rootRouter.Group("/")
+	webRouter.Use(gzip.Gzip(gzip.DefaultCompression)) // 开启gzip压缩
+	dir, err := ioutil.ReadDir("./www")
+	if err != nil {
+		panic(err)
+	}
+	for _, info := range dir {
+		if info.IsDir() {
+			webRouter.Static("/"+info.Name(), "./www/"+info.Name())
+		} else {
+			webRouter.StaticFile("/"+info.Name(), "./www/"+info.Name())
+			// 主页
+			if info.Name() == "index.html" {
+				webRouter.StaticFile("/", "./www/"+info.Name())
+			}
+			// 文章详情
+			if info.Name() == "article_detail.html" {
+				webRouter.StaticFile("/article_detail", "./www/"+info.Name())
+			}
+			// 管理
+			if info.Name() == "management.html" {
+				webRouter.StaticFile("/management", "./www/"+info.Name())
+			}
+		}
+	}
+	// 重定向
+	rootRouter.NoRoute(func(c *gin.Context) {
+		if c.Request.Method != "GET" {
+			c.String(404, "page not found")
+			return
+		}
+		path := c.Request.URL.Path
+		prefix := []string{"/api", "/files", "/swagger", "/health", "/version"}
+		for i := range prefix {
+			if strings.HasPrefix(path, prefix[i]) {
+				c.String(404, "page not found")
+				return
+			}
+		}
+		if strings.HasPrefix(path, "/article_detail") {
+			c.Request.URL.Path = "/article_detail"
+		} else if strings.HasPrefix(path, "/management") {
+			c.Request.URL.Path = "/management"
+		} else {
+			c.Request.URL.Path = "/"
+		}
+		rootRouter.HandleContext(c)
+		return
+	})
 }
 
 func Cors() gin.HandlerFunc {
