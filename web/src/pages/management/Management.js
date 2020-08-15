@@ -1,5 +1,4 @@
 import React from "react";
-import 'antd/dist/antd.css';
 import "./Management.less"
 import {Redirect, Route, Switch} from "react-router-dom";
 import LoginPage from "./login-page/LoginPage";
