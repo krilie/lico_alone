@@ -152,6 +152,11 @@ module.exports = function (webpackEnv) {
                 require.resolve('react-dev-utils/webpackHotDevClient'),
                 paths.appArticleDetail,
             ].filter(Boolean),
+            management: [
+                isEnvDevelopment &&
+                require.resolve('react-dev-utils/webpackHotDevClient'),
+                paths.appManagement,
+            ].filter(Boolean),
         },
         output: {
             path: isEnvProduction ? paths.appBuild : undefined,
@@ -563,6 +568,35 @@ module.exports = function (webpackEnv) {
                         : undefined
                 )
             ),
+
+            new HtmlWebpackPlugin(
+                Object.assign(
+                    {},
+                    {
+                        inject: true,
+                        chunks: ["management"],
+                        template: paths.appManagementHtml,
+                        filename: "management.html"
+                    },
+                    isEnvProduction
+                        ? {
+                            minify: {
+                                removeComments: true,
+                                collapseWhitespace: true,
+                                removeRedundantAttributes: true,
+                                useShortDoctype: true,
+                                removeEmptyAttributes: true,
+                                removeStyleLinkTypeAttributes: true,
+                                keepClosingSlash: true,
+                                minifyJS: true,
+                                minifyCSS: true,
+                                minifyURLs: true,
+                            },
+                        }
+                        : undefined
+                )
+            ),
+
             // Inlines the webpack runtime script. This script is too small to warrant
             // a network request.
             // https://github.com/facebook/create-react-app/issues/5358

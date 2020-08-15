@@ -3,17 +3,18 @@ import 'antd/dist/antd.css';
 import {Menu, Row, Col, Divider, BackTop, Affix} from 'antd';
 import Logo from "../components/logo/Logo";
 import {Route, Switch} from "react-router-dom";
-import Article from "./article/Article";
+import Article from "./home/Article";
 import IcpLabel from "../components/icp/IcpLabel";
 import {withRouter, Redirect} from "react-router-dom";
 import "./App.less"
 import Home from "./home/Home";
 import RightCircleTwoTone from "@ant-design/icons/lib/icons/RightCircleTwoTone";
-import Management from "./management/Management";
+// import Management from "./management/Management";
 // import ArticleDetailPage from "./article/ArticleDetailPage";
 import {postVisited} from "../api/ApiCommon";
 import {GetCustomerTraceId} from "../utils/LocalStorageUtil";
 
+// 每个文件夹一个单独页面
 class App extends React.Component {
 
     state = {current: '/home',};
@@ -59,7 +60,7 @@ class App extends React.Component {
                     <Route exact path="/home" component={Home}/>
                     <Route exact path="/article" component={Article}/>
                     {/*<Route exact path="/article/:articleId" component={ArticleDetailPage}/>*/}
-                    <Route exact={false} path="/management" component={Management}/>
+                    {/*<Route exact={false} path="/management" component={Management}/>*/}
                     <Redirect path="/" to={{pathname: '/home'}}/>
                 </Switch>
                 <IcpLabel/>
