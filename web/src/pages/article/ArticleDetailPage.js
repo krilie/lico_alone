@@ -27,6 +27,7 @@ export default class ArticleDetailPage extends React.Component {
             this.setState({
                 article: data
             })
+            document.title = data.title // 设置标题
         })
     }
 
