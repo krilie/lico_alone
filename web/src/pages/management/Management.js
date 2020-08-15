@@ -21,6 +21,7 @@ export default class Management extends React.Component {
     render() {
         return (
             <div>
+                <div>网站管理页面</div>
                 <Switch>
                     <Route exact path="/management/login" component={LoginPage}/>
                     <Route exact={false} path="/management/manage" component={ManagePage}/>

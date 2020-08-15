@@ -47,7 +47,7 @@ class App extends React.Component {
                                     <a
                                         title={"management"}
                                         href={"/management"}
-                                        target="_blank"
+                                        target="_parent"
                                         rel="noopener noreferrer">
                                         <RightCircleTwoTone className="array-router"/>
                                     </a>
