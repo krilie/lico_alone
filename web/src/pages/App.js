@@ -9,8 +9,6 @@ import {withRouter, Redirect} from "react-router-dom";
 import "./App.less"
 import Home from "./home/Home";
 import RightCircleTwoTone from "@ant-design/icons/lib/icons/RightCircleTwoTone";
-// import Management from "./management/Management";
-// import ArticleDetailPage from "./article/ArticleDetailPage";
 import {postVisited} from "../api/ApiCommon";
 import {GetCustomerTraceId} from "../utils/LocalStorageUtil";
 
@@ -33,8 +31,6 @@ class App extends React.Component {
         });
     };
 
-    toManagePage = () => this.handleClick({key: "/management"})
-
     render() {
         return (
             <div className="global-style">
@@ -47,8 +43,14 @@ class App extends React.Component {
                                   mode="horizontal">
                                 <Menu.Item key="/home">主页</Menu.Item>
                                 <Menu.Item key="/article">文章</Menu.Item>
-                                <Menu.Item key="/management" onClick={() => this.toManagePage()}>
-                                    <RightCircleTwoTone className="array-router"/>
+                                <Menu.Item key="/management">
+                                    <a
+                                        title={"management"}
+                                        href={"/management"}
+                                        target="_blank"
+                                        rel="noopener noreferrer">
+                                        <RightCircleTwoTone className="array-router"/>
+                                    </a>
                                 </Menu.Item>
                             </Menu>
                         </Col>
@@ -59,8 +61,6 @@ class App extends React.Component {
                 <Switch>
                     <Route exact path="/home" component={Home}/>
                     <Route exact path="/article" component={Article}/>
-                    {/*<Route exact path="/article/:articleId" component={ArticleDetailPage}/>*/}
-                    {/*<Route exact={false} path="/management" component={Management}/>*/}
                     <Redirect path="/" to={{pathname: '/home'}}/>
                 </Switch>
                 <IcpLabel/>
