@@ -1,4 +1,5 @@
 import React from "react";
+import 'antd/dist/antd.css';
 import "./ArticleDetailPage.less"
 import {getArticleById} from "../../api/ApiCommon";
 import ReactMarkdown from "react-markdown/with-html";
