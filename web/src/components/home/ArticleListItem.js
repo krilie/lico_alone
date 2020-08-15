@@ -24,7 +24,7 @@ class ArticleListItem extends React.Component {
 
     render() {
         const {title, description, pv, id, picture} = this.props
-        const url = "/article/" + id;
+        const url = "/article_detail/" + id;
         return (
             <Card className="article-item-card"
                   bodyStyle={{padding: "0 0 0 0", margin: "0 0 0 0"}}

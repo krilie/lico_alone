@@ -91,7 +91,7 @@ export default class Article extends React.Component {
                     loadMore={loadMore}
                     dataSource={articleList}
                     renderItem={(item, index) => {
-                        const link = "/article/" + item.id
+                        const link = "/article_detail/" + item.id
                         return <div className="article-item-view">
                             <Row>
                                 <Col span={1} style={{minWidth:"20px",color: "#3f6600", fontWeight: 700}}>
