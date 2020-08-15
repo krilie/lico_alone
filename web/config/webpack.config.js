@@ -546,9 +546,9 @@ module.exports = function (webpackEnv) {
                     {},
                     {
                         inject: true,
-                        chunks: ["article"],
+                        chunks: ["article_detail"],
                         template: paths.appArticleDetailHtml,
-                        filename: "article.html"
+                        filename: "article_detail.html"
                     },
                     isEnvProduction
                         ? {
