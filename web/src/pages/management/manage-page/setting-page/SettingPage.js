@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {getSettingListAllRedux} from "../../../../api/ManageSettingApi";
 import store from "../../../../redux/RuduxIndex"
 import SettingCard from "../../../../components/setting_card/SettingCard";
+import {Card} from "antd";
 
 class SettingPage extends React.Component {
 
@@ -17,9 +18,9 @@ class SettingPage extends React.Component {
     render() {
         const {settings} = this.props
         return (
-            <div>
+            <Card bodyStyle={{padding: "10px"}} title={<div>配置</div>}>
                 {settings.map(val => <SettingCard key={val.name} data={val}/>)}
-            </div>
+            </Card>
         );
     }
 }
