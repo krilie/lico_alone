@@ -147,7 +147,7 @@ module.exports = function (webpackEnv) {
                 require.resolve('react-dev-utils/webpackHotDevClient'),
                 paths.appIndexJs,
             ].filter(Boolean),
-            article: [
+            article_detail: [
                 isEnvDevelopment &&
                 require.resolve('react-dev-utils/webpackHotDevClient'),
                 paths.appArticleDetail,
