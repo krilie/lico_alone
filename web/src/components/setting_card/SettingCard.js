@@ -14,7 +14,7 @@ export default class SettingCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: this.props.data.value,
+            value: JSON.stringify(JSON.parse(this.props.data.value), null, 4),
         }
     }
 
@@ -28,7 +28,8 @@ export default class SettingCard extends React.Component {
 
     onCommitSetting = () => {
         const {name} = this.props.data
-        const {value} = this.state
+        let {value} = this.state
+        value = JSON.stringify(JSON.parse(value), null)
         updateSettingItem(name, value).then(data => {
             message.info("保存成功");
         }).catch(err => {
