@@ -1,16 +1,16 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import {Menu, Row, Col, Divider, BackTop, Affix} from 'antd';
-import Logo from "../components/logo/Logo";
+import Logo from "../../components/logo/Logo";
 import {Route, Switch} from "react-router-dom";
-import Article from "./home/Article";
-import IcpLabel from "../components/icp/IcpLabel";
+import Article from "./Article";
+import IcpLabel from "../../components/icp/IcpLabel";
 import {withRouter, Redirect} from "react-router-dom";
 import "./App.less"
-import Home from "./home/Home";
+import Home from "./Home";
 import RightCircleTwoTone from "@ant-design/icons/lib/icons/RightCircleTwoTone";
-import {postVisited} from "../api/ApiCommon";
-import {GetCustomerTraceId} from "../utils/LocalStorageUtil";
+import {postVisited} from "../../api/ApiCommon";
+import {GetCustomerTraceId} from "../../utils/LocalStorageUtil";
 
 // 每个文件夹一个单独页面
 class App extends React.Component {
