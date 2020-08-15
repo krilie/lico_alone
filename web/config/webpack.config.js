@@ -162,13 +162,13 @@ module.exports = function (webpackEnv) {
             path: isEnvProduction ? paths.appBuild : undefined,
             pathinfo: isEnvDevelopment,
             filename: isEnvProduction
-                ? 'static/js/[name].[contenthash:8].js'
-                : isEnvDevelopment && 'static/js/bundle.js',
+                ? 'static/js/[name]/[name].[contenthash:8].js'
+                : isEnvDevelopment && 'static/js/[name]/[name].bundle.js',
             // TODO: remove this when upgrading to webpack 5
             futureEmitAssets: true,
             chunkFilename: isEnvProduction
-                ? 'static/js/[name].[contenthash:8].chunk.js'
-                : isEnvDevelopment && 'static/js/[name].chunk.js',
+                ? 'static/js/[name]/[name].[contenthash:8].chunk.js'
+                : isEnvDevelopment && 'static/js/[name]/[name].chunk.js',
             publicPath: paths.publicUrlOrPath,
             devtoolModuleFilenameTemplate: isEnvProduction
                 ? info =>
