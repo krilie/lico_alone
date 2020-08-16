@@ -19,10 +19,7 @@ export default class ArticleDetailPage extends React.Component {
 
     // id, created_at, updated_at, deleted_at, title, pv, content, picture, description, sort
     componentWillMount() {
-        const articleId = this.props.match.params.articleId
-        this.setState({
-            articleId: articleId
-        })
+        const {articleId} = this.state
         getArticleById(articleId, (data) => {
             this.setState({
                 article: data
