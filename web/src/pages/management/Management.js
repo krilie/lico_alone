@@ -14,7 +14,8 @@ export default class Management extends React.Component {
     }
 
     goToPage = path => {
-        this.props.history.push(path);
+        window.location.href = path;
+        location.reload();
     };
 
     render() {

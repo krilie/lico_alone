@@ -14,7 +14,10 @@ export default class LoginPage extends React.Component {
         const token = GetUserToken();
         if (token !== "") this.goToPage("/management/manage");
     }
-    goToPage = path => this.props.history.push(path);
+    goToPage = path => {
+        window.location.href = path;
+        location.reload();
+    };
 
 
     setToken(token) {SetUserToken(token)}
