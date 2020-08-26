@@ -8,8 +8,8 @@ import {BrowserRouter, Route} from "react-router-dom";
 
 ReactDOM.render((
     <Provider store={store}>
-        <BrowserRouter basename='/'>
-            <Route path={`/management`} component={ManagePage}/>
+        <BrowserRouter basename='/management'>
+            <Route path={`/`} component={ManagePage}/>
         </BrowserRouter>
     </Provider>
 ), document.getElementById('management'));
