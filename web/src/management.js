@@ -1,15 +1,15 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import ReactDOM from 'react-dom';
-import ManagePage from "./pages/management/manage-page/ManagePage";
 import {Provider} from "react-redux";
 import store from "./redux/RuduxIndex";
 import {BrowserRouter, Route} from "react-router-dom";
+import Management from "./pages/management/Management";
 
 ReactDOM.render((
     <Provider store={store}>
-        <BrowserRouter basename='/management'>
-            <Route path={`/`} component={ManagePage}/>
+        <BrowserRouter basename='/'>
+            <Route path={`/management`} component={Management}/>
         </BrowserRouter>
     </Provider>
 ), document.getElementById('management'));

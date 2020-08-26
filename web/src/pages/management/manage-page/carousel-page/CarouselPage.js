@@ -7,6 +7,8 @@ import CarouselCreateUpdateModal from "./CarouselCreateUpdateModal";
 
 class CarouselPage extends Component {
 
+    goToPage = path => this.props.history.push(path);
+
     constructor(props) {
         super(props);
         this.state = {

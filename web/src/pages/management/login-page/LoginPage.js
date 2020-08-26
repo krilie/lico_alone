@@ -10,13 +10,11 @@ import {userLogin} from "../../../api/ManageUserApi";
  */
 export default class LoginPage extends React.Component {
 
-    goToPage = path => {
-        window.location.href = path;
-        location.reload();
-    };
+    goToPage = path => this.props.history.push(path);
 
-
-    setToken(token) {SetUserToken(token)}
+    setToken(token) {
+        SetUserToken(token)
+    }
 
     render() {
         const layout = {
@@ -34,12 +32,13 @@ export default class LoginPage extends React.Component {
                     this.setToken(res.data.data.token)
                     this.goToPage("/management/manage")
                 } else {
-                    message.error(res.data.message + res.data.detail)
+                    message.error("from login page:" + res.data.message + res.data.detail)
                 }
             }).then(err => {
                 if (err !== undefined)
-                    message.error(err.toString())
-            }).finally(() => {})
+                    message.error("from login page:" + err.toString())
+            }).finally(() => {
+            })
         };
 
         const onFinishFailed = errorInfo => console.log('Failed:', errorInfo);

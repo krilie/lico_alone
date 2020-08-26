@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown/with-html";
 import "github-markdown-css"
 import "highlight.js/styles/github.css"
 import CodeBlock from "../../components/mark_down/CodeBlock";
+import IcpLabel from "../../components/icp/IcpLabel";
 
 export default class ArticleDetailPage extends React.Component {
 
@@ -46,6 +47,7 @@ export default class ArticleDetailPage extends React.Component {
                     <div className="article-foot-info">
                         {article.title}&nbsp;{article.created_at}&nbsp;共访问{article.pv}次
                     </div>
+                    <IcpLabel/>
                 </div>
             );
         }

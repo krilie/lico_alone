@@ -1,10 +1,10 @@
 import React from 'react';
 import {Menu, Row, Col, Divider, BackTop, Affix} from 'antd';
 import Logo from "../../components/logo/Logo";
-import {Route, Switch} from "react-router-dom";
+import { Redirect, Route, Switch} from "react-router-dom";
 import Article from "./Article";
 import IcpLabel from "../../components/icp/IcpLabel";
-import {withRouter, Redirect} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import "./App.less"
 import Home from "./Home";
 import RightCircleTwoTone from "@ant-design/icons/lib/icons/RightCircleTwoTone";
@@ -14,11 +14,16 @@ import {GetCustomerTraceId} from "../../utils/LocalStorageUtil";
 // 每个文件夹一个单独页面
 class App extends React.Component {
 
-    state = {current: '/home',};
+    state = {current: `${this.props.match.path}/index`,};
 
-    componentWillMount() {
+    constructor(props) {
+        super(props);
         const {pathname} = this.props.location;
         this.setState({current: pathname,});
+        this.props.history.push(pathname);
+    }
+
+    componentWillMount() {
         postVisited(GetCustomerTraceId(), (res) => {
         })
     }
@@ -40,8 +45,8 @@ class App extends React.Component {
                             <Menu className="Menu" onClick={this.handleClick}
                                   selectedKeys={[this.state.current]}
                                   mode="horizontal">
-                                <Menu.Item key="/home">主页</Menu.Item>
-                                <Menu.Item key="/article">文章</Menu.Item>
+                                <Menu.Item key={`${this.props.match.path}/index`}>主页</Menu.Item>
+                                <Menu.Item key={`${this.props.match.path}/article`}>文章</Menu.Item>
                                 <Menu.Item key="/management">
                                     <a
                                         title={"management"}
@@ -58,9 +63,9 @@ class App extends React.Component {
                 </Affix>
 
                 <Switch>
-                    <Route exact path="/home" component={Home}/>
-                    <Route exact path="/article" component={Article}/>
-                    <Redirect path="/" to={{pathname: '/home'}}/>
+                    <Route path={`${this.props.match.path}/index`} component={Home}/>
+                    <Route path={`${this.props.match.path}/article`} component={Article}/>
+                    <Redirect path={`${this.props.match.path}/`} to={{pathname: `${this.props.match.path}/index`}}/>
                 </Switch>
                 <IcpLabel/>
                 <BackTop>

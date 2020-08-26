@@ -122,6 +122,8 @@ class FilePage extends Component {
         })
     }
 
+    goToPage = path => this.props.history.push(path);
+
     // 分页修改当前页大小 回调
     onLoadPageData = (page_num, page_size) => {
         console.log(page_num, page_size);
