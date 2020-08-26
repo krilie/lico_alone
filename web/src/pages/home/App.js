@@ -1,19 +1,17 @@
 import React from 'react';
-import 'antd/dist/antd.css';
 import {Menu, Row, Col, Divider, BackTop, Affix} from 'antd';
-import Logo from "../components/logo/Logo";
+import Logo from "../../components/logo/Logo";
 import {Route, Switch} from "react-router-dom";
-import Article from "./article/Article";
-import IcpLabel from "../components/icp/IcpLabel";
+import Article from "./Article";
+import IcpLabel from "../../components/icp/IcpLabel";
 import {withRouter, Redirect} from "react-router-dom";
 import "./App.less"
-import Home from "./home/Home";
+import Home from "./Home";
 import RightCircleTwoTone from "@ant-design/icons/lib/icons/RightCircleTwoTone";
-import Management from "./management/Management";
-// import ArticleDetailPage from "./article/ArticleDetailPage";
-import {postVisited} from "../api/ApiCommon";
-import {GetCustomerTraceId} from "../utils/LocalStorageUtil";
+import {postVisited} from "../../api/ApiCommon";
+import {GetCustomerTraceId} from "../../utils/LocalStorageUtil";
 
+// 每个文件夹一个单独页面
 class App extends React.Component {
 
     state = {current: '/home',};
@@ -32,8 +30,6 @@ class App extends React.Component {
         });
     };
 
-    toManagePage = () => this.handleClick({key: "/management"})
-
     render() {
         return (
             <div className="global-style">
@@ -46,8 +42,14 @@ class App extends React.Component {
                                   mode="horizontal">
                                 <Menu.Item key="/home">主页</Menu.Item>
                                 <Menu.Item key="/article">文章</Menu.Item>
-                                <Menu.Item key="/management" onClick={() => this.toManagePage()}>
-                                    <RightCircleTwoTone className="array-router"/>
+                                <Menu.Item key="/management">
+                                    <a
+                                        title={"management"}
+                                        href={"/management"}
+                                        target="_parent"
+                                        rel="noopener noreferrer">
+                                        <RightCircleTwoTone className="array-router"/>
+                                    </a>
                                 </Menu.Item>
                             </Menu>
                         </Col>
@@ -58,8 +60,6 @@ class App extends React.Component {
                 <Switch>
                     <Route exact path="/home" component={Home}/>
                     <Route exact path="/article" component={Article}/>
-                    {/*<Route exact path="/article/:articleId" component={ArticleDetailPage}/>*/}
-                    <Route exact={false} path="/management" component={Management}/>
                     <Redirect path="/" to={{pathname: '/home'}}/>
                 </Switch>
                 <IcpLabel/>

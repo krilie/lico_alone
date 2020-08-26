@@ -14,12 +14,14 @@ export default class Management extends React.Component {
     }
 
     goToPage = path => {
-        this.props.history.push(path);
+        window.location.href = path;
+        location.reload();
     };
 
     render() {
         return (
             <div>
+                <div>网站管理页面</div>
                 <Switch>
                     <Route exact path="/management/login" component={LoginPage}/>
                     <Route exact={false} path="/management/manage" component={ManagePage}/>

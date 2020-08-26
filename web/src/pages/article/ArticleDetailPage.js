@@ -10,22 +10,22 @@ export default class ArticleDetailPage extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log(props);
+        const searchParams = new URLSearchParams(props.location.search);
         this.state = {
-            articleId: props.match.params.articleId,
+            articleId: searchParams.get("id"),
             article: {}
         }
     }
 
     // id, created_at, updated_at, deleted_at, title, pv, content, picture, description, sort
     componentWillMount() {
-        const articleId = this.props.match.params.articleId
-        this.setState({
-            articleId: articleId
-        })
+        const {articleId} = this.state
         getArticleById(articleId, (data) => {
             this.setState({
                 article: data
             })
+            document.title = data.title // 设置标题
         })
     }
 

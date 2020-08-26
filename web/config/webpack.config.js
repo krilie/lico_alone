@@ -147,23 +147,28 @@ module.exports = function (webpackEnv) {
                 require.resolve('react-dev-utils/webpackHotDevClient'),
                 paths.appIndexJs,
             ].filter(Boolean),
-            article: [
+            article_detail: [
                 isEnvDevelopment &&
                 require.resolve('react-dev-utils/webpackHotDevClient'),
                 paths.appArticleDetail,
+            ].filter(Boolean),
+            management: [
+                isEnvDevelopment &&
+                require.resolve('react-dev-utils/webpackHotDevClient'),
+                paths.appManagement,
             ].filter(Boolean),
         },
         output: {
             path: isEnvProduction ? paths.appBuild : undefined,
             pathinfo: isEnvDevelopment,
             filename: isEnvProduction
-                ? 'static/js/[name].[contenthash:8].js'
-                : isEnvDevelopment && 'static/js/bundle.js',
+                ? 'static/js/[name]/[name].[contenthash:8].js'
+                : isEnvDevelopment && 'static/js/[name]/[name].bundle.js',
             // TODO: remove this when upgrading to webpack 5
             futureEmitAssets: true,
             chunkFilename: isEnvProduction
-                ? 'static/js/[name].[contenthash:8].chunk.js'
-                : isEnvDevelopment && 'static/js/[name].chunk.js',
+                ? 'static/js/[name]/[name].[contenthash:8].chunk.js'
+                : isEnvDevelopment && 'static/js/[name]/[name].chunk.js',
             publicPath: paths.publicUrlOrPath,
             devtoolModuleFilenameTemplate: isEnvProduction
                 ? info =>
@@ -541,9 +546,9 @@ module.exports = function (webpackEnv) {
                     {},
                     {
                         inject: true,
-                        chunks: ["article"],
+                        chunks: ["article_detail"],
                         template: paths.appArticleDetailHtml,
-                        filename: "article.html"
+                        filename: "article_detail.html"
                     },
                     isEnvProduction
                         ? {
@@ -563,6 +568,35 @@ module.exports = function (webpackEnv) {
                         : undefined
                 )
             ),
+
+            new HtmlWebpackPlugin(
+                Object.assign(
+                    {},
+                    {
+                        inject: true,
+                        chunks: ["management"],
+                        template: paths.appManagementHtml,
+                        filename: "management.html"
+                    },
+                    isEnvProduction
+                        ? {
+                            minify: {
+                                removeComments: true,
+                                collapseWhitespace: true,
+                                removeRedundantAttributes: true,
+                                useShortDoctype: true,
+                                removeEmptyAttributes: true,
+                                removeStyleLinkTypeAttributes: true,
+                                keepClosingSlash: true,
+                                minifyJS: true,
+                                minifyCSS: true,
+                                minifyURLs: true,
+                            },
+                        }
+                        : undefined
+                )
+            ),
+
             // Inlines the webpack runtime script. This script is too small to warrant
             // a network request.
             // https://github.com/facebook/create-react-app/issues/5358
@@ -603,12 +637,6 @@ module.exports = function (webpackEnv) {
                 filename: 'static/css/[name].[contenthash:8].css',
                 chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
             }),
-            // Generate an asset manifest file with the following content:
-            // - "files" key: Mapping of all asset filenames to their corresponding
-            //   output file so that tools can pick it up without having to parse
-            //   `index.html`
-            // - "entrypoints" key: Array of files which are included in `index.html`,
-            //   can be used to reconstruct the HTML if necessary
             new ManifestPlugin({
                 fileName: 'asset-manifest.json',
                 publicPath: paths.publicUrlOrPath,
@@ -617,15 +645,17 @@ module.exports = function (webpackEnv) {
                         manifest[file.name] = file.path;
                         return manifest;
                     }, seed);
-                    const entrypointFiles = entrypoints.index.filter(
-                        fileName => !fileName.endsWith('.map')
-                    );
-
+                    // 改造entrypointFiles
+                    const entrypointFiles = {};
+                    Object.keys(entrypoints).forEach(entrypoint => {
+                        entrypointFiles[entrypoint] = entrypoints[entrypoint].filter(fileName =>
+                            !fileName.endsWith('.map'));
+                    });
                     return {
                         files: manifestFiles,
                         entrypoints: entrypointFiles,
                     };
-                },
+                }
             }),
             // Moment.js is an extremely popular library that bundles large locale files
             // by default due to how webpack interprets its code. This is a practical

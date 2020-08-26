@@ -1,6 +1,6 @@
 import React from "react";
 import "./LoginPage.less"
-import {GetUserToken, SetUserToken} from "../../../utils/LocalStorageUtil";
+import {SetUserToken} from "../../../utils/LocalStorageUtil";
 import {Button, Col, Form, Input, message, Row} from "antd";
 import {userLogin} from "../../../api/ManageUserApi";
 
@@ -10,11 +10,10 @@ import {userLogin} from "../../../api/ManageUserApi";
  */
 export default class LoginPage extends React.Component {
 
-    componentDidMount() {
-        const token = GetUserToken();
-        if (token !== "") this.goToPage("/management/manage");
-    }
-    goToPage = path => this.props.history.push(path);
+    goToPage = path => {
+        window.location.href = path;
+        location.reload();
+    };
 
 
     setToken(token) {SetUserToken(token)}

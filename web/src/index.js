@@ -1,7 +1,8 @@
 import React from 'react';
+import 'antd/dist/antd.css';
 import ReactDOM from 'react-dom';
 import {Provider} from "react-redux";
-import App from "./pages/App";
+import App from "./pages/home/App";
 import {BrowserRouter, Route} from 'react-router-dom'
 import store from "./redux/RuduxIndex";
 

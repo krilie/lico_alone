@@ -41,18 +41,18 @@ export default class ManagePage extends React.Component {
                           className="sider-layout-background"
                           mode="inline"
                           defaultSelectedKeys={['4']}>
-                        <Menu.Item className="v-center" key="/management/manage/setting">设置</Menu.Item>
-                        <Menu.Item className="v-center" key="/management/manage/files">文件</Menu.Item>
-                        <Menu.Item className="v-center" key="/management/manage/carousel">轮播图</Menu.Item>
-                        <Menu.Item className="v-center" key="/management/manage/article">Article</Menu.Item>
+                        <Menu.Item className="v-center" key="/manage/setting">设置</Menu.Item>
+                        <Menu.Item className="v-center" key="/manage/files">文件</Menu.Item>
+                        <Menu.Item className="v-center" key="/manage/carousel">轮播图</Menu.Item>
+                        <Menu.Item className="v-center" key="/manage/article">Article</Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout className="manage-layout">
                     <Switch>
-                        <Route exact path="/management/manage/setting" component={SettingPage}/>
-                        <Route exact path="/management/manage/files" component={FilePage}/>
-                        <Route exact path="/management/manage/carousel" component={CarouselPage}/>
-                        <Route path="/management/manage/article" component={ArticleHomePage}/>
+                        <Route exact path="/manage/setting" component={SettingPage}/>
+                        <Route exact path="/manage/files" component={FilePage}/>
+                        <Route exact path="/manage/carousel" component={CarouselPage}/>
+                        <Route path="/manage/article" component={ArticleHomePage}/>
                     </Switch>
                 </Layout>
             </Layout>
