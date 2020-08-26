@@ -10,6 +10,7 @@ export default class ArticleDetailPage extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log(props.match.params.search);
         const searchParams = new URLSearchParams(props.match.params.search);
         this.state = {
             articleId: searchParams.get("id"),
