@@ -27,6 +27,10 @@ export default class Article extends React.Component {
         this.loadData(true)
     }
 
+    componentWillUnmount = () => {
+        this.setState = (state,callback)=>{};
+    }
+
     updateSearchKey = (searchKey) => {
         this.setState({
             searchKey: searchKey

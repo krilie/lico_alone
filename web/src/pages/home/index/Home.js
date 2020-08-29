@@ -15,7 +15,7 @@ class Home extends React.Component {
                 </Col>
                 <Col sm={8} xs={0} className="status-area">
                     <div><AppVersion/></div>
-                    <div style={{margin:"3px"}}><a href="/article">->文章区</a></div>
+                    <div style={{margin:"3px"}}><a href="/home/article">->文章区</a></div>
                     <SlidePictures className="slide-picture"/>
                 </Col>
             </Row>

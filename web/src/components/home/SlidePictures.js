@@ -24,6 +24,10 @@ class SlidePictures extends React.Component {
         this.loadCarouselData();
     }
 
+    componentWillUnmount = () => {
+        this.setState = (state,callback)=>{};
+    }
+
     loadCarouselData = () => {
         GetCarouselPicData(data => {
             this.setState({
@@ -35,7 +39,7 @@ class SlidePictures extends React.Component {
     render() {
         const {data} = this.state
         const dataView3 = data.map(val =>
-            <div className="div-relative">
+            <div key={val.id} className="div-relative">
                 <img src={val.url + "?imageView2/3/w/400/h/225"} alt={"img"}/>
                 <div className="div-text-area">
                     <ReactMarkdown
