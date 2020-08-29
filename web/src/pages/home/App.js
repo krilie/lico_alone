@@ -14,10 +14,17 @@ import {GetCustomerTraceId} from "../../utils/LocalStorageUtil";
 // 每个文件夹一个单独页面
 class App extends React.Component {
 
+    constructor(props) {
+        super(props);
+        console.log(props)
+        this.state = {current: `${this.props.location.pathname}`}
+    }
 
-    componentWillMount() {
-        this.setState({current: `${this.props.match.path}/index`})
-        postVisited(GetCustomerTraceId(), (res) => {
+    componentDidMount() {
+        process.nextTick(()=>{
+            this.props.history.push(`${this.state.current}`);
+            postVisited(GetCustomerTraceId(), (res) => {
+            })
         })
     }
 
