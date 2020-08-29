@@ -8,8 +8,11 @@ const UserTraceId = "UserTraceId";
  * @return {string}
  */
 export function GetUserToken() {
-    if (UserTokenStr === "")
+    if (UserTokenStr === "") {
         UserTokenStr = store.get(UserToken) ?? "";
+        if (UserTokenStr === undefined)
+            UserTokenStr = "";
+    }
     return UserTokenStr;
 }
 
@@ -35,7 +38,7 @@ export function ClearToken() {
 
 export function hasToken() {
     let token = GetUserToken();
-    return token !== "";
+    return token !== "" && token !== undefined;
 }
 
 /**

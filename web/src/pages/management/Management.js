@@ -10,22 +10,21 @@ export default class Management extends React.Component {
     componentWillMount() {
         const token = GetUserToken();
         if (token === "")
-            this.goToPage("/management/login");
+            this.goToPage(`${this.props.match.path}/login`);
     }
 
     goToPage = path => {
-        window.location.href = path;
-        location.reload();
+        this.props.history.push(path);
     };
 
     render() {
         return (
             <div>
-                <div>网站管理页面</div>
+                <div className="management-view">网站管理页面</div>
                 <Switch>
-                    <Route exact path="/management/login" component={LoginPage}/>
-                    <Route exact={false} path="/management/manage" component={ManagePage}/>
-                    <Redirect path="/management" to={{pathname: '/management/login'}}/>
+                    <Route exact path={`${this.props.match.path}/login`} component={LoginPage}/>
+                    <Route path={`${this.props.match.path}/manage`} component={ManagePage}/>
+                    <Redirect path={`${this.props.match.path}/`} to={{pathname: `${this.props.match.path}/manage`}}/>
                 </Switch>
             </div>
         );

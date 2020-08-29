@@ -8,12 +8,12 @@ import {Card} from "antd";
 
 class SettingPage extends React.Component {
 
+    goToPage = path => this.props.history.push(path)
+
     constructor(props) {
         super(props);
         store.dispatch(getSettingListAllRedux())
     }
-
-    goToPage = path => this.props.history.push(path);
 
     render() {
         const {settings} = this.props

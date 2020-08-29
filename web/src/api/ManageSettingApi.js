@@ -9,7 +9,10 @@ export const getSettingListAllRedux = () => {
                 const data = res.data.data; // data 就是body
                 const action = actions.getSettings(data);
                 dispatch(action);
-            })
+            }).catch(err=>{
+                console.log("err:+");
+                console.log(err);
+        })
     }
 };
 

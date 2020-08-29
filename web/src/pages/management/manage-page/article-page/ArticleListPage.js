@@ -95,7 +95,7 @@ class ArticleListPage extends Component {
         {title: 'ID', key: 'id', dataIndex: 'id'},
         {
             title: '图片', key: 'picture', dataIndex: 'picture',
-            render: text => <img src={text + "?imageView2/2/w/200/h/100"} height={100} width={200} alt={"img"}/>
+            render: text => <img src={text + "?imageView2/2/w/200/h/100"} alt={"img"}/>
         },
         {title: '标题', key: 'title', dataIndex: 'title', render: val => <div>{val}</div>},
         {

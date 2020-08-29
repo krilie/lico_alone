@@ -33,9 +33,13 @@ apiRequest.interceptors.response.use(
         }
         // token有误
         if (data.data.code === 4002) {
-            message.warning(data.data.message)
+            message.warning("from api post:" + data.data.message)
             ClearToken()
-            window.location.reload()
+            // 跳转到登录页面
+            console.log("err on auth token")
+            window.location.href = "/management/login";
+            console.log("reloaded to login")
+
             return Promise.reject(data)
         }
         // 其它错误
@@ -43,7 +47,7 @@ apiRequest.interceptors.response.use(
         return Promise.reject(data)
     },
     err => {
-        if (err.response !== undefined && err.response !== null){
+        if (err.response !== undefined && err.response !== null) {
             if (err.response.status === 504 || err.response.status === 404) {
                 message.error("服务器被吃了⊙﹏⊙∥");
             } else if (err.response.status === 401) {
@@ -51,7 +55,7 @@ apiRequest.interceptors.response.use(
             } else if (err.response.status === 500) {
                 message.error("服务器开小差了⊙﹏⊙∥");
             }
-        }else{
+        } else {
             message.error(err.toString())
         }
         return Promise.reject(err);
