@@ -1,6 +1,6 @@
 import React from "react";
 import "./Article.less"
-import {getArticleSampleList} from "../../api/ApiCommon";
+import {getArticleSampleList} from "../../../api/ApiCommon";
 import {Button, Col, Input, List, message, Row} from "antd";
 
 /**
@@ -76,7 +76,8 @@ export default class Article extends React.Component {
                 </div>
             );
 
-        return (<div className="article-page-view">
+        return (
+            <div className="article-page-view">
                 <div style={{textAlign: "right", paddingTop: "10px"}}>
                     <Input name="search_key"
                            onChange={event => this.updateSearchKey(event.target.value)}
@@ -94,7 +95,7 @@ export default class Article extends React.Component {
                         const link = "/article_detail?id=" + item.id
                         return <div className="article-item-view">
                             <Row>
-                                <Col span={1} style={{minWidth:"20px",color: "#3f6600", fontWeight: 700}}>
+                                <Col span={1} style={{minWidth: "20px", color: "#3f6600", fontWeight: 700}}>
                                     <div>#{index}</div>
                                 </Col>
                                 <Col span={21}>

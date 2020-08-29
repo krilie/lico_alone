@@ -2,9 +2,9 @@ import React from "react";
 import "./Home.less"
 import {connect} from 'react-redux'
 import {Col, Row} from "antd";
-import SlidePictures from "../../components/home/SlidePictures";
-import ArticleListPageRollView from "../../components/home/ArticleListPageRollView";
-import AppVersion from "../../components/app_version/AppVersion";
+import SlidePictures from "../../../components/home/SlidePictures";
+import ArticleListPageRollView from "../../../components/home/ArticleListPageRollView";
+import AppVersion from "../../../components/app_version/AppVersion";
 
 class Home extends React.Component {
     render() {

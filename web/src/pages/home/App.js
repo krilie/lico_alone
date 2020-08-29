@@ -1,12 +1,12 @@
 import React from 'react';
 import {Menu, Row, Col, Divider, BackTop, Affix} from 'antd';
 import Logo from "../../components/logo/Logo";
-import { Redirect, Route, Switch} from "react-router-dom";
-import Article from "./Article";
+import {Redirect, Route, Switch} from "react-router-dom";
+import Article from "./article/Article";
 import IcpLabel from "../../components/icp/IcpLabel";
 import {withRouter} from "react-router-dom";
 import "./App.less"
-import Home from "./Home";
+import Home from "./index/Home";
 import RightCircleTwoTone from "@ant-design/icons/lib/icons/RightCircleTwoTone";
 import {postVisited} from "../../api/ApiCommon";
 import {GetCustomerTraceId} from "../../utils/LocalStorageUtil";
@@ -14,25 +14,16 @@ import {GetCustomerTraceId} from "../../utils/LocalStorageUtil";
 // 每个文件夹一个单独页面
 class App extends React.Component {
 
-    state = {current: `${this.props.match.path}/index`,};
-
-    constructor(props) {
-        super(props);
-        const {pathname} = this.props.location;
-        this.setState({current: pathname,});
-        this.props.history.push(pathname);
-    }
 
     componentWillMount() {
+        this.setState({current: `${this.props.match.path}/index`})
         postVisited(GetCustomerTraceId(), (res) => {
         })
     }
 
     handleClick = e => {
         this.props.history.push(e.key);
-        this.setState({
-            current: e.key,
-        });
+        this.setState({current: e.key,});
     };
 
     render() {
