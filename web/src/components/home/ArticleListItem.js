@@ -35,7 +35,7 @@ class ArticleListItem extends React.Component {
                             <Layout.Header style={{minHeight: "20px", maxHeight: "20px"}}
                                            className="article-layout-content-real">
                                 <a href={url} rel="noopener noreferrer" target="_blank">
-                                    <div style={{height: "unset", verticalAlign: "center",color: "coral"}}>
+                                    <div style={{height: "unset", verticalAlign: "center",color: "#089393"}}>
                                         {title}
                                     </div>
                                 </a>
