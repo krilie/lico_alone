@@ -26,13 +26,13 @@ class ArticleListItem extends React.Component {
                 <Layout className="article-layout">
 
                     <Layout.Sider width={100} className="article-layout-sider">
-                        <img className="pic" src={picture} alt={"pic"}/>
+                        <img className="pic" src={picture+ "?imageView2/2/w/100/h/80"} alt={"pic"}/>
                     </Layout.Sider>
 
                     <Layout.Content className="article-layout-content">
                         <Layout className="article-layout">
 
-                            <Layout.Header style={{minHeight: "30px", maxHeight: "30px"}}
+                            <Layout.Header style={{minHeight: "20px", maxHeight: "20px"}}
                                            className="article-layout-content-real">
                                 <a href={url} rel="noopener noreferrer" target="_blank">
                                     <div style={{height: "unset", verticalAlign: "center"}}>
