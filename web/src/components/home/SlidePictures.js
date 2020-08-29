@@ -40,7 +40,7 @@ class SlidePictures extends React.Component {
         const {data} = this.state
         const dataView3 = data.map(val =>
             <div key={val.id} className="div-relative">
-                <img src={val.url + "?imageView2/3/w/400/h/225"} alt={"img"}/>
+                <img src={val.url + "?imageView2/2/w/500/h/250"} alt={"img"}/>
                 <div className="div-text-area">
                     <ReactMarkdown
                         className="markdown-content-carousel-view markdown-body"
