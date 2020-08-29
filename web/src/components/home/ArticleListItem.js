@@ -35,7 +35,7 @@ class ArticleListItem extends React.Component {
                             <Layout.Header style={{minHeight: "20px", maxHeight: "20px"}}
                                            className="article-layout-content-real">
                                 <a href={url} rel="noopener noreferrer" target="_blank">
-                                    <div style={{height: "unset", verticalAlign: "center",fontSize:"15px",fontWeight: 1000,color: "#52820f"}}>
+                                    <div className="article-description-view">
                                         {title}
                                     </div>
                                 </a>
@@ -43,7 +43,7 @@ class ArticleListItem extends React.Component {
 
                             <Layout.Content>
                                 <a href={url} rel="noopener noreferrer" target="_blank"
-                                   className="article-description-view">{description}</a>
+                                   style={{height: "unset", verticalAlign: "center",fontSize:"14px",fontWeight: 700,color: "#208719"}}>{description}</a>
                             </Layout.Content>
 
                             <Layout.Footer className="article-layout-footer">
