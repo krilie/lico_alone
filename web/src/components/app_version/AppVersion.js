@@ -22,6 +22,10 @@ export default class AppVersion extends React.Component {
         });
     }
 
+    componentWillUnmount = () => {
+        this.setState = (state,callback)=>{};
+    }
+
     copyText = (text) => CopyToBoard(text)
 
     render() {

@@ -2,9 +2,9 @@ import React from "react";
 import "./Home.less"
 import {connect} from 'react-redux'
 import {Col, Row} from "antd";
-import SlidePictures from "../../components/home/SlidePictures";
-import ArticleListPageRollView from "../../components/home/ArticleListPageRollView";
-import AppVersion from "../../components/app_version/AppVersion";
+import SlidePictures from "../../../components/home/SlidePictures";
+import ArticleListPageRollView from "../../../components/home/ArticleListPageRollView";
+import AppVersion from "../../../components/app_version/AppVersion";
 
 class Home extends React.Component {
     render() {
@@ -15,8 +15,10 @@ class Home extends React.Component {
                 </Col>
                 <Col sm={8} xs={0} className="status-area">
                     <div><AppVersion/></div>
-                    <div style={{margin:"3px"}}><a href="/article">->文章区</a></div>
-                    <SlidePictures className="slide-picture"/>
+                    <div style={{margin:"3px"}}><a href="/home/article">->文章区</a></div>
+                    <div className="slide-picture">
+                        <SlidePictures className="slide-picture"/>
+                    </div>
                 </Col>
             </Row>
         </div>);

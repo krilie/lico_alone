@@ -27,6 +27,10 @@ class ArticleListPageRollView extends React.Component {
         })
     }
 
+    componentWillUnmount = () => {
+        this.setState = (state,callback)=>{};
+    }
+
     getData = (pageNum) => {
         this.setState({loading: true})
         getArticleSampleList(pageNum, pageSize, "", (data) => {
@@ -82,6 +86,7 @@ class ArticleListPageRollView extends React.Component {
                 itemLayout="horizontal"
                 loadMore={loadMore}
                 dataSource={articleList}
+                rowKey={item => item.id}
                 renderItem={item => (
                     <ArticleListItem
                         id={item.id}
