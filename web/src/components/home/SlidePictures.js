@@ -1,11 +1,12 @@
 import React from "react";
 import "./SlidePictures.less"
-import {Carousel} from "antd";
 import {GetCarouselPicData} from "../../api/ApiCommon";
 import CodeBlock from "../mark_down/CodeBlock";
 import ReactMarkdown from "react-markdown";
 import "github-markdown-css"
 import "highlight.js/styles/github.css"
+import "react-image-gallery/styles/css/image-gallery.css"
+import ImageGallery from 'react-image-gallery';
 
 class SlidePictures extends React.Component {
     constructor(props) {
@@ -25,7 +26,8 @@ class SlidePictures extends React.Component {
     }
 
     componentWillUnmount = () => {
-        this.setState = (state,callback)=>{};
+        this.setState = (state, callback) => {
+        };
     }
 
     loadCarouselData = () => {
@@ -38,8 +40,11 @@ class SlidePictures extends React.Component {
 
     render() {
         const {data} = this.state
-        const dataView3 = data.map(val =>
-            <div key={val.id} className="div-relative">
+
+        const images = data.map(val => ({
+            original: val.url,
+            thumbnail: val.url + "?imageView2/2/w/200/h/100",
+            renderItem: () => <div key={val.id} style={{height:"250px",width:"500px"}} className="div-relative carousels">
                 <img src={val.url + "?imageView2/2/w/500/h/250"} alt={"img"}/>
                 <div className="div-text-area">
                     <ReactMarkdown
@@ -50,11 +55,18 @@ class SlidePictures extends React.Component {
                         source={val.message}
                     />
                 </div>
-            </div>)
+            </div>
+        }));
         return (
-            <Carousel className="carousels" autoplay dotPosition='top'>
-                {dataView3}
-            </Carousel>
+            <div className="image-gallery">
+                <ImageGallery
+                    autoPlay={true}
+                    showFullscreenButton={true}
+                    showPlayButton={false}
+                    showThumbnails={false}
+                    thumbnailPosition="bottom"
+                    items={images}/>
+            </div>
         );
     }
 }
