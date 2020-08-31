@@ -18,7 +18,7 @@ class SlidePictures extends React.Component {
         // message: "顯示的"
         // url: "http://oss.lizo.top/static/1273910222259228672b7a47c273de0783708ea5eb52b42c35d.jpg"
         // is_on_show: true
-        this.state = {data: []};
+        this.state = {data: [], onFullScreen: false};
     }
 
     componentDidMount() {
@@ -39,32 +39,50 @@ class SlidePictures extends React.Component {
     }
 
     render() {
-        const {data} = this.state
+        const {data, onFullScreen} = this.state
 
         const images = data.map(val => ({
             original: val.url,
-            thumbnail: val.url + "?imageView2/2/w/200/h/100",
-            renderItem: () => <div key={val.id} style={{height:"250px",width:"500px"}} className="div-relative carousels">
-                <img src={val.url + "?imageView2/2/w/500/h/250"} alt={"img"}/>
-                <div className="div-text-area">
-                    <ReactMarkdown
-                        className="markdown-content-carousel-view markdown-body"
-                        renderers={{code: CodeBlock,}}
-                        escapeHtml={false}
-                        skipHtml={false}
-                        source={val.message}
-                    />
+            fullscreen: val.url,
+            thumbnail: val.url + "?imageView2/2/w/400/h/200",
+            renderItem: () => onFullScreen ?
+                <div key={val.id} style={{height: "800px", width: "1000px"}}
+                     className="div-relative">
+                    <img src={val.url + "?imageView2/2/w/1000/h/800"} alt={"img"}/>
+                    <div className="div-text-area">
+                        <ReactMarkdown
+                            className="markdown-content-carousel-view markdown-body"
+                            renderers={{code: CodeBlock,}}
+                            escapeHtml={false}
+                            skipHtml={false}
+                            source={val.message}
+                        />
+                    </div>
                 </div>
-            </div>
+                :
+                <div key={val.id} style={{height: "250px", width: "500px"}}
+                     className="div-relative carousels">
+                    <img src={val.url + "?imageView2/2/w/500/h/250"} alt={"img"}/>
+                    <div className="div-text-area">
+                        <ReactMarkdown
+                            className="markdown-content-carousel-view markdown-body"
+                            renderers={{code: CodeBlock,}}
+                            escapeHtml={false}
+                            skipHtml={false}
+                            source={val.message}
+                        />
+                    </div>
+                </div>,
         }));
         return (
             <div className="image-gallery">
                 <ImageGallery
                     autoPlay={true}
                     showFullscreenButton={true}
-                    showPlayButton={false}
-                    showThumbnails={false}
+                    showPlayButton={onFullScreen}
+                    showThumbnails={onFullScreen}
                     thumbnailPosition="bottom"
+                    onScreenChange={(isFull) => this.setState({onFullScreen: isFull})}
                     items={images}/>
             </div>
         );
