@@ -31,7 +31,7 @@ import (
 // @license.name all right
 func main() {
 	// dig config
-	component.DigProvider()
+	component.DigProviderTest()
 	module.DigProviderModule()
 	service2.DigProviderService()
 	http.DigProviderController()

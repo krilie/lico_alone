@@ -8,7 +8,7 @@ import (
 // StatArticleVisitorLogs 文档访问记录
 type StatArticleVisitorLogs struct {
 	com_model.Model
-	AccessTime      time.Time `json:"access_time" gorm:"column:access_time;type:datetime;index;not null"`
+	AccessTime      time.Time `json:"access_time" gorm:"column:access_time;type:datetime(3);index;not null"`
 	Ip              string    `json:"ip" gorm:"column:ip;type:nvarchar(64);index;not null"`
 	CustomerTraceId string    `json:"customer_trace_id" gorm:"column:customer_trace_id;type:nvarchar(64);index;not null"`
 	ArticleId       string    `json:"article_id" gorm:"column:article_id;type:nvarchar(36);not null"`
