@@ -43,6 +43,20 @@ func (ndb *NDb) GetDb(ctx context.Context) *gorm.DB {
 	}
 }
 
+// GetSessionDb 获取上下文中的数据库连接 可以为nil
+func (ndb *NDb) GetSessionDb(ctx context.Context) *gorm.DB {
+	nCtx := context2.GetContextOrNil(ctx)
+	if nCtx == nil {
+		return nil
+	} else {
+		if nCtx.Tx == nil {
+			return nil
+		} else {
+			return nCtx.Tx.(*gorm.DB)
+		}
+	}
+}
+
 func (ndb *NDb) Ping() error {
 	db, err := ndb.db.DB()
 	if err != nil {
