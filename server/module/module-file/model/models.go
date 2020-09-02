@@ -8,13 +8,13 @@ import (
 // 上传的文件的内容
 type FileMaster struct {
 	com_model.Model
-	KeyName     string `json:"key_name" gorm:"column:key_name;type:varchar(200);unique_index;not null"`
+	KeyName     string `json:"key_name" gorm:"column:key_name;type:varchar(200);uniqueIndex;not null"`
 	BucketName  string `json:"bucket_name" gorm:"column:bucket_name;type:varchar(200);not null"`
-	Url         string `json:"url" gorm:"column:url;type:varchar(200);unique_index;not null"`
+	Url         string `json:"url" gorm:"column:url;type:varchar(200);uniqueIndex;not null"`
 	UserId      string `json:"user_id" gorm:"column:user_id;type:char(36);not null"`
 	ContentType string `json:"content_type" gorm:"column:content_type;type:varchar(50);not null"`
 	BizType     string `json:"biz_type" gorm:"column:biz_type;type:varchar(50);not null"`
-	Size        int    `json:"size" gorm:"column:size;type:int;not null"`
+	Size        int    `json:"size" gorm:"column:size;type:int(11);not null"`
 }
 
 func (FileMaster) TableName() string {

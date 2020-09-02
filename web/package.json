@@ -158,6 +158,7 @@
     "less": "^3.11.1",
     "lodash-webpack-plugin": "^0.11.5",
     "prop-types": "^15.7.2",
+    "react-image-gallery": "^1.0.8",
     "react-router-dom": "^5.1.2",
     "reqwest": "^2.0.5",
     "storejs": "^1.0.25",

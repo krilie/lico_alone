@@ -18,42 +18,42 @@ class ArticleListItem extends React.Component {
         this.state = {};
     }
 
-    goDetailPage = (articleId) => {
-        this.props.history.push("/article/" + articleId);
-    }
-
     render() {
         const {title, description, pv, id, picture} = this.props
         const url = "/article_detail?id=" + id;
         return (
-            <Card className="article-item-card"
-                  bodyStyle={{padding: "0 0 0 0", margin: "0 0 0 0"}}
-                  style={{minWidth: 400}}>
+            <Card className="article-item-card" bodyStyle={{padding: "0", margin: "0"}} style={{minWidth: 300}}>
                 <Layout className="article-layout">
-                    <Layout.Header className="article-layout-header">
-                        <a href={url} rel="noopener noreferrer" target="_blank">
-                            <div style={{height: "unset", verticalAlign: "center"}}>
-                                {title}
-                            </div>
-                        </a>
-                    </Layout.Header>
-                    <Layout className="article-layout">
-                        <Layout.Sider width={100} className="article-layout-sider">
-                            <img className="pic" src={picture} alt={"pic"}/>
-                        </Layout.Sider>
-                        <Layout.Content className="article-layout-content">
-                            <Layout className="article-layout">
-                                <Layout.Header style={{minHeight: "30px",maxHeight:"30px"}} className="article-layout-content-real">
-                                    <a href={url}  rel="noopener noreferrer" target="_blank" className="article-description-view">{description}</a>
-                                </Layout.Header>
-                                <Layout.Footer className="article-layout-footer">
-                                    <div style={{textAlign: "left", fontWeight: "600"}}>
-                                        访问量:&nbsp;{pv}&nbsp;次
+
+                    <Layout.Sider width={100} className="article-layout-sider">
+                        <img className="pic" src={picture+ "?imageView2/2/w/100/h/80"} alt={"pic"}/>
+                    </Layout.Sider>
+
+                    <Layout.Content className="article-layout-content">
+                        <Layout className="article-layout">
+
+                            <Layout.Header style={{minHeight: "20px", maxHeight: "20px"}}
+                                           className="article-layout-content-real">
+                                <a href={url} rel="noopener noreferrer" target="_blank">
+                                    <div className="article-description-view">
+                                        {title}
                                     </div>
-                                </Layout.Footer>
-                            </Layout>
-                        </Layout.Content>
-                    </Layout>
+                                </a>
+                            </Layout.Header>
+
+                            <Layout.Content>
+                                <a href={url} rel="noopener noreferrer" target="_blank"
+                                   style={{height: "unset", verticalAlign: "center",fontSize:"14px",fontWeight: 700,color: "#208719"}}>{description}</a>
+                            </Layout.Content>
+
+                            <Layout.Footer className="article-layout-footer">
+                                <div style={{textAlign: "left", fontWeight: "600"}}>
+                                    访问量:&nbsp;{pv}&nbsp;次
+                                </div>
+                            </Layout.Footer>
+
+                        </Layout>
+                    </Layout.Content>
                 </Layout>
             </Card>
         );

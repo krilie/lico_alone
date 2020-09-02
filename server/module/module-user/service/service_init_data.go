@@ -58,9 +58,12 @@ type initAdminUserStruct struct {
 
 func NewPerm(name, method, path, desc string, sort int) model.Permission {
 	return model.Permission{
-		CreatedAt:   time.Now(),
-		UpdatedAt:   time.Now(),
-		DeletedAt:   nil,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+		DeletedAt: gorm.DeletedAt{
+			Time:  time.Time{},
+			Valid: false,
+		},
 		Name:        name,
 		Description: desc,
 		RefMethod:   method,
