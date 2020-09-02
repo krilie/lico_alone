@@ -13,7 +13,7 @@ type Permission struct {
 	Description string         `gorm:"column:description;type:varchar(100);not null" json:"description"`
 	RefMethod   string         `gorm:"column:ref_method;not null;type:varchar(255)" json:"ref_method"`
 	RefPath     string         `gorm:"column:ref_path;not null;type:varchar(255)" json:"ref_path"`
-	Sort        int            `gorm:"column:sort;not null;type:int" json:"sort"`
+	Sort        int            `gorm:"column:sort;not null;type:int(11)" json:"sort"`
 }
 
 func (Permission) TableName() string {
