@@ -16,7 +16,7 @@ type CustomerAccount struct {
 	Mobile          string `json:"mobile" gorm:"column:mobile;size:32;not null;index"`
 	Email           string `json:"email" gorm:"column:email;size:32;not null;index"`
 	Other           string `json:"other" gorm:"column:other;size:1024;not null"` // 其它
-	AccessTimes     int    `json:"access_times" gorm:"column:access_times;type:int;not null"`
+	AccessTimes     int    `json:"access_times" gorm:"column:access_times;type:int(11);not null"`
 }
 
 func (CustomerAccount) TableName() string {

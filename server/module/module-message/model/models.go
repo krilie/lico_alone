@@ -43,7 +43,7 @@ type MessageValidCode struct {
 	SendTime time.Time `json:"send_time" gorm:"column:send_time;type:datetime;not null"` // 发送时间
 	PhoneNum string    `json:"phone_num" gorm:"column:phone_num;size:32;not null"`       // 手机号
 	Code     string    `json:"code" gorm:"column:code;size:16;not null"`                 // 验证码
-	Type     int       `json:"type" gorm:"column:type;not null;type:int"`                // 1->登录 2->注册 3->改密码
+	Type     int       `json:"type" gorm:"column:type;not null;type:int(11)"`            // 1->登录 2->注册 3->改密码
 }
 
 func (MessageValidCode) TableName() string {
