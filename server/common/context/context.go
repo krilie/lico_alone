@@ -11,7 +11,7 @@ type Context struct {
 	context_enum.ContextValues
 	StartTime time.Time   //开始调用时间
 	LastTime  time.Time   //调用结束时间
-	Tx        interface{} // 数据库事务对象
+	Tx        interface{} // 数据库事务对象 可有可无 跟随ctx下发 线程不安全
 }
 
 func (c *Context) Clone() *Context {

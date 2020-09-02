@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
-	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
@@ -19,11 +18,11 @@ type FileDao struct {
 
 func NewFileDao(db *ndb.NDb, log *nlog.NLog) *FileDao {
 	log = log.WithField(context_enum.Module.Str(), "module file dao")
-	err := db.GetDb(context2.NewContext()).
-		AutoMigrate(&model.FileMaster{})
-	if err != nil {
-		panic(err)
-	}
+	//err := db.GetDb(context2.NewContext()).
+	//	AutoMigrate(&model.FileMaster{})
+	//if err != nil {
+	//	panic(err)
+	//}
 	return &FileDao{
 		NDb: db,
 		log: log,

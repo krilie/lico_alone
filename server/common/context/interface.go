@@ -36,14 +36,6 @@ func GetContextOrNil(ctx interface{}) *Context {
 		return c
 	}
 }
-func CloneContextOrCreate(c *Context) *Context {
-	ctx := GetContextOrNil(c)
-	if ctx == nil {
-		return NewContext()
-	} else {
-		return ctx.Clone()
-	}
-}
 
 func MustGetUserId(ctx interface{}) string {
 	orNil := GetContextOrNil(ctx)
