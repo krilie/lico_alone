@@ -2,8 +2,10 @@ package dao
 
 import (
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
+	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
+	"github.com/krilie/lico_alone/module/module-blog-article/model"
 )
 
 type BlogArticleDao struct {
@@ -13,10 +15,10 @@ type BlogArticleDao struct {
 
 func NewBlogArticleDao(ndb *ndb.NDb, log *nlog.NLog) *BlogArticleDao {
 	log = log.WithField(context_enum.Module.Str(), "blog article dao")
-	//err := ndb.GetDb(context.NewContext()).AutoMigrate(&model.Article{})
-	//if err != nil {
-	//	panic(err)
-	//}
+	err := ndb.GetDb(context.NewContext()).AutoMigrate(&model.Article{})
+	if err != nil {
+		panic(err)
+	}
 	return &BlogArticleDao{
 		NDb: ndb,
 		log: log,
