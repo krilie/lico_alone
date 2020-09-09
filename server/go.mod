@@ -40,7 +40,7 @@ require (
 	github.com/swaggo/gin-swagger v1.2.0
 	github.com/swaggo/swag v1.6.7
 	go.uber.org/automaxprocs v1.3.0
-	go.uber.org/dig v1.9.0
+	go.uber.org/dig v1.10.0
 	golang.org/x/net v0.0.0-20200707034311-ab3426394381 // indirect
 	golang.org/x/sys v0.0.0-20200802091954-4b90ce9b60b3 // indirect
 	golang.org/x/text v0.3.3 // indirect
