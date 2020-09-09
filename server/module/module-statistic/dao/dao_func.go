@@ -11,7 +11,7 @@ import (
 
 func (a *StatisticDao) AddStatVisitorLogs(ctx context.Context, item *model.AddStatVisitorLogsModel) error {
 	log := a.log.Get(ctx).WithFuncName("AddStatVisitorLogs")
-	err := a.GetDb(ctx).Model(new(model.StatVisitorLogs)).Save(&model.StatVisitorLogs{
+	err := a.GetDb(ctx).Model(new(model.StatVisitorLogs)).Create(&model.StatVisitorLogs{
 		Model: com_model.Model{
 			Id:        id_util.GetUuid(),
 			CreatedAt: time.Now(),
@@ -34,7 +34,7 @@ func (a *StatisticDao) AddStatVisitorLogs(ctx context.Context, item *model.AddSt
 
 func (a *StatisticDao) AddStatArticleVisitorLogs(ctx context.Context, item *model.AddStatArticleVisitorModel) error {
 	log := a.log.Get(ctx).WithFuncName("AddStatArticleVisitorLogs")
-	err := a.GetDb(ctx).Model(new(model.StatArticleVisitorLogs)).Save(&model.StatArticleVisitorLogs{
+	err := a.GetDb(ctx).Model(new(model.StatArticleVisitorLogs)).Create(&model.StatArticleVisitorLogs{
 		Model: com_model.Model{
 			Id:        id_util.GetUuid(),
 			CreatedAt: time.Now(),
