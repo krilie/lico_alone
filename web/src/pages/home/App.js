@@ -1,5 +1,5 @@
 import React from 'react';
-import {Menu, Row, Col, Divider, BackTop, Affix} from 'antd';
+import {Menu, Row, Col, BackTop, Affix} from 'antd';
 import Logo from "../../components/logo/Logo";
 import {Redirect, Route, Switch} from "react-router-dom";
 import Article from "./article/Article";
@@ -37,9 +37,9 @@ class App extends React.Component {
         return (
             <div className="global-style">
                 <Affix className="menu-affix" offsetTop={0}>
-                    <Row className="fix-height-menu menu-affix" justify="start" align="middle">
-                        <Col className="menu-logo" flex="150px"><Logo/></Col>
-                        <Col className="fix-height-menu" flex="auto">
+                    <Row className="fix-height-menu-all menu-affix">
+                        <Col className="menu-logo" sm={12} xs={0}><Logo/></Col>
+                        <Col className="fix-height-menu" sm={12} xs={24} style={{margin: "0px 0px 0px 20px"}}>
                             <Menu className="Menu" onClick={this.handleClick}
                                   selectedKeys={[this.state.current]}
                                   mode="horizontal">
@@ -57,7 +57,6 @@ class App extends React.Component {
                             </Menu>
                         </Col>
                     </Row>
-                    <Divider orientation="left" className="div-line"/>
                 </Affix>
 
                 <Switch>
