@@ -21,7 +21,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        process.nextTick(()=>{
+        process.nextTick(() => {
             this.props.history.push(`${this.state.current}`);
             postVisited(GetCustomerTraceId(), (res) => {
             })
