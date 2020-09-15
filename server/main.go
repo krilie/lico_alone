@@ -12,6 +12,7 @@ import (
 	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
+	"github.com/krilie/lico_alone/component/nlog/logcat"
 	"github.com/krilie/lico_alone/module/module"
 	"github.com/krilie/lico_alone/module/module-user/service"
 	service2 "github.com/krilie/lico_alone/module/service"
@@ -20,6 +21,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 )
 
 //go:generate swag init -g ./main.go
@@ -49,6 +51,8 @@ func main() {
 			ctx.Module = "main"
 			ctx.Function = "main"
 
+			closeLogLimit := logcat.BeginLogFileLimit(1024, cfg.Cfg.Log.LogFile, time.Hour*8)
+			defer closeLogLimit()
 			defer log.CloseAndWait(ctx)
 			defer db.CloseDb()
 			defer nCron.StopAndWait(ctx)
