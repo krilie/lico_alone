@@ -19,6 +19,7 @@ type LogFileInfo struct {
 	UpdateTime time.Time
 	Host       string
 	Size       int64
+	Exclude    bool
 }
 
 func GetSumSize(infos []LogFileInfo) (sum int64) {
@@ -28,18 +29,41 @@ func GetSumSize(infos []LogFileInfo) (sum int64) {
 	return sum
 }
 
+func GetHostCount(infos []LogFileInfo, host string) int {
+	var count = 0
+	for _, info := range infos {
+		if info.Host == host {
+			count++
+		}
+	}
+	return count
+}
+
 func GetLastShouldDeleteFile(infos []LogFileInfo) *LogFileInfo {
 	var info *LogFileInfo
+	// 最后修改的
 	for i := range infos {
-		if info == nil {
-			info = &infos[i]
-		} else {
-			if infos[i].UpdateTime.Before(info.UpdateTime) {
+		if !infos[i].Exclude {
+			if info == nil {
 				info = &infos[i]
+			} else {
+				if infos[i].UpdateTime.Before(info.UpdateTime) {
+					info = &infos[i]
+				}
 			}
 		}
 	}
-	return info
+	// 不在使用的最后一个
+	if info != nil {
+		if GetHostCount(infos, info.Host) == 1 && info.UpdateTime.After(time.Now().Add(-time.Hour*4)) {
+			info.Exclude = true
+			return GetLastShouldDeleteFile(infos)
+		} else {
+			return info
+		}
+	} else {
+		return info
+	}
 }
 
 func GetLogDir(logFilePath string) string {
@@ -115,7 +139,7 @@ func DeleteOverflowFile(filePath string, sizeLimit int64) {
 	sumSize := GetSumSize(info)
 	if sizeLimit < sumSize {
 		file := GetLastShouldDeleteFile(info)
-		if len(info) == 1 {
+		if len(info) == 1 || file == nil {
 			return
 		}
 		err := os.Remove(file.FullName)
@@ -162,4 +186,19 @@ func (l *LogCat) Start() {
 func (l *LogCat) Stop() {
 	close(l.exitChan)
 	l.wait.Wait()
+}
+
+func BeginLogFileLimit(mb int64, filePath string, duration time.Duration) (close func()) {
+	if filePath == "stdout" || filePath == "stderr" || filePath == "" {
+		return func() {}
+	}
+	logCat := &LogCat{
+		logFile:   filePath,
+		sizeLimit: mb * 1024 * 1024,
+		duration:  duration,
+	}
+	logCat.Start()
+	return func() {
+		logCat.Stop()
+	}
 }

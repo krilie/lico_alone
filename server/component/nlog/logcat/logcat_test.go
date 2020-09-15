@@ -17,7 +17,7 @@ func TestReadLogFileInfo(t *testing.T) {
 func TestDeleteOverflowFile(t *testing.T) {
 	logCat := &LogCat{
 		logFile:   "C:\\Users\\Administrator\\Desktop\\ccc\\",
-		sizeLimit: 330,
+		sizeLimit: 80 * 1024,
 		duration:  time.Second * 7,
 	}
 	logCat.Start()
