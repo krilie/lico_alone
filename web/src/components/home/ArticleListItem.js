@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import "./ArticleListItem.less"
 import {Card, Layout} from "antd";
 import {withRouter} from "react-router-dom";
+import {replaceForImageProxy} from "../../utils/ImageProxy";
 
 /**
  * --------------------------------------
@@ -26,7 +27,7 @@ class ArticleListItem extends React.Component {
                 <Layout className="article-layout">
 
                     <Layout.Sider width={100} className="article-layout-sider">
-                        <img className="pic" src={picture+ "?imageView2/5/w/100/h/80"} alt={"pic"}/>
+                        <img className="pic" src={replaceForImageProxy(picture,"100x")} alt={"pic"}/>
                     </Layout.Sider>
 
                     <Layout.Content className="article-layout-content">

@@ -31,7 +31,7 @@ func NewFileModule(dao *dao.FileDao, log *nlog.NLog, cfgs *ncfg.NConfig) *FileMo
 	} else if cfg.Channel == "qiniu" {
 		fileApi = file_api.NewOssQiNiu(cfg)
 	} else if cfg.Channel == "minio" {
-		fileApi = file_api.NewOssMinioClient(cfg)
+		fileApi = file_api.NewOssMinioClientByCfg(cfg)
 	} else {
 		panic("config error on file save " + cfg.Channel)
 	}
