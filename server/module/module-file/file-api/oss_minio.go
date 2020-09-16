@@ -61,7 +61,7 @@ func (f *OssMinio) UploadFile(ctx context.Context, fileName string, fileStream i
 		_ = f.Client.RemoveIncompleteUpload(f.BucketName, key) // 删除可能存在的不完整文件
 		return f.BucketName, key, errs.NewInternal().WithMsg("un completed upload please check")
 	} else {
-		return f.BucketName, key, nil
+		return f.GetBaseUrl(ctx) + "/" + key, key, nil
 	}
 }
 
@@ -74,6 +74,9 @@ func (f *OssMinio) DeleteFile(ctx context.Context, key string) error {
 }
 
 func (f *OssMinio) GetBaseUrl(ctx context.Context) string {
+	if !strings.HasPrefix(f.Url, "http") {
+		return "https://" + f.Url
+	}
 	return f.Url
 }
 
@@ -88,10 +91,26 @@ func NewOssMinioClientByCfg(cfg *ncfg.FileSave) *OssMinio {
 }
 
 func NewOssMinioClient(bucket, endPoint, key, secret string) *OssMinio {
-	minioClient, err := minio.New(endPoint, key, secret, true) //endpoint, accessKeyID, secretAccessKey string, secure bool
-	if err != nil {
-		panic(errs.NewInternal().WithError(err))
+	if strings.HasSuffix(endPoint, "http://") {
+		minioClient, err := minio.New(strings.TrimPrefix(endPoint, "http://"), key, secret, false) //endpoint, accessKeyID, secretAccessKey string, secure bool
+		if err != nil {
+			panic(errs.NewInternal().WithError(err))
+		}
+		url := fmt.Sprintf("%v%v%v", endPoint, "/", bucket)
+		return &OssMinio{Client: minioClient, BucketName: bucket, Url: url}
+	} else if strings.HasSuffix(endPoint, "https://") {
+		minioClient, err := minio.New(strings.TrimPrefix(endPoint, "https://"), key, secret, true) //endpoint, accessKeyID, secretAccessKey string, secure bool
+		if err != nil {
+			panic(errs.NewInternal().WithError(err))
+		}
+		url := fmt.Sprintf("%v%v%v", endPoint, "/", bucket)
+		return &OssMinio{Client: minioClient, BucketName: bucket, Url: url}
+	} else {
+		minioClient, err := minio.New(endPoint, key, secret, true) //endpoint, accessKeyID, secretAccessKey string, secure bool
+		if err != nil {
+			panic(errs.NewInternal().WithError(err))
+		}
+		url := fmt.Sprintf("%v%v%v", endPoint, "/", bucket)
+		return &OssMinio{Client: minioClient, BucketName: bucket, Url: url}
 	}
-	url := fmt.Sprintf("%v%v%v", endPoint, "/", bucket)
-	return &OssMinio{Client: minioClient, BucketName: bucket, Url: url}
 }
