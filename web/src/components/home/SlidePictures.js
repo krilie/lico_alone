@@ -63,7 +63,7 @@ class SlidePictures extends React.Component {
                 :
                 <div key={val.id} style={{height: "250px", width: "500px"}}
                      className="div-relative carousels">
-                    <img src={replaceForImageProxy(val.url,"500x250")} alt={"img"}/>
+                    <img src={replaceForImageProxy(val.url,"500x")} alt={"img"}/>
                     <div className="div-text-area">
                         <ReactMarkdown
                             className="markdown-content-carousel-view markdown-body"
