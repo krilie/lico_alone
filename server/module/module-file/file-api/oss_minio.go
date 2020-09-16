@@ -9,6 +9,8 @@ import (
 	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/minio/minio-go"
 	"io"
+	"strings"
+	"time"
 )
 
 type OssMinio struct {
@@ -17,12 +19,27 @@ type OssMinio struct {
 	Url        string
 }
 
-func (o *OssMinio) DeleteFileByUrl(ctx context.Context, url string) error {
-	panic("implement me")
+func (f *OssMinio) DeleteFileByUrl(ctx context.Context, url string) error {
+	bucket, key := f.GetBucketAndKeyByUrl(ctx, url)
+	if bucket != f.BucketName {
+		return errs.NewParamError().WithMsg("minio err bucket name on delete file")
+	}
+	if err := f.DeleteFile(ctx, key); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (f *OssMinio) GetUrl(ctx context.Context, isPub bool, fileKey string) (url string, err error) {
-	return fmt.Sprintf("%v/%v/%v", f.Url, f.BucketName, fileKey), nil
+	if isPub {
+		return fmt.Sprintf("%v/%v/%v", f.Url, f.BucketName, fileKey), nil
+	} else {
+		url, err := f.Client.PresignedGetObject(f.BucketName, fileKey, time.Hour*5, nil)
+		if err != nil {
+			return "", err
+		}
+		return url.String(), nil
+	}
 }
 
 func (f *OssMinio) GetBucketName(ctx context.Context) string {
@@ -34,14 +51,14 @@ func (f *OssMinio) UploadFile(ctx context.Context, fileName string, fileStream i
 	if err != nil {
 		return "", "", err
 	}
-	key = id_util.GetUuid() + fileName
+	key = id_util.NextSnowflake() + fileName
 	userMate := make(map[string]string)
 	userMate["user_id"] = "userId"
 	n, err := f.Client.PutObject(f.BucketName, key, reader, fileSize, minio.PutObjectOptions{ContentType: content, UserMetadata: userMate})
 	if err != nil {
 		_ = f.Client.RemoveIncompleteUpload(f.BucketName, key) // 删除可能存在的不完整文件
 		return f.BucketName, key, errs.NewInternal().WithError(err)
-	} else if fileSize != -1 && n != fileSize {
+	} else if fileSize != -1 && n != fileSize && fileSize > 1024*1024*64 {
 		_ = f.Client.RemoveIncompleteUpload(f.BucketName, key) // 删除可能存在的不完整文件
 		return f.BucketName, key, errs.NewInternal().WithMsg("un completed upload please check")
 	} else {
@@ -57,15 +74,25 @@ func (f *OssMinio) DeleteFile(ctx context.Context, key string) error {
 	return nil
 }
 
-func (o *OssMinio) GetBaseUrl(ctx context.Context) string {
-	return o.Url
+func (f *OssMinio) GetBaseUrl(ctx context.Context) string {
+	return f.Url
 }
 
-func NewOssMinioClient(cfg *ncfg.FileSave) *OssMinio {
-	minioClient, err := minio.New(cfg.OssEndPoint, cfg.OssKey, cfg.OssSecret, true) //endpoint, accessKeyID, secretAccessKey string, secure bool
+func (f *OssMinio) GetBucketAndKeyByUrl(ctx context.Context, url string) (bucket, key string) {
+	bucketKey := strings.Replace(url, f.Url+"/", "", 1)
+	bucketKeySlice := strings.SplitN(bucketKey, "/", 1)
+	return bucketKeySlice[0], bucketKeySlice[1]
+}
+
+func NewOssMinioClientByCfg(cfg *ncfg.FileSave) *OssMinio {
+	return NewOssMinioClient(cfg.OssBucket, cfg.OssEndPoint, cfg.OssKey, cfg.OssSecret)
+}
+
+func NewOssMinioClient(bucket, endPoint, key, secret string) *OssMinio {
+	minioClient, err := minio.New(endPoint, key, secret, true) //endpoint, accessKeyID, secretAccessKey string, secure bool
 	if err != nil {
 		panic(errs.NewInternal().WithError(err))
 	}
-	url := fmt.Sprintf("%v%v%v", cfg.OssEndPoint, "/", cfg.OssBucket)
-	return &OssMinio{Client: minioClient, BucketName: cfg.OssBucket, Url: url}
+	url := fmt.Sprintf("%v%v%v", endPoint, "/", bucket)
+	return &OssMinio{Client: minioClient, BucketName: bucket, Url: url}
 }
