@@ -27,7 +27,7 @@ class ArticleListItem extends React.Component {
                 <Layout className="article-layout">
 
                     <Layout.Sider width={100} className="article-layout-sider">
-                        <img className="pic" src={replaceForImageProxy(picture,"100px")} alt={"pic"}/>
+                        <img className="pic" src={replaceForImageProxy(picture,"100x")} alt={"pic"}/>
                     </Layout.Sider>
 
                     <Layout.Content className="article-layout-content">

@@ -53,7 +53,7 @@ class SelectFileModal extends Component {
                                  message.info("copy ok")
                                  onOk();
                              }}>
-                    <img src={replaceForImageProxy(val.url,"70px")} height="70px" width="auto" alt={"img"}/>
+                    <img src={replaceForImageProxy(val.url,"70x")} height="70px" width="auto" alt={"img"}/>
                 </div>)
             });
         options.push(

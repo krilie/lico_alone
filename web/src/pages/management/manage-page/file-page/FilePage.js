@@ -14,7 +14,7 @@ class FilePage extends Component {
         {title: '创建时间', key: 'created_at', dataIndex: 'created_at', sorter: {multiple: 1,}},
         {
             title: '地址', key: 'url', dataIndex: 'url',
-            render: text => <img src={replaceForImageProxy(text,"200px")} alt={"img"}/>
+            render: text => <img src={replaceForImageProxy(text,"200x")} alt={"img"}/>
         },
         {title: '用户ID', key: 'user_id', dataIndex: 'user_id'},
         {

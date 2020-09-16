@@ -96,7 +96,7 @@ class ArticleListPage extends Component {
         {title: 'ID', key: 'id', dataIndex: 'id'},
         {
             title: '图片', key: 'picture', dataIndex: 'picture',
-            render: text => <img src={replaceForImageProxy(text,"200px")} alt={"img"}/>
+            render: text => <img src={replaceForImageProxy(text,"200x")} alt={"img"}/>
         },
         {title: '标题', key: 'title', dataIndex: 'title', render: val => <div>{val}</div>},
         {

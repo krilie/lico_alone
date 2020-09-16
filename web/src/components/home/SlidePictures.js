@@ -45,11 +45,11 @@ class SlidePictures extends React.Component {
         const images = data.map(val => ({
             original: val.url,
             fullscreen: val.url,
-            thumbnail: replaceForImageProxy(val.url,"400px"),
+            thumbnail: replaceForImageProxy(val.url,"400x"),
             renderItem: () => onFullScreen ?
                 <div key={val.id} style={{height: "800px", width: "1000px"}}
                      className="div-relative">
-                    <img src={replaceForImageProxy(val.url,"1000px")} alt={"img"}/>
+                    <img src={replaceForImageProxy(val.url,"1000x")} alt={"img"}/>
                     <div className="div-text-area">
                         <ReactMarkdown
                             className="markdown-content-carousel-view markdown-body"
@@ -63,7 +63,7 @@ class SlidePictures extends React.Component {
                 :
                 <div key={val.id} style={{height: "250px", width: "500px"}}
                      className="div-relative carousels">
-                    <img src={replaceForImageProxy(val.url,"500px")} alt={"img"}/>
+                    <img src={replaceForImageProxy(val.url,"500x250")} alt={"img"}/>
                     <div className="div-text-area">
                         <ReactMarkdown
                             className="markdown-content-carousel-view markdown-body"

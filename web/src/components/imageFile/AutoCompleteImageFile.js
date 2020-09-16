@@ -43,7 +43,7 @@ class AutoCompleteImageFile extends Component {
             imgList.map(val => {
                 return {
                     value: val.url,
-                    label: <img src={replaceForImageProxy(val.url,"150px")} height="150px" width="auto" alt={"img"}/>
+                    label: <img src={replaceForImageProxy(val.url,"150x")} height="150px" width="auto" alt={"img"}/>
                 }
             });
         options.push({

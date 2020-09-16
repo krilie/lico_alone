@@ -110,7 +110,7 @@ class CarouselPage extends Component {
         },
         {
             title: 'url', key: 'url', dataIndex: 'url',
-            render: text => <img src={replaceForImageProxy(text,"150px")} alt={"img"}/>
+            render: text => <img src={replaceForImageProxy(text,"150x")} alt={"img"}/>
         },
         {
             title: '操作', key: 'operation',
