@@ -7,6 +7,7 @@ import "github-markdown-css"
 import "highlight.js/styles/github.css"
 import "react-image-gallery/styles/css/image-gallery.css"
 import ImageGallery from 'react-image-gallery';
+import {replaceForImageProxy} from "../../utils/ImageProxy";
 
 class SlidePictures extends React.Component {
     constructor(props) {
@@ -44,11 +45,11 @@ class SlidePictures extends React.Component {
         const images = data.map(val => ({
             original: val.url,
             fullscreen: val.url,
-            thumbnail: val.url + "?imageView2/2/w/400/h/200",
+            thumbnail: replaceForImageProxy(val.url,"400px"),
             renderItem: () => onFullScreen ?
                 <div key={val.id} style={{height: "800px", width: "1000px"}}
                      className="div-relative">
-                    <img src={val.url + "?imageView2/2/w/1000/h/800"} alt={"img"}/>
+                    <img src={replaceForImageProxy(val.url,"1000px")} alt={"img"}/>
                     <div className="div-text-area">
                         <ReactMarkdown
                             className="markdown-content-carousel-view markdown-body"
@@ -62,7 +63,7 @@ class SlidePictures extends React.Component {
                 :
                 <div key={val.id} style={{height: "250px", width: "500px"}}
                      className="div-relative carousels">
-                    <img src={val.url + "?imageView2/2/w/500/h/250"} alt={"img"}/>
+                    <img src={replaceForImageProxy(val.url,"500px")} alt={"img"}/>
                     <div className="div-text-area">
                         <ReactMarkdown
                             className="markdown-content-carousel-view markdown-body"

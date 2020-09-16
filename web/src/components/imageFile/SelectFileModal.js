@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button, message, Modal, Spin} from "antd";
 import {manageGetFilePage} from "../../api/ManageFileApi";
 import copyToBoard from "../../utils/CopyToBoard";
+import {replaceForImageProxy} from "../../utils/ImageProxy";
 
 class SelectFileModal extends Component {
 
@@ -52,7 +53,7 @@ class SelectFileModal extends Component {
                                  message.info("copy ok")
                                  onOk();
                              }}>
-                    <img src={val.url + "?imageView2/2/h/70"} height="70px" width="auto" alt={"img"}/>
+                    <img src={replaceForImageProxy(val.url,"70px")} height="70px" width="auto" alt={"img"}/>
                 </div>)
             });
         options.push(

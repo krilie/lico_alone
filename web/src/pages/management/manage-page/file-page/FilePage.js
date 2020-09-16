@@ -5,6 +5,7 @@ import {manageDeleteFile, manageGetFilePage, manageUpdateFile} from "../../../..
 import UploadOutlined from "@ant-design/icons/lib/icons/UploadOutlined";
 import CopyToBoard from "../../../../utils/CopyToBoard";
 import {Input} from 'antd';
+import {replaceForImageProxy} from "../../../../utils/ImageProxy";
 
 class FilePage extends Component {
     // 表格列信息
@@ -13,7 +14,7 @@ class FilePage extends Component {
         {title: '创建时间', key: 'created_at', dataIndex: 'created_at', sorter: {multiple: 1,}},
         {
             title: '地址', key: 'url', dataIndex: 'url',
-            render: text => <img src={text + "?imageView2/2/w/200/h/100"} alt={"img"}/>
+            render: text => <img src={replaceForImageProxy(text,"200px")} alt={"img"}/>
         },
         {title: '用户ID', key: 'user_id', dataIndex: 'user_id'},
         {
