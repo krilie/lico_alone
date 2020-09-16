@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/file_util"
-	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/minio/minio-go"
 	"io"
@@ -51,7 +50,7 @@ func (f *OssMinio) UploadFile(ctx context.Context, fileName string, fileStream i
 	if err != nil {
 		return "", "", err
 	}
-	key = id_util.NextSnowflake() + fileName
+	key = fileName
 	userMate := make(map[string]string)
 	userMate["user_id"] = "userId"
 	n, err := f.Client.PutObject(f.BucketName, key, reader, fileSize, minio.PutObjectOptions{ContentType: content, UserMetadata: userMate})
