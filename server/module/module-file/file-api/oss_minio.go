@@ -91,14 +91,14 @@ func NewOssMinioClientByCfg(cfg *ncfg.FileSave) *OssMinio {
 }
 
 func NewOssMinioClient(bucket, endPoint, key, secret string) *OssMinio {
-	if strings.HasSuffix(endPoint, "http://") {
+	if strings.HasPrefix(endPoint, "http://") {
 		minioClient, err := minio.New(strings.TrimPrefix(endPoint, "http://"), key, secret, false) //endpoint, accessKeyID, secretAccessKey string, secure bool
 		if err != nil {
 			panic(errs.NewInternal().WithError(err))
 		}
 		url := fmt.Sprintf("%v%v%v", endPoint, "/", bucket)
 		return &OssMinio{Client: minioClient, BucketName: bucket, Url: url}
-	} else if strings.HasSuffix(endPoint, "https://") {
+	} else if strings.HasPrefix(endPoint, "https://") {
 		minioClient, err := minio.New(strings.TrimPrefix(endPoint, "https://"), key, secret, true) //endpoint, accessKeyID, secretAccessKey string, secure bool
 		if err != nil {
 			panic(errs.NewInternal().WithError(err))
