@@ -3,11 +3,7 @@ export const imageProxy = 'https://imageproxy.lizo.top'
 
 export function replaceForImageProxy(oriUrl, paramStr) {
     // http(s)://host/key/key.jpg => https://imageproxy.host/paramStr/key/key.jpg
-    var myURL = new URL(oriUrl);
-    if (myURL.host.indexOf("minio.lizo.top") === -1){
-        console.log(oriUrl)
-        return oriUrl;
-    }
-    var split = oriUrl.split(myURL.host + "/", 2);
-    return imageProxy + "/" + paramStr + "/" + split[1];
+    var split1 = oriUrl.split("//",2);
+    var split2 = split1[1]("/",2)
+    return imageProxy + "/" + paramStr + "/" + split2[1];
 }
