@@ -76,6 +76,7 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 	checkToken.POST("/manage/carousel/create", ctrl.userCtrl.CreateCarousel)
 	checkToken.POST("/manage/carousel/update", ctrl.userCtrl.UpdateCarousel)
 	checkToken.POST("/manage/carousel/delete_by_id", ctrl.userCtrl.DeleteCarouselById)
+	checkToken.GET("/manage/statistic/get_visitor_points", ctrl.userCtrl.ManageGetVisitorPoints)
 
 	// common 服务
 	commonApi := apiGroup.Group("")

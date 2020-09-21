@@ -214,6 +214,18 @@ definitions:
         description: 图片地址
         type: string
     type: object
+  model.VisitorLonlatModel:
+    properties:
+      city:
+        description: 城市
+        type: string
+      lat:
+        description: 纬度
+        type: number
+      lon:
+        description: 经度
+        type: number
+    type: object
   service_user.InitAppData:
     properties:
       build_time:
@@ -769,17 +781,6 @@ paths:
     get:
       description: 获取AMap配置项
       operationId: 获取AMap配置项
-      parameters:
-      - description: 配置名
-        in: formData
-        name: name
-        required: true
-        type: string
-      - description: 配置值
-        in: formData
-        name: value
-        required: true
-        type: string
       produces:
       - application/json
       responses:
@@ -852,6 +853,31 @@ paths:
           schema:
             type: string
       summary: 更新配置项
+      tags:
+      - 配置项
+  /api/manage/statistic/get_visitor_points:
+    get:
+      description: 获取所有访问地点
+      operationId: 获取所有访问地点
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.VisitorLonlatModel'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 获取所有访问地点
       tags:
       - 配置项
   /api/user/init_app:
