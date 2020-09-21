@@ -43,7 +43,7 @@ export default class ManagePage extends React.Component {
                         <Menu.Item className="v-center" key = {`${this.props.match.path}/setting`}>设置</Menu.Item>
                         <Menu.Item className="v-center" key = {`${this.props.match.path}/files`}>文件</Menu.Item>
                         <Menu.Item className="v-center" key = {`${this.props.match.path}/carousel`}>轮播图</Menu.Item>
-                        <Menu.Item className="v-center" key = {`${this.props.match.path}/article`}>Article</Menu.Item>
+                        <Menu.Item className="v-center" key = {`${this.props.match.path}/article`}>文章</Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout className="manage-layout">
