@@ -23,7 +23,7 @@ func RateLimit() gin.HandlerFunc {
 
 // RateLimit 限制网速
 func RequestOpsLimit() gin.HandlerFunc {
-	limitBucket := ratelimit.NewBucket(time.Millisecond*100, 3) // 0.1秒三次
+	limitBucket := ratelimit.NewBucket(time.Millisecond*100, 30) // 0.1秒三次
 	return func(c *gin.Context) {
 		// 限制速度
 		limitBucket.Wait(1)
