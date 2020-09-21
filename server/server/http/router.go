@@ -25,7 +25,9 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 	// 设置gin mode
 	gin.SetMode(httpCfg.GinMode)
 	// 路径设置 根路径
-	rootRouter := gin.Default()         // logger recover
+	rootRouter := gin.Default()                  // logger recover
+	rootRouter.Use(middleware.RequestOpsLimit()) // 限流
+
 	pprof.Register(rootRouter, "pprof") // 性能
 	// 跨域
 	rootRouter.Use(Cors())
