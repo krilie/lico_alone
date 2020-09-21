@@ -26,10 +26,10 @@ class VisitorPointPage extends Component {
             <div style={{height:"100%",width:"100%"}}>
                 <Map
                     amapkey={mapKey}
-                    plugins={["ToolBar", 'Scale']}
+                    plugins={["ToolBar", 'Scale','OverView','MapType','Geolocation']}
                     center={["116.397128", "39.916527"]}
                     zoom={15}>
-                    <Marker position={["116.397128", "39.916527"]}/>
+                    <Marker autoRotation={true} position={["116.397128", "39.916527"]}/>
                 </Map>
             </div>
             ;
