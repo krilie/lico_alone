@@ -23,7 +23,7 @@ class VisitorPointPage extends Component {
             ?
             <div>loading...</div>
             :
-            <div>
+            <div style={{height:"100%",width:"100%"}}>
                 <Map
                     amapkey={mapKey}
                     plugins={["ToolBar", 'Scale']}
