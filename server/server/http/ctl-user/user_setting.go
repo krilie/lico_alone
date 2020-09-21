@@ -48,3 +48,24 @@ func (a *UserCtrl) ManageUpdateConfig(c *gin.Context) {
 	ginutil.ReturnOk(c)
 	return
 }
+
+// ManageGetAMapKey 获取AMap配置项
+// @Summary 获取AMap配置项
+// @Description 获取AMap配置项
+// @Tags 配置项
+// @ID 获取AMap配置项
+// @Produce  json
+// @Param name formData string true "配置名"
+// @Param value formData string true "配置值"
+// @Success 200 {object} com_model.CommonReturn =>"data":{"a_map_key":"the a map key"}
+// @Failure 500 {string} errInfo
+// @Router /api/manage/setting/get_a_map_key [get]
+func (a *UserCtrl) ManageGetAMapKey(c *gin.Context) {
+	key, err := a.userService.GetAMapKey(ginutil.MustGetAppCtx(c))
+	if err != nil {
+		ginutil.ReturnWithErr(c, err)
+		return
+	}
+	ginutil.ReturnData(c, gin.H{"a_map_key": key})
+	return
+}

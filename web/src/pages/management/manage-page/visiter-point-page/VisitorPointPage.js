@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Map, Marker} from 'react-amap';
+import {getAMapKey} from "../../../../api/ManageSettingApi";
 
 class VisitorPointPage extends Component {
 
@@ -9,9 +10,10 @@ class VisitorPointPage extends Component {
     }
 
     componentDidMount() {
-        // todo: 请求mapKey
-        this.setState({
-            mapKey: "123"
+        getAMapKey().then(res => {
+            this.setState({
+                mapKey: res.data.data.a_map_key,
+            })
         })
     }
 
@@ -19,7 +21,7 @@ class VisitorPointPage extends Component {
         const {mapKey} = this.state;
         return mapKey === ""
             ?
-            <div>loading</div>
+            <div>loading...</div>
             :
             <div>
                 <Map

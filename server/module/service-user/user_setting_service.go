@@ -25,3 +25,14 @@ func (a *UserService) UpdateConfig(ctx context.Context, name, value string) erro
 	config.Value = value
 	return a.moduleConfig.Dao.UpdateConfig(ctx, config)
 }
+
+func (a *UserService) GetAMapKey(ctx context.Context) (key string, err error) {
+	config, err := a.moduleConfig.Dao.GetConfigByName(ctx, model.ConfigItemsAMapKey.Val())
+	if err != nil {
+		return "", err
+	}
+	if config == nil {
+		return "", errs.NewNormal().WithMsg("未找到AMapKey")
+	}
+	return config.Value, nil
+}
