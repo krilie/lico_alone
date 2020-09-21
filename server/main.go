@@ -62,7 +62,7 @@ func main() {
 			shutDownApi := http.InitAndStartHttpServer(ctx, cfg, auth, ctrl)
 			// 收尾工作
 			WaitSignalAndExit(ctx, func() {
-				err := shutDownApi(30)
+				err := shutDownApi(time.Second * 30)
 				if err != nil {
 					log.Get(ctx).Errorln(err)
 				} else {
