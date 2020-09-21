@@ -869,6 +869,33 @@ var doc = `{
                 }
             }
         },
+        "/api/manage/setting/get_a_map_key": {
+            "get": {
+                "description": "获取AMap配置项",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "配置项"
+                ],
+                "summary": "获取AMap配置项",
+                "operationId": "获取AMap配置项",
+                "responses": {
+                    "200": {
+                        "description": "data\":{\"a_map_key\":\"the a map key\"}",
+                        "schema": {
+                            "$ref": "#/definitions/com_model.CommonReturn"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/manage/setting/get_setting_all": {
             "post": {
                 "description": "获取所有配置项",
@@ -952,6 +979,48 @@ var doc = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/com_model.CommonReturn"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/manage/statistic/get_visitor_points": {
+            "get": {
+                "description": "获取所有访问地点",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "配置项"
+                ],
+                "summary": "获取所有访问地点",
+                "operationId": "获取所有访问地点",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.VisitorLonlatModel"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -1493,6 +1562,23 @@ var doc = `{
                 "url": {
                     "description": "图片地址",
                     "type": "string"
+                }
+            }
+        },
+        "model.VisitorLonlatModel": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "description": "城市",
+                    "type": "string"
+                },
+                "lat": {
+                    "description": "纬度",
+                    "type": "number"
+                },
+                "lon": {
+                    "description": "经度",
+                    "type": "number"
                 }
             }
         },

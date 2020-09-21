@@ -21,3 +21,6 @@ export const updateSettingItem = (name, value) => {
     return postForm("/manage/setting/update_config", {name, value});
 }
 
+export const getAMapKey = () => {
+    return getQuery("/manage/setting/get_a_map_key"); // 高德地图key
+}

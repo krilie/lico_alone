@@ -7,6 +7,7 @@ import FilePage from "./file-page/FilePage";
 import CarouselPage from "./carousel-page/CarouselPage";
 import ArticleHomePage from "./article-page/ArticleHomePage";
 import {Redirect} from "react-router-dom";
+import VisitorPointPage from "./visiter-point-page/VisitorPointPage";
 
 const {Sider} = Layout;
 
@@ -43,7 +44,8 @@ export default class ManagePage extends React.Component {
                         <Menu.Item className="v-center" key = {`${this.props.match.path}/setting`}>设置</Menu.Item>
                         <Menu.Item className="v-center" key = {`${this.props.match.path}/files`}>文件</Menu.Item>
                         <Menu.Item className="v-center" key = {`${this.props.match.path}/carousel`}>轮播图</Menu.Item>
-                        <Menu.Item className="v-center" key = {`${this.props.match.path}/article`}>Article</Menu.Item>
+                        <Menu.Item className="v-center" key = {`${this.props.match.path}/article`}>文章</Menu.Item>
+                        <Menu.Item className="v-center" key = {`${this.props.match.path}/visitor_point`}>访问地址</Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout className="manage-layout">
@@ -52,6 +54,7 @@ export default class ManagePage extends React.Component {
                         <Route  path={`${this.props.match.path}/files`} component={FilePage}/>
                         <Route  path={`${this.props.match.path}/carousel`} component={CarouselPage}/>
                         <Route  path={`${this.props.match.path}/article`} component={ArticleHomePage}/>
+                        <Route  path={`${this.props.match.path}/visitor_point`} component={VisitorPointPage}/>
                         <Redirect path={`${this.props.match.path}/`}
                                   to={{pathname: `${this.props.match.path}/setting`}}/>
                     </Switch>

@@ -63,6 +63,7 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 	checkToken.GET("/user/init_app", ctrl.userCtrl.InitApp)
 	checkToken.GET("/manage/setting/get_setting_all", ctrl.userCtrl.ManageGetConfigList)
 	checkToken.POST("/manage/setting/update_config", ctrl.userCtrl.ManageUpdateConfig)
+	checkToken.GET("/manage/setting/get_a_map_key", ctrl.userCtrl.ManageGetAMapKey) // 高德地图 获取配置key
 	checkToken.GET("/manage/article/query", ctrl.userCtrl.QueryArticle)
 	checkToken.GET("/manage/article/get_by_id", ctrl.userCtrl.GetArticleById)
 	checkToken.POST("/manage/article/update", ctrl.userCtrl.UpdateArticle)
@@ -75,6 +76,7 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 	checkToken.POST("/manage/carousel/create", ctrl.userCtrl.CreateCarousel)
 	checkToken.POST("/manage/carousel/update", ctrl.userCtrl.UpdateCarousel)
 	checkToken.POST("/manage/carousel/delete_by_id", ctrl.userCtrl.DeleteCarouselById)
+	checkToken.GET("/manage/statistic/get_visitor_points", ctrl.userCtrl.ManageGetVisitorPoints)
 
 	// common 服务
 	commonApi := apiGroup.Group("")
