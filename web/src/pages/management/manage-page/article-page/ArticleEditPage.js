@@ -8,6 +8,8 @@ import ArrowLeftOutlined from "@ant-design/icons/lib/icons/ArrowLeftOutlined";
 import CodeBlock from "../../../../components/mark_down/CodeBlock";
 import ReactMarkdown from "react-markdown/with-html";
 import SelectFileModal from "../../../../components/imageFile/SelectFileModal";
+import "github-markdown-css"
+import "highlight.js/styles/github.css"
 
 class ArticleEditPage extends Component {
 
