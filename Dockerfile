@@ -1,7 +1,7 @@
 FROM golang:1.15.2-alpine3.12 as goBuilder
 ADD ./ /myapp
 WORKDIR /myapp
-RUN export CGO_ENABLED=0 && export GOPROXY=https://goproxy.io,direct && cd ./server && go build -v -o myapp
+RUN ls -alh && export CGO_ENABLED=0 && export GOPROXY=https://goproxy.io,direct && cd ./server && go build -v -o myapp
 
 FROM node:lts-alpine3.10 as webBuilder
 ADD ./ /myapp
