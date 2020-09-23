@@ -6,7 +6,7 @@ RUN export CGO_ENABLED=0 && export GOPROXY=https://goproxy.io,direct && cd ./ser
 FROM node:lts-alpine3.10 as webBuilder
 ADD ./ /myapp
 WORKDIR /myapp/web
-RUN cd ./web && npm install && npm run-script build
+RUN npm install && npm run-script build
 
 FROM alpine:3.11
 MAINTAINER livo
