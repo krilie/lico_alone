@@ -21,5 +21,4 @@ func TestSendEmail(t *testing.T) {
 		err := email.SendEmail(context.Background(), "776334655@qq.com", "bbbbb", "测试消息")
 		t.Log(err)
 	})
-
 }

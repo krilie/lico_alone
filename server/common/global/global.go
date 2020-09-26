@@ -1,4 +1,4 @@
 package global
 
-// 静态配置
-const EnableAutoMigrate bool = false
+// 静态配置 自动表迁移
+const EnableAutoMigrate bool = true
