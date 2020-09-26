@@ -19,6 +19,7 @@ const (
 	RemoteIp        ContextEnum = "remote_ip"
 	CommitSha       ContextEnum = "commit_sha"
 	CustomerTraceId ContextEnum = "customer_trace_id"
+	Err             ContextEnum = "err"
 )
 
 type ContextValues struct {

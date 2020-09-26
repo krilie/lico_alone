@@ -18,7 +18,7 @@ func TestMain(m *testing.M) {
 func TestSendSms(t *testing.T) {
 	dig.Container.MustInvoke(func(cfg *ncfg.NConfig) {
 		sms := NewAliSms(cfg.Cfg.AliSms.Key, cfg.Cfg.AliSms.Secret)
-		err := sms.SendRegisterSms(context.Background(), "11232123", "11112222223333333333")
+		err := sms.SendRegisterSms(context.Background(), "3332234", "223")
 		assert.Nil(t, err, err)
 	})
 }

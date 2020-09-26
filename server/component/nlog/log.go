@@ -124,6 +124,10 @@ func (nlog *NLog) WithFuncName(value interface{}) *NLog {
 	return &NLog{Entry: nlog.Entry.WithField(context_enum.Function.Str(), value), hook: nlog.hook}
 }
 
+func (nlog *NLog) WithError(value interface{}) *NLog {
+	return &NLog{Entry: nlog.Entry.WithField(context_enum.Err.Str(), value), hook: nlog.hook}
+}
+
 func (nlog *NLog) CloseAndWait(ctx context.Context) {
 	if nlog.hook != nil {
 		nlog.hook.StopPushLogWorker(ctx)
