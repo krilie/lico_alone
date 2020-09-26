@@ -7,7 +7,6 @@ import (
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/utils/time_util"
 	"github.com/krilie/lico_alone/component/ncfg"
-	"github.com/krilie/lico_alone/component/nlog/logsyshook"
 	"github.com/sirupsen/logrus"
 	"os"
 	"path/filepath"
@@ -17,7 +16,6 @@ import (
 
 type NLog struct {
 	*logrus.Entry
-	hook *logsyshook.ElfLogHook
 }
 
 func NewLogger(cfg *ncfg.NConfig) *NLog {
@@ -42,12 +40,7 @@ func NewLogger(cfg *ncfg.NConfig) *NLog {
 		WithField(context_enum.CommitSha.Str(), cfg.RunEnv.GetShortGitCommitSha()).
 		WithField(context_enum.TraceId.Str(), "")
 	Log.Infoln("log init ok")
-	log := &NLog{Entry: Log, hook: nil}
-	if cfg.Cfg.Log.ElfLog.Url != "" {
-		hook := logsyshook.NewElfLogHook(logCfg.ElfLog.Key, logCfg.ElfLog.Secret, logCfg.ElfLog.Url)
-		Log.Logger.AddHook(hook)
-		log.hook = hook
-	}
+	log := &NLog{Entry: Log}
 	log.SetUpLogFile(cfg.Cfg.Log.LogFile)
 	GLog = log
 	return log
@@ -113,23 +106,21 @@ func (nlog *NLog) Get(ctx context.Context, location ...string) *NLog {
 		context_enum.Stack.Str():    nCtx.Stack,
 		context_enum.RemoteIp.Str(): nCtx.RemoteIp,
 		context_enum.Module.Str():   module,
-		context_enum.Function.Str(): funcName}), hook: nlog.hook}
+		context_enum.Function.Str(): funcName})}
 }
 
 func (nlog *NLog) WithField(key string, value interface{}) *NLog {
-	return &NLog{Entry: nlog.Entry.WithField(key, value), hook: nlog.hook}
+	return &NLog{Entry: nlog.Entry.WithField(key, value)}
 }
 
 func (nlog *NLog) WithFuncName(value interface{}) *NLog {
-	return &NLog{Entry: nlog.Entry.WithField(context_enum.Function.Str(), value), hook: nlog.hook}
+	return &NLog{Entry: nlog.Entry.WithField(context_enum.Function.Str(), value)}
 }
 
 func (nlog *NLog) WithError(value interface{}) *NLog {
-	return &NLog{Entry: nlog.Entry.WithField(context_enum.Err.Str(), value), hook: nlog.hook}
+	return &NLog{Entry: nlog.Entry.WithField(context_enum.Err.Str(), value)}
 }
 
 func (nlog *NLog) CloseAndWait(ctx context.Context) {
-	if nlog.hook != nil {
-		nlog.hook.StopPushLogWorker(ctx)
-	}
+
 }

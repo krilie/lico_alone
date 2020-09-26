@@ -64,11 +64,10 @@ func main() {
 			WaitSignalAndExit(ctx, func() {
 				err := shutDownApi(time.Second * 30)
 				if err != nil {
-					log.Get(ctx).Errorln(err)
+					log.Get(ctx).WithError(err).Errorln("service is closed with err")
 				} else {
-					log.Get(ctx).Infoln("service is closed normally")
+					log.Get(ctx).Infoln("service is closed gracefully")
 				}
-				log.Get(ctx).Infoln("service is done.")
 				return
 			})
 		})

@@ -2,6 +2,7 @@ package http
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-contrib/pprof"
@@ -9,7 +10,6 @@ import (
 	"github.com/krilie/lico_alone/component/ncfg"
 	_ "github.com/krilie/lico_alone/docs"
 	"github.com/krilie/lico_alone/server/http/middleware"
-	"github.com/prometheus/common/log"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"io/ioutil"
@@ -98,14 +98,22 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 	if pubKey == "" || priKey == "" {
 		go func() {
 			if err := srv.ListenAndServe(); err != nil {
-				log.Warnln(err)
+				if errors.Is(err, http.ErrServerClosed) {
+					return
+				} else {
+					panic(err.Error())
+				}
 				return
 			}
 		}()
 	} else {
 		go func() {
 			if err := srv.ListenAndServeTLS(pubKey, priKey); err != nil {
-				log.Warnln(err)
+				if errors.Is(err, http.ErrServerClosed) {
+					return
+				} else {
+					panic(err.Error())
+				}
 				return
 			}
 		}()
@@ -116,10 +124,8 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 		// shutdown
 		err := srv.Shutdown(ctxTimeout)
 		if err != nil {
-			log.Error(err)
 			return err
 		} else {
-			log.Info("end of service...")
 			return nil
 		}
 	}
