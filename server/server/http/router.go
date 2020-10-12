@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/arl/statsviz"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
@@ -27,8 +28,15 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 	// 路径设置 根路径
 	rootRouter := gin.Default()                  // logger recover
 	rootRouter.Use(middleware.RequestOpsLimit()) // 限流
+	// 性能
+	pprof.Register(rootRouter, "pprof")
+	// 性能
+	mux := http.NewServeMux()
+	statsviz.Register(mux)
+	rootRouter.Any("statsviz", func(c *gin.Context) {
+		mux.ServeHTTP(c.Writer, c.Request)
+	})
 
-	pprof.Register(rootRouter, "pprof") // 性能
 	// 跨域
 	rootRouter.Use(Cors())
 	// 静态文件 图片等
