@@ -49,8 +49,8 @@ class ArticleListItem extends React.Component {
                             </Layout.Content>
 
                             <Layout.Footer className="article-layout-footer">
-                                <div style={{textAlign: "left", fontWeight: "600"}}>
-                                    <EyeOutlined />:{pv}
+                                <div style={{textAlign: "left", fontWeight: "600",color:"#eedc3d"}}>
+                                    <EyeOutlined color={"#adef11"}/>{pv}
                                 </div>
                             </Layout.Footer>
 
