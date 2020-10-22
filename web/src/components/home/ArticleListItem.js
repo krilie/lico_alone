@@ -4,6 +4,7 @@ import "./ArticleListItem.less"
 import {Card, Layout} from "antd";
 import {withRouter} from "react-router-dom";
 import {replaceForImageProxy} from "../../utils/ImageProxy";
+import {EyeOutlined} from "@ant-design/icons"
 
 /**
  * --------------------------------------
@@ -48,8 +49,8 @@ class ArticleListItem extends React.Component {
                             </Layout.Content>
 
                             <Layout.Footer className="article-layout-footer">
-                                <div style={{textAlign: "left", fontWeight: "600"}}>
-                                    访问量:&nbsp;{pv}&nbsp;次
+                                <div style={{textAlign: "left", fontWeight: "600",color:"#eedc3d"}}>
+                                    <EyeOutlined color={"#adef11"}/>{pv}
                                 </div>
                             </Layout.Footer>
 
