@@ -39,6 +39,8 @@ func (a *StatisticService) QueryAllVisitorLonLat(ctx context.Context) ([]model.V
 			Lat:  jsoniter.Get([]byte(o.(string)), "lat").ToFloat64(),
 			City: jsoniter.Get([]byte(o.(string)), "city").ToString(),
 		}
+	}).Where(func(o interface{}) bool {
+		return !o.(model.VisitorLonlatModel).IsEmpty()
 	}).Distinct().ToSlice(&listRet)
 	// 返回数据
 	a.log.Get(ctx).WithField("memo_data", str_util.ToJson(listRet)).Info("get memo list")
