@@ -11,6 +11,14 @@ import (
 // QueryAllVisitorLonLat
 // 查询所有访问过系统的经纬度与城市
 func (a *StatisticService) QueryAllVisitorLonLat(ctx context.Context) ([]model.VisitorLonlatModel, error) {
+
+	defer func() {
+		if err := recover(); err != nil {
+			a.log.Get(ctx).WithError(err).Error("panic on QueryAllVisitorLonLat")
+			panic(err)
+		}
+	}()
+
 	// 获取数据
 	type Memo struct {
 		Memo string `json:"memo" gorm:"column:memo"`
