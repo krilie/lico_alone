@@ -66,14 +66,10 @@ jobs:
           cp ./server/lico_alone ./docker/lico_alone
           cp -rf ./web/build ./docker/www
 
-          echo $GITHUB_SHA | cut -c 1-6 >> $GITHUB_SHA_SHORT
-          echo "latest" >> $DOCKER_IMAGE_TAGS_LATEST
-          echo cat version >> $DOCKER_IMAGE_TAGS_VERSION
-          echo "Asia/Shanghai" >> $TZ
-#          echo ::set-env name=GITHUB_SHA_SHORT::$(echo $GITHUB_SHA | cut -c 1-6)
-#          echo ::set-env name=DOCKER_IMAGE_TAGS_LATEST::"latest"
-#          echo ::set-env name=DOCKER_IMAGE_TAGS_VERSION::$(cat version)
-#          echo ::set-env name=TZ::"Asia/Shanghai"
+          echo ::set-env name=GITHUB_SHA_SHORT::$(echo $GITHUB_SHA | cut -c 1-6)
+          echo ::set-env name=DOCKER_IMAGE_TAGS_LATEST::"latest"
+          echo ::set-env name=DOCKER_IMAGE_TAGS_VERSION::$(cat version)
+          echo ::set-env name=TZ::"Asia/Shanghai"
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v1.1.0
