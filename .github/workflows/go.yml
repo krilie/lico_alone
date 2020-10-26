@@ -65,6 +65,7 @@ jobs:
         run: |
           cp ./server/lico_alone ./docker/lico_alone
           cp -rf ./web/build ./docker/www
+
           echo ::set-env name=GITHUB_SHA_SHORT::$(echo $GITHUB_SHA | cut -c 1-6)
           echo ::set-env name=DOCKER_IMAGE_TAGS_LATEST::"latest"
           echo ::set-env name=DOCKER_IMAGE_TAGS_VERSION::$(cat version)

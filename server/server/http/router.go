@@ -15,6 +15,7 @@ import (
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -140,6 +141,11 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 }
 
 func InitStaticWeb(ctx context.Context, rootRouter *gin.Engine) {
+	_, err := os.Stat("./www")
+	if err != nil {
+		// 没有静态文件夹
+		return
+	}
 	// web 网页
 	webRouter := rootRouter.Group("/")
 	webRouter.Use(gzip.Gzip(gzip.DefaultCompression)) // 开启gzip压缩
