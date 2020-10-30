@@ -1,0 +1,41 @@
+{
+  "name": "web-article",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": ".",
+
+  "dependencies": {
+    "axios": "^0.21.0",
+    "highlight": "^0.2.4",
+    "highlight.js": "^10.3.1",
+    "qs": "^6.9.4",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
+    "react-markdown": "^5.0.2",
+    "react-scripts": "4.0.0",
+    "react-toastify": "^6.0.9"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
