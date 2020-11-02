@@ -18,6 +18,7 @@ import (
 // @Tags 文件管理
 // @ID 文件上传
 // @Produce json
+// @Param Authorization header string true "凭证token" default({{token}})
 // @Param file formData file true "单个文件"
 // @Success 200 {object} com_model.CommonReturn{data=UpdateFileReturn}
 // @Failure 500 {string} errInfo
@@ -108,6 +109,7 @@ type UpdateFileReturn struct {
 // @Tags 文件管理
 // @ID 文件删除
 // @Produce json
+// @Param Authorization header string true "凭证token" default({{token}})
 // @Param file_id formData string true "文件记录id"
 // @Success 200 {object} com_model.CommonReturn{}
 // @Failure 500 {string} errInfo
@@ -132,6 +134,7 @@ func (a *UserCtrl) DeleteFile(c *gin.Context) {
 // @Tags 文件管理
 // @ID 文件查询
 // @Produce json
+// @Param Authorization header string true "凭证token" default({{token}})
 // @Param page_num query int true "page_num页索引"
 // @Param page_size query int true "page_size页大小"
 // @Param key_name_like formData string true "key_name_like"
