@@ -11,7 +11,7 @@ import (
 // @Summary 查询文章列表
 // @Description 查询文章列表
 // @Tags 公共接口
-// @ID 查询文章列表
+// @ID 查询文章列表简单
 // @Produce json
 // @Param search_key query string true "搜索内容"
 // @Param page_num query int true "页索引"
@@ -49,7 +49,7 @@ func (common *CommonCtrl) QueryArticleSample(c *gin.Context) {
 // @ID 获取article
 // @Produce json
 // @Param article_id query string true "搜索内容"
-// @Success 200 {object} com_model.CommonReturn{data=model.Article}
+// @Success 200 {object} com_model.CommonReturn{data=model.ArticleDto}
 // @Failure 500 {string} errInfo
 // @Router /api/common/article/get_article [GET]
 func (common *CommonCtrl) GetArticle(c *gin.Context) {

@@ -14,7 +14,7 @@ import (
 // @Produce  json
 // @Param Authorization header string true "凭证token" default({{token}})
 // @Param is_on_show query bool false "是否显示"
-// @Success 200 {object} com_model.CommonReturn{data=[]model.Carousel}
+// @Success 200 {object} com_model.CommonReturn{data=[]model.CarouselDto}
 // @Failure 500 {string} errInfo
 // @Router /api/manage/carousel/query [get]
 func (a *UserCtrl) QueryCarousel(c *gin.Context) {

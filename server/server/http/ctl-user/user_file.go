@@ -1,12 +1,19 @@
 package ctl_user
 
 import (
+	"github.com/ahmetb/go-linq/v3"
 	"github.com/gin-gonic/gin"
 	com_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/module/module-file/model"
 	"github.com/krilie/lico_alone/server/http/ginutil"
 )
+
+type UpdateFileReturn struct {
+	Url    string `json:"url" swag:"true,file's url'"`
+	Bucket string `json:"bucket" swag:"true,file's bucket'"`
+	Key    string `json:"key" swag:"true,file's key'"`
+}
 
 // 文件上传
 // 文件删除
@@ -97,12 +104,6 @@ func (a *UserCtrl) UploadFile(c *gin.Context) {
 
 }
 
-type UpdateFileReturn struct {
-	Url    string `json:"url" swag:"true,file's url'"`
-	Bucket string `json:"bucket" swag:"true,file's bucket'"`
-	Key    string `json:"key" swag:"true,file's key'"`
-}
-
 // DeleteFile 文件删除
 // @Summary 文件删除
 // @Description 文件删除
@@ -145,9 +146,9 @@ func (a *UserCtrl) DeleteFile(c *gin.Context) {
 // @Param content_type formData string true "content_type"
 // @Param created_at_begin formData string true "created_at_begin"
 // @Param created_at_end formData string true "created_at_end"
-// @Success 200 {object} com_model.CommonReturn{data=com_model.PageData{data=[]model.FileMaster}}
+// @Success 200 {object} com_model.CommonReturn{data=com_model.PageData{data=[]model.FileMasterDto}}
 // @Failure 500 {string} errInfo
-// @Failure 500 {object} com_model.Model
+// @Failure 500 {object} com_model.CommonReturn{}
 // @Router /api/manage/file/query [POST]
 func (a *UserCtrl) QueryFile(c *gin.Context) {
 	ctx := ginutil.MustGetAppCtx(c)
@@ -169,7 +170,9 @@ func (a *UserCtrl) QueryFile(c *gin.Context) {
 			PageNum:    pageNum,
 			PageSize:   pageSize,
 		},
-		Data: files,
+		Data: linq.From(files).Select(func(o interface{}) interface{} {
+			return o.(*model.FileMaster).ToDto()
+		}).Results(),
 	})
 	return
 }

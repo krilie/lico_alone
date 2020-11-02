@@ -45,3 +45,13 @@ type CreateArticleModel struct {
 	Description string `json:"description" form:"description" xml:"description"`
 	Sort        int    `json:"sort" form:"sort" xml:"sort"`
 }
+
+type ArticleDto struct {
+	com_model.ModelVo
+	Title       string `json:"title" gorm:"column:title;type:varchar(256);not null"`
+	Description string `json:"description" gorm:"column:description;type:varchar(512);not null"` // 描述+关键值+标签
+	Content     string `json:"content" gorm:"column:content;type:text;not null"`
+	Picture     string `json:"picture" gorm:"column:picture;type:varchar(512);not null"`
+	Sort        int    `json:"sort" gorm:"column:sort;type:int(11);not null;index"`
+	Pv          int    `json:"pv" gorm:"column:pv;type:int(11);not null"`
+}

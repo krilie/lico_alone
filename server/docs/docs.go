@@ -59,7 +59,7 @@ var doc = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/model.Article"
+                                            "$ref": "#/definitions/model.ArticleDto"
                                         }
                                     }
                                 }
@@ -85,7 +85,7 @@ var doc = `{
                     "公共接口"
                 ],
                 "summary": "查询文章列表",
-                "operationId": "查询文章列表",
+                "operationId": "查询文章列表简单",
                 "parameters": [
                     {
                         "type": "string",
@@ -177,7 +177,7 @@ var doc = `{
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/model.Carousel"
+                                                "$ref": "#/definitions/model.CarouselDto"
                                             }
                                         }
                                     }
@@ -470,7 +470,7 @@ var doc = `{
                                                         "data": {
                                                             "type": "array",
                                                             "items": {
-                                                                "$ref": "#/definitions/model.Article"
+                                                                "$ref": "#/definitions/model.ArticleDto"
                                                             }
                                                         }
                                                     }
@@ -668,7 +668,7 @@ var doc = `{
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/model.Carousel"
+                                                "$ref": "#/definitions/model.CarouselDto"
                                             }
                                         }
                                     }
@@ -888,7 +888,7 @@ var doc = `{
                                                         "data": {
                                                             "type": "array",
                                                             "items": {
-                                                                "$ref": "#/definitions/model.FileMaster"
+                                                                "$ref": "#/definitions/model.FileMasterDto"
                                                             }
                                                         }
                                                     }
@@ -903,7 +903,7 @@ var doc = `{
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/com_model.Model"
+                            "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     }
                 }
@@ -1409,23 +1409,6 @@ var doc = `{
                 }
             }
         },
-        "com_model.Model": {
-            "type": "object",
-            "properties": {
-                "created_at": {
-                    "type": "string"
-                },
-                "deleted_at": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "updated_at": {
-                    "type": "string"
-                }
-            }
-        },
         "com_model.PageData": {
             "type": "object",
             "properties": {
@@ -1435,7 +1418,6 @@ var doc = `{
                 },
                 "page_info": {
                     "description": "分页信息",
-                    "type": "object",
                     "$ref": "#/definitions/com_model.PageInfo"
                 }
             }
@@ -1472,7 +1454,7 @@ var doc = `{
                 }
             }
         },
-        "model.Article": {
+        "model.ArticleDto": {
             "type": "object",
             "properties": {
                 "content": {
@@ -1508,7 +1490,7 @@ var doc = `{
                 }
             }
         },
-        "model.Carousel": {
+        "model.CarouselDto": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -1588,7 +1570,7 @@ var doc = `{
                 }
             }
         },
-        "model.FileMaster": {
+        "model.FileMasterDto": {
             "type": "object",
             "properties": {
                 "biz_type": {
@@ -1753,8 +1735,8 @@ type swaggerInfo struct {
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
 	Version:     "1.0.0",
-	Host:        "",
-	BasePath:    "",
+	Host:        "localhost:80",
+	BasePath:    "/",
 	Schemes:     []string{},
 	Title:       "lizo_alone",
 	Description: "api docs for lizo_alone",
