@@ -12,15 +12,14 @@ import (
 )
 
 func init() {
-	imgbytes, err := base64.StdEncoding.DecodeString(markImgLizo)
+	var img = "R0lGODlhZABkAPcAAHZ2dnR0dHx8fIiIiJaWlqWlpaysrMDAwNHR0d7e3urq6vT09Pz8/P39/f7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v////7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v////7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v////7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v////7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v////7+/v7+/v7+/v///yH/C05FVFNDQVBFMi4wAwEAAAAh+QQJAQDSACwAAAAAZABkAAAI/gClCRxIsKDBgwgTKlzIsKHDhxAjSpxIsaLFixgzatzIsaPHjyBDihxJsqTJkyhTqlzJsqXLlzBjypxJs6bNmzhz6tzJs6fPn0CDCh1KtKjRo0iTKl1qMcECphQNCAggoADUiAaoDggQYMBVhwsEEBCYYOrYrwoLTD0wsGwABWgTFuBqgOBctnERzhWQYGBWvHkFLnAqcO+BBAgECAg8kMBUsXDncqUKOO/WAQMeR6b8lPGBAHgZbD27ty/jraalhRXQeS/cwKgJxi4s4HXerF4HZu4sGCpgAqYZTB2QIMHns2gJBLC6FbDbybXzul1bkIEBzJXjukXOOOHWqVYH99ruLu2u2/Dlc5OXhoAseGnH1xucTpW3fPGOC9i/z7+///8ABvjRAdgZ1N56W0GXWnPkKXdYAt8NpFZqeYWlnjQM9tZdAl0RhECH9ylAFQNtgdjdgRh2RSJ8oJG31YEKPIYZVS5yBZgCCQZAwHhxNSdAdgokwGOPLf7432d4CVCXQCh+lR1ZAwmQ22foQbVVlQZJyeKFvrXo3QCfcXlVZ08KlJmJgc2FpZloBvbZcvNx192ba35lnEJ0BiaclwjlmdebZQ705pJxAYonX57ZqNCKifIJoKECQhqgpI9y1eSRYgqo6aacdurpp6CGKuqopJaK0j//BAQAOw=="
+	imgbytes, err := base64.StdEncoding.DecodeString(img)
 	if err != nil {
 		panic(err)
 	}
-	imgbytes = MustUnGzipBytes(imgbytes)
 	markbLizo = imgbytes
 }
 
-var markImgLizo = "H4sIAAAAAAAA/3L3dLOwTExhSGH4zsBQVlZWUlJSU1PT0dExbdq0pUuXrlmz5sCBAxcvXrx3796rV6++fPny58+fv3///hsFo4BK4P///+TJ4tdIqoL///8r/uf2cw0JdnYMcDXSM2BmZGBgUPzJwsnIcIlBh4GBgQGUTRg4/jEs5ZTx2LDgYDOHsFbMiQ0LD7cLKHvN8di46Gi3hHHWnRMbFx/vV3DukvHctOTkZI3gVTEnNy09Pd0g+dQcz83Lzs62KH515+Tm5efnOzRzyXptWXFxscdkrdgsw4NMy0R4OTgUFjBc6WBbwcchkHAgtJ2bRUBgRsKrG+u5uH1sDTbkMLBmCIs9yGp4ELOtUPCc6ISEhLA9lax6BVoF7xtZOFg4OGwmHAjZWPC8aCmXxftrjMxy7sv+TPnYyFAhmWO7e7v+47XLlraKXqjUv3NgBecxPZ0HpffWxLGnvdOR0EpgWibpIztB4eDzzRmcLBt2iW64fXLr512x0RMaGc9MfbzL9ZzFw2srw9i/33qn93bd7Q9PiydPb2vQqcg8fl16jt/U7TUf+7hv7D+/f////wxsPy4y3pC8cq8q2nF6VPETzfIIpvu8S8KyKluXzjPh+XYtlilWsMWh/bumgyhzbuONu40SZa5KNQsmbr/ayGXTJhmqV8Q6g4mTzeFARaGpukMZl8qB5H7dfz/up1dwBkx30KibKhvJzDnhdvoLx62hU9k8Tz5q3bf1xV2G+YWVoen+XFNmdjaebV06M4Pt282iz4XX787Orkud41TCpjZnOsfTmddnp/J9eTapkLFLPX7ezRUXujo/cS5YyOQktWBJf9HVJxOTuFa8XDan7NXL5QvatF6tWDKt65L9fxYWBmsAAAAA//8="
 var markbLizo []byte
 
 // 添加水印one 简单的
@@ -31,7 +30,7 @@ func WaterMarkTwo(ctx context.Context, oriImg io.Reader, outImg io.Writer) error
 		return err
 	}
 	// 水印图像
-	markImg, err := gif.Decode(bytes.NewReader(markb))
+	markImg, err := gif.Decode(bytes.NewReader(markbLizo))
 	if err != nil {
 		return err
 	}
