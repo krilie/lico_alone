@@ -16,7 +16,7 @@ import (
 // @Produce  json
 // @Param Authorization header string true "凭证token" default({{token}})
 // @Param id query string true "文章id"
-// @Success 200 {object} com_model.CommonReturn
+// @Success 200 {object} com_model.CommonReturn{data=object}
 // @Failure 500 {string} errInfo
 // @Router /api/manage/article/get_by_id [get]
 func (a *UserCtrl) GetArticleById(c *gin.Context) {
@@ -41,7 +41,7 @@ func (a *UserCtrl) GetArticleById(c *gin.Context) {
 // @Produce json
 // @Param Authorization header string true "凭证token" default({{token}})
 // @Param article body model.UpdateArticleModel true "文章内容"
-// @Success 200 {object} com_model.CommonReturn
+// @Success 200 {object} com_model.CommonReturn{data=object}
 // @Failure 500 {string} errInfo
 // @Router /api/manage/article/update [POST]
 func (a *UserCtrl) UpdateArticle(c *gin.Context) {
@@ -115,7 +115,7 @@ func (a *UserCtrl) QueryArticle(c *gin.Context) {
 // @Produce  json
 // @Param Authorization header string true "凭证token" default({{token}})
 // @Param article_id query string true "文章id"
-// @Success 200 {object} com_model.CommonReturn
+// @Success 200 {object} com_model.CommonReturn{data=object}
 // @Failure 500 {string} errInfo
 // @Router /api/manage/article/delete [POST]
 func (a *UserCtrl) DeleteArticle(c *gin.Context) {
@@ -141,7 +141,7 @@ func (a *UserCtrl) DeleteArticle(c *gin.Context) {
 // @Produce  json
 // @Param Authorization header string true "凭证token" default({{token}})
 // @Param article body model.CreateArticleModel true "文章"
-// @Success 200 {object} com_model.CommonReturn
+// @Success 200 {object} com_model.CommonReturn{data=object}
 // @Failure 500 {string} errInfo
 // @Router /api/manage/article/create [POST]
 func (a *UserCtrl) CreateArticle(c *gin.Context) {

@@ -408,7 +408,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -438,7 +443,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -468,7 +478,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -551,7 +566,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -582,7 +602,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -612,7 +637,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -679,7 +709,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -709,7 +744,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -800,7 +840,12 @@ paths:
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  type: object
+              type: object
       summary: 文件查询
       tags:
       - 文件管理
@@ -856,7 +901,12 @@ paths:
         "200":
           description: data":{"a_map_key":"the a map key"}
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -928,7 +978,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -1019,7 +1074,12 @@ paths:
         "200":
           description: 2000 {token:"asb"}
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -1053,7 +1113,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -1082,7 +1147,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  type: object
+              type: object
         "500":
           description: Internal Server Error
           schema:

@@ -35,7 +35,7 @@ func (a *UserCtrl) QueryCarousel(c *gin.Context) {
 // @Produce json
 // @Param Authorization header string true "凭证token" default({{token}})
 // @Param carousel body model.CreateCarouselModel true "单个文件"
-// @Success 200 {object} com_model.CommonReturn{}
+// @Success 200 {object} com_model.CommonReturn{data=object}
 // @Failure 500 {string} errInfo
 // @Router /api/manage/carousel/create [POST]
 func (a *UserCtrl) CreateCarousel(c *gin.Context) {
@@ -59,7 +59,7 @@ func (a *UserCtrl) CreateCarousel(c *gin.Context) {
 // @Produce json
 // @Param Authorization header string true "凭证token" default({{token}})
 // @Param carousel body model.UpdateCarouselModel true "更新结构"
-// @Success 200 {object} com_model.CommonReturn{}
+// @Success 200 {object} com_model.CommonReturn{data=object}
 // @Failure 500 {string} errInfo
 // @Router /api/manage/carousel/update [POST]
 func (a *UserCtrl) UpdateCarousel(c *gin.Context) {
@@ -83,7 +83,7 @@ func (a *UserCtrl) UpdateCarousel(c *gin.Context) {
 // @Produce json
 // @Param Authorization header string true "凭证token" default({{token}})
 // @Param carousel_id formData string true "id"
-// @Success 200 {object} com_model.CommonReturn{}
+// @Success 200 {object} com_model.CommonReturn{data=object}
 // @Failure 500 {string} errInfo
 // @Router /api/manage/carousel/delete_by_id [POST]
 func (a *UserCtrl) DeleteCarouselById(c *gin.Context) {
