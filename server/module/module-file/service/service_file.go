@@ -2,19 +2,15 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"github.com/krilie/lico_alone/common/com-model"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/file_util"
 	"github.com/krilie/lico_alone/common/utils/id_util"
-	"github.com/krilie/lico_alone/module/module-file/fileutils"
 	"github.com/krilie/lico_alone/module/module-file/model"
 	"gorm.io/gorm"
 	"io"
-	"io/ioutil"
 	"mime"
-	"os"
 	"time"
 )
 
@@ -34,26 +30,26 @@ func (a *FileModule) UploadFile(ctx context.Context, userId, fileName string, fi
 		} else {
 			content = content2
 		}
-		// 添加水印
-		tempFile, err := ioutil.TempFile(os.TempDir(), "fileloadmarkfile*")
-		if err != nil {
-			return err
-		}
-		defer func() {
-			err := tempFile.Close()
-			if err != nil {
-				log.WithError(err).Error("close temp file err")
-			}
-			err = os.Remove(fmt.Sprintf("%v%v%v", os.TempDir(), os.PathSeparator, tempFile.Name()))
-			if err != nil {
-				log.WithError(err).Error("delete temp file err")
-			}
-		}()
-		err = fileutils.WaterMarkOne(ctx, newReader, tempFile)
-		if err != nil {
-			return err
-		}
-		url, key, err = a.fileApi.UploadFile(ctx, "static/"+id_util.NextSnowflake()+fileName, tempFile, int64(size))
+		//// 添加水印
+		//tempFile, err := ioutil.TempFile(os.TempDir(), "fileloadmarkfile*")
+		//if err != nil {
+		//	return err
+		//}
+		//defer func() {
+		//	err := tempFile.Close()
+		//	if err != nil {
+		//		log.WithError(err).Error("close temp file err")
+		//	}
+		//	err = os.Remove(fmt.Sprintf("%v%v%v", os.TempDir(), os.PathSeparator, tempFile.Name()))
+		//	if err != nil {
+		//		log.WithError(err).Error("delete temp file err")
+		//	}
+		//}()
+		//err = fileutils.WaterMarkOne(ctx, newReader, tempFile)
+		//if err != nil {
+		//	return err
+		//}
+		url, key, err = a.fileApi.UploadFile(ctx, "static/"+id_util.NextSnowflake()+fileName, newReader, int64(size))
 		if err != nil {
 			return err
 		}
