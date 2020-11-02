@@ -14,6 +14,7 @@ import (
 // @Tags 文章管理
 // @ID 获取一个文章信息
 // @Produce  json
+// @Param Authorization header string true "凭证token" default({{token}})
 // @Param id query string true "文章id"
 // @Success 200 {object} com_model.CommonReturn
 // @Failure 500 {string} errInfo
@@ -38,6 +39,7 @@ func (a *UserCtrl) GetArticleById(c *gin.Context) {
 // @Tags 文章管理
 // @ID 更新文章内容
 // @Produce json
+// @Param Authorization header string true "凭证token" default({{token}})
 // @Param article body model.UpdateArticleModel true "文章内容"
 // @Success 200 {object} com_model.CommonReturn
 // @Failure 500 {string} errInfo
@@ -66,6 +68,7 @@ func (a *UserCtrl) UpdateArticle(c *gin.Context) {
 // @Tags 文章管理
 // @ID 查询文章列表
 // @Produce json
+// @Param Authorization header string true "凭证token" default({{token}})
 // @Param search_key query string true "搜索内容"
 // @Param page_num query int true "页索引"
 // @Param page_size query int true "页大小"
@@ -110,6 +113,7 @@ func (a *UserCtrl) QueryArticle(c *gin.Context) {
 // @Tags 文章管理
 // @ID 删除文章
 // @Produce  json
+// @Param Authorization header string true "凭证token" default({{token}})
 // @Param article_id query string true "文章id"
 // @Success 200 {object} com_model.CommonReturn
 // @Failure 500 {string} errInfo
@@ -135,6 +139,7 @@ func (a *UserCtrl) DeleteArticle(c *gin.Context) {
 // @Tags 文章管理
 // @ID 创建文章
 // @Produce  json
+// @Param Authorization header string true "凭证token" default({{token}})
 // @Param article body model.CreateArticleModel true "文章"
 // @Success 200 {object} com_model.CommonReturn
 // @Failure 500 {string} errInfo

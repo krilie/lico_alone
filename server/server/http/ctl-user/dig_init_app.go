@@ -12,6 +12,7 @@ import (
 // @Tags 用户
 // @ID 用户初始化
 // @Produce  json
+// @Param Authorization header string true "凭证token" default({{token}})
 // @Success 200 {object} com_model.CommonReturn{data=service_user.InitAppData}
 // @Failure 500 {string} errInfo
 // @Router /api/user/init_app [get]

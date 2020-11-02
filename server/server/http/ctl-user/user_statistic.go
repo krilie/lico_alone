@@ -11,6 +11,7 @@ import (
 // @Tags 配置项
 // @ID 获取所有访问地点
 // @Produce  json
+// @Param Authorization header string true "凭证token" default({{token}})
 // @Success 200 {object} com_model.CommonReturn{data=[]model.VisitorLonlatModel}
 // @Failure 500 {string} errInfo
 // @Router /api/manage/statistic/get_visitor_points [get]

@@ -285,6 +285,14 @@ var doc = `{
                 "operationId": "创建文章",
                 "parameters": [
                     {
+                        "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "文章",
                         "name": "article",
                         "in": "body",
@@ -324,6 +332,14 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "文章id",
                         "name": "article_id",
                         "in": "query",
@@ -360,6 +376,14 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "文章id",
                         "name": "id",
                         "in": "query",
@@ -394,6 +418,14 @@ var doc = `{
                 "summary": "查询文章列表",
                 "operationId": "查询文章列表",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "搜索内容",
@@ -472,6 +504,14 @@ var doc = `{
                 "operationId": "更新文章内容",
                 "parameters": [
                     {
+                        "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "文章内容",
                         "name": "article",
                         "in": "body",
@@ -509,6 +549,14 @@ var doc = `{
                 "summary": "管理员创建轮播图",
                 "operationId": "管理员创建轮播图",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "单个文件",
                         "name": "carousel",
@@ -549,6 +597,14 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "id",
                         "name": "carousel_id",
                         "in": "formData",
@@ -583,6 +639,14 @@ var doc = `{
                 "summary": "管理者查询轮播图",
                 "operationId": "管理者查询轮播图",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "boolean",
                         "description": "是否显示",
@@ -634,6 +698,14 @@ var doc = `{
                 "operationId": "管理员更新轮播图",
                 "parameters": [
                     {
+                        "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "更新结构",
                         "name": "carousel",
                         "in": "body",
@@ -673,6 +745,14 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "文件记录id",
                         "name": "file_id",
                         "in": "formData",
@@ -707,6 +787,14 @@ var doc = `{
                 "summary": "文件查询",
                 "operationId": "文件查询",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "integer",
                         "description": "page_num页索引",
@@ -834,6 +922,14 @@ var doc = `{
                 "operationId": "文件上传",
                 "parameters": [
                     {
+                        "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "type": "file",
                         "description": "单个文件",
                         "name": "file",
@@ -880,6 +976,16 @@ var doc = `{
                 ],
                 "summary": "获取AMap配置项",
                 "operationId": "获取AMap配置项",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "data\":{\"a_map_key\":\"the a map key\"}",
@@ -908,6 +1014,14 @@ var doc = `{
                 "summary": "获取所有配置项",
                 "operationId": "获取所有配置项",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "搜索值",
@@ -961,6 +1075,14 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "配置名",
                         "name": "name",
                         "in": "formData",
@@ -1001,6 +1123,16 @@ var doc = `{
                 ],
                 "summary": "获取所有访问地点",
                 "operationId": "获取所有访问地点",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1043,6 +1175,16 @@ var doc = `{
                 ],
                 "summary": "用户初始化",
                 "operationId": "用户初始化",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",

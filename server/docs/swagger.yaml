@@ -400,6 +400,12 @@ paths:
       description: 创建文章
       operationId: 创建文章
       parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: 文章
         in: body
         name: article
@@ -425,6 +431,12 @@ paths:
       description: 删除文章
       operationId: 删除文章
       parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: 文章id
         in: query
         name: article_id
@@ -449,6 +461,12 @@ paths:
       description: 获取一个文章信息
       operationId: 获取一个文章信息
       parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: 文章id
         in: query
         name: id
@@ -473,6 +491,12 @@ paths:
       description: 查询文章列表
       operationId: 查询文章列表
       parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: 搜索内容
         in: query
         name: search_key
@@ -519,6 +543,12 @@ paths:
       description: 更新文章内容
       operationId: 更新文章内容
       parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: 文章内容
         in: body
         name: article
@@ -544,6 +574,12 @@ paths:
       description: 管理员创建轮播图
       operationId: 管理员创建轮播图
       parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: 单个文件
         in: body
         name: carousel
@@ -569,6 +605,12 @@ paths:
       description: 管理员删除轮播图
       operationId: 管理员删除轮播图
       parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: id
         in: formData
         name: carousel_id
@@ -593,6 +635,12 @@ paths:
       description: 管理者查询轮播图
       operationId: 管理者查询轮播图
       parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: 是否显示
         in: query
         name: is_on_show
@@ -623,6 +671,12 @@ paths:
       description: 管理员更新轮播图
       operationId: 管理员更新轮播图
       parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: 更新结构
         in: body
         name: carousel
@@ -648,6 +702,12 @@ paths:
       description: 文件删除
       operationId: 文件删除
       parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: 文件记录id
         in: formData
         name: file_id
@@ -672,6 +732,12 @@ paths:
       description: 文件查询
       operationId: 文件查询
       parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: page_num页索引
         in: query
         name: page_num
@@ -753,6 +819,12 @@ paths:
       description: 文件上传
       operationId: 文件上传
       parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: 单个文件
         in: formData
         name: file
@@ -781,6 +853,13 @@ paths:
     get:
       description: 获取AMap配置项
       operationId: 获取AMap配置项
+      parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -800,6 +879,12 @@ paths:
       description: 获取所有配置项
       operationId: 获取所有配置项
       parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: 搜索值
         in: query
         name: searchKey
@@ -831,6 +916,12 @@ paths:
       description: 更新配置项
       operationId: 更新配置项
       parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: 配置名
         in: formData
         name: name
@@ -859,6 +950,13 @@ paths:
     get:
       description: 获取所有访问地点
       operationId: 获取所有访问地点
+      parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -884,6 +982,13 @@ paths:
     get:
       description: 用户初始化数据
       operationId: 用户初始化
+      parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
