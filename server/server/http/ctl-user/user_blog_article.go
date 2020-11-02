@@ -72,7 +72,7 @@ func (a *UserCtrl) UpdateArticle(c *gin.Context) {
 // @Param search_key query string true "搜索内容"
 // @Param page_num query int true "页索引"
 // @Param page_size query int true "页大小"
-// @Success 200 {object} com_model.CommonReturn{data=com_model.PageData{data=[]model.Article}}
+// @Success 200 {object} com_model.CommonReturn{data=com_model.PageData{data=[]model.ArticleDto}}
 // @Failure 500 {string} errInfo
 // @Router /api/manage/article/query [GET]
 func (a *UserCtrl) QueryArticle(c *gin.Context) {

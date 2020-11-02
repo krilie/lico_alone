@@ -9,6 +9,8 @@
         },
         "version": "1.0.0"
     },
+    "host": "localhost:80",
+    "basePath": "/",
     "paths": {
         "/api/common/article/get_article": {
             "get": {
@@ -42,7 +44,7 @@
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/model.Article"
+                                            "$ref": "#/definitions/model.ArticleDto"
                                         }
                                     }
                                 }
@@ -68,7 +70,7 @@
                     "公共接口"
                 ],
                 "summary": "查询文章列表",
-                "operationId": "查询文章列表",
+                "operationId": "查询文章列表简单",
                 "parameters": [
                     {
                         "type": "string",
@@ -160,7 +162,7 @@
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/model.Carousel"
+                                                "$ref": "#/definitions/model.CarouselDto"
                                             }
                                         }
                                     }
@@ -453,7 +455,7 @@
                                                         "data": {
                                                             "type": "array",
                                                             "items": {
-                                                                "$ref": "#/definitions/model.Article"
+                                                                "$ref": "#/definitions/model.ArticleDto"
                                                             }
                                                         }
                                                     }
@@ -651,7 +653,7 @@
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/definitions/model.Carousel"
+                                                "$ref": "#/definitions/model.CarouselDto"
                                             }
                                         }
                                     }
@@ -871,7 +873,7 @@
                                                         "data": {
                                                             "type": "array",
                                                             "items": {
-                                                                "$ref": "#/definitions/model.FileMaster"
+                                                                "$ref": "#/definitions/model.FileMasterDto"
                                                             }
                                                         }
                                                     }
@@ -886,7 +888,7 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/com_model.Model"
+                            "$ref": "#/definitions/com_model.CommonReturn"
                         }
                     }
                 }
@@ -1392,23 +1394,6 @@
                 }
             }
         },
-        "com_model.Model": {
-            "type": "object",
-            "properties": {
-                "created_at": {
-                    "type": "string"
-                },
-                "deleted_at": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "updated_at": {
-                    "type": "string"
-                }
-            }
-        },
         "com_model.PageData": {
             "type": "object",
             "properties": {
@@ -1418,7 +1403,6 @@
                 },
                 "page_info": {
                     "description": "分页信息",
-                    "type": "object",
                     "$ref": "#/definitions/com_model.PageInfo"
                 }
             }
@@ -1455,7 +1439,7 @@
                 }
             }
         },
-        "model.Article": {
+        "model.ArticleDto": {
             "type": "object",
             "properties": {
                 "content": {
@@ -1491,7 +1475,7 @@
                 }
             }
         },
-        "model.Carousel": {
+        "model.CarouselDto": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -1571,7 +1555,7 @@
                 }
             }
         },
-        "model.FileMaster": {
+        "model.FileMasterDto": {
             "type": "object",
             "properties": {
                 "biz_type": {

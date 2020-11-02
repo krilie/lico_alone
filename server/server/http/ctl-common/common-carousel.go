@@ -11,7 +11,7 @@ import (
 // @Tags 公共接口
 // @ID common查询轮播图
 // @Produce json
-// @Success 200 {object} com_model.CommonReturn{data=[]model.Carousel}
+// @Success 200 {object} com_model.CommonReturn{data=[]model.CarouselDto}
 // @Failure 500 {string} errInfo
 // @Router /api/common/carousel/query [GET]
 func (common *CommonCtrl) QueryCarousel(c *gin.Context) {

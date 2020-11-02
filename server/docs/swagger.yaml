@@ -1,3 +1,4 @@
+basePath: /
 definitions:
   com_model.CommonReturn:
     properties:
@@ -15,17 +16,6 @@ definitions:
         example: 错误信息
         type: string
     type: object
-  com_model.Model:
-    properties:
-      created_at:
-        type: string
-      deleted_at:
-        type: string
-      id:
-        type: string
-      updated_at:
-        type: string
-    type: object
   com_model.PageData:
     properties:
       data:
@@ -34,7 +24,6 @@ definitions:
       page_info:
         $ref: '#/definitions/com_model.PageInfo'
         description: 分页信息
-        type: object
     type: object
   com_model.PageInfo:
     properties:
@@ -57,7 +46,7 @@ definitions:
       url:
         type: string
     type: object
-  model.Article:
+  model.ArticleDto:
     properties:
       content:
         type: string
@@ -81,7 +70,7 @@ definitions:
       updated_at:
         type: string
     type: object
-  model.Carousel:
+  model.CarouselDto:
     properties:
       created_at:
         type: string
@@ -135,7 +124,7 @@ definitions:
         description: 图片地址
         type: string
     type: object
-  model.FileMaster:
+  model.FileMasterDto:
     properties:
       biz_type:
         type: string
@@ -235,6 +224,7 @@ definitions:
       version:
         type: string
     type: object
+host: localhost:80
 info:
   contact: {}
   description: api docs for lizo_alone
@@ -263,7 +253,7 @@ paths:
             - $ref: '#/definitions/com_model.CommonReturn'
             - properties:
                 data:
-                  $ref: '#/definitions/model.Article'
+                  $ref: '#/definitions/model.ArticleDto'
               type: object
         "500":
           description: Internal Server Error
@@ -275,7 +265,7 @@ paths:
   /api/common/article/query_sample:
     get:
       description: 查询文章列表
-      operationId: 查询文章列表
+      operationId: 查询文章列表简单
       parameters:
       - description: 搜索内容
         in: query
@@ -333,7 +323,7 @@ paths:
             - properties:
                 data:
                   items:
-                    $ref: '#/definitions/model.Carousel'
+                    $ref: '#/definitions/model.CarouselDto'
                   type: array
               type: object
         "500":
@@ -527,7 +517,7 @@ paths:
                   - properties:
                       data:
                         items:
-                          $ref: '#/definitions/model.Article'
+                          $ref: '#/definitions/model.ArticleDto'
                         type: array
                     type: object
               type: object
@@ -656,7 +646,7 @@ paths:
             - properties:
                 data:
                   items:
-                    $ref: '#/definitions/model.Carousel'
+                    $ref: '#/definitions/model.CarouselDto'
                   type: array
               type: object
         "500":
@@ -803,14 +793,14 @@ paths:
                   - properties:
                       data:
                         items:
-                          $ref: '#/definitions/model.FileMaster'
+                          $ref: '#/definitions/model.FileMasterDto'
                         type: array
                     type: object
               type: object
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/com_model.Model'
+            $ref: '#/definitions/com_model.CommonReturn'
       summary: 文件查询
       tags:
       - 文件管理

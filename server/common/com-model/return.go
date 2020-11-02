@@ -11,6 +11,7 @@ var StdSuccess = &CommonReturn{
 	Data:    nil,
 }
 
+// CommonReturn
 type CommonReturn struct {
 	Code    int         `json:"code" swaggo:"true,错误码" example:"400"`
 	Message string      `json:"message" swaggo:"true,错误信息" example:"错误信息"`
