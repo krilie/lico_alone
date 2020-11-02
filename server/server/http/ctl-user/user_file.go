@@ -4,10 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	com_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/common/utils/str_util"
 	"github.com/krilie/lico_alone/module/module-file/model"
 	"github.com/krilie/lico_alone/server/http/ginutil"
-	"io"
 )
 
 // 文件上传
@@ -28,64 +26,73 @@ func (a *UserCtrl) UploadFile(c *gin.Context) {
 	// 请求
 	ctx := ginutil.MustGetAppCtx(c)
 
-	////NOTE: 使用临时文件缓存
-	//err := c.Request.ParseMultipartForm(1024 * 1024 * 5) // 5mb放在内存中 超过放在临时文件中
-	//if err != nil {
-	//	ginutil.ReturnFailure(c, errs.ErrorInternal, err.Error())
-	//	return
-	//}
-	//file, err := c.FormFile("file")
-	//if err != nil {
-	//	ginutil.ReturnFailure(c, errs.ErrorParam, "no file found")
-	//	return
-	//}
-	//f, err := file.Open()
-	//if err != nil {
-	//	ginutil.ReturnFailure(c, errs.ErrorInternal, err.Error())
-	//	return
-	//}
-	//defer f.Close()
+	//NOTE: 使用临时文件缓存
+	err := c.Request.ParseMultipartForm(1024 * 1024 * 5) // 5mb放在内存中 超过放在临时文件中
+	if err != nil {
+		ginutil.ReturnFailure(c, errs.ErrorInternal, err.Error())
+		return
+	}
+	file, err := c.FormFile("file")
+	if err != nil {
+		ginutil.ReturnFailure(c, errs.ErrorParam, "no file found")
+		return
+	}
+	f, err := file.Open()
+	if err != nil {
+		ginutil.ReturnFailure(c, errs.ErrorInternal, err.Error())
+		return
+	}
+	defer f.Close()
 
-	reader, err := c.Request.MultipartReader()
+	url, bucket, key, err := a.userService.UploadFile(ctx, ctx.UserId, file.Filename, f, int(file.Size))
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return
 	}
-	for {
-		p, err := reader.NextPart()
-		if err == io.EOF {
-			ginutil.ReturnWithErr(c, errs.NewParamError().WithMsg("no file"))
-			return
-		}
-		if err != nil {
-			ginutil.ReturnWithErr(c, err)
-			return
-		}
+	ginutil.ReturnData(c, &UpdateFileReturn{Url: url, Bucket: bucket, Key: key})
+	return
 
-		name := p.FormName()
-		if name == "" {
-			continue
-		}
-
-		if name != "file" {
-			continue
-		}
-
-		filename := p.FileName()
-		if filename == "" {
-			continue
-		}
-
-		size := str_util.GetIntOrDef(p.Header.Get("size"), -1)
-
-		url, bucket, key, err := a.userService.UploadFile(ctx, ctx.UserId, p.FileName(), p, size)
-		if err != nil {
-			ginutil.ReturnWithErr(c, err)
-			return
-		}
-		ginutil.ReturnData(c, &UpdateFileReturn{Url: url, Bucket: bucket, Key: key})
-		return
-	}
+	//NOTE: 不使用文件缓存
+	//reader, err := c.Request.MultipartReader()
+	//if err != nil {
+	//	ginutil.ReturnWithErr(c, err)
+	//	return
+	//}
+	//for {
+	//	p, err := reader.NextPart()
+	//	if err == io.EOF {
+	//		ginutil.ReturnWithErr(c, errs.NewParamError().WithMsg("no file"))
+	//		return
+	//	}
+	//	if err != nil {
+	//		ginutil.ReturnWithErr(c, err)
+	//		return
+	//	}
+	//
+	//	name := p.FormName()
+	//	if name == "" {
+	//		continue
+	//	}
+	//
+	//	if name != "file" {
+	//		continue
+	//	}
+	//
+	//	filename := p.FileName()
+	//	if filename == "" {
+	//		continue
+	//	}
+	//
+	//	size := str_util.GetIntOrDef(p.Header.Get("size"), -1)
+	//
+	//	url, bucket, key, err := a.userService.UploadFile(ctx, ctx.UserId, p.FileName(), p, size)
+	//	if err != nil {
+	//		ginutil.ReturnWithErr(c, err)
+	//		return
+	//	}
+	//	ginutil.ReturnData(c, &UpdateFileReturn{Url: url, Bucket: bucket, Key: key})
+	//	return
+	//}
 
 }
 

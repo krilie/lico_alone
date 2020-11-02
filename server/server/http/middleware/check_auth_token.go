@@ -9,6 +9,7 @@ import (
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/jwt"
 	"github.com/krilie/lico_alone/server/http/ginutil"
+	"strings"
 )
 
 // 权限接口
@@ -28,6 +29,7 @@ func CheckAuthToken(auth IAuth) gin.HandlerFunc {
 			return
 		}
 		headerAuth := c.GetHeader(ginutil.HeaderAuthorization)
+		headerAuth = strings.TrimPrefix(headerAuth, "Bearer ")
 
 		var claims, err = auth.CheckJwtToken(headerAuth)
 		if err != nil {
