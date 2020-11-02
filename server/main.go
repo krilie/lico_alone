@@ -31,6 +31,10 @@ import (
 // @version 1.0.0
 // @description  api docs for lizo_alone
 // @license.name all right
+
+// @host localhost:80
+// @BasePath /
+
 func main() {
 	// dig config
 	component.DigProvider()
