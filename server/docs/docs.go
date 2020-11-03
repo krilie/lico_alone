@@ -1123,7 +1123,7 @@ var doc = `{
             }
         },
         "/api/manage/setting/get_setting_all": {
-            "post": {
+            "get": {
                 "description": "获取所有配置项",
                 "produces": [
                     "application/json"

@@ -15,7 +15,7 @@ import (
 // @Param searchKey query string true "搜索值"
 // @Success 200 {object} com_model.CommonReturn{data=[]model.Config}
 // @Failure 500 {string} errInfo
-// @Router /api/manage/setting/get_setting_all [post]
+// @Router /api/manage/setting/get_setting_all [get]
 func (a *UserCtrl) ManageGetConfigList(c *gin.Context) {
 	searchKey := c.Query("searchKey")
 	config, err := a.userService.GetAllConfig(ginutil.MustGetAppCtx(c), searchKey)
