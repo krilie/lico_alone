@@ -758,7 +758,7 @@ paths:
       tags:
       - 文件管理
   /api/manage/file/query:
-    post:
+    get:
       description: 文件查询
       operationId: 文件查询
       parameters:

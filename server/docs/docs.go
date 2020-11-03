@@ -872,7 +872,7 @@ var doc = `{
             }
         },
         "/api/manage/file/query": {
-            "post": {
+            "get": {
                 "description": "文件查询",
                 "produces": [
                     "application/json"

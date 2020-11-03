@@ -149,7 +149,7 @@ func (a *UserCtrl) DeleteFile(c *gin.Context) {
 // @Success 200 {object} com_model.CommonReturn{data=com_model.PageData{data=[]model.FileMasterDto}}
 // @Failure 500 {string} errInfo
 // @Failure 500 {object} com_model.CommonReturn{data=object}
-// @Router /api/manage/file/query [POST]
+// @Router /api/manage/file/query [GET]
 func (a *UserCtrl) QueryFile(c *gin.Context) {
 	ctx := ginutil.MustGetAppCtx(c)
 	var param = &model.QueryFileParam{}
