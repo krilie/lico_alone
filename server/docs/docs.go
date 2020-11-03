@@ -306,7 +306,19 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -350,7 +362,19 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -394,7 +418,19 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -525,7 +561,19 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -571,7 +619,19 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -615,7 +675,19 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -719,7 +791,19 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -763,7 +847,19 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -903,7 +999,19 @@ var doc = `{
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -990,7 +1098,19 @@ var doc = `{
                     "200": {
                         "description": "data\":{\"a_map_key\":\"the a map key\"}",
                         "schema": {
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -1100,7 +1220,19 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -1244,7 +1376,19 @@ var doc = `{
                     "200": {
                         "description": "2000 {token:\"asb\"}",
                         "schema": {
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -1294,7 +1438,19 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -1337,7 +1493,19 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {

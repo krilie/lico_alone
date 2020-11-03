@@ -14,7 +14,7 @@ import (
 // @Produce  json
 // @Param phone formData string true "用户手机号"
 // @Param send_type formData string true "register login change_password"
-// @Success 200 {object} com_model.CommonReturn
+// @Success 200 {object} com_model.CommonReturn{data=object}
 // @Failure 500 {string} errInfo
 // @Router /api/user/send_sms [post]
 func (a *UserCtrl) UserSendSms(c *gin.Context) {

@@ -36,7 +36,7 @@ func (a *UserCtrl) ManageGetConfigList(c *gin.Context) {
 // @Param Authorization header string true "凭证token" default({{token}})
 // @Param name formData string true "配置名"
 // @Param value formData string true "配置值"
-// @Success 200 {object} com_model.CommonReturn
+// @Success 200 {object} com_model.CommonReturn{data=object}
 // @Failure 500 {string} errInfo
 // @Router /api/manage/setting/update_config [post]
 func (a *UserCtrl) ManageUpdateConfig(c *gin.Context) {
@@ -58,7 +58,7 @@ func (a *UserCtrl) ManageUpdateConfig(c *gin.Context) {
 // @ID 获取AMap配置项
 // @Produce  json
 // @Param Authorization header string true "凭证token" default({{token}})
-// @Success 200 {object} com_model.CommonReturn =>"data":{"a_map_key":"the a map key"}
+// @Success 200 {object} com_model.CommonReturn{data=object} => "data":{"a_map_key":"the a map key"}
 // @Failure 500 {string} errInfo
 // @Router /api/manage/setting/get_a_map_key [get]
 func (a *UserCtrl) ManageGetAMapKey(c *gin.Context) {

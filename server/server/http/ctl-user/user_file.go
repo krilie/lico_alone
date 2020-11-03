@@ -112,7 +112,7 @@ func (a *UserCtrl) UploadFile(c *gin.Context) {
 // @Produce json
 // @Param Authorization header string true "凭证token" default({{token}})
 // @Param file_id formData string true "文件记录id"
-// @Success 200 {object} com_model.CommonReturn{}
+// @Success 200 {object} com_model.CommonReturn{data=object}
 // @Failure 500 {string} errInfo
 // @Router /api/manage/file/delete [POST]
 func (a *UserCtrl) DeleteFile(c *gin.Context) {
@@ -148,7 +148,7 @@ func (a *UserCtrl) DeleteFile(c *gin.Context) {
 // @Param created_at_end formData string true "created_at_end"
 // @Success 200 {object} com_model.CommonReturn{data=com_model.PageData{data=[]model.FileMasterDto}}
 // @Failure 500 {string} errInfo
-// @Failure 500 {object} com_model.CommonReturn{}
+// @Failure 500 {object} com_model.CommonReturn{data=object}
 // @Router /api/manage/file/query [POST]
 func (a *UserCtrl) QueryFile(c *gin.Context) {
 	ctx := ginutil.MustGetAppCtx(c)
