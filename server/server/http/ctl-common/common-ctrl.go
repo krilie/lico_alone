@@ -26,9 +26,8 @@ func NewCommonCtrl(log *nlog.NLog, common *common_service.CommonService, cfg *nc
 // @Description Icp信息
 // @Tags 公共接口
 // @ID Icp信息
-// @Success 200 {object} model.IcpInfo
-// @Success 400 {string} errInfo
-// @Success 500 {string} errInfo
+// @Success 200 {object} com_model.CommonReturn{data=model.IcpInfo}
+// @Success 500 {object} com_model.CommonReturn
 // @Router /api/common/icp_info [get]
 func (common *CommonCtrl) GetIcpInfo(c *gin.Context) {
 	info := common.CommonService.GetIcpInfo(ginutil.MustGetAppCtx(c))
@@ -58,11 +57,25 @@ func (common *CommonCtrl) Version(c *gin.Context) {
 // @Description WebVisited
 // @Tags 公共接口
 // @ID WebVisited
-// @Success 200 {string} string ""
-// @Failure 500 {string} string ""
+// @Success 200 {object} com_model.CommonReturn
+// @Success 500 {object} com_model.CommonReturn
 // @Router /api/common/visited [post]
 func (common *CommonCtrl) WebVisited(c *gin.Context) {
 	ctx := ginutil.MustGetAppCtx(c)
 	common.CommonService.WebVisited(ctx, ctx.RemoteIp, ctx.CustomerTraceId)
 	ginutil.ReturnOk(c)
+}
+
+// AboutApp AboutApp
+// @Summary AboutApp
+// @Description AboutApp
+// @Tags 公共接口
+// @ID AboutApp
+// @Success 200 {object} com_model.CommonReturn
+// @Success 500 {object} com_model.CommonReturn
+// @Router /api/common/about_app [get]
+func (common *CommonCtrl) AboutApp(c *gin.Context) {
+	ctx := ginutil.MustGetAppCtx(c)
+	app, err := common.CommonService.GetAboutApp(ctx)
+	ginutil.HandlerErrorOrReturnData(c, err, app)
 }

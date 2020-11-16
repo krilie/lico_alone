@@ -11,4 +11,5 @@ const (
 	ConfigItemsNotificationEmail ConfigItems = "common.notification_email" // 系统消息的通知邮件
 	ConfigItemsIcpInfo           ConfigItems = "icp信息"                     // icp信息
 	ConfigItemsAMapKey           ConfigItems = "AMapKey"                   // AMap key 高德地图
+	ConfigItemsAboutApp          ConfigItems = "关于本站"                      // 关于本站信息 可以有格式
 )

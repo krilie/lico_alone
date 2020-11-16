@@ -89,7 +89,8 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 	commonApi.GET("/common/article/get_article", ctrl.commonCtrl.GetArticle)
 	commonApi.GET("/common/carousel/query", ctrl.commonCtrl.QueryCarousel)
 	commonApi.GET("/common/version", ctrl.commonCtrl.Version)     // 版本号
-	commonApi.POST("/common/visited", ctrl.commonCtrl.WebVisited) // 版本号
+	commonApi.POST("/common/visited", ctrl.commonCtrl.WebVisited) // WebVisited
+	commonApi.POST("/common/about_app", ctrl.commonCtrl.AboutApp) // AboutApp
 
 	// 开始服务
 	srv := &http.Server{

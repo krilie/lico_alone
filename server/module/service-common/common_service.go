@@ -46,3 +46,14 @@ func (a *CommonService) WebVisited(ctx context.Context, ip, traceId string) {
 		TraceId:    traceId,
 	})
 }
+
+func (a *CommonService) GetAboutApp(ctx context.Context) (string, error) {
+	str, err := a.configService.GetValueStr(ctx, model.ConfigItemsAboutApp.Val())
+	if err != nil {
+		return "", err
+	}
+	if str == nil {
+		str = new(string)
+	}
+	return *str, nil
+}

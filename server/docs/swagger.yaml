@@ -233,6 +233,22 @@ info:
   title: lizo_alone
   version: 1.0.0
 paths:
+  /api/common/about_app:
+    get:
+      description: AboutApp
+      operationId: AboutApp
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+      summary: AboutApp
+      tags:
+      - 公共接口
   /api/common/article/get_article:
     get:
       description: 获取article
@@ -341,15 +357,16 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.IcpInfo'
-        "400":
-          description: Bad Request
-          schema:
-            type: string
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.IcpInfo'
+              type: object
         "500":
           description: Internal Server Error
           schema:
-            type: string
+            $ref: '#/definitions/com_model.CommonReturn'
       summary: Icp信息
       tags:
       - 公共接口
@@ -377,11 +394,11 @@ paths:
         "200":
           description: OK
           schema:
-            type: string
+            $ref: '#/definitions/com_model.CommonReturn'
         "500":
           description: Internal Server Error
           schema:
-            type: string
+            $ref: '#/definitions/com_model.CommonReturn'
       summary: WebVisited
       tags:
       - 公共接口

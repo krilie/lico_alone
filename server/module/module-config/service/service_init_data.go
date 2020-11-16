@@ -24,6 +24,10 @@ func (a *ConfigModule) InitConfigData(ctx context.Context) error {
 		if err != nil {
 			return err
 		}
+		err = a.SetValueStr(ctx, model.ConfigItemsAboutApp.Val(), "todo:关于本站")
+		if err != nil {
+			return err
+		}
 		return nil
 	})
 	if err != nil {
