@@ -10,11 +10,11 @@
 > * https://github.com/swaggo/swag swag文档
 * docker https://hub.docker.com/
 * .github 文件夹中有github action相关内容 可供参考
-* react & antd
 
 ## server文件夹
 所有go代码 
-## web 文件夹
-所有前端网页代码
+## 前端代码
+https://github.com/krilie/lico_alone_web   
+https://github.com/krilie/lico_alone_web_manage
 ## 个人站点
 <a href="https://lizo.top"> https://lizo.top </a>

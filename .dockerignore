@@ -1,7 +1,3 @@
-/node_modules
-/web/node_modules
-/web/build/
-/web/dist
 /docker
 /.git
 /.idea

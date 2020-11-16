@@ -3,24 +3,23 @@ on:
   push:
     branches:
       - master
-      - customer
       - dev
 jobs:
 
   build:
-    name: Build
+    name: 构建部署
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code into the Go module directory
+      - name: 检出代码
         uses: actions/checkout@v1
 
-      - name: Set up Go 1.15
+      - name: 设置golang1.15
         uses: actions/setup-go@v1
         with:
           go-version: 1.15
         id: go
 
-      - name: use cache
+      - name: 使用golang包缓存
         uses: actions/cache@v1
         with:
           path: ~/go/pkg/mod
@@ -29,7 +28,7 @@ jobs:
             ${{ runner.os }}-go-
 
       # 自动化测试时使用的配置信息
-      - name: go build and test
+      - name: golang测试与golang构建
         env:
           CGO_ENABLED: 0
         run: |
@@ -40,51 +39,28 @@ jobs:
           go test -tags "auto_test" -v ./...
           cd ..
 
-      - name: use npm cache
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/web/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      # 使用 node:10
-      - name: use Node.js 12
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      # npm install
-      - name: npm install and build
-        run: |
-          cd web
-          npm install
-          npm run build
-          cd ..
-
-      - name: copy-file-to-docker
+      - name: 复制文件到docker文件夹&&设置环境变量
         run: |
           cp ./server/lico_alone ./docker/lico_alone
-          cp -rf ./web/build ./docker/www
-
           echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
           echo "DOCKER_IMAGE_TAGS_LATEST=latest" >> $GITHUB_ENV
           echo "DOCKER_IMAGE_TAGS_VERSION=$(cat version)" >> $GITHUB_ENV
           echo "TZ=Asia/Shanghai" >> $GITHUB_ENV
 
-      - name: Build and push Docker images
+      - name: 构建与推送镜像
         uses: docker/build-push-action@v1.1.0
         env:
           TAG: ${{ github.sha }}
-          TZ:  "Asia/Shanghai"
+          TZ: "Asia/Shanghai"
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
           path: ./docker
           repository: ${{ secrets.DOCKER_IMAGE_NAME }}
-          tags:  ${{ env.DOCKER_IMAGE_TAGS_VERSION }},${{ env.GITHUB_SHA_SHORT }}
+          tags: ${{ env.DOCKER_IMAGE_TAGS_VERSION }},${{ env.GITHUB_SHA_SHORT }}
 
-      - name: apply app server
+      - name: 部署
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
