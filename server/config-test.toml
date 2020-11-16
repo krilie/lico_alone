@@ -38,8 +38,3 @@
 [log]
   log_file = "log.txt"
   log_level = 5
-
-  [log.elf_log]
-    key = ""
-    secret = ""
-    url = ""
