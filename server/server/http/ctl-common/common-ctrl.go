@@ -71,7 +71,7 @@ func (common *CommonCtrl) WebVisited(c *gin.Context) {
 // @Description AboutApp
 // @Tags 公共接口
 // @ID AboutApp
-// @Success 200 {object} com_model.CommonReturn
+// @Success 200 {object} com_model.CommonReturn{data=string}
 // @Success 500 {object} com_model.CommonReturn
 // @Router /api/common/about_app [get]
 func (common *CommonCtrl) AboutApp(c *gin.Context) {

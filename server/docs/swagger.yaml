@@ -241,7 +241,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/com_model.CommonReturn'
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  type: string
+              type: object
         "500":
           description: Internal Server Error
           schema:

@@ -39,7 +39,19 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/com_model.CommonReturn"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
