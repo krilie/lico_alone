@@ -2,16 +2,11 @@ package dao
 
 import (
 	"context"
-	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/module/module-dynamic-share/model"
 )
 
-func (a *DynamicShareDao) AddDynamicShare(ctx context.Context, m model.CreateDynamicShareModel) error {
-	err := a.GetDb(ctx).Create(model.DynamicShare{
-		Model:   com_model.NewModel(),
-		Content: m.Content,
-		Sort:    m.Sort,
-	}).Error
+func (a *DynamicShareDao) AddDynamicShare(ctx context.Context, m model.DynamicShare) error {
+	err := a.GetDb(ctx).Create(m).Error
 	return err
 }
 
