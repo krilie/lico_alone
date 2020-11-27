@@ -1,3 +1,5 @@
+// +build auto_test
+
 package utils_str_utils
 
 import (
