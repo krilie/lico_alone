@@ -1,6 +1,7 @@
 package service
 
 import (
+	service_dynamic_share "github.com/krilie/lico_alone/module/module-dynamic-share/service"
 	service_common "github.com/krilie/lico_alone/module/service-common"
 	service_cronjob "github.com/krilie/lico_alone/module/service-cron-job"
 	service_init_data "github.com/krilie/lico_alone/module/service-init-data"
@@ -14,4 +15,5 @@ func DigProviderService() {
 	service_notify_email.DigProvider()
 	service_user.DigProvider()
 	service_cronjob.DigProvider()
+	service_dynamic_share.DigProvider()
 }
