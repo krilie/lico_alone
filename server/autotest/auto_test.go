@@ -19,7 +19,6 @@ func TestMain(t *testing.M) {
 }
 
 func TestAutoTest(t *testing.T) {
-	t.Log("自动测试外层测试")
 	dig.Container.MustInvoke(func(i *int) {
 		fmt.Println("自动测试外层测试一 " + strconv.Itoa(*i))
 	})

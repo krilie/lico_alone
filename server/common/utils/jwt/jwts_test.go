@@ -2,6 +2,7 @@ package jwt
 
 import (
 	"errors"
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/krilie/lico_alone/common/utils/str_util"
 	"testing"
@@ -9,6 +10,7 @@ import (
 )
 
 func TestNewJwtToken(t *testing.T) {
+	fmt.Println("jwt jwt jwt jwt")
 	var userClaims UserClaims
 	userClaims.ClientId = "123"
 	userClaims.Iss = "sys"
@@ -17,13 +19,13 @@ func TestNewJwtToken(t *testing.T) {
 	userClaims.Iat = time.Now().Unix()
 	//userClaims.Exp = time.Now().Add(time.Hour).Unix()
 	userClaims.Exp = time.Now().Unix() + -1
-	jwtToken, e := GetNewJwtToken([]byte{0x234534}, &userClaims)
+	jwtToken, e := GetNewJwtToken([]byte{0x23, 0x45, 0x34}, &userClaims)
 	if e != nil {
 		t.Error(e)
 	} else {
 		t.Log(jwtToken)
 	}
-	claims, e := CheckJwtToken([]byte{0x234534}, jwtToken)
+	claims, e := CheckJwtToken([]byte{0x23, 0x45, 0x34}, jwtToken)
 	if e != nil {
 		t.Error(e)
 		eV := e.(*jwt.ValidationError)
