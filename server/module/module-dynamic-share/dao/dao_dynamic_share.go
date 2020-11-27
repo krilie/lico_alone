@@ -2,6 +2,7 @@ package dao
 
 import (
 	"context"
+	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/module/module-dynamic-share/model"
 )
 
@@ -16,8 +17,14 @@ func (a *DynamicShareDao) DeleteDynamicShare(ctx context.Context, ids []string) 
 }
 
 func (a *DynamicShareDao) UpdateDynamicShare(ctx context.Context, u model.UpdateDynamicShareModel) error {
-	err := a.GetDb(ctx).
-		Where("id=?", u.Id).
-		Updates(&model.DynamicShare{Sort: u.Sort, Content: u.Content}).Error
-	return err
+	affected, err := a.Exec(ctx,
+		"update tb_dynamic_share set content=?,sort=? where id=? and deleted_at is null",
+		u.Content, u.Sort, u.Id)
+	if err != nil {
+		return err
+	}
+	if affected == 0 {
+		return errs.NewNormal().WithMsg("no updated")
+	}
+	return nil
 }
