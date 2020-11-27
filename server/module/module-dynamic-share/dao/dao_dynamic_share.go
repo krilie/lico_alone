@@ -16,6 +16,8 @@ func (a *DynamicShareDao) DeleteDynamicShare(ctx context.Context, ids []string) 
 }
 
 func (a *DynamicShareDao) UpdateDynamicShare(ctx context.Context, u model.UpdateDynamicShareModel) error {
-	err := a.GetDb(ctx).Updates(u).Error
+	err := a.GetDb(ctx).
+		Where("id=?", u.Id).
+		Updates(&model.DynamicShare{Sort: u.Sort, Content: u.Content}).Error
 	return err
 }
