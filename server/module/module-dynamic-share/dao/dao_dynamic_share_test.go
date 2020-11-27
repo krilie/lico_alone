@@ -23,6 +23,7 @@ var testData = []model.DynamicShare{
 }
 
 func TestAutoDynamicShareDao_AddDynamicShare(t *testing.T) {
+
 	dig.Container.MustInvoke(func(dao *DynamicShareDao) {
 		err := dao.AddDynamicShare(context.Background(), testData[0])
 		assert.Nil(t, err)
@@ -40,6 +41,30 @@ func TestAutoDynamicShareDao_AddDynamicShare(t *testing.T) {
 		assert.Equal(t, data.Content, "12")
 		assert.Equal(t, data.Sort, 12)
 		err = dao.DeleteDynamicShare(context.Background(), []string{testData[0].Id})
+		assert.Nil(t, err)
+	})
+	dig.Container.MustInvoke(func(dao *DynamicShareDao) {
+		var testData = []model.DynamicShare{
+			{Model: com_model.NewModel(), Content: "1", Sort: 1},
+			{Model: com_model.NewModel(), Content: "2", Sort: 2},
+			{Model: com_model.NewModel(), Content: "3", Sort: 3},
+		}
+		for _, item := range testData {
+			err := dao.AddDynamicShare(context.Background(), item)
+			assert.Nil(t, err)
+		}
+		share, err := dao.QueryDynamicShare(context.Background(), model.QueryDynamicShareModel{
+			PageParams: com_model.PageParams{
+				PageNum:  1,
+				PageSize: 10,
+			},
+			ContentLike: "",
+		})
+		assert.Nil(t, err)
+		assert.Equal(t, share.TotalCount, 3, "应该是三个")
+		assert.Equal(t, len(share.Data), 3, "是三个才对")
+		assert.Equal(t, share.Data[0].Sort, 3, "是三才对")
+		err = dao.DeleteDynamicShare(context.Background(), []string{testData[0].Id, testData[1].Id, testData[2].Id})
 		assert.Nil(t, err)
 	})
 }
