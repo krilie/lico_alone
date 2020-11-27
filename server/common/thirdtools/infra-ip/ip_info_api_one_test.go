@@ -1,5 +1,3 @@
-// +build !auto_test
-
 package infra_ip
 
 import (

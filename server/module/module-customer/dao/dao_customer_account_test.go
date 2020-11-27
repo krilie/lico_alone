@@ -1,5 +1,3 @@
-// +build auto_test
-
 package dao
 
 import (
@@ -22,14 +20,14 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-func TestCustomerDao_CreateCustomerAccount(t *testing.T) {
+func TestAutoCustomerDao_CreateCustomerAccount(t *testing.T) {
 	dig.Container.MustInvoke(func(dao *CustomerDao) {
 		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
 		assert.NotNil(t, test, "should not nil")
 	})
 }
 
-func TestCustomerDao_DeleteCustomerByCustomerTraceId(t *testing.T) {
+func TestAutoCustomerDao_DeleteCustomerByCustomerTraceId(t *testing.T) {
 	dig.Container.MustInvoke(func(dao *CustomerDao) {
 		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
 		err := dao.DeleteCustomerByCustomerTraceId(context2.NewContext(), test.CustomerTraceId)
@@ -37,7 +35,7 @@ func TestCustomerDao_DeleteCustomerByCustomerTraceId(t *testing.T) {
 	})
 }
 
-func TestCustomerDao_DeleteCustomerById(t *testing.T) {
+func TestAutoCustomerDao_DeleteCustomerById(t *testing.T) {
 	dig.Container.MustInvoke(func(dao *CustomerDao) {
 		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
 		err := dao.DeleteCustomerById(context2.NewContext(), test.Id)
@@ -45,7 +43,7 @@ func TestCustomerDao_DeleteCustomerById(t *testing.T) {
 	})
 }
 
-func TestCustomerDao_GetCustomerByCustomerTraceId(t *testing.T) {
+func TestAutoCustomerDao_GetCustomerByCustomerTraceId(t *testing.T) {
 	dig.Container.MustInvoke(func(dao *CustomerDao) {
 		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
 		customerInfo, err := dao.GetCustomerByCustomerTraceId(context2.NewContext(), test.CustomerTraceId)
@@ -55,7 +53,7 @@ func TestCustomerDao_GetCustomerByCustomerTraceId(t *testing.T) {
 	})
 }
 
-func TestCustomerDao_IncreaseAccessTimes(t *testing.T) {
+func TestAutoCustomerDao_IncreaseAccessTimes(t *testing.T) {
 	dig.Container.MustInvoke(func(dao *CustomerDao) {
 		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
 		err := dao.IncreaseAccessTimes(context2.NewContext(), test.Id, "123", "1234")
