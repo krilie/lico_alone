@@ -10,11 +10,19 @@ type DynamicShare struct {
 	Sort    int    `json:"sort" gorm:"column:sort;type:int(11);not null;index"` // 大的在前
 }
 
+func (DynamicShare) TableName() string {
+	return "tb_dynamic_share"
+}
+
 // DynamicShareLabel 标签表
 type DynamicShareLabel struct {
 	com_model.Model
 	ShareId string `gorm:"column:id;primaryKey;type:char(36)" json:"id"`
 	Label   string `gorm:"column:label,type:nvarchar(36);not null;index"`
+}
+
+func (DynamicShareLabel) TableName() string {
+	return "tb_dynamic_share_label"
 }
 
 type CreateDynamicShareLabelModel struct {

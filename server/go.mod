@@ -22,6 +22,7 @@ require (
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.4.2
 	github.com/gomodule/redigo v2.0.0+incompatible
+	github.com/issue9/assert v1.4.1
 	github.com/issue9/watermark v1.1.0
 	github.com/json-iterator/go v1.1.9
 	github.com/juju/ratelimit v1.0.1
