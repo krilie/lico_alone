@@ -1,5 +1,3 @@
-// +build auto_test
-
 package test_test
 
 import (
@@ -19,11 +17,11 @@ func TestMain(t *testing.M) {
 	fmt.Printf("after run %v \n", run)
 }
 
-func TestOne(t *testing.T) {
+func TestAutoOne(t *testing.T) {
 	fmt.Println("test one")
 }
 
-func TestTwo(t *testing.T) {
+func TestAutoTwo(t *testing.T) {
 	fmt.Println("test two")
 	dig.Container.MustInvoke(func(i *int) {
 		fmt.Println("auto test two " + strconv.Itoa(*i))

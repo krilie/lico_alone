@@ -1,5 +1,3 @@
-// +build !auto_test
-
 package rsa_util
 
 import "testing"

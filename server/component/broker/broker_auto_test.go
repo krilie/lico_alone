@@ -1,5 +1,3 @@
-// +build auto_test
-
 package broker
 
 import (
@@ -15,7 +13,7 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-func TestFunc(t *testing.T) {
+func TestAutoFunc(t *testing.T) {
 	count := 0
 	dig.Container.MustInvoke(func(Smq *Broker) {
 		// register smq

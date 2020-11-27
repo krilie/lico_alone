@@ -1,5 +1,3 @@
-// +build auto_test
-
 package cache
 
 import (
@@ -14,7 +12,7 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-func TestGCache(t *testing.T) {
+func TestAutoGCache(t *testing.T) {
 	dig.Container.MustInvoke(func(cache *Cache) {
 		err := cache.Set("ok", "ok")
 		assert.Equal(t, nil, err, "should no error", err)

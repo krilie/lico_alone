@@ -1,5 +1,3 @@
-// +build !auto_test
-
 package random
 
 import "testing"
