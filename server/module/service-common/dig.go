@@ -1,10 +1,10 @@
 package service_common
 
 import (
-	"github.com/krilie/lico_alone/common/dig"
+	"github.com/krilie/lico_alone/common/appdig"
 )
 
 // DigProvider provider
 func DigProvider() {
-	dig.Container.MustProvide(NewCommonService)
+	appdig.Container.MustProvide(NewCommonService)
 }

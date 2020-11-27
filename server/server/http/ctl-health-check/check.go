@@ -2,9 +2,9 @@ package ctl_health_check
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/krilie/lico_alone/common/appdig"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/common/utils/str_util"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
@@ -61,5 +61,5 @@ func NewHealthCheckCtl(db *ndb.NDb, log *nlog.NLog) *HealthCheckCtrl {
 
 // DigProvider provider
 func DigProvider() {
-	dig.Container.MustProvide(NewHealthCheckCtl)
+	appdig.Container.MustProvide(NewHealthCheckCtl)
 }

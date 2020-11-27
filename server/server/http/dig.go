@@ -1,7 +1,7 @@
 package http
 
 import (
-	"github.com/krilie/lico_alone/common/dig"
+	"github.com/krilie/lico_alone/common/appdig"
 	ctl_common "github.com/krilie/lico_alone/server/http/ctl-common"
 	ctl_health_check "github.com/krilie/lico_alone/server/http/ctl-health-check"
 	ctl_user "github.com/krilie/lico_alone/server/http/ctl-user"
@@ -23,7 +23,7 @@ func NewController(commonCtrl *ctl_common.CommonCtrl, userCtrl *ctl_user.UserCtr
 
 // DigProvider provider
 func DigProvider() {
-	dig.Container.MustProvide(NewController)
+	appdig.Container.MustProvide(NewController)
 }
 
 func DigProviderController() {

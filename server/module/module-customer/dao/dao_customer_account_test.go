@@ -2,9 +2,9 @@ package dao
 
 import (
 	"context"
+	"github.com/krilie/lico_alone/common/appdig"
 	com_model "github.com/krilie/lico_alone/common/com-model"
 	context2 "github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/component"
 	"github.com/krilie/lico_alone/module/module-customer/model"
@@ -14,21 +14,20 @@ import (
 	"time"
 )
 
-func TestMain(m *testing.M) {
-	component.DigProviderTest()
-	DigProvider()
-	m.Run()
-}
+var container = appdig.
+	NewAppDig().
+	MustProvides(component.DigComponentProviderFuncForTest).
+	MustProvide(NewCustomerDao)
 
 func TestAutoCustomerDao_CreateCustomerAccount(t *testing.T) {
-	dig.Container.MustInvoke(func(dao *CustomerDao) {
+	container.MustInvoke(func(dao *CustomerDao) {
 		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
 		assert.NotNil(t, test, "should not nil")
 	})
 }
 
 func TestAutoCustomerDao_DeleteCustomerByCustomerTraceId(t *testing.T) {
-	dig.Container.MustInvoke(func(dao *CustomerDao) {
+	container.MustInvoke(func(dao *CustomerDao) {
 		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
 		err := dao.DeleteCustomerByCustomerTraceId(context2.NewContext(), test.CustomerTraceId)
 		assert.Equal(t, nil, err, "should no err")
@@ -36,7 +35,7 @@ func TestAutoCustomerDao_DeleteCustomerByCustomerTraceId(t *testing.T) {
 }
 
 func TestAutoCustomerDao_DeleteCustomerById(t *testing.T) {
-	dig.Container.MustInvoke(func(dao *CustomerDao) {
+	container.MustInvoke(func(dao *CustomerDao) {
 		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
 		err := dao.DeleteCustomerById(context2.NewContext(), test.Id)
 		assert.Equal(t, nil, err, "should no err")
@@ -44,7 +43,7 @@ func TestAutoCustomerDao_DeleteCustomerById(t *testing.T) {
 }
 
 func TestAutoCustomerDao_GetCustomerByCustomerTraceId(t *testing.T) {
-	dig.Container.MustInvoke(func(dao *CustomerDao) {
+	container.MustInvoke(func(dao *CustomerDao) {
 		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
 		customerInfo, err := dao.GetCustomerByCustomerTraceId(context2.NewContext(), test.CustomerTraceId)
 		assert.Equal(t, nil, err, "should no err")
@@ -54,7 +53,7 @@ func TestAutoCustomerDao_GetCustomerByCustomerTraceId(t *testing.T) {
 }
 
 func TestAutoCustomerDao_IncreaseAccessTimes(t *testing.T) {
-	dig.Container.MustInvoke(func(dao *CustomerDao) {
+	container.MustInvoke(func(dao *CustomerDao) {
 		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
 		err := dao.IncreaseAccessTimes(context2.NewContext(), test.Id, "123", "1234")
 		assert.Nil(t, err, "should not nil")

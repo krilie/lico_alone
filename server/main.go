@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/krilie/lico_alone/common/appdig"
 	context2 "github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/dig"
 	run_env "github.com/krilie/lico_alone/common/run_env"
 	"github.com/krilie/lico_alone/component"
 	"github.com/krilie/lico_alone/component/broker"
@@ -37,12 +37,12 @@ import (
 
 func main() {
 	// dig config
-	component.DigProvider()
+	component.DigComponentProvider()
 	module.DigProviderModule()
 	service2.DigProviderService()
 	http.DigProviderController()
 	// begin service
-	dig.Container.MustInvoke(
+	appdig.Container.MustInvoke(
 		func(log *nlog.NLog,
 			broker *broker.Broker,
 			cfg *ncfg.NConfig,

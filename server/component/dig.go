@@ -9,22 +9,20 @@ import (
 	"github.com/krilie/lico_alone/component/nlog"
 )
 
-// dig provider
-func DigProvider() {
-	ncfg.DigProvider()
-	nlog.DigProvider()
-	ndb.DigProvider()
-	broker.DigProvider()
-	cache.DigProvider()
-	cron.DigProvider()
+var DigComponentProviderFunc = []interface{}{
+	ncfg.NewNConfig,
+	nlog.NewLogger,
+	ndb.NewNDb,
+	broker.NewBroker,
+	cache.NewCache,
+	cron.NewCrone,
 }
 
-// dig provider
-func DigProviderTest() {
-	ncfg.DigProviderByCfgStrFromEnv()
-	nlog.DigProvider()
-	ndb.DigProvider()
-	broker.DigProvider()
-	cache.DigProvider()
-	cron.DigProvider()
+var DigComponentProviderFuncForTest = []interface{}{
+	ncfg.NewNConfigByCfgStrFromEnvTest,
+	nlog.NewLogger,
+	ndb.NewNDb,
+	broker.NewBroker,
+	cache.NewCache,
+	cron.NewCrone,
 }

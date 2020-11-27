@@ -1,9 +1,9 @@
 package service
 
 import (
+	"github.com/krilie/lico_alone/common/appdig"
 	"github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/dig"
 	infra_ip "github.com/krilie/lico_alone/common/thirdtools/infra-ip"
 	"github.com/krilie/lico_alone/component/broker"
 	"github.com/krilie/lico_alone/component/nlog"
@@ -32,7 +32,7 @@ func NewStatisticService(broker *broker.Broker, Dao *dao.StatisticDao, log *nlog
 
 // DigProvider provider
 func DigProvider() {
-	dig.Container.MustProvide(NewStatisticService)
+	appdig.Container.MustProvide(NewStatisticService)
 }
 
 func DigProviderAll() {

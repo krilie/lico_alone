@@ -3,14 +3,13 @@ package service
 import (
 	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/common/utils/str_util"
 	"github.com/krilie/lico_alone/module/module-file/model"
 	"testing"
 )
 
 func TestFileModule_QueryFilePage(t *testing.T) {
-	dig.Container.MustInvoke(func(svc *FileModule) {
+	container.MustInvoke(func(svc *FileModule) {
 		page, count, num, size, files, err := svc.QueryFilePage(context.NewContext(), model.QueryFileParam{
 			PageParams:     com_model.PageParams{},
 			KeyNameLike:    "1",

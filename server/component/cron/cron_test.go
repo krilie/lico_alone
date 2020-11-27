@@ -8,7 +8,6 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	DigProvider()
 	m.Run()
 }
 

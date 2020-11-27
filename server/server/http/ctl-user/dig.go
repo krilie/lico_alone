@@ -1,10 +1,10 @@
 package ctl_user
 
 import (
-	"github.com/krilie/lico_alone/common/dig"
+	"github.com/krilie/lico_alone/common/appdig"
 )
 
 // DigProvider provider
 func DigProvider() {
-	dig.Container.MustProvide(NewUserCtrl)
+	appdig.Container.MustProvide(NewUserCtrl)
 }

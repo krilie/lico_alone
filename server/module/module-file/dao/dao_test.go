@@ -1,9 +1,9 @@
 package dao
 
 import (
+	"github.com/krilie/lico_alone/common/appdig"
 	com_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/common/utils/str_util"
 	"github.com/krilie/lico_alone/component"
@@ -14,14 +14,13 @@ import (
 	"time"
 )
 
-func TestMain(m *testing.M) {
-	component.DigProviderTest()
-	DigProvider()
-	m.Run()
-}
+var container = appdig.
+	NewAppDig().
+	MustProvides(component.DigComponentProviderFuncForTest).
+	MustProvide(NewFileDao)
 
 func TestFileDao_CreateFile(t *testing.T) {
-	dig.Container.MustInvoke(func(dao *FileDao) {
+	container.MustInvoke(func(dao *FileDao) {
 		file := &model.FileMaster{
 			Model: com_model.Model{
 				Id:        id_util.GetUuid(),
@@ -54,7 +53,7 @@ func TestFileDao_CreateFile(t *testing.T) {
 }
 
 func BenchmarkNewFileDao(b *testing.B) {
-	dig.Container.MustInvoke(func(dao *FileDao) {
+	container.MustInvoke(func(dao *FileDao) {
 		dao.GetDb(context.NewContext()).Logger.LogMode(logger.Error)
 		file := &model.FileMaster{
 			Model: com_model.Model{

@@ -13,13 +13,13 @@ import (
 )
 
 func DigProviderModule() {
-	article_module.DigProviderWithDao()
+	article_module.DigModuleBlogArticleProviderAll()
 	user_module.DigProviderAll()
-	carousel_module.DigProviderWithDao()
-	config_module.DigProviderWithDao()
-	file_module.DigProviderWithDao()
-	message_module.DigProviderAll()
+	carousel_module.DigModuleCarouselProviderAll()
+	config_module.DigModuleConfigProviderAll()
+	file_module.DigModuleFileProviderAll()
+	message_module.DigModuleMessageProviderAll()
 	statistic_module.DigProviderAll()
-	customer_module.DigProviderAll()
-	dynamic_module.DigProviderAll()
+	customer_module.DigModuleCustomerProviderAll()
+	dynamic_module.DigModuleDynamicShareProviderAll()
 }

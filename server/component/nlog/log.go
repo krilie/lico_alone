@@ -42,7 +42,6 @@ func NewLogger(cfg *ncfg.NConfig) *NLog {
 	Log.Infoln("log init ok")
 	log := &NLog{Entry: Log}
 	log.SetUpLogFile(cfg.Cfg.Log.LogFile)
-	GLog = log
 	return log
 }
 

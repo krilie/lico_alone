@@ -3,7 +3,6 @@ package dao
 import (
 	"github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/common/global"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
@@ -28,9 +27,4 @@ func NewStatisticDao(db *ndb.NDb, log *nlog.NLog) *StatisticDao {
 		NDb: db,
 		log: log,
 	}
-}
-
-// DigProvider provider
-func DigProvider() {
-	dig.Container.MustProvide(NewStatisticDao)
 }

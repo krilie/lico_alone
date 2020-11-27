@@ -1,8 +1,8 @@
 package service_cron_job
 
-import "github.com/krilie/lico_alone/common/dig"
+import "github.com/krilie/lico_alone/common/appdig"
 
 // DigProvider provider
 func DigProvider() {
-	dig.Container.MustProvide(NewCronJobService)
+	appdig.Container.MustProvide(NewCronJobService)
 }

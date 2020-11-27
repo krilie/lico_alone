@@ -1,10 +1,10 @@
 package service_init_data
 
 import (
-	"github.com/krilie/lico_alone/common/dig"
+	"github.com/krilie/lico_alone/common/appdig"
 )
 
 // DigProvider provider
 func DigProvider() {
-	dig.Container.MustProvide(NewInitDataService)
+	appdig.Container.MustProvide(NewInitDataService)
 }
