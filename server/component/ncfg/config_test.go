@@ -38,7 +38,7 @@ func TestNConfig_GetInt(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	err = cfg.V.WriteConfigAs("./config.json")
+	err = cfg.V.WriteConfigAs("./config.toml")
 	if err != nil {
 		panic(err)
 	}
