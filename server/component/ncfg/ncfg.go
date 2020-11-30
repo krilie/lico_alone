@@ -24,7 +24,6 @@ type Http struct {
 type Log struct {
 	LogFile  string `mapstructure:"log_file" json:"log_file" toml:"log_file"`    // 配置文件 空为控制台
 	LogLevel uint32 `mapstructure:"log_level" json:"log_level" toml:"log_level"` // 0-6 fatal ... trace
-	ElfLog   ElfLog `mapstructure:"elf_log" json:"elf_log" toml:"elf_log"`
 }
 
 // DB 数据库相关配置
@@ -59,10 +58,4 @@ type Email struct {
 type AliSms struct {
 	Key    string `mapstructure:"key" json:"key" toml:"key"`
 	Secret string `mapstructure:"secret" json:"secret" toml:"secret"`
-}
-
-type ElfLog struct {
-	Key    string `mapstructure:"key" json:"key" toml:"key"`
-	Secret string `mapstructure:"secret" json:"secret" toml:"secret"`
-	Url    string `mapstructure:"url" json:"url" toml:"url"`
 }

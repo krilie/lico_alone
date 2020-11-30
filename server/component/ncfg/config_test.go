@@ -30,3 +30,16 @@ func TestSetEnv(t *testing.T) {
 	getenv := os.Getenv("MYAPP_CONFIG_PATH")
 	t.Log(getenv)
 }
+
+func TestNConfig_GetInt(t *testing.T) {
+	getenv := os.Getenv("MYAPP_TEST_CONFIG")
+	cfg := NewNConfig()
+	err := cfg.LoadFromConfigJsonStr(getenv)
+	if err != nil {
+		panic(err)
+	}
+	err = cfg.V.WriteConfigAs("./config.json")
+	if err != nil {
+		panic(err)
+	}
+}
