@@ -16,7 +16,7 @@ import (
 
 var container = appdig.
 	NewAppDig().
-	MustProvides(component.DigComponentProviderFuncForTest).
+	MustProvides(component.DigComponentProviderAllForTest).
 	MustProvide(NewCustomerDao)
 
 func TestAutoCustomerDao_CreateCustomerAccount(t *testing.T) {

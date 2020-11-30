@@ -14,9 +14,9 @@ import (
 // @Success 200 {object} com_model.CommonReturn{data=[]model.CarouselDto}
 // @Failure 500 {string} errInfo
 // @Router /api/common/carousel/query [GET]
-func (common *CommonCtrl) QueryCarousel(c *gin.Context) {
+func (con *CommonCtrl) QueryCarousel(c *gin.Context) {
 	ctx := ginutil.MustGetAppCtx(c)
-	carousel, err := common.CommonService.QueryCarousel(ctx)
+	carousel, err := con.CommonService.QueryCarousel(ctx)
 	ginutil.HandlerErrorOrReturnData(c, err, carousel)
 	return
 }

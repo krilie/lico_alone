@@ -10,7 +10,7 @@ import (
 
 var container = appdig.
 	NewAppDig().
-	MustProvides(component.DigComponentProviderFuncForTest)
+	MustProvides(component.DigComponentProviderAllForTest)
 
 func TestSendEmail(t *testing.T) {
 	container.MustInvoke(func(cfg2 *ncfg.NConfig) {

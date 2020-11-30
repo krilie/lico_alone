@@ -10,7 +10,7 @@ import (
 
 var container = appdig.
 	NewAppDig().
-	MustProvides(component.DigComponentProviderFuncForTest).
+	MustProvides(component.DigComponentProviderAllForTest).
 	MustProvides(DigModuleConfigProviderAll)
 
 func TestAddItems(t *testing.T) {

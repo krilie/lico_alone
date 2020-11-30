@@ -12,7 +12,7 @@ import (
 
 var container = appdig.
 	NewAppDig().
-	MustProvides(component.DigComponentProviderFuncForTest).
+	MustProvides(component.DigComponentProviderAllForTest).
 	MustProvides(DigModuleCustomerProviderAll)
 
 func TestAutoCustomerModule_CreateCustomerAccount(t *testing.T) {

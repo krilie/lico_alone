@@ -12,7 +12,7 @@ import (
 
 var container = func() *appdig.AppContainer {
 	container := appdig.NewAppDig()
-	container.MustProvides(component.DigComponentProviderFuncForTest)
+	container.MustProvides(component.DigComponentProviderAllForTest)
 	container.MustProvide(NewCarouseDao)
 	return container
 }()

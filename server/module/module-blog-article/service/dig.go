@@ -15,7 +15,7 @@ var DigModuleBlogArticleProviderAll = []interface{}{
 func BuildTestContainer() *appdig.AppContainer {
 	var container = appdig.NewAppDig()
 	container.
-		MustProvides(component.DigComponentProviderFuncForTest).
+		MustProvides(component.DigComponentProviderAllForTest).
 		MustProvides(DigModuleBlogArticleProviderAll)
 	return container
 }

@@ -8,17 +8,32 @@ import (
 	"github.com/krilie/lico_alone/component/nlog"
 	common_service "github.com/krilie/lico_alone/module/service-common"
 	"github.com/krilie/lico_alone/server/http/ginutil"
+	"github.com/krilie/lico_alone/server/http/middleware"
 )
 
 type CommonCtrl struct {
 	CommonService *common_service.CommonService
 	runEnv        *run_env.RunEnv
 	log           *nlog.NLog
+	middleware    *middleware.GinMiddleware
+	ginUtil       *ginutil.GinUtils
 }
 
-func NewCommonCtrl(log *nlog.NLog, common *common_service.CommonService, cfg *ncfg.NConfig) *CommonCtrl {
+func NewCommonCtrl(
+	log *nlog.NLog,
+	common *common_service.CommonService,
+	middleware *middleware.GinMiddleware,
+	ginUtil *ginutil.GinUtils,
+	cfg *ncfg.NConfig) *CommonCtrl {
+
 	log = log.WithField(context_enum.Module.Str(), "common controller")
-	return &CommonCtrl{CommonService: common, runEnv: cfg.RunEnv, log: log}
+	return &CommonCtrl{
+		CommonService: common,
+		runEnv:        cfg.RunEnv,
+		log:           log,
+		middleware:    middleware,
+		ginUtil:       ginUtil,
+	}
 }
 
 // Health Icp信息
@@ -29,8 +44,8 @@ func NewCommonCtrl(log *nlog.NLog, common *common_service.CommonService, cfg *nc
 // @Success 200 {object} com_model.CommonReturn{data=model.IcpInfo}
 // @Success 500 {object} com_model.CommonReturn
 // @Router /api/common/icp_info [get]
-func (common *CommonCtrl) GetIcpInfo(c *gin.Context) {
-	info := common.CommonService.GetIcpInfo(ginutil.MustGetAppCtx(c))
+func (con *CommonCtrl) GetIcpInfo(c *gin.Context) {
+	info := con.CommonService.GetIcpInfo(con.ginUtil.MustGetAppCtx(c))
 	ginutil.ReturnData(c, info)
 }
 
@@ -42,13 +57,13 @@ func (common *CommonCtrl) GetIcpInfo(c *gin.Context) {
 // @Success 200 {string} string "version build_time git_commit go_version"
 // @Failure 500 {string} string ""
 // @Router /api/common/version [get]
-func (common *CommonCtrl) Version(c *gin.Context) {
+func (con *CommonCtrl) Version(c *gin.Context) {
 	c.JSON(200, gin.H{
-		"version":    common.runEnv.Version,
-		"build_time": common.runEnv.BuildTime,
-		"git_commit": common.runEnv.GitCommit,
-		"go_version": common.runEnv.GoVersion,
-		"host":       common.runEnv.AppHost,
+		"version":    con.runEnv.Version,
+		"build_time": con.runEnv.BuildTime,
+		"git_commit": con.runEnv.GitCommit,
+		"go_version": con.runEnv.GoVersion,
+		"host":       con.runEnv.AppHost,
 	})
 }
 
@@ -60,9 +75,9 @@ func (common *CommonCtrl) Version(c *gin.Context) {
 // @Success 200 {object} com_model.CommonReturn
 // @Success 500 {object} com_model.CommonReturn
 // @Router /api/common/visited [post]
-func (common *CommonCtrl) WebVisited(c *gin.Context) {
-	ctx := ginutil.MustGetAppCtx(c)
-	common.CommonService.WebVisited(ctx, ctx.RemoteIp, ctx.CustomerTraceId)
+func (con *CommonCtrl) WebVisited(c *gin.Context) {
+	ctx := con.ginUtil.MustGetAppCtx(c)
+	con.CommonService.WebVisited(ctx, ctx.RemoteIp, ctx.CustomerTraceId)
 	ginutil.ReturnOk(c)
 }
 
@@ -74,8 +89,8 @@ func (common *CommonCtrl) WebVisited(c *gin.Context) {
 // @Success 200 {object} com_model.CommonReturn{data=string}
 // @Success 500 {object} com_model.CommonReturn
 // @Router /api/common/about_app [get]
-func (common *CommonCtrl) AboutApp(c *gin.Context) {
-	ctx := ginutil.MustGetAppCtx(c)
-	app, err := common.CommonService.GetAboutApp(ctx)
+func (con *CommonCtrl) AboutApp(c *gin.Context) {
+	ctx := con.ginUtil.MustGetAppCtx(c)
+	app, err := con.CommonService.GetAboutApp(ctx)
 	ginutil.HandlerErrorOrReturnData(c, err, app)
 }

@@ -9,7 +9,7 @@ import (
 	"github.com/krilie/lico_alone/component/nlog"
 )
 
-var DigComponentProviderFunc = []interface{}{
+var DigComponentProviderAll = []interface{}{
 	ncfg.NewNConfig,
 	nlog.NewLogger,
 	ndb.NewNDb,
@@ -18,7 +18,7 @@ var DigComponentProviderFunc = []interface{}{
 	cron.NewCrone,
 }
 
-var DigComponentProviderFuncForTest = []interface{}{
+var DigComponentProviderAllForTest = []interface{}{
 	ncfg.NewNConfigByCfgStrFromEnvTest,
 	nlog.NewLogger,
 	ndb.NewNDb,

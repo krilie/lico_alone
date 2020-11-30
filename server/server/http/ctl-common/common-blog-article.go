@@ -19,9 +19,9 @@ import (
 // @Success 200 {object} com_model.CommonReturn{data=com_model.PageData{data=[]model.QueryArticleModel}}
 // @Failure 500 {string} errInfo
 // @Router /api/common/article/query_sample [GET]
-func (common *CommonCtrl) QueryArticleSample(c *gin.Context) {
+func (con *CommonCtrl) QueryArticleSample(c *gin.Context) {
 	ctx := ginutil.MustGetAppCtx(c)
-	log := common.log.Get(ctx)
+	log := con.log.Get(ctx)
 	var param = &struct {
 		com_model.PageParams
 		SearchKey string `form:"search_key" json:"search_key" xml:"search_key"  binding:"required"`
@@ -33,7 +33,7 @@ func (common *CommonCtrl) QueryArticleSample(c *gin.Context) {
 		return
 	}
 	param.PageParams.CheckOkOrSetDefault()
-	pageData, err := common.CommonService.QueryArticleSamplePage(ctx, param.PageParams, param.SearchKey)
+	pageData, err := con.CommonService.QueryArticleSamplePage(ctx, param.PageParams, param.SearchKey)
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return
@@ -52,12 +52,12 @@ func (common *CommonCtrl) QueryArticleSample(c *gin.Context) {
 // @Success 200 {object} com_model.CommonReturn{data=model.ArticleDto}
 // @Failure 500 {string} errInfo
 // @Router /api/common/article/get_article [GET]
-func (common *CommonCtrl) GetArticle(c *gin.Context) {
+func (con *CommonCtrl) GetArticle(c *gin.Context) {
 	ctx := ginutil.MustGetAppCtx(c)
-	log := common.log.Get(ctx)
+	log := con.log.Get(ctx)
 	articleId := c.Query("article_id")
 
-	article, err := common.CommonService.GetArticleById(ctx, articleId)
+	article, err := con.CommonService.GetArticleById(ctx, articleId)
 	if err != nil {
 		log.Error(err)
 		ginutil.ReturnWithErr(c, err)

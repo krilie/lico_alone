@@ -9,11 +9,11 @@ import (
 	service_user "github.com/krilie/lico_alone/module/service-user"
 )
 
-func DigProviderService() {
-	service_common.DigProvider()
-	service_init_data.DigProvider()
-	service_notify_email.DigProvider()
-	service_user.DigProvider()
-	service_cronjob.DigProvider()
-	service_dynamic_share.DigProvider()
+var DigServiceProviderAll = []interface{}{
+	service_common.NewCommonService,
+	service_init_data.NewInitDataService,
+	service_notify_email.NewNotificationEmailService,
+	service_user.NewUserService,
+	service_cronjob.NewCronJobService,
+	service_dynamic_share.NewDynamicShareModule,
 }

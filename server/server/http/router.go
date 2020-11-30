@@ -19,9 +19,19 @@ import (
 	"time"
 )
 
-func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middleware.IAuth, ctrl *Controllers) (shutDown func(waitSec time.Duration) error) {
-	httpCfg := &cfg.Cfg.Http
-	fileCfg := &cfg.Cfg.FileSave
+type HttpService struct {
+	cfg        *ncfg.NConfig
+	ctrl       *Controllers
+	middleware *middleware.GinMiddleware
+}
+
+func NewHttpService(cfg *ncfg.NConfig, ctrl *Controllers, middleware *middleware.GinMiddleware) *HttpService {
+	return &HttpService{cfg: cfg, ctrl: ctrl, middleware: middleware}
+}
+
+func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown func(waitSec time.Duration) error) {
+	httpCfg := &h.cfg.Cfg.Http
+	fileCfg := &h.cfg.Cfg.FileSave
 	// 设置gin mode
 	gin.SetMode(httpCfg.GinMode)
 	// 路径设置 根路径
@@ -48,8 +58,8 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 	}
 
 	// 健康检查
-	rootRouter.GET("health/", ctrl.healthCheckCtrl.Hello)
-	rootRouter.GET("health/ping", ctrl.healthCheckCtrl.Ping)
+	rootRouter.GET("health/", h.ctrl.healthCheckCtrl.Hello)
+	rootRouter.GET("health/ping", h.ctrl.healthCheckCtrl.Ping)
 
 	// api路由 + 中间件
 	apiGroup := rootRouter.Group("/api")
@@ -57,40 +67,40 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 
 	// 不检查权限的分组
 	noCheckToken := apiGroup.Group("")
-	noCheckToken.POST("/user/login", ctrl.userCtrl.UserLogin)
-	noCheckToken.POST("/user/register", ctrl.userCtrl.UserRegister)
-	noCheckToken.POST("/user/send_sms", ctrl.userCtrl.UserSendSms)
+	noCheckToken.POST("/user/login", h.ctrl.userCtrl.UserLogin)
+	noCheckToken.POST("/user/register", h.ctrl.userCtrl.UserRegister)
+	noCheckToken.POST("/user/send_sms", h.ctrl.userCtrl.UserSendSms)
 
 	//检查权限的分组
 	checkToken := apiGroup.Group("")
-	checkToken.Use(middleware.CheckAuthToken(auth))
-	checkToken.GET("/user/init_app", ctrl.userCtrl.InitApp)
-	checkToken.GET("/manage/setting/get_setting_all", ctrl.userCtrl.ManageGetConfigList)
-	checkToken.POST("/manage/setting/update_config", ctrl.userCtrl.ManageUpdateConfig)
-	checkToken.GET("/manage/setting/get_a_map_key", ctrl.userCtrl.ManageGetAMapKey) // 高德地图 获取配置key
-	checkToken.GET("/manage/article/query", ctrl.userCtrl.QueryArticle)
-	checkToken.GET("/manage/article/get_by_id", ctrl.userCtrl.GetArticleById)
-	checkToken.POST("/manage/article/update", ctrl.userCtrl.UpdateArticle)
-	checkToken.POST("/manage/article/delete", ctrl.userCtrl.DeleteArticle)
-	checkToken.POST("/manage/article/create", ctrl.userCtrl.CreateArticle)
-	checkToken.POST("/manage/file/upload", middleware.OpsLimit(1), ctrl.userCtrl.UploadFile)
-	checkToken.POST("/manage/file/delete", ctrl.userCtrl.DeleteFile)
-	checkToken.GET("/manage/file/query", ctrl.userCtrl.QueryFile)
-	checkToken.GET("/manage/carousel/query", ctrl.userCtrl.QueryCarousel)
-	checkToken.POST("/manage/carousel/create", ctrl.userCtrl.CreateCarousel)
-	checkToken.POST("/manage/carousel/update", ctrl.userCtrl.UpdateCarousel)
-	checkToken.POST("/manage/carousel/delete_by_id", ctrl.userCtrl.DeleteCarouselById)
-	checkToken.GET("/manage/statistic/get_visitor_points", ctrl.userCtrl.ManageGetVisitorPoints)
+	checkToken.Use(h.middleware.CheckAuthToken())
+	checkToken.GET("/user/init_app", h.ctrl.userCtrl.InitApp)
+	checkToken.GET("/manage/setting/get_setting_all", h.ctrl.userCtrl.ManageGetConfigList)
+	checkToken.POST("/manage/setting/update_config", h.ctrl.userCtrl.ManageUpdateConfig)
+	checkToken.GET("/manage/setting/get_a_map_key", h.ctrl.userCtrl.ManageGetAMapKey) // 高德地图 获取配置key
+	checkToken.GET("/manage/article/query", h.ctrl.userCtrl.QueryArticle)
+	checkToken.GET("/manage/article/get_by_id", h.ctrl.userCtrl.GetArticleById)
+	checkToken.POST("/manage/article/update", h.ctrl.userCtrl.UpdateArticle)
+	checkToken.POST("/manage/article/delete", h.ctrl.userCtrl.DeleteArticle)
+	checkToken.POST("/manage/article/create", h.ctrl.userCtrl.CreateArticle)
+	checkToken.POST("/manage/file/upload", middleware.OpsLimit(1), h.ctrl.userCtrl.UploadFile)
+	checkToken.POST("/manage/file/delete", h.ctrl.userCtrl.DeleteFile)
+	checkToken.GET("/manage/file/query", h.ctrl.userCtrl.QueryFile)
+	checkToken.GET("/manage/carousel/query", h.ctrl.userCtrl.QueryCarousel)
+	checkToken.POST("/manage/carousel/create", h.ctrl.userCtrl.CreateCarousel)
+	checkToken.POST("/manage/carousel/update", h.ctrl.userCtrl.UpdateCarousel)
+	checkToken.POST("/manage/carousel/delete_by_id", h.ctrl.userCtrl.DeleteCarouselById)
+	checkToken.GET("/manage/statistic/get_visitor_points", h.ctrl.userCtrl.ManageGetVisitorPoints)
 
 	// common 服务
 	commonApi := apiGroup.Group("")
-	commonApi.GET("/common/icp_info", ctrl.commonCtrl.GetIcpInfo)
-	commonApi.GET("/common/article/query_sample", ctrl.commonCtrl.QueryArticleSample)
-	commonApi.GET("/common/article/get_article", ctrl.commonCtrl.GetArticle)
-	commonApi.GET("/common/carousel/query", ctrl.commonCtrl.QueryCarousel)
-	commonApi.GET("/common/version", ctrl.commonCtrl.Version)     // 版本号
-	commonApi.POST("/common/visited", ctrl.commonCtrl.WebVisited) // WebVisited
-	commonApi.GET("/common/about_app", ctrl.commonCtrl.AboutApp)  // AboutApp
+	commonApi.GET("/common/icp_info", h.ctrl.commonCtrl.GetIcpInfo)
+	commonApi.GET("/common/article/query_sample", h.ctrl.commonCtrl.QueryArticleSample)
+	commonApi.GET("/common/article/get_article", h.ctrl.commonCtrl.GetArticle)
+	commonApi.GET("/common/carousel/query", h.ctrl.commonCtrl.QueryCarousel)
+	commonApi.GET("/common/version", h.ctrl.commonCtrl.Version)     // 版本号
+	commonApi.POST("/common/visited", h.ctrl.commonCtrl.WebVisited) // WebVisited
+	commonApi.GET("/common/about_app", h.ctrl.commonCtrl.AboutApp)  // AboutApp
 
 	// 开始服务
 	srv := &http.Server{

@@ -11,7 +11,7 @@ import (
 var container = func() *appdig.AppContainer {
 	return appdig.
 		NewAppDig().
-		MustProvides(component.DigComponentProviderFuncForTest).
+		MustProvides(component.DigComponentProviderAllForTest).
 		MustProvide(NewConfigDao)
 }()
 

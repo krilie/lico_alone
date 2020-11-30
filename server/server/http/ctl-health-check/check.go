@@ -2,7 +2,6 @@ package ctl_health_check
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/krilie/lico_alone/common/appdig"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/utils/str_util"
@@ -57,9 +56,4 @@ type HealthCheckCtrl struct {
 func NewHealthCheckCtl(db *ndb.NDb, log *nlog.NLog) *HealthCheckCtrl {
 	log = log.WithField(context_enum.Module.Str(), "health Ctrl")
 	return &HealthCheckCtrl{startTime: time.Now(), db: db, log: log}
-}
-
-// DigProvider provider
-func DigProvider() {
-	appdig.Container.MustProvide(NewHealthCheckCtl)
 }

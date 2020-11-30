@@ -5,18 +5,16 @@ import (
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/utils/str_util"
 	"github.com/krilie/lico_alone/component"
-	"github.com/krilie/lico_alone/module/module"
 	"testing"
 )
 
-func TestMain(m *testing.M) {
-	component.DigComponentProviderTest() // 数据库 配置 消息队列 等
-	module.DigProviderModule()           // 服务 模块 包括其dao层
-	DigProvider()
-}
+var container = appdig.
+	NewAppDig().
+	MustProvides(component.DigComponentProviderAllForTest).
+	MustProvide(NewCommonService)
 
 func TestCommonService_GetIcpInfo(t *testing.T) {
-	appdig.Container.MustInvoke(func(svc *CommonService) {
+	container.MustInvoke(func(svc *CommonService) {
 		info := svc.GetIcpInfo(context.NewContext())
 		t.Log(str_util.ToJsonPretty(info))
 	})
