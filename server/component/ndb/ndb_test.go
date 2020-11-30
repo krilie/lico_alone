@@ -5,7 +5,6 @@ import (
 	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/stretchr/testify/assert"
-	"os"
 	"testing"
 )
 
@@ -13,8 +12,7 @@ var container = appdig.NewAppDig()
 
 func TestMain(m *testing.M) {
 
-	cfgStr := os.Getenv("MYAPP_TEST_CONFIG")
-	container.MustProvide(ncfg.NewNConfigByCfgStr(cfgStr))
+	container.MustInvoke(ncfg.NewNConfigByCfgStrFromEnvTest)
 	container.MustProvide(nlog.NewLogger)
 	container.MustProvide(NewNDb)
 

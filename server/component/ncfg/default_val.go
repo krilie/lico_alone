@@ -40,11 +40,6 @@ var defaultCfg = `
 [log]
   log_file = ""
   log_level = 5
-
-  [log.elf_log]
-    key = ""
-    secret = ""
-    url = ""
 `
 
 /**
@@ -57,9 +52,6 @@ http.ssl_pub 				= ""
 http.url 					= "http://localhost"
 log.log_file 				= "log.txt"
 log.log_level				= 5
-log.elf_log.key				= ""
-log.elf_log.secret			= ""
-log.elf_log.url				= ""
 db.conn_str				 	= "root:123456@tcp(localhost:3306)/myapp?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai"
 db.max_open_conn			= 5
 db.max_idle_conn 		    = 10

@@ -7,9 +7,11 @@ import (
 	"testing"
 )
 
+var container = appdig.NewAppDig()
+
 func TestMain(t *testing.M) {
 	fmt.Println("自动测试dig测试main")
-	appdig.Container.MustProvide(func() *int {
+	container.MustProvide(func() *int {
 		var i = 2
 		return &i
 	})
@@ -23,7 +25,7 @@ func TestAutoOne(t *testing.T) {
 
 func TestAutoTwo(t *testing.T) {
 	fmt.Println("test two")
-	appdig.Container.MustInvoke(func(i *int) {
+	container.MustInvoke(func(i *int) {
 		fmt.Println("auto test two " + strconv.Itoa(*i))
 	})
 }
