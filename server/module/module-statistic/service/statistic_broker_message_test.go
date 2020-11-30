@@ -2,23 +2,20 @@ package service
 
 import (
 	"fmt"
+	"github.com/krilie/lico_alone/common/appdig"
 	context2 "github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/component"
-	"github.com/krilie/lico_alone/module/module-statistic/dao"
 	"github.com/krilie/lico_alone/module/module-statistic/model"
 	"testing"
 )
 
-func TestMain(m *testing.M) {
-	component.DigProviderTest()
-	dao.DigProvider()
-	DigProvider()
-	m.Run()
-}
+var container = appdig.
+	NewAppDig().
+	MustProvides(component.DigComponentProviderAllForTest).
+	MustProvides(DigModuleStatisticProviderAll)
 
 func TestStatisticService_HandleBrokerWebStationVisited(t *testing.T) {
-	dig.Container.MustInvoke(func(svc *StatisticService) {
+	container.MustInvoke(func(svc *StatisticService) {
 		ctx := context2.NewContext()
 		list := []*model.StatVisitorLogs{}
 		err := svc.Dao.GetDb(ctx).Model(new(model.AddStatVisitorLogsModel)).Find(&list, "city=''").Error

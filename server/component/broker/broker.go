@@ -3,7 +3,6 @@ package broker
 import (
 	"context"
 	go_smq "github.com/krilie/go-smq"
-	"github.com/krilie/lico_alone/common/dig"
 )
 
 type Broker struct {
@@ -25,9 +24,4 @@ func (broker *Broker) MustRegister(ctx context.Context, f interface{}) {
 	if err != nil {
 		panic(err)
 	}
-}
-
-// dig provider
-func DigProvider() {
-	dig.Container.MustProvide(NewBroker)
 }

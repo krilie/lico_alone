@@ -1,7 +1,7 @@
 package service_user
 
 import (
-	"github.com/krilie/lico_alone/common/dig"
+	"github.com/krilie/lico_alone/common/appdig"
 	"github.com/krilie/lico_alone/component"
 	"github.com/krilie/lico_alone/module/module"
 	"testing"
@@ -10,10 +10,10 @@ import (
 var userService *UserService
 
 func TestMain(m *testing.M) {
-	component.DigProviderTest()
+	component.DigComponentProviderTest()
 	module.DigProviderModule()
 	DigProvider()
-	dig.Container.MustInvoke(func(svc *UserService) {
+	appdig.Container.MustInvoke(func(svc *UserService) {
 		userService = svc
 	})
 	m.Run()

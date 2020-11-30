@@ -1,10 +1,11 @@
 package http
 
 import (
-	"github.com/krilie/lico_alone/common/dig"
 	ctl_common "github.com/krilie/lico_alone/server/http/ctl-common"
 	ctl_health_check "github.com/krilie/lico_alone/server/http/ctl-health-check"
 	ctl_user "github.com/krilie/lico_alone/server/http/ctl-user"
+	"github.com/krilie/lico_alone/server/http/ginutil"
+	"github.com/krilie/lico_alone/server/http/middleware"
 )
 
 type Controllers struct {
@@ -21,14 +22,11 @@ func NewController(commonCtrl *ctl_common.CommonCtrl, userCtrl *ctl_user.UserCtr
 	}
 }
 
-// DigProvider provider
-func DigProvider() {
-	dig.Container.MustProvide(NewController)
-}
-
-func DigProviderController() {
-	ctl_common.DigProvider()
-	ctl_user.DigProvider()
-	ctl_health_check.DigProvider()
-	DigProvider()
+var DigControllerProviderAll = []interface{}{
+	ginutil.NewGinUtils,
+	middleware.NewGinMiddleware,
+	ctl_common.NewCommonCtrl,
+	ctl_user.NewUserCtrl,
+	ctl_health_check.NewHealthCheckCtl,
+	NewController,
 }

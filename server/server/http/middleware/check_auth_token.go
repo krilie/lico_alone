@@ -21,17 +21,17 @@ type IAuth interface {
 }
 
 // check user is login and auth token validation
-func CheckAuthToken(auth IAuth) gin.HandlerFunc {
+func (m *GinMiddleware) CheckAuthToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// get context
-		ctx := ginutil.GetAppCtxOrAbort(c)
+		ctx := m.GinUtil.GetAppCtxOrAbort(c)
 		if ctx == nil {
 			return
 		}
 		headerAuth := c.GetHeader(ginutil.HeaderAuthorization)
 		headerAuth = strings.TrimPrefix(headerAuth, "Bearer ")
 
-		var claims, err = auth.CheckJwtToken(headerAuth)
+		var claims, err = m.IAuth.CheckJwtToken(headerAuth)
 		if err != nil {
 			if errors.As(err, &jwt2.ValidationError{}) {
 				validateErr := err.(*jwt2.ValidationError)
@@ -49,7 +49,7 @@ func CheckAuthToken(auth IAuth) gin.HandlerFunc {
 				return
 			}
 		} else {
-			has, err := auth.HasUser(ctx, claims.UserId)
+			has, err := m.IAuth.HasUser(ctx, claims.UserId)
 			if err != nil {
 				ginutil.AbortWithErr(c, err)
 				return

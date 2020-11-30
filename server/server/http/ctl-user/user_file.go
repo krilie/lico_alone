@@ -32,7 +32,7 @@ type UpdateFileReturn struct {
 // @Router /api/manage/file/upload [POST]
 func (a *UserCtrl) UploadFile(c *gin.Context) {
 	// 请求
-	ctx := ginutil.MustGetAppCtx(c)
+	ctx := a.ginUtil.MustGetAppCtx(c)
 
 	//NOTE: 使用临时文件缓存
 	err := c.Request.ParseMultipartForm(1024 * 1024 * 5) // 5mb放在内存中 超过放在临时文件中
@@ -116,7 +116,7 @@ func (a *UserCtrl) UploadFile(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/file/delete [POST]
 func (a *UserCtrl) DeleteFile(c *gin.Context) {
-	ctx := ginutil.MustGetAppCtx(c)
+	ctx := a.ginUtil.MustGetAppCtx(c)
 	log := a.log.Get(ctx).WithFuncName("DeleteFile")
 	fileId := c.PostForm("file_id")
 	if fileId == "" {
@@ -151,7 +151,7 @@ func (a *UserCtrl) DeleteFile(c *gin.Context) {
 // @Failure 500 {object} com_model.CommonReturn{data=object}
 // @Router /api/manage/file/query [GET]
 func (a *UserCtrl) QueryFile(c *gin.Context) {
-	ctx := ginutil.MustGetAppCtx(c)
+	ctx := a.ginUtil.MustGetAppCtx(c)
 	var param = &model.QueryFileParam{}
 	err := c.BindQuery(param)
 	if err != nil {
