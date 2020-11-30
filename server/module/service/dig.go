@@ -1,7 +1,6 @@
 package service
 
 import (
-	service_dynamic_share "github.com/krilie/lico_alone/module/module-dynamic-share/service"
 	service_common "github.com/krilie/lico_alone/module/service-common"
 	service_cronjob "github.com/krilie/lico_alone/module/service-cron-job"
 	service_init_data "github.com/krilie/lico_alone/module/service-init-data"
@@ -15,5 +14,4 @@ var DigServiceProviderAll = []interface{}{
 	service_notify_email.NewNotificationEmailService,
 	service_user.NewUserService,
 	service_cronjob.NewCronJobService,
-	service_dynamic_share.NewDynamicShareModule,
 }

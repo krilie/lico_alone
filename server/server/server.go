@@ -67,3 +67,8 @@ func WaitSignalAndExit(ctx context.Context, exit func()) {
 		}
 	}
 }
+
+var DigServerProviderAll = []interface{}{
+	http.NewHttpService,
+	NewServer,
+}

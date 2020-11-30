@@ -20,7 +20,7 @@ import (
 // @Failure 500 {string} errInfo
 // @Router /api/common/article/query_sample [GET]
 func (con *CommonCtrl) QueryArticleSample(c *gin.Context) {
-	ctx := ginutil.MustGetAppCtx(c)
+	ctx := con.ginUtil.MustGetAppCtx(c)
 	log := con.log.Get(ctx)
 	var param = &struct {
 		com_model.PageParams
@@ -53,7 +53,7 @@ func (con *CommonCtrl) QueryArticleSample(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/common/article/get_article [GET]
 func (con *CommonCtrl) GetArticle(c *gin.Context) {
-	ctx := ginutil.MustGetAppCtx(c)
+	ctx := con.ginUtil.MustGetAppCtx(c)
 	log := con.log.Get(ctx)
 	articleId := c.Query("article_id")
 
