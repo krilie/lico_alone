@@ -34,11 +34,11 @@ func main() {
 	// dig config
 	var container = appdig.
 		NewAppDig().
-		MustProvides(component.DigComponentProviderAllForTest). // 基础组件
-		MustProvides(module.DigProviderModuleAll).              // 功能模块组件
-		MustProvides(service2.DigServiceProviderAll).           // 服务组件
-		MustProvides(http.DigControllerProviderAll).            // http controller组件
-		MustProvides(server.DigServerProviderAll)               // app组件
+		MustProvides(component.DigComponentProviderAll). // 基础组件
+		MustProvides(module.DigProviderModuleAll).       // 功能模块组件
+		MustProvides(service2.DigServiceProviderAll).    // 服务组件
+		MustProvides(http.DigControllerProviderAll).     // http controller组件
+		MustProvides(server.DigServerProviderAll)        // app组件
 	// begin service
 	container.MustInvoke(func(svc *server.Server, log *nlog.NLog) {
 		ctx := context.NewContext()
