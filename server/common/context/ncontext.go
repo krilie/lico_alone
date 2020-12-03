@@ -25,6 +25,13 @@ func (a *AppCtxValues) CopyFrom(p *AppCtxValues) {
 	a.Tx = p.Tx
 }
 
+func (a *AppCtxValues) Clone(tx interface{}) *AppCtxValues {
+	var v = &AppCtxValues{}
+	v.CopyFrom(a)
+	v.Tx = tx
+	return v
+}
+
 func NewAppCtx(parent context.Context, values ...*AppCtxValues) context.Context {
 	value, ok := parent.Value(AppCtxValuesKey).(*AppCtxValues)
 	if ok {
@@ -36,7 +43,7 @@ func NewAppCtx(parent context.Context, values ...*AppCtxValues) context.Context 
 		if len(values) > 0 {
 			return context.WithValue(parent, AppCtxValuesKey, values[0])
 		} else {
-			return context.WithValue(parent, AppCtxValuesKey, &AppCtxValues{})
+			return context.WithValue(parent, AppCtxValuesKey, NewAppCtxValues())
 		}
 	}
 }
@@ -67,8 +74,8 @@ func NewAppCtxValues() *AppCtxValues {
 			TraceId:         id_util.GetUuid(),
 			ClientId:        "",
 			UserId:          "",
-			Module:          "global",
-			Function:        "global",
+			Module:          "", // ""
+			Function:        "", // ""
 			Stack:           "",
 			RemoteIp:        "",
 			CustomerTraceId: "",

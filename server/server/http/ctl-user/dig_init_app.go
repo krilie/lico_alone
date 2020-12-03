@@ -17,7 +17,7 @@ import (
 // @Failure 500 {string} errInfo
 // @Router /api/user/init_app [get]
 func (a *UserCtrl) InitApp(c *gin.Context) {
-	var data *service_user.InitAppData = a.userService.InitAppData(a.ginUtil.MustGetAppValues(c))
+	var data *service_user.InitAppData = a.userService.InitAppData(a.ginUtil.MustGetAppContext(c))
 	ginutil.ReturnData(c, data)
 	return
 }

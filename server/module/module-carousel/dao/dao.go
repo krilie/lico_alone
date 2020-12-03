@@ -1,6 +1,7 @@
 package dao
 
 import (
+	context2 "context"
 	"github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/global"
@@ -17,7 +18,7 @@ type CarouselDao struct {
 func NewCarouseDao(db *ndb.NDb, log *nlog.NLog) *CarouselDao {
 	log = log.WithField(context_enum.Module.Str(), "CarouselDao")
 	if global.EnableAutoMigrate {
-		err := db.GetDb(context.NewContext()).AutoMigrate(&model.Carousel{})
+		err := db.GetDb(context.NewAppCtx(context2.Background())).AutoMigrate(&model.Carousel{})
 		if err != nil {
 			panic(err)
 		}

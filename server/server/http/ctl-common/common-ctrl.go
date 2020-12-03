@@ -3,6 +3,7 @@ package ctl_common
 import (
 	"github.com/gin-gonic/gin"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
+	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/run_env"
 	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/krilie/lico_alone/component/nlog"
@@ -45,7 +46,7 @@ func NewCommonCtrl(
 // @Success 500 {object} com_model.CommonReturn
 // @Router /api/common/icp_info [get]
 func (con *CommonCtrl) GetIcpInfo(c *gin.Context) {
-	info := con.CommonService.GetIcpInfo(con.ginUtil.MustGetAppValues(c))
+	info := con.CommonService.GetIcpInfo(con.ginUtil.MustGetAppContext(c))
 	ginutil.ReturnData(c, info)
 }
 
@@ -76,8 +77,9 @@ func (con *CommonCtrl) Version(c *gin.Context) {
 // @Success 500 {object} com_model.CommonReturn
 // @Router /api/common/visited [post]
 func (con *CommonCtrl) WebVisited(c *gin.Context) {
-	ctx := con.ginUtil.MustGetAppValues(c)
-	con.CommonService.WebVisited(ctx, ctx.RemoteIp, ctx.CustomerTraceId)
+	ctx := con.ginUtil.MustGetAppContext(c)
+	values := context.MustGetAppValues(ctx)
+	con.CommonService.WebVisited(ctx, values.RemoteIp, values.CustomerTraceId)
 	ginutil.ReturnOk(c)
 }
 
@@ -90,7 +92,7 @@ func (con *CommonCtrl) WebVisited(c *gin.Context) {
 // @Success 500 {object} com_model.CommonReturn
 // @Router /api/common/about_app [get]
 func (con *CommonCtrl) AboutApp(c *gin.Context) {
-	ctx := con.ginUtil.MustGetAppValues(c)
+	ctx := con.ginUtil.MustGetAppContext(c)
 	app, err := con.CommonService.GetAboutApp(ctx)
 	ginutil.HandlerErrorOrReturnData(c, err, app)
 }

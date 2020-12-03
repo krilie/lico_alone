@@ -21,7 +21,7 @@ type FileDao struct {
 func NewFileDao(db *ndb.NDb, log *nlog.NLog) *FileDao {
 	log = log.WithField(context_enum.Module.Str(), "module file dao")
 	if global.EnableAutoMigrate {
-		err := db.GetDb(context2.NewContext()).AutoMigrate(&model.FileMaster{})
+		err := db.GetDb(context2.NewAppCtx(context.Background())).AutoMigrate(&model.FileMaster{})
 		if err != nil {
 			panic(err)
 		}

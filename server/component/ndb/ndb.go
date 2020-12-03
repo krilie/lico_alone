@@ -31,29 +31,27 @@ type NDb struct {
 }
 
 func (ndb *NDb) GetDb(ctx context.Context) *gorm.DB {
-	nCtx := context2.GetContextOrNil(ctx)
-	if nCtx == nil {
+	values := context2.GetAppValues(ctx)
+	if values == nil {
+		return ndb.db
+	}
+	if values.Tx == nil {
 		return ndb.db
 	} else {
-		if nCtx.Tx == nil {
-			return ndb.db
-		} else {
-			return nCtx.Tx.(*gorm.DB)
-		}
+		return values.Tx.(*gorm.DB)
 	}
 }
 
 // GetSessionDb 获取上下文中的数据库连接 可以为nil
 func (ndb *NDb) GetSessionDb(ctx context.Context) *gorm.DB {
-	nCtx := context2.GetContextOrNil(ctx)
-	if nCtx == nil {
+	values := context2.GetAppValues(ctx)
+	if values == nil {
+		return nil
+	}
+	if values.Tx == nil {
 		return nil
 	} else {
-		if nCtx.Tx == nil {
-			return nil
-		} else {
-			return nCtx.Tx.(*gorm.DB)
-		}
+		return values.Tx.(*gorm.DB)
 	}
 }
 
@@ -105,9 +103,10 @@ func (ndb *NDb) CloseDb() {
 }
 
 func NewNDb(dbCfg *ncfg.NConfig, log *nlog.NLog) (ndb *NDb) {
-	ctx := context2.NewContext()
-	ctx.Module = "ndb"
-	ctx.Function = "dbfunc"
+	values := context2.NewAppCtxValues()
+	values.Module = "ndb"
+	values.Function = "NewNDb"
+	ctx := context2.NewAppCtx(context.Background(), values)
 	log = log.Get(ctx)
 	log.Info("no ndb created")
 	ndb = &NDb{log: log}

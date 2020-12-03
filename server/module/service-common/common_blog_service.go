@@ -35,11 +35,11 @@ func (a *CommonService) GetArticleById(ctx context.Context, id string) (*model.A
 		return nil, errs.NewNotExistsError().WithMsg("未找到")
 	}
 	a.broker.MustSend(ctx, &messages.BlogArticleVisitedMessage{
-		Ctx:             context2.MustGetContext(ctx).Clone().SetTx(nil),
+		Ctx:             context2.NewAppCtx(ctx, context2.MustGetAppValues(ctx).Clone(nil)),
 		VisitedTime:     time.Now(),
 		ArticleId:       id,
-		VisitorIp:       context2.MustGetContext(ctx).GetRemoteIp(),
-		CustomerTraceId: context2.MustGetContext(ctx).CustomerTraceId,
+		VisitorIp:       context2.MustGetAppValues(ctx).RemoteIp,
+		CustomerTraceId: context2.MustGetAppValues(ctx).CustomerTraceId,
 		ArticleTitle:    article.Title,
 	})
 	return article, nil
