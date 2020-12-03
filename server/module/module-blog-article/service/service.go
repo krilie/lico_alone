@@ -1,6 +1,7 @@
 package service
 
 import (
+	context2 "context"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/broker"
@@ -22,7 +23,7 @@ func NewBlogArticleModule(log *nlog.NLog, dao *dao.BlogArticleDao, broker *broke
 		log:    log,
 		broker: broker,
 	}
-	ctx := context.NewContext()
+	ctx := context.NewAppCtx(context2.Background())
 	module.broker.MustRegister(ctx, module.HandleBrokerBlogArticleVisitedMessage)
 	return module
 }

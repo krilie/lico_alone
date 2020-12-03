@@ -1,6 +1,7 @@
 package dao
 
 import (
+	context2 "context"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/global"
@@ -17,7 +18,7 @@ type CustomerDao struct {
 func NewCustomerDao(db *ndb.NDb, log *nlog.NLog) *CustomerDao {
 	log = log.WithField(context_enum.Module.Str(), "module CustomerDao dao")
 	if global.EnableAutoMigrate {
-		err := db.GetDb(context.NewContext()).AutoMigrate(new(model.CustomerAccount))
+		err := db.GetDb(context.NewAppCtx(context2.Background())).AutoMigrate(new(model.CustomerAccount))
 		if err != nil {
 			panic(err)
 		}

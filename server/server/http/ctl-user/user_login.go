@@ -19,7 +19,7 @@ import (
 func (a *UserCtrl) UserLogin(c *gin.Context) {
 	phone := c.PostForm("phone")
 	password := c.PostForm("password")
-	jwt, err := a.userService.UserLogin(a.ginUtil.MustGetAppCtx(c), phone, password, "")
+	jwt, err := a.userService.UserLogin(a.ginUtil.MustGetAppContext(c), phone, password, "")
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return
