@@ -6,6 +6,7 @@ import (
 	jwt2 "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/com-model"
+	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/jwt"
 	"github.com/krilie/lico_alone/server/http/ginutil"
@@ -24,7 +25,7 @@ type IAuth interface {
 func (m *GinMiddleware) CheckAuthToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// get context
-		ctx := m.GinUtil.GetAppValuesOrAbort(c)
+		ctx := m.GinUtil.GetAppContextOrAbort(c)
 		if ctx == nil {
 			return
 		}
@@ -58,7 +59,9 @@ func (m *GinMiddleware) CheckAuthToken() gin.HandlerFunc {
 				ginutil.AbortWithAppErr(c, errs.NewInvalidToken())
 				return
 			}
-			ctx.SetUserId(claims.UserId)
+			// set user id to ctx
+			values := context2.MustGetAppValues(ctx)
+			values.UserId = claims.UserId // 设置用户id
 			c.Next()
 			return
 		}

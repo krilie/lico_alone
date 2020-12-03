@@ -1,6 +1,7 @@
 package main
 
 import (
+	context2 "context"
 	"fmt"
 	"github.com/krilie/lico_alone/common/appdig"
 	"github.com/krilie/lico_alone/common/context"
@@ -41,10 +42,13 @@ func main() {
 		MustProvides(server.DigServerProviderAll)        // app组件
 	// begin service
 	container.MustInvoke(func(svc *server.Server, log *nlog.NLog) {
-		ctx := context.NewContext()
-		ctx.Module = "main"
-		ctx.Function = "main"
-		ctx.UserId = "main"
+
+		ctxValues := context.NewAppCtxValues()
+		ctxValues.Module = "main"
+		ctxValues.Function = "main"
+		ctxValues.UserId = "main"
+		ctx := context.NewAppCtx(context2.Background(), ctxValues)
+
 		svc.StartService(ctx)
 		log.Get(ctx).Warning("service done")
 	})

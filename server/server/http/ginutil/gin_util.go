@@ -44,6 +44,16 @@ func (g *GinUtils) GetAppValuesOrAbort(c *gin.Context) *context.AppCtxValues {
 	return value
 }
 
+func (g *GinUtils) GetAppContextOrAbort(c *gin.Context) context2.Context {
+	appContext := g.GetAppContext(c)
+	if appContext == nil {
+		g.log.WithFuncName("GetAppValuesOrAbort").Error("can not get service context for next step")
+		c.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
+		return nil
+	}
+	return appContext
+}
+
 func (g *GinUtils) GetUserIdOrAbort(c *gin.Context) string {
 	values := g.GetAppValuesOrAbort(c)
 	if values == nil {

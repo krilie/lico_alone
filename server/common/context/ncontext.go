@@ -4,6 +4,8 @@ import (
 	"context"
 	"errors"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
+	"github.com/krilie/lico_alone/common/run_env"
+	"github.com/krilie/lico_alone/common/utils/id_util"
 	"time"
 )
 
@@ -53,4 +55,26 @@ func MustGetAppValues(ctx context.Context) *AppCtxValues {
 		panic(errors.New("no app context value"))
 	}
 	return value
+}
+
+func NewAppCtxValues() *AppCtxValues {
+	return &AppCtxValues{
+		ContextValues: context_enum.ContextValues{
+			AppName:         run_env.RunEnvLocal.AppName,
+			AppVersion:      run_env.RunEnvLocal.Version,
+			AppHost:         run_env.RunEnvLocal.AppHost,
+			CommitSha:       run_env.RunEnvLocal.GitCommit,
+			TraceId:         id_util.GetUuid(),
+			ClientId:        "",
+			UserId:          "",
+			Module:          "global",
+			Function:        "global",
+			Stack:           "",
+			RemoteIp:        "",
+			CustomerTraceId: "",
+		},
+		StartTime: time.Now(),
+		LastTime:  time.Now(),
+		Tx:        nil,
+	}
 }
