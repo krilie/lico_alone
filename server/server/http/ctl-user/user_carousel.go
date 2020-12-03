@@ -18,7 +18,7 @@ import (
 // @Failure 500 {string} errInfo
 // @Router /api/manage/carousel/query [get]
 func (a *UserCtrl) QueryCarousel(c *gin.Context) {
-	ctx := a.ginUtil.MustGetAppCtx(c)
+	ctx := a.ginUtil.MustGetAppValues(c)
 	log := a.log.Get(ctx).WithFuncName("QueryCarousel")
 	isOnShow := ginutil.ParseBoolOrNil(c.Query("is_on_show"))
 	carousel, err := a.userService.QueryCarousel(ctx, isOnShow)
@@ -39,7 +39,7 @@ func (a *UserCtrl) QueryCarousel(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/carousel/create [POST]
 func (a *UserCtrl) CreateCarousel(c *gin.Context) {
-	ctx := a.ginUtil.MustGetAppCtx(c)
+	ctx := a.ginUtil.MustGetAppValues(c)
 	var item = new(model.CreateCarouselModel)
 	err := c.ShouldBindJSON(item)
 	if err != nil {
@@ -63,7 +63,7 @@ func (a *UserCtrl) CreateCarousel(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/carousel/update [POST]
 func (a *UserCtrl) UpdateCarousel(c *gin.Context) {
-	ctx := a.ginUtil.MustGetAppCtx(c)
+	ctx := a.ginUtil.MustGetAppValues(c)
 	var item = new(model.UpdateCarouselModel)
 	err := c.ShouldBindJSON(item)
 	if err != nil {
@@ -87,7 +87,7 @@ func (a *UserCtrl) UpdateCarousel(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/carousel/delete_by_id [POST]
 func (a *UserCtrl) DeleteCarouselById(c *gin.Context) {
-	ctx := a.ginUtil.MustGetAppCtx(c)
+	ctx := a.ginUtil.MustGetAppValues(c)
 	carouselId := c.PostForm("carousel_id")
 	err := a.userService.DeleteCarouselById(ctx, carouselId)
 	ginutil.HandlerErrorOrReturnSuccess(c, err)

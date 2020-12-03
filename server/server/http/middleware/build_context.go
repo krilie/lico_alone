@@ -20,7 +20,7 @@ func BuildContext() gin.HandlerFunc {
 		ctx.SetTraceId(str_util.EmptyOrDefault(c.GetHeader(ginutil.HeaderTraceId), id_util.GetUuid()))
 		ctx.SetStartTime(time.Now())
 		ctx.SetRemoteIp(c.ClientIP())
-		c.Set(ginutil.GinKeyAppContext, ctx)
+		c.Set(ginutil.GinKeyAppValues, ctx)
 		// cookie trace id
 		traceId, err := c.Cookie(http_common.CookieCustomerTraceId)
 		if errors.Is(err, http.ErrNoCookie) {

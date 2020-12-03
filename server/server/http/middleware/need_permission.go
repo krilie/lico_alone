@@ -18,7 +18,7 @@ func (m *GinMiddleware) NeedPermission() gin.HandlerFunc {
 			return
 		}
 		//check user has permission
-		has, err := m.IAuth.HasPermission(m.GinUtil.MustGetAppCtx(c), userId, method, path)
+		has, err := m.IAuth.HasPermission(m.GinUtil.MustGetAppValues(c), userId, method, path)
 		if err != nil {
 			ginutil.AbortWithErr(c, err)
 			return

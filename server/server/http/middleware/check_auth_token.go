@@ -24,7 +24,7 @@ type IAuth interface {
 func (m *GinMiddleware) CheckAuthToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// get context
-		ctx := m.GinUtil.GetAppCtxOrAbort(c)
+		ctx := m.GinUtil.GetAppValuesOrAbort(c)
 		if ctx == nil {
 			return
 		}

@@ -18,7 +18,7 @@ import (
 // @Router /api/manage/setting/get_setting_all [get]
 func (a *UserCtrl) ManageGetConfigList(c *gin.Context) {
 	searchKey := c.Query("searchKey")
-	config, err := a.userService.GetAllConfig(a.ginUtil.MustGetAppCtx(c), searchKey)
+	config, err := a.userService.GetAllConfig(a.ginUtil.MustGetAppValues(c), searchKey)
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return
@@ -42,7 +42,7 @@ func (a *UserCtrl) ManageGetConfigList(c *gin.Context) {
 func (a *UserCtrl) ManageUpdateConfig(c *gin.Context) {
 	name := c.PostForm("name")
 	value := c.PostForm("value")
-	err := a.userService.UpdateConfig(a.ginUtil.MustGetAppCtx(c), name, value)
+	err := a.userService.UpdateConfig(a.ginUtil.MustGetAppValues(c), name, value)
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return
@@ -62,7 +62,7 @@ func (a *UserCtrl) ManageUpdateConfig(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/setting/get_a_map_key [get]
 func (a *UserCtrl) ManageGetAMapKey(c *gin.Context) {
-	key, err := a.userService.GetAMapKey(a.ginUtil.MustGetAppCtx(c))
+	key, err := a.userService.GetAMapKey(a.ginUtil.MustGetAppValues(c))
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return

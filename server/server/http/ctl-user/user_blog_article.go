@@ -21,7 +21,7 @@ import (
 // @Router /api/manage/article/get_by_id [get]
 func (a *UserCtrl) GetArticleById(c *gin.Context) {
 	id := c.Query("id")
-	article, err := a.userService.GetArticleById(a.ginUtil.MustGetAppCtx(c), id)
+	article, err := a.userService.GetArticleById(a.ginUtil.MustGetAppValues(c), id)
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return
@@ -45,7 +45,7 @@ func (a *UserCtrl) GetArticleById(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/article/update [POST]
 func (a *UserCtrl) UpdateArticle(c *gin.Context) {
-	log := a.log.Get(a.ginUtil.MustGetAppCtx(c), "userControl", "UpdateArticle")
+	log := a.log.Get(a.ginUtil.MustGetAppValues(c), "userControl", "UpdateArticle")
 	param := &model.UpdateArticleModel{}
 	err := c.ShouldBindJSON(param)
 	if err != nil {
@@ -53,7 +53,7 @@ func (a *UserCtrl) UpdateArticle(c *gin.Context) {
 		ginutil.ReturnFailure(c, errs.ErrorParam, "参数错误")
 		return
 	}
-	err = a.userService.UpdateArticleSample(a.ginUtil.MustGetAppCtx(c), param)
+	err = a.userService.UpdateArticleSample(a.ginUtil.MustGetAppValues(c), param)
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return
@@ -76,7 +76,7 @@ func (a *UserCtrl) UpdateArticle(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/article/query [GET]
 func (a *UserCtrl) QueryArticle(c *gin.Context) {
-	ctx := a.ginUtil.MustGetAppCtx(c)
+	ctx := a.ginUtil.MustGetAppValues(c)
 	log := a.log.Get(ctx)
 	// 参数
 	var param = &struct {
@@ -124,7 +124,7 @@ func (a *UserCtrl) DeleteArticle(c *gin.Context) {
 		ginutil.ReturnWithErr(c, errs.NewParamError().WithMsg("no id find on post form"))
 		return
 	}
-	_, err := a.userService.DeleteArticleById(a.ginUtil.MustGetAppCtx(c), articleId)
+	_, err := a.userService.DeleteArticleById(a.ginUtil.MustGetAppValues(c), articleId)
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return
@@ -145,7 +145,7 @@ func (a *UserCtrl) DeleteArticle(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/article/create [POST]
 func (a *UserCtrl) CreateArticle(c *gin.Context) {
-	ctx := a.ginUtil.MustGetAppCtx(c)
+	ctx := a.ginUtil.MustGetAppValues(c)
 	log := a.log.Get(ctx)
 	var param = &model.CreateArticleModel{}
 	err := c.ShouldBindJSON(param)

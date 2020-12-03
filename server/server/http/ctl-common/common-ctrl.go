@@ -45,7 +45,7 @@ func NewCommonCtrl(
 // @Success 500 {object} com_model.CommonReturn
 // @Router /api/common/icp_info [get]
 func (con *CommonCtrl) GetIcpInfo(c *gin.Context) {
-	info := con.CommonService.GetIcpInfo(con.ginUtil.MustGetAppCtx(c))
+	info := con.CommonService.GetIcpInfo(con.ginUtil.MustGetAppValues(c))
 	ginutil.ReturnData(c, info)
 }
 
@@ -76,7 +76,7 @@ func (con *CommonCtrl) Version(c *gin.Context) {
 // @Success 500 {object} com_model.CommonReturn
 // @Router /api/common/visited [post]
 func (con *CommonCtrl) WebVisited(c *gin.Context) {
-	ctx := con.ginUtil.MustGetAppCtx(c)
+	ctx := con.ginUtil.MustGetAppValues(c)
 	con.CommonService.WebVisited(ctx, ctx.RemoteIp, ctx.CustomerTraceId)
 	ginutil.ReturnOk(c)
 }
@@ -90,7 +90,7 @@ func (con *CommonCtrl) WebVisited(c *gin.Context) {
 // @Success 500 {object} com_model.CommonReturn
 // @Router /api/common/about_app [get]
 func (con *CommonCtrl) AboutApp(c *gin.Context) {
-	ctx := con.ginUtil.MustGetAppCtx(c)
+	ctx := con.ginUtil.MustGetAppValues(c)
 	app, err := con.CommonService.GetAboutApp(ctx)
 	ginutil.HandlerErrorOrReturnData(c, err, app)
 }
