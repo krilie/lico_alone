@@ -19,7 +19,7 @@ var container = func() *appdig.AppContainer {
 
 func TestCarouselDao_QueryCarousel(t *testing.T) {
 	container.MustInvoke(func(dao *CarouselDao) {
-		carousels, err := dao.QueryCarousel(context.NewContext(), nil)
+		carousels, err := dao.QueryCarousel(context.EmptyAppCtx(), nil)
 		fmt.Println(str_util.ToJsonPretty(carousels))
 		t.Log(err)
 	})
@@ -27,7 +27,7 @@ func TestCarouselDao_QueryCarousel(t *testing.T) {
 
 func TestCarouselDao_UpdateCarousel(t *testing.T) {
 	container.MustInvoke(func(dao *CarouselDao) {
-		ctx := context.NewContext()
+		ctx := context.EmptyAppCtx()
 		err := dao.UpdateCarousel(ctx, &model.UpdateCarouselModel{
 			Id:       "2e415049-feaa-45fe-8482-22712155253b",
 			Message:  "333333333333344444444433333333333",

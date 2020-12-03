@@ -21,31 +21,31 @@ var container = appdig.
 
 func TestAutoCustomerDao_CreateCustomerAccount(t *testing.T) {
 	container.MustInvoke(func(dao *CustomerDao) {
-		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
+		test := AddCustomerDataForTest(t, context2.EmptyAppCtx(), dao)
 		assert.NotNil(t, test, "should not nil")
 	})
 }
 
 func TestAutoCustomerDao_DeleteCustomerByCustomerTraceId(t *testing.T) {
 	container.MustInvoke(func(dao *CustomerDao) {
-		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
-		err := dao.DeleteCustomerByCustomerTraceId(context2.NewContext(), test.CustomerTraceId)
+		test := AddCustomerDataForTest(t, context2.EmptyAppCtx(), dao)
+		err := dao.DeleteCustomerByCustomerTraceId(context2.EmptyAppCtx(), test.CustomerTraceId)
 		assert.Equal(t, nil, err, "should no err")
 	})
 }
 
 func TestAutoCustomerDao_DeleteCustomerById(t *testing.T) {
 	container.MustInvoke(func(dao *CustomerDao) {
-		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
-		err := dao.DeleteCustomerById(context2.NewContext(), test.Id)
+		test := AddCustomerDataForTest(t, context2.EmptyAppCtx(), dao)
+		err := dao.DeleteCustomerById(context2.EmptyAppCtx(), test.Id)
 		assert.Equal(t, nil, err, "should no err")
 	})
 }
 
 func TestAutoCustomerDao_GetCustomerByCustomerTraceId(t *testing.T) {
 	container.MustInvoke(func(dao *CustomerDao) {
-		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
-		customerInfo, err := dao.GetCustomerByCustomerTraceId(context2.NewContext(), test.CustomerTraceId)
+		test := AddCustomerDataForTest(t, context2.EmptyAppCtx(), dao)
+		customerInfo, err := dao.GetCustomerByCustomerTraceId(context2.EmptyAppCtx(), test.CustomerTraceId)
 		assert.Equal(t, nil, err, "should no err")
 		assert.NotNil(t, customerInfo, "should not nil")
 		assert.Equal(t, test.CustomerTraceId, customerInfo.CustomerTraceId, "should same")
@@ -54,8 +54,8 @@ func TestAutoCustomerDao_GetCustomerByCustomerTraceId(t *testing.T) {
 
 func TestAutoCustomerDao_IncreaseAccessTimes(t *testing.T) {
 	container.MustInvoke(func(dao *CustomerDao) {
-		test := AddCustomerDataForTest(t, context2.NewContext(), dao)
-		err := dao.IncreaseAccessTimes(context2.NewContext(), test.Id, "123", "1234")
+		test := AddCustomerDataForTest(t, context2.EmptyAppCtx(), dao)
+		err := dao.IncreaseAccessTimes(context2.EmptyAppCtx(), test.Id, "123", "1234")
 		assert.Nil(t, err, "should not nil")
 	})
 }
@@ -79,7 +79,7 @@ func AddCustomerDataForTest(t *testing.T, ctx context.Context, dao *CustomerDao)
 		Email:           "123",
 		Other:           "123",
 	}
-	err := dao.CreateCustomerAccount(context2.NewContext(), customerModel)
+	err := dao.CreateCustomerAccount(context2.EmptyAppCtx(), customerModel)
 	assert.Equal(t, nil, err, "should no err")
 	return customerModel
 }

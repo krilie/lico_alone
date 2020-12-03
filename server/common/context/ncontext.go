@@ -32,6 +32,10 @@ func (a *AppCtxValues) Clone(tx interface{}) *AppCtxValues {
 	return v
 }
 
+func EmptyAppCtx() context.Context {
+	return NewAppCtx(context.Background())
+}
+
 func NewAppCtx(parent context.Context, values ...*AppCtxValues) context.Context {
 	value, ok := parent.Value(AppCtxValuesKey).(*AppCtxValues)
 	if ok {

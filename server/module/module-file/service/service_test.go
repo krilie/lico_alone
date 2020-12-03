@@ -19,7 +19,7 @@ var container = appdig.
 func TestFileService_UploadFile(t *testing.T) {
 	container.MustInvoke(func(svc *FileModule) {
 		uploadStr := "hello qiniu oss"
-		url, bucket, key, err := svc.UploadFile(context.NewContext(), "test", "tts/"+id_util.GetUuid()+"test2.txt", strings.NewReader(uploadStr), len(uploadStr))
+		url, bucket, key, err := svc.UploadFile(context.EmptyAppCtx(), "test", "tts/"+id_util.GetUuid()+"test2.txt", strings.NewReader(uploadStr), len(uploadStr))
 		t.Logf("%v %v %v %v", url, bucket, key, err)
 		if err != nil {
 			log.Error(err)
@@ -29,7 +29,7 @@ func TestFileService_UploadFile(t *testing.T) {
 
 func TestFileService_DeleteFile(t *testing.T) {
 	container.MustInvoke(func(svc *FileModule) {
-		err := svc.DeleteFile(context.NewContext(), "", "test")
+		err := svc.DeleteFile(context.EmptyAppCtx(), "", "test")
 		if err != nil {
 			log.Error(err)
 		}

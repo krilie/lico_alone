@@ -10,7 +10,7 @@ import (
 
 func TestFileModule_QueryFilePage(t *testing.T) {
 	container.MustInvoke(func(svc *FileModule) {
-		page, count, num, size, files, err := svc.QueryFilePage(context.NewContext(), model.QueryFileParam{
+		page, count, num, size, files, err := svc.QueryFilePage(context.EmptyAppCtx(), model.QueryFileParam{
 			PageParams:     com_model.PageParams{},
 			KeyNameLike:    "1",
 			BucketNameLike: "2",

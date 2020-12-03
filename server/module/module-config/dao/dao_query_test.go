@@ -17,7 +17,7 @@ var container = func() *appdig.AppContainer {
 
 func TestConfigDao_GetAllConfig(t *testing.T) {
 	container.MustInvoke(func(svc *ConfigDao) {
-		config, err := svc.GetAllConfig(context.NewContext(), "")
+		config, err := svc.GetAllConfig(context.EmptyAppCtx(), "")
 		svc.log.Info(str_util.ToJson(config))
 		t.Log(err)
 	})

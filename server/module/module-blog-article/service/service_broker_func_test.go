@@ -9,8 +9,8 @@ import (
 
 func TestBlogArticleModule_HandleBrokerBlogArticleVisitedMessage(t *testing.T) {
 	container.MustInvoke(func(svc *BlogArticleModule) {
-		svc.broker.Send(context.NewContext(), &messages.BlogArticleVisitedMessage{
-			Ctx:         context.NewContext(),
+		svc.broker.Send(context.EmptyAppCtx(), &messages.BlogArticleVisitedMessage{
+			Ctx:         context.EmptyAppCtx(),
 			VisitedTime: time.Now(),
 			ArticleId:   "11",
 			VisitorIp:   "22",

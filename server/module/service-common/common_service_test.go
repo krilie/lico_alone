@@ -15,7 +15,7 @@ var container = appdig.
 
 func TestCommonService_GetIcpInfo(t *testing.T) {
 	container.MustInvoke(func(svc *CommonService) {
-		info := svc.GetIcpInfo(context.NewContext())
+		info := svc.GetIcpInfo(context.EmptyAppCtx())
 		t.Log(str_util.ToJsonPretty(info))
 	})
 }

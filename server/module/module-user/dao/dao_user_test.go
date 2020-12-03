@@ -17,13 +17,13 @@ var container = appdig.
 
 func TestDao_GetAllValidUserId(t *testing.T) {
 	container.MustInvoke(func(dao *UserDao) {
-		err := dao.UpdateUserPassword(context.NewContext(), "12", "dd", "")
+		err := dao.UpdateUserPassword(context.EmptyAppCtx(), "12", "dd", "")
 		t.Log(err)
 	})
 }
 
 func TestUserDao_DeleteUserByPhone(t *testing.T) {
-	ctx := context.NewContext()
+	ctx := context.EmptyAppCtx()
 	container.MustInvoke(func(dao *UserDao) {
 		phone := id_util.NextSnowflake()
 		err := dao.CreateUserMaster(ctx, model.NewUserMaster(id_util.GetUuid(), time.Now(), time.Now(), nil, time.Now(), phone, phone, "11", "", "", ""))

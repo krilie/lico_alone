@@ -11,7 +11,7 @@ var container = BuildTestContainer()
 
 func TestBlogArticleService_QueryArticleSamplePage(t *testing.T) {
 	container.MustInvoke(func(svc *BlogArticleModule) {
-		ctx := context2.NewContext()
+		ctx := context2.EmptyAppCtx()
 		page, count, data, err := svc.QueryArticleSamplePage(ctx, com_model.PageParams{
 			PageNum:  1,
 			PageSize: 10,
