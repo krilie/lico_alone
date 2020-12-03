@@ -1,6 +1,7 @@
 package dao
 
 import (
+	context2 "context"
 	"github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/global"
@@ -18,7 +19,7 @@ type StatisticDao struct {
 func NewStatisticDao(db *ndb.NDb, log *nlog.NLog) *StatisticDao {
 	log = log.WithField(context_enum.Module.Str(), "StatisticDao")
 	if global.EnableAutoMigrate {
-		err := db.GetDb(context.NewContext()).AutoMigrate(new(model.StatVisitorLogs), new(model.StatArticleVisitorLogs))
+		err := db.GetDb(context.NewAppCtx(context2.Background())).AutoMigrate(new(model.StatVisitorLogs), new(model.StatArticleVisitorLogs))
 		if err != nil {
 			panic(err)
 		}

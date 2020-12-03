@@ -17,7 +17,7 @@ var container = appdig.
 
 func TestAutoCustomerModule_CreateCustomerAccount(t *testing.T) {
 	container.MustInvoke(func(svc *CustomerModule) {
-		account, err := svc.CreateCustomerAccount(context2.NewContext(), &model.CreateCustomerAccountModel{
+		account, err := svc.CreateCustomerAccount(context2.EmptyAppCtx(), &model.CreateCustomerAccountModel{
 			CustomerTraceId: id_util.GetUuid(),
 			LoginName:       id_util.NextSnowflake(),
 			Password:        "323",
@@ -34,7 +34,7 @@ func TestAutoCustomerModule_CreateCustomerAccount(t *testing.T) {
 func TestAutoCustomerModule_GetOrCreateCustomerAccountByTraceId(t *testing.T) {
 	container.MustInvoke(func(svc *CustomerModule) {
 		var traceId = id_util.GetUuid()
-		account, err := svc.GetOrCreateCustomerAccountByTraceId(context2.NewContext(), traceId, "123")
+		account, err := svc.GetOrCreateCustomerAccountByTraceId(context2.EmptyAppCtx(), traceId, "123")
 		assert.Nil(t, err, "should nil")
 		assert.NotNil(t, account, "not nil")
 		assert.Equal(t, traceId, account.CustomerTraceId, "应该有值")
@@ -44,7 +44,7 @@ func TestAutoCustomerModule_GetOrCreateCustomerAccountByTraceId(t *testing.T) {
 
 func TestAutoCustomerModule_IncreaseCustomerAccessTimesByTraceId(t *testing.T) {
 	container.MustInvoke(func(svc *CustomerModule) {
-		err := svc.IncreaseCustomerAccessTimesByTraceId(context2.NewContext(), id_util.NextSnowflake(), "4432")
+		err := svc.IncreaseCustomerAccessTimesByTraceId(context2.EmptyAppCtx(), id_util.NextSnowflake(), "4432")
 		assert.Nil(t, err, "should nil")
 	})
 }

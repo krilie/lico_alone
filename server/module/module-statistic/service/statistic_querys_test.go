@@ -8,7 +8,7 @@ import (
 
 func TestStatisticService_QueryAllVisitorLonLat(t *testing.T) {
 	container.MustInvoke(func(svc *StatisticService) {
-		ctx := context2.NewContext()
+		ctx := context2.EmptyAppCtx()
 		lat, err := svc.QueryAllVisitorLonLat(ctx)
 		t.Log(err)
 		t.Log(str_util.ToJsonPretty(lat), len(lat))

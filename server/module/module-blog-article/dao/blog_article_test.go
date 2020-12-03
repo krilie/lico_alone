@@ -22,7 +22,7 @@ var container = func() *appdig.AppContainer {
 
 func TestBlogArticleDao_CreateArticle(t *testing.T) {
 	container.MustInvoke(func(dao *BlogArticleDao) {
-		err := dao.CreateArticle(context.NewContext(), &model.Article{
+		err := dao.CreateArticle(context.EmptyAppCtx(), &model.Article{
 			Model: com_model.Model{
 				Id:        id_util.GetUuid(),
 				CreatedAt: time.Now(),
@@ -41,7 +41,7 @@ func TestBlogArticleDao_CreateArticle(t *testing.T) {
 
 func TestBlogArticleDao_DeleteArticleById(t *testing.T) {
 	container.MustInvoke(func(dao *BlogArticleDao) {
-		id, err := dao.DeleteArticleById(context.NewContext(), "11")
+		id, err := dao.DeleteArticleById(context.EmptyAppCtx(), "11")
 		fmt.Println(id)
 		fmt.Println(err)
 	})
@@ -49,7 +49,7 @@ func TestBlogArticleDao_DeleteArticleById(t *testing.T) {
 
 func TestBlogArticleDao_UpdateArticle(t *testing.T) {
 	container.MustInvoke(func(dao *BlogArticleDao) {
-		ctx := context.NewContext()
+		ctx := context.EmptyAppCtx()
 		err := dao.UpdateArticle(ctx, &model.Article{
 			Model: com_model.Model{
 				Id:        "b93b348a-0d93-45d9-9cc4-5b1e4fe5407b",
@@ -70,14 +70,14 @@ func TestBlogArticleDao_UpdateArticle(t *testing.T) {
 
 func TestBlogArticleDao_QueryArticleById(t *testing.T) {
 	container.MustInvoke(func(dao *BlogArticleDao) {
-		id, err := dao.GetArticleById(context.NewContext(), "12")
+		id, err := dao.GetArticleById(context.EmptyAppCtx(), "12")
 		t.Log(id, err)
 	})
 }
 
 func TestBlogArticleDao_UpdateArticleSample(t *testing.T) {
 	container.MustInvoke(func(dao *BlogArticleDao) {
-		err := dao.UpdateArticleSample(context.NewContext(), &model.UpdateArticleModel{
+		err := dao.UpdateArticleSample(context.EmptyAppCtx(), &model.UpdateArticleModel{
 			Id:      "11",
 			Title:   "22",
 			Content: "33",

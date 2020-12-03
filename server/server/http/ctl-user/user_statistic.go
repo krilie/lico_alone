@@ -16,7 +16,7 @@ import (
 // @Failure 500 {string} errInfo
 // @Router /api/manage/statistic/get_visitor_points [get]
 func (a *UserCtrl) ManageGetVisitorPoints(c *gin.Context) {
-	point, err := a.userService.GetAllVisitorPoint(a.ginUtil.MustGetAppCtx(c))
+	point, err := a.userService.GetAllVisitorPoint(a.ginUtil.MustGetAppContext(c))
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return

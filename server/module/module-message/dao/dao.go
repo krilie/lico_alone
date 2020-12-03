@@ -1,6 +1,7 @@
 package dao
 
 import (
+	context2 "context"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/global"
@@ -12,7 +13,7 @@ import (
 func NewMessageDao(db *ndb.NDb, log *nlog.NLog) *MessageDao {
 	log = log.WithField(context_enum.Module.Str(), "module message dao")
 	if global.EnableAutoMigrate {
-		err := db.GetDb(context.NewContext()).
+		err := db.GetDb(context.NewAppCtx(context2.Background())).
 			AutoMigrate(
 				new(model.MessageEmail),
 				new(model.MessageSms),

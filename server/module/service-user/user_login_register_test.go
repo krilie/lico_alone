@@ -13,7 +13,7 @@ import (
 
 func TestUserService_UserRegister(t *testing.T) {
 	container.MustInvoke(func(userService *UserService) {
-		err := userService.UserRegister(context.NewContext(), "mobile", "123", "123", "123")
+		err := userService.UserRegister(context.EmptyAppCtx(), "mobile", "123", "123", "123")
 		t.Log(err)
 		assert.NotNil(t, err, "注册失败")
 	})
@@ -22,7 +22,7 @@ func TestUserService_UserRegister(t *testing.T) {
 func TestUserService_UserRegister2(t *testing.T) {
 	container.MustInvoke(func(userService *UserService) {
 		id := id_util.GetUuid()
-		ctx := context.NewContext()
+		ctx := context.EmptyAppCtx()
 		phone := id_util.NextSnowflake()
 		code := "123"
 		err := userService.moduleMsg.Dao.CreateMessageValidCode(ctx, &model.MessageValidCode{

@@ -16,7 +16,7 @@ var container = appdig.
 
 func TestStatisticService_HandleBrokerWebStationVisited(t *testing.T) {
 	container.MustInvoke(func(svc *StatisticService) {
-		ctx := context2.NewContext()
+		ctx := context2.EmptyAppCtx()
 		list := []*model.StatVisitorLogs{}
 		err := svc.Dao.GetDb(ctx).Model(new(model.AddStatVisitorLogsModel)).Find(&list, "city=''").Error
 		if err != nil {

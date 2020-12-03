@@ -15,7 +15,7 @@ var container = appdig.
 
 func TestAddItems(t *testing.T) {
 	container.MustInvoke(func(svc *ConfigModule) error {
-		return svc.SetJsonValue(context.NewContext(), model.ConfigItemsIcpInfo.Val(), model.IcpInfo{
+		return svc.SetJsonValue(context.EmptyAppCtx(), model.ConfigItemsIcpInfo.Val(), model.IcpInfo{
 			Name:  "1",
 			Link:  "2",
 			Label: "3",

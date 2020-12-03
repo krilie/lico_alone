@@ -14,7 +14,7 @@ var container = appdig.
 
 func TestUserService_RegisterNewUser(t *testing.T) {
 	container.MustInvoke(func(svc *UserModule) {
-		err := svc.RegisterNewUser(context.NewContext(), "123", "123456")
+		err := svc.RegisterNewUser(context.EmptyAppCtx(), "123", "123456")
 		t.Log(err)
 	})
 }
