@@ -3,6 +3,7 @@ module github.com/krilie/lico_alone
 go 1.14
 
 require (
+	github.com/Masterminds/squirrel v1.5.0
 	github.com/ahmetb/go-linq/v3 v3.1.0
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/aliyun/alibaba-cloud-sdk-go v1.61.668

@@ -2,9 +2,11 @@ package dao
 
 import (
 	"context"
+	"errors"
 	"github.com/ahmetb/go-linq/v3"
 	com_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/module/module-dynamic-share/model"
+	"time"
 )
 
 func (a *DynamicShareDao) GetAllLabels(ctx context.Context) (*[]model.DynamicShareLabel, error) {
@@ -38,6 +40,13 @@ func (a *DynamicShareDao) AddLabels(ctx context.Context, labels []model.CreateDy
 }
 
 func (a *DynamicShareDao) DeleteLabels(ctx context.Context, ids []string) error {
-	err := a.GetDb(ctx).Where("id in (?)", ids).Delete(&model.DynamicShareLabel{}).Error
-	return err
+	var sql = "update tb_dynamic_share_label set deleted_at=? where id in (?)"
+	result := a.GetDb(ctx).Exec(sql, time.Now(), ids)
+	if result.Error != nil {
+		return result.Error
+	}
+	if result.RowsAffected <= 0 {
+		return errors.New("no affected rows")
+	}
+	return nil
 }
