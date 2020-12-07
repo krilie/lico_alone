@@ -11,7 +11,7 @@ import (
 )
 
 func (a *CommonService) QueryArticleSamplePage(ctx context.Context, page common_model.PageParams, searchKey string) (pageData *common_model.PageData, err error) {
-	totalCount, totalPage, data, err := a.moduleArticle.QueryArticleSamplePage(ctx, page, searchKey)
+	totalCount, totalPage, data, err := a.ModuleArticle.QueryArticleSamplePage(ctx, page, searchKey)
 	if err != nil {
 		return nil, err
 	}
@@ -27,7 +27,7 @@ func (a *CommonService) QueryArticleSamplePage(ctx context.Context, page common_
 }
 
 func (a *CommonService) GetArticleById(ctx context.Context, id string) (*model.Article, error) {
-	article, err := a.moduleArticle.GetArticleById(ctx, id)
+	article, err := a.ModuleArticle.GetArticleById(ctx, id)
 	if err != nil {
 		return nil, err
 	}

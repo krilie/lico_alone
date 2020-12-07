@@ -15,7 +15,7 @@ import (
 
 type CommonService struct {
 	configService      *service.ConfigModule
-	moduleArticle      *service2.BlogArticleModule
+	ModuleArticle      *service2.BlogArticleModule
 	moduleCarousel     *service3.CarouselModule
 	moduleCustomer     *service4.CustomerModule
 	moduleDynamicShare *service5.DynamicShareModule
@@ -25,7 +25,7 @@ type CommonService struct {
 func NewCommonService(broker *broker.Broker, moduleCustomer *service4.CustomerModule, moduleArticle *service2.BlogArticleModule, configService *service.ConfigModule, moduleCarousel *service3.CarouselModule, moduleDynamicShare *service5.DynamicShareModule) *CommonService {
 	return &CommonService{
 		configService:      configService,
-		moduleArticle:      moduleArticle,
+		ModuleArticle:      moduleArticle,
 		moduleCarousel:     moduleCarousel,
 		moduleCustomer:     moduleCustomer,
 		moduleDynamicShare: moduleDynamicShare,
