@@ -7,6 +7,7 @@ import (
 	customer_module "github.com/krilie/lico_alone/module/module-customer/service"
 	dynamic_module "github.com/krilie/lico_alone/module/module-dynamic-share/service"
 	file_module "github.com/krilie/lico_alone/module/module-file/service"
+	module_like_dislike "github.com/krilie/lico_alone/module/module-like-dislike"
 	message_module "github.com/krilie/lico_alone/module/module-message/service"
 	statistic_module "github.com/krilie/lico_alone/module/module-statistic/service"
 	user_module "github.com/krilie/lico_alone/module/module-user/service"
@@ -25,6 +26,7 @@ func BuildProviderList() []interface{} {
 		customer_module.DigModuleCustomerProviderAll,
 		dynamic_module.DigModuleDynamicShareProviderAll,
 		ConfigService.DigModuleConfigProviderAll,
+		module_like_dislike.DigModuleLikeDisLikeProviderAll,
 	}
 	var targetList []interface{}
 	for i := range list {
