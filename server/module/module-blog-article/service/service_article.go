@@ -54,25 +54,25 @@ func (s *BlogArticleModule) QueryArticleSamplePage(ctx context.Context, page com
 	}
 	linq.From(data).ForEachT(func(o *model.QueryArticleModelSample) {
 		// like
-		like := linq.From(list).FirstWithT(func(a *module_like_dislike.LikeDisLikeModelResult) bool {
+		like, ok := linq.From(list).FirstWithT(func(a *module_like_dislike.LikeDisLikeModelResult) bool {
 			if a.BusinessId == o.Id && "like" == a.GiveType {
 				return true
 			}
 			return false
 		}).(*module_like_dislike.LikeDisLikeModelResult)
-		if like == nil {
+		if !ok {
 			o.Like = 0
 		} else {
 			o.Like = int(like.Count)
 		}
 		// dislike
-		dislike := linq.From(list).FirstWithT(func(a *module_like_dislike.LikeDisLikeModelResult) bool {
+		dislike, ok := linq.From(list).FirstWithT(func(a *module_like_dislike.LikeDisLikeModelResult) bool {
 			if a.BusinessId == o.Id && "dislike" == a.GiveType {
 				return true
 			}
 			return false
 		}).(*module_like_dislike.LikeDisLikeModelResult)
-		if dislike == nil {
+		if !ok {
 			o.DisLike = 0
 		} else {
 			o.DisLike = int(dislike.Count)
@@ -120,25 +120,25 @@ func (s *BlogArticleModule) QueryArticlePage(ctx context.Context, page common_mo
 				DisLike:     0,
 			}
 			// like
-			like := linq.From(list).FirstWithT(func(a *module_like_dislike.LikeDisLikeModelResult) bool {
+			like, ok := linq.From(list).FirstWithT(func(a *module_like_dislike.LikeDisLikeModelResult) bool {
 				if a.BusinessId == queryArticle.Id && "like" == a.GiveType {
 					return true
 				}
 				return false
 			}).(*module_like_dislike.LikeDisLikeModelResult)
-			if like == nil {
+			if !ok {
 				queryArticle.Like = 0
 			} else {
 				queryArticle.Like = int(like.Count)
 			}
 			// dislike
-			dislike := linq.From(list).FirstWithT(func(a *module_like_dislike.LikeDisLikeModelResult) bool {
+			dislike, ok := linq.From(list).FirstWithT(func(a *module_like_dislike.LikeDisLikeModelResult) bool {
 				if a.BusinessId == queryArticle.Id && "dislike" == a.GiveType {
 					return true
 				}
 				return false
 			}).(*module_like_dislike.LikeDisLikeModelResult)
-			if dislike == nil {
+			if !ok {
 				queryArticle.DisLike = 0
 			} else {
 				queryArticle.DisLike = int(dislike.Count)
