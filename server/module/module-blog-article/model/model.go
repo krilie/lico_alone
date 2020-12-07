@@ -28,14 +28,29 @@ type UpdateArticleModel struct {
 	Sort        int    `json:"sort"`
 }
 
-// QueryArticleModel 分页查询简单结果
-type QueryArticleModel struct {
+// QueryArticleModelSample 分页查询简单结果
+type QueryArticleModelSample struct {
 	Id          string `json:"id"`
 	Title       string `json:"title"`
 	Picture     string `json:"picture"`
 	Description string `json:"description"`
 	Pv          int    `json:"pv"`
 	Sort        int    `json:"sort"`
+	Like        int    `json:"like"`
+	DisLike     int    `json:"dis_like"`
+}
+
+// QueryArticleModelSample 分页查询简单结果
+type QueryArticleModel struct {
+	Id          string `json:"id"`
+	Title       string `json:"title"`
+	Picture     string `json:"picture"`
+	Description string `json:"description"`
+	Content     string `json:"content"`
+	Pv          int    `json:"pv"`
+	Sort        int    `json:"sort"`
+	Like        int    `json:"like"`
+	DisLike     int    `json:"dis_like"`
 }
 
 type CreateArticleModel struct {
