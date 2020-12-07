@@ -16,7 +16,7 @@ import (
 	"os"
 )
 
-//go:generate swag init -g ./main.go
+//go:generate swag init -g ./main.go  # install: go get -u github.com/swaggo/swag/cmd/swag
 //go:generate go test -run Auto -v ./...
 
 // @title lizo_alone

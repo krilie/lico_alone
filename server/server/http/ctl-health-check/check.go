@@ -48,6 +48,19 @@ func (h *HealthCheckCtrl) Ping(c *gin.Context) {
 	c.String(http.StatusOK, "pong start time "+h.startTime.String())
 }
 
+// Health 健康检查panic
+// @Summary 健康检查panic
+// @Description 健康检查panic 引发一个panic以测试系统
+// @Tags 健康检查
+// @ID 健康检查panic
+// @Success 200 {string} string "no success"
+// @Router /health/panic [get]
+func (h *HealthCheckCtrl) Panic(c *gin.Context) {
+	log := h.log.Get(context.NewAppCtx(context2.Background()), "HealthCheckCtrl", "Ping")
+	log.Info("begin panic")
+	panic("on health panic")
+}
+
 type HealthCheckCtrl struct {
 	startTime time.Time
 	db        *ndb.NDb

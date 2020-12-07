@@ -160,10 +160,16 @@ definitions:
     type: object
   model.QueryArticleModel:
     properties:
+      content:
+        type: string
       description:
         type: string
+      dis_like:
+        type: integer
       id:
         type: string
+      like:
+        type: integer
       picture:
         type: string
       pv:
@@ -1192,6 +1198,18 @@ paths:
           schema:
             type: string
       summary: 健康检查Hello
+      tags:
+      - 健康检查
+  /health/panic:
+    get:
+      description: 健康检查panic 引发一个panic以测试系统
+      operationId: 健康检查panic
+      responses:
+        "200":
+          description: no success
+          schema:
+            type: string
+      summary: 健康检查panic
       tags:
       - 健康检查
   /health/ping:

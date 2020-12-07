@@ -35,7 +35,8 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 	// 设置gin mode
 	gin.SetMode(httpCfg.GinMode)
 	// 路径设置 根路径
-	rootRouter := gin.Default()                  // logger recover
+	rootRouter := gin.Default() // logger recover
+	rootRouter.Use(h.middleware.MiddlewareRecovery())
 	rootRouter.Use(middleware.RequestOpsLimit()) // 限流
 	// 性能
 	pprof.Register(rootRouter, "pprof")
@@ -60,6 +61,7 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 	// 健康检查
 	rootRouter.GET("health/", h.ctrl.healthCheckCtrl.Hello)
 	rootRouter.GET("health/ping", h.ctrl.healthCheckCtrl.Ping)
+	rootRouter.GET("health/panic", h.ctrl.healthCheckCtrl.Panic)
 
 	// api路由 + 中间件
 	apiGroup := rootRouter.Group("/api")

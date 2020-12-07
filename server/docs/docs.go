@@ -1577,6 +1577,24 @@ var doc = `{
                 }
             }
         },
+        "/health/panic": {
+            "get": {
+                "description": "健康检查panic 引发一个panic以测试系统",
+                "tags": [
+                    "健康检查"
+                ],
+                "summary": "健康检查panic",
+                "operationId": "健康检查panic",
+                "responses": {
+                    "200": {
+                        "description": "no success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/health/ping": {
             "get": {
                 "description": "健康检查Ping 检查数据库是否正常 并返回启动时间",
@@ -1835,11 +1853,20 @@ var doc = `{
         "model.QueryArticleModel": {
             "type": "object",
             "properties": {
+                "content": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
+                "dis_like": {
+                    "type": "integer"
+                },
                 "id": {
                     "type": "string"
+                },
+                "like": {
+                    "type": "integer"
                 },
                 "picture": {
                     "type": "string"
