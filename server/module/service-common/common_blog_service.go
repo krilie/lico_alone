@@ -10,8 +10,8 @@ import (
 	"time"
 )
 
-func (a *CommonService) QueryArticleSamplePage(ctx context.Context, page common_model.PageParams, searchKey string) (pageData *common_model.PageData, err error) {
-	totalCount, totalPage, data, err := a.ModuleArticle.QueryArticleSamplePage(ctx, page, searchKey)
+func (a *CommonService) QueryArticleSamplePage(ctx context.Context, page common_model.PageParams, searchKey, uId string) (pageData *common_model.PageData, err error) {
+	totalCount, totalPage, data, err := a.ModuleArticle.QueryArticleSamplePage(ctx, page, searchKey, uId)
 	if err != nil {
 		return nil, err
 	}
@@ -26,8 +26,8 @@ func (a *CommonService) QueryArticleSamplePage(ctx context.Context, page common_
 	}, nil
 }
 
-func (a *CommonService) GetArticleById(ctx context.Context, id string) (*model.Article, error) {
-	article, err := a.ModuleArticle.GetArticleById(ctx, id)
+func (a *CommonService) GetArticleById(ctx context.Context, articleId, uId string) (*model.QueryArticleModel, error) {
+	article, err := a.ModuleArticle.GetArticleById(ctx, articleId, uId)
 	if err != nil {
 		return nil, err
 	}
@@ -37,7 +37,7 @@ func (a *CommonService) GetArticleById(ctx context.Context, id string) (*model.A
 	a.broker.MustSend(ctx, &messages.BlogArticleVisitedMessage{
 		Ctx:             context2.NewAppCtx(ctx, context2.MustGetAppValues(ctx).Clone(nil)),
 		VisitedTime:     time.Now(),
-		ArticleId:       id,
+		ArticleId:       articleId,
 		VisitorIp:       context2.MustGetAppValues(ctx).RemoteIp,
 		CustomerTraceId: context2.MustGetAppValues(ctx).CustomerTraceId,
 		ArticleTitle:    article.Title,

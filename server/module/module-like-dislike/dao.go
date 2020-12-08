@@ -98,3 +98,16 @@ func (a *LikeDisLikeDao) GetLikeDiskLikeResult(ctx context.Context, businessType
 	}
 	return res, nil
 }
+
+func (a *LikeDisLikeDao) GetLikeUserLikeDisLike(ctx context.Context, businessType string, businessIds []string, userId string) (res []UserLikeDisLikeModelResult, err error) {
+	sql := `select business_id,business_type,give_type,count(give_type) as count
+            from tb_like_dislike 
+            where deleted_at is null and business_type=? and business_id in (?) and user_id=?
+            group by business_id, business_type, give_type
+            order by count desc `
+	err = a.RawQuery(ctx, &res, sql, businessType, businessIds, userId)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}

@@ -28,3 +28,6 @@ type LikeDisLikeModelResult struct {
 	GiveType     string `json:"give_type"`
 	Count        int64  `json:"count"`
 }
+
+// UserLikeDisLikeModelResult user id give type count user space
+type UserLikeDisLikeModelResult LikeDisLikeModelResult

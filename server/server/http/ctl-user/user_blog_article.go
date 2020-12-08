@@ -91,7 +91,7 @@ func (a *UserCtrl) QueryArticle(c *gin.Context) {
 	}
 	// 查询
 	param.PageParams.CheckOkOrSetDefault()
-	page, count, data, err := a.userService.ModuleArticle.QueryArticlePage(ctx, param.PageParams, param.SearchKey)
+	page, count, data, err := a.userService.ModuleArticle.QueryArticlePage(ctx, param.PageParams, param.SearchKey, a.ginUtil.MustGetUserId(c))
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return

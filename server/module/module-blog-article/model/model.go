@@ -37,7 +37,9 @@ type QueryArticleModelSample struct {
 	Pv          int    `json:"pv"`
 	Sort        int    `json:"sort"`
 	Like        int    `json:"like"`
-	DisLike     int    `json:"dis_like"`
+	DisLike     int    `json:"dislike"`
+	HasLike     bool   `json:"has_like"`
+	HasDisLike  bool   `json:"has_dislike"`
 }
 
 // QueryArticleModelSample 分页查询简单结果
@@ -50,7 +52,9 @@ type QueryArticleModel struct {
 	Pv          int    `json:"pv"`
 	Sort        int    `json:"sort"`
 	Like        int    `json:"like"`
-	DisLike     int    `json:"dis_like"`
+	DisLike     int    `json:"dislike"`
+	HasLike     bool   `json:"has_like"`
+	HasDisLike  bool   `json:"has_dislike"`
 }
 
 type CreateArticleModel struct {
