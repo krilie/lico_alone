@@ -22,6 +22,7 @@ import (
 func (con *CommonCtrl) QueryArticleSample(c *gin.Context) {
 	ctx := con.ginUtil.MustGetAppContext(c)
 	log := con.log.Get(ctx)
+	log.Info("on query article sample")
 	var param = &struct {
 		com_model.PageParams
 		SearchKey string `form:"search_key" json:"search_key" xml:"search_key"  binding:"required"`
