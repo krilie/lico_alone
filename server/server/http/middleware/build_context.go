@@ -24,12 +24,12 @@ func (m *GinMiddleware) BuildContext() gin.HandlerFunc {
 		values.RemoteIp = c.ClientIP()
 		// cookie trace id
 		traceId, err := c.Cookie(http_common.CookieCustomerTraceId)
-		m.log.WithField("customer_trace_id", traceId).Info("get customer trace id")
+		m.log.WithField("customer_trace_id", traceId).Info("获取到的用户追踪号")
 		if errors.Is(err, http.ErrNoCookie) {
 			traceId = id_util.GetUuid()
 			c.SetCookie(http_common.CookieCustomerTraceId, traceId, 3600*24*365*10, "", "", true, true)
 		} else if err != nil {
-			m.log.WithError(err.Error()).Error("get customer trace id err")
+			m.log.WithError(err.Error()).Error("获取用户追踪号错误")
 		}
 		values.CustomerTraceId = traceId
 		c.Set(ginutil.GinKeyAppContext, context.NewAppCtx(parentCtx, values))
