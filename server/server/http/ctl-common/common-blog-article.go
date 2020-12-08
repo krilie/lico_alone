@@ -34,7 +34,7 @@ func (con *CommonCtrl) QueryArticleSample(c *gin.Context) {
 		return
 	}
 	param.PageParams.CheckOkOrSetDefault()
-	pageData, err := con.CommonService.QueryArticleSamplePage(ctx, param.PageParams, param.SearchKey, con.ginUtil.MustGetUserId(c))
+	pageData, err := con.CommonService.QueryArticleSamplePage(ctx, param.PageParams, param.SearchKey, con.ginUtil.GetCustomerId(c))
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return
@@ -58,7 +58,7 @@ func (con *CommonCtrl) GetArticle(c *gin.Context) {
 	log := con.log.Get(ctx)
 	articleId := c.Query("article_id")
 
-	article, err := con.CommonService.GetArticleById(ctx, articleId, con.ginUtil.MustGetUserId(c))
+	article, err := con.CommonService.GetArticleById(ctx, articleId, con.ginUtil.GetCustomerId(c))
 	if err != nil {
 		log.Error(err)
 		ginutil.ReturnWithErr(c, err)

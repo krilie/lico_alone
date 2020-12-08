@@ -110,6 +110,16 @@ func (g *GinUtils) MustGetUserId(c *gin.Context) string {
 	}
 }
 
+func (g *GinUtils) GetCustomerId(c *gin.Context) string {
+	values := g.MustGetAppValues(c)
+	if values.UserId != "" {
+		return values.CustomerTraceId
+	} else {
+		g.log.WithFuncName("GetAppValuesOrAbort").Error("must get customer id can not get user id.")
+		return ""
+	}
+}
+
 func (g *GinUtils) MustGetAppContext(c *gin.Context) context2.Context {
 	appContext := g.GetAppContext(c)
 	if appContext == nil {
