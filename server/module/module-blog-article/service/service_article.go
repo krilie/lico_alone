@@ -50,7 +50,7 @@ func (s *BlogArticleModule) GetArticleById(ctx context.Context, articleId, uId s
 	if err != nil {
 		return nil, err
 	}
-	linq.From(result).ForEachT(func(a *module_like_dislike.LikeDisLikeModelResult) {
+	linq.From(result).ForEachT(func(a module_like_dislike.LikeDisLikeModelResult) {
 		if a.BusinessId == articleId && a.GiveType == "like" {
 			res.Like = int(a.Count)
 		}
@@ -62,7 +62,7 @@ func (s *BlogArticleModule) GetArticleById(ctx context.Context, articleId, uId s
 	if err != nil {
 		return nil, err
 	}
-	linq.From(userResult).ForEachT(func(a *module_like_dislike.UserLikeDisLikeModelResult) {
+	linq.From(userResult).ForEachT(func(a module_like_dislike.UserLikeDisLikeModelResult) {
 		if a.BusinessId == articleId && a.GiveType == "like" && a.Count > 0 {
 			res.HasLike = true
 		}
@@ -102,23 +102,23 @@ func (s *BlogArticleModule) QueryArticleSamplePage(ctx context.Context, page com
 	}
 	linq.From(data).ForEachT(func(o *model.QueryArticleModelSample) {
 		// like
-		like, ok := linq.From(list).FirstWithT(func(a *module_like_dislike.LikeDisLikeModelResult) bool {
+		like, ok := linq.From(list).FirstWithT(func(a module_like_dislike.LikeDisLikeModelResult) bool {
 			if a.BusinessId == o.Id && "like" == a.GiveType {
 				return true
 			}
 			return false
-		}).(*module_like_dislike.LikeDisLikeModelResult)
+		}).(module_like_dislike.LikeDisLikeModelResult)
 		if !ok {
 			o.Like = 0
 		} else {
 			o.Like = int(like.Count)
 		}
-		hasLike, ok := linq.From(userLikeList).FirstWithT(func(a *module_like_dislike.UserLikeDisLikeModelResult) bool {
+		hasLike, ok := linq.From(userLikeList).FirstWithT(func(a module_like_dislike.UserLikeDisLikeModelResult) bool {
 			if a.BusinessId == o.Id && "like" == a.GiveType {
 				return true
 			}
 			return false
-		}).(*module_like_dislike.UserLikeDisLikeModelResult)
+		}).(module_like_dislike.UserLikeDisLikeModelResult)
 		if !ok {
 			o.HasLike = false
 		} else {
@@ -129,23 +129,23 @@ func (s *BlogArticleModule) QueryArticleSamplePage(ctx context.Context, page com
 			}
 		}
 		// dislike
-		dislike, ok := linq.From(list).FirstWithT(func(a *module_like_dislike.LikeDisLikeModelResult) bool {
+		dislike, ok := linq.From(list).FirstWithT(func(a module_like_dislike.LikeDisLikeModelResult) bool {
 			if a.BusinessId == o.Id && "dislike" == a.GiveType {
 				return true
 			}
 			return false
-		}).(*module_like_dislike.LikeDisLikeModelResult)
+		}).(module_like_dislike.LikeDisLikeModelResult)
 		if !ok {
 			o.DisLike = 0
 		} else {
 			o.DisLike = int(dislike.Count)
 		}
-		hasDisLike, ok := linq.From(userLikeList).FirstWithT(func(a *module_like_dislike.UserLikeDisLikeModelResult) bool {
+		hasDisLike, ok := linq.From(userLikeList).FirstWithT(func(a module_like_dislike.UserLikeDisLikeModelResult) bool {
 			if a.BusinessId == o.Id && "dislike" == a.GiveType {
 				return true
 			}
 			return false
-		}).(*module_like_dislike.UserLikeDisLikeModelResult)
+		}).(module_like_dislike.UserLikeDisLikeModelResult)
 		if !ok {
 			o.HasDisLike = false
 		} else {
@@ -204,23 +204,23 @@ func (s *BlogArticleModule) QueryArticlePage(ctx context.Context, page common_mo
 				HasDisLike:  false,
 			}
 			// like
-			like, ok := linq.From(list).FirstWithT(func(a *module_like_dislike.LikeDisLikeModelResult) bool {
+			like, ok := linq.From(list).FirstWithT(func(a module_like_dislike.LikeDisLikeModelResult) bool {
 				if a.BusinessId == queryArticle.Id && "like" == a.GiveType {
 					return true
 				}
 				return false
-			}).(*module_like_dislike.LikeDisLikeModelResult)
+			}).(module_like_dislike.LikeDisLikeModelResult)
 			if !ok {
 				queryArticle.Like = 0
 			} else {
 				queryArticle.Like = int(like.Count)
 			}
-			hasLike, ok := linq.From(userLikeList).FirstWithT(func(a *module_like_dislike.UserLikeDisLikeModelResult) bool {
+			hasLike, ok := linq.From(userLikeList).FirstWithT(func(a module_like_dislike.UserLikeDisLikeModelResult) bool {
 				if a.BusinessId == o.Id && "like" == a.GiveType {
 					return true
 				}
 				return false
-			}).(*module_like_dislike.UserLikeDisLikeModelResult)
+			}).(module_like_dislike.UserLikeDisLikeModelResult)
 			if !ok {
 				queryArticle.HasLike = false
 			} else {
@@ -231,24 +231,24 @@ func (s *BlogArticleModule) QueryArticlePage(ctx context.Context, page common_mo
 				}
 			}
 			// dislike
-			dislike, ok := linq.From(list).FirstWithT(func(a *module_like_dislike.LikeDisLikeModelResult) bool {
+			dislike, ok := linq.From(list).FirstWithT(func(a module_like_dislike.LikeDisLikeModelResult) bool {
 				if a.BusinessId == queryArticle.Id && "dislike" == a.GiveType {
 					return true
 				}
 				return false
-			}).(*module_like_dislike.LikeDisLikeModelResult)
+			}).(module_like_dislike.LikeDisLikeModelResult)
 			if !ok {
 				queryArticle.DisLike = 0
 			} else {
 				queryArticle.DisLike = int(dislike.Count)
 			}
 
-			hasDisLike, ok := linq.From(userLikeList).FirstWithT(func(a *module_like_dislike.UserLikeDisLikeModelResult) bool {
+			hasDisLike, ok := linq.From(userLikeList).FirstWithT(func(a module_like_dislike.UserLikeDisLikeModelResult) bool {
 				if a.BusinessId == o.Id && "dislike" == a.GiveType {
 					return true
 				}
 				return false
-			}).(*module_like_dislike.UserLikeDisLikeModelResult)
+			}).(module_like_dislike.UserLikeDisLikeModelResult)
 			if !ok {
 				queryArticle.HasDisLike = false
 			} else {
