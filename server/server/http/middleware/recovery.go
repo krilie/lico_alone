@@ -16,7 +16,7 @@ func (m *GinMiddleware) MiddlewareRecovery() gin.HandlerFunc {
 					ctx = context2.EmptyAppCtx()
 				}
 				m.log.Get(ctx).WithError(err).Error("internal err")
-				ginutil.AbortWithErr(c, errs.NewInternal().WithMsg("internal err"))
+				ginutil.AbortWithErr(c, errs.NewInternal().WithMsg("internal err by recovery"))
 				return
 			}
 		}()
