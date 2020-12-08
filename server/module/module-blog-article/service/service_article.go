@@ -25,12 +25,56 @@ func (s *BlogArticleModule) UpdateArticleSample(ctx context.Context, article *mo
 	return s.Dao.UpdateArticleSample(ctx, article)
 }
 
-func (s *BlogArticleModule) GetArticleById(ctx context.Context, id string) (*model.Article, error) {
-	return s.Dao.GetArticleById(ctx, id)
+func (s *BlogArticleModule) GetArticleById(ctx context.Context, articleId, uId string) (*model.QueryArticleModel, error) {
+	article, err := s.Dao.GetArticleById(ctx, articleId)
+	if err != nil {
+		return nil, err
+	}
+	if article == nil {
+		return nil, nil
+	}
+	var res = &model.QueryArticleModel{
+		Id:          article.Id,
+		Title:       article.Title,
+		Picture:     article.Picture,
+		Description: article.Description,
+		Content:     article.Content,
+		Pv:          article.Pv,
+		Sort:        article.Sort,
+		Like:        0,
+		DisLike:     0,
+		HasLike:     false,
+		HasDisLike:  false,
+	}
+	result, err := s.likeDislikeModule.Dao.GetLikeDiskLikeResult(ctx, "article", []string{articleId})
+	if err != nil {
+		return nil, err
+	}
+	linq.From(result).ForEachT(func(a module_like_dislike.LikeDisLikeModelResult) {
+		if a.BusinessId == articleId && a.GiveType == "like" {
+			res.Like = int(a.Count)
+		}
+		if a.BusinessId == articleId && a.GiveType == "dislike" {
+			res.DisLike = int(a.Count)
+		}
+	})
+	userResult, err := s.likeDislikeModule.Dao.GetLikeUserLikeDisLike(ctx, "article", []string{articleId}, uId)
+	if err != nil {
+		return nil, err
+	}
+	linq.From(userResult).ForEachT(func(a module_like_dislike.UserLikeDisLikeModelResult) {
+		if a.BusinessId == articleId && a.GiveType == "like" && a.Count > 0 {
+			res.HasLike = true
+		}
+		if a.BusinessId == articleId && a.GiveType == "dislike" && a.Count > 0 {
+			res.HasDisLike = true
+		}
+	})
+	return res, nil
 }
 
 // 分页查询
-func (s *BlogArticleModule) QueryArticleSamplePage(ctx context.Context, page common_model.PageParams, searchKey string) (totalCount, totalPage int, data []*model.QueryArticleModelSample, err error) {
+func (s *BlogArticleModule) QueryArticleSamplePage(ctx context.Context, page common_model.PageParams, searchKey string, uId string) (totalCount, totalPage int, data []*model.QueryArticleModelSample, err error) {
 
 	page.CheckOkOrSetDefault()
 
@@ -52,30 +96,64 @@ func (s *BlogArticleModule) QueryArticleSamplePage(ctx context.Context, page com
 	if err != nil {
 		return 0, 0, nil, err
 	}
+	userLikeList, err := s.likeDislikeModule.Dao.GetLikeUserLikeDisLike(ctx, "article", ids, uId)
+	if err != nil {
+		return 0, 0, nil, err
+	}
 	linq.From(data).ForEachT(func(o *model.QueryArticleModelSample) {
 		// like
-		like, ok := linq.From(list).FirstWithT(func(a *module_like_dislike.LikeDisLikeModelResult) bool {
+		like, ok := linq.From(list).FirstWithT(func(a module_like_dislike.LikeDisLikeModelResult) bool {
 			if a.BusinessId == o.Id && "like" == a.GiveType {
 				return true
 			}
 			return false
-		}).(*module_like_dislike.LikeDisLikeModelResult)
+		}).(module_like_dislike.LikeDisLikeModelResult)
 		if !ok {
 			o.Like = 0
 		} else {
 			o.Like = int(like.Count)
 		}
+		hasLike, ok := linq.From(userLikeList).FirstWithT(func(a module_like_dislike.UserLikeDisLikeModelResult) bool {
+			if a.BusinessId == o.Id && "like" == a.GiveType {
+				return true
+			}
+			return false
+		}).(module_like_dislike.UserLikeDisLikeModelResult)
+		if !ok {
+			o.HasLike = false
+		} else {
+			if hasLike.Count > 0 {
+				o.HasLike = true
+			} else {
+				o.HasLike = false
+			}
+		}
 		// dislike
-		dislike, ok := linq.From(list).FirstWithT(func(a *module_like_dislike.LikeDisLikeModelResult) bool {
+		dislike, ok := linq.From(list).FirstWithT(func(a module_like_dislike.LikeDisLikeModelResult) bool {
 			if a.BusinessId == o.Id && "dislike" == a.GiveType {
 				return true
 			}
 			return false
-		}).(*module_like_dislike.LikeDisLikeModelResult)
+		}).(module_like_dislike.LikeDisLikeModelResult)
 		if !ok {
 			o.DisLike = 0
 		} else {
 			o.DisLike = int(dislike.Count)
+		}
+		hasDisLike, ok := linq.From(userLikeList).FirstWithT(func(a module_like_dislike.UserLikeDisLikeModelResult) bool {
+			if a.BusinessId == o.Id && "dislike" == a.GiveType {
+				return true
+			}
+			return false
+		}).(module_like_dislike.UserLikeDisLikeModelResult)
+		if !ok {
+			o.HasDisLike = false
+		} else {
+			if hasDisLike.Count > 0 {
+				o.HasDisLike = true
+			} else {
+				o.HasDisLike = false
+			}
 		}
 	})
 
@@ -83,7 +161,7 @@ func (s *BlogArticleModule) QueryArticleSamplePage(ctx context.Context, page com
 }
 
 // 分页查询
-func (s *BlogArticleModule) QueryArticlePage(ctx context.Context, page common_model.PageParams, searchKey string) (totalPage, totalCount int, tdata []*model.QueryArticleModel, err error) {
+func (s *BlogArticleModule) QueryArticlePage(ctx context.Context, page common_model.PageParams, searchKey, uId string) (totalPage, totalCount int, tdata []*model.QueryArticleModel, err error) {
 
 	page.CheckOkOrSetDefault()
 
@@ -106,6 +184,10 @@ func (s *BlogArticleModule) QueryArticlePage(ctx context.Context, page common_mo
 	if err != nil {
 		return 0, 0, nil, err
 	}
+	userLikeList, err := s.likeDislikeModule.Dao.GetLikeUserLikeDisLike(ctx, "article", ids, uId)
+	if err != nil {
+		return 0, 0, nil, err
+	}
 	linq.From(data).
 		SelectT(func(o *model.Article) *model.QueryArticleModel {
 			var queryArticle = &model.QueryArticleModel{
@@ -118,30 +200,63 @@ func (s *BlogArticleModule) QueryArticlePage(ctx context.Context, page common_mo
 				Sort:        o.Sort,
 				Like:        0,
 				DisLike:     0,
+				HasLike:     false,
+				HasDisLike:  false,
 			}
 			// like
-			like, ok := linq.From(list).FirstWithT(func(a *module_like_dislike.LikeDisLikeModelResult) bool {
+			like, ok := linq.From(list).FirstWithT(func(a module_like_dislike.LikeDisLikeModelResult) bool {
 				if a.BusinessId == queryArticle.Id && "like" == a.GiveType {
 					return true
 				}
 				return false
-			}).(*module_like_dislike.LikeDisLikeModelResult)
+			}).(module_like_dislike.LikeDisLikeModelResult)
 			if !ok {
 				queryArticle.Like = 0
 			} else {
 				queryArticle.Like = int(like.Count)
 			}
+			hasLike, ok := linq.From(userLikeList).FirstWithT(func(a module_like_dislike.UserLikeDisLikeModelResult) bool {
+				if a.BusinessId == o.Id && "like" == a.GiveType {
+					return true
+				}
+				return false
+			}).(module_like_dislike.UserLikeDisLikeModelResult)
+			if !ok {
+				queryArticle.HasLike = false
+			} else {
+				if hasLike.Count > 0 {
+					queryArticle.HasLike = true
+				} else {
+					queryArticle.HasLike = false
+				}
+			}
 			// dislike
-			dislike, ok := linq.From(list).FirstWithT(func(a *module_like_dislike.LikeDisLikeModelResult) bool {
+			dislike, ok := linq.From(list).FirstWithT(func(a module_like_dislike.LikeDisLikeModelResult) bool {
 				if a.BusinessId == queryArticle.Id && "dislike" == a.GiveType {
 					return true
 				}
 				return false
-			}).(*module_like_dislike.LikeDisLikeModelResult)
+			}).(module_like_dislike.LikeDisLikeModelResult)
 			if !ok {
 				queryArticle.DisLike = 0
 			} else {
 				queryArticle.DisLike = int(dislike.Count)
+			}
+
+			hasDisLike, ok := linq.From(userLikeList).FirstWithT(func(a module_like_dislike.UserLikeDisLikeModelResult) bool {
+				if a.BusinessId == o.Id && "dislike" == a.GiveType {
+					return true
+				}
+				return false
+			}).(module_like_dislike.UserLikeDisLikeModelResult)
+			if !ok {
+				queryArticle.HasDisLike = false
+			} else {
+				if hasDisLike.Count > 0 {
+					queryArticle.HasDisLike = true
+				} else {
+					queryArticle.HasDisLike = false
+				}
 			}
 			return queryArticle
 		}).ToSlice(&tdata)

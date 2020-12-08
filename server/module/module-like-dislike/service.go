@@ -15,6 +15,18 @@ func NewLikeDisLikeModule(dao *LikeDisLikeDao, log *nlog.NLog) *LikeDisLikeModul
 }
 
 func (a *LikeDisLikeModule) AddLikeRecord(ctx context.Context, uId, bId, bType string) error {
+	has, err := a.Dao.HasLikeDisLikeRecord(ctx, LikeDisLikeModelParams{
+		UserId:       uId,
+		BusinessType: bType,
+		BusinessId:   bId,
+		GiveType:     "like",
+	})
+	if err != nil {
+		return err
+	}
+	if has {
+		return nil
+	}
 	return a.Dao.AddLikeDisLikeRecord(ctx, LikeDisLikeModelParams{
 		UserId:       uId,
 		BusinessType: bType,
@@ -23,6 +35,18 @@ func (a *LikeDisLikeModule) AddLikeRecord(ctx context.Context, uId, bId, bType s
 	})
 }
 func (a *LikeDisLikeModule) AddDisLikeRecord(ctx context.Context, uId, bId, bType string) error {
+	has, err := a.Dao.HasLikeDisLikeRecord(ctx, LikeDisLikeModelParams{
+		UserId:       uId,
+		BusinessType: bType,
+		BusinessId:   bId,
+		GiveType:     "dislike",
+	})
+	if err != nil {
+		return err
+	}
+	if has {
+		return nil
+	}
 	return a.Dao.AddLikeDisLikeRecord(ctx, LikeDisLikeModelParams{
 		UserId:       uId,
 		BusinessType: bType,
@@ -31,6 +55,18 @@ func (a *LikeDisLikeModule) AddDisLikeRecord(ctx context.Context, uId, bId, bTyp
 	})
 }
 func (a *LikeDisLikeModule) RemoveLikeRecord(ctx context.Context, uId, bId, bType string) error {
+	has, err := a.Dao.HasLikeDisLikeRecord(ctx, LikeDisLikeModelParams{
+		UserId:       uId,
+		BusinessType: bType,
+		BusinessId:   bId,
+		GiveType:     "like",
+	})
+	if err != nil {
+		return err
+	}
+	if !has {
+		return nil
+	}
 	return a.Dao.RemoveLikeDisLikeRecord(ctx, LikeDisLikeModelParams{
 		UserId:       uId,
 		BusinessType: bType,
@@ -39,6 +75,18 @@ func (a *LikeDisLikeModule) RemoveLikeRecord(ctx context.Context, uId, bId, bTyp
 	})
 }
 func (a *LikeDisLikeModule) RemoveDisLikeRecord(ctx context.Context, uId, bId, bType string) error {
+	has, err := a.Dao.HasLikeDisLikeRecord(ctx, LikeDisLikeModelParams{
+		UserId:       uId,
+		BusinessType: bType,
+		BusinessId:   bId,
+		GiveType:     "dislike",
+	})
+	if err != nil {
+		return err
+	}
+	if !has {
+		return nil
+	}
 	return a.Dao.RemoveLikeDisLikeRecord(ctx, LikeDisLikeModelParams{
 		UserId:       uId,
 		BusinessType: bType,
