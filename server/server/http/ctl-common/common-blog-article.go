@@ -133,7 +133,7 @@ func (con *CommonCtrl) MarkArticleDisLike(c *gin.Context) {
 func (con *CommonCtrl) RemoveMarkArticleLike(c *gin.Context) {
 	ctx := con.ginUtil.MustGetAppContext(c)
 	log := con.log.Get(ctx)
-	articleId := c.Query("article_id")
+	articleId := c.PostForm("article_id")
 	customerId := con.ginUtil.MustGetAppValues(c).CustomerTraceId
 
 	err := con.CommonService.ModuleArticle.RemoveLike(ctx, customerId, articleId)
@@ -159,7 +159,7 @@ func (con *CommonCtrl) RemoveMarkArticleLike(c *gin.Context) {
 func (con *CommonCtrl) RemoveMarkArticleDisLike(c *gin.Context) {
 	ctx := con.ginUtil.MustGetAppContext(c)
 	log := con.log.Get(ctx)
-	articleId := c.Query("article_id")
+	articleId := c.PostForm("article_id")
 	customerId := con.ginUtil.MustGetAppValues(c).CustomerTraceId
 
 	err := con.CommonService.ModuleArticle.RemoveDisLike(ctx, customerId, articleId)
