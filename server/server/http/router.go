@@ -65,7 +65,7 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 
 	// api路由 + 中间件
 	apiGroup := rootRouter.Group("/api")
-	apiGroup.Use(middleware.BuildContext())
+	apiGroup.Use(h.middleware.BuildContext())
 
 	// 不检查权限的分组
 	noCheckToken := apiGroup.Group("")

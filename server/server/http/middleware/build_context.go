@@ -15,21 +15,24 @@ import (
 
 // 请求到来后第一个经过的中间件
 // 从请中中构建context上下文的中间件
-func BuildContext() gin.HandlerFunc {
+func (m *GinMiddleware) BuildContext() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		parentCtx := context2.Background()
 		values := context.NewAppCtxValues()
 		values.TraceId = str_util.EmptyOrDefault(c.GetHeader(ginutil.HeaderTraceId), id_util.GetUuid())
 		values.StartTime = time.Now()
 		values.RemoteIp = c.ClientIP()
-		c.Set(ginutil.GinKeyAppContext, context.NewAppCtx(parentCtx, values))
 		// cookie trace id
 		traceId, err := c.Cookie(http_common.CookieCustomerTraceId)
+		m.log.WithField("customer_trace_id", traceId).Info("get customer trace id")
 		if errors.Is(err, http.ErrNoCookie) {
 			traceId = id_util.GetUuid()
 			c.SetCookie(http_common.CookieCustomerTraceId, traceId, 3600*24*365*10, "", "", true, true)
+		} else if err != nil {
+			m.log.WithError(err.Error()).Error("get customer trace id err")
 		}
 		values.CustomerTraceId = traceId
+		c.Set(ginutil.GinKeyAppContext, context.NewAppCtx(parentCtx, values))
 		c.Next()
 		values.LastTime = time.Now()
 	}
