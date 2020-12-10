@@ -2,19 +2,13 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	context2 "github.com/krilie/lico_alone/common/context"
 	"net/http"
 )
 
-func (m *GinMiddleware) Cors() gin.HandlerFunc {
+func (m *GinMiddleware) Cors(origin string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		method := c.Request.Method //请求方法
-		origin, err := m.CfgService.GetValueStr(context2.EmptyAppCtx(), "access-control-allow-origin")
-		if err != nil {
-			origin = new(string)
-			*origin = "*"
-		}
-		c.Header("Access-Control-Allow-Origin", *origin)                                   // 这是允许访问所有域
+		method := c.Request.Method                                                         //请求方法
+		c.Header("Access-Control-Allow-Origin", origin)                                    // 这是允许访问所有域
 		c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE,UPDATE") //服务器支持的所有跨域请求的方法,为了避免浏览次请求的多次'预检'请求
 		//header的类型
 		c.Header("Access-Control-Allow-Headers", "Authorization, Content-Length, X-CSRF-Token, Token,session,X_Requested_With,Accept, Origin, Host, Connection, Accept-Encoding, Accept-Language,DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Pragma")
