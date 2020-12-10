@@ -111,9 +111,9 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 			origin = new(string)
 			*origin = "*"
 		}
-		commonGroup.Use(h.middleware.Cors(*origin))
 		// common 服务
 		commonApi := commonGroup.Group("")
+		commonApi.Use(h.middleware.Cors(*origin))
 		commonApi.GET("/common/icp_info", h.ctrl.commonCtrl.GetIcpInfo)
 		commonApi.GET("/common/article/query_sample", h.ctrl.commonCtrl.QueryArticleSample)
 		commonApi.GET("/common/article/get_article", h.ctrl.commonCtrl.GetArticle)
