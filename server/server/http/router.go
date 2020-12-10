@@ -75,15 +75,16 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 			origin = new(string)
 			*origin = "*"
 		}
-		manageGroup.Use(h.middleware.Cors(*origin)) // 管理页面跨域
 		// 不检查权限的分组
 		noCheckToken := manageGroup.Group("")
+		noCheckToken.Use(h.middleware.Cors(*origin))
 		noCheckToken.POST("/user/login", h.ctrl.userCtrl.UserLogin)
 		noCheckToken.POST("/user/register", h.ctrl.userCtrl.UserRegister)
 		noCheckToken.POST("/user/send_sms", h.ctrl.userCtrl.UserSendSms)
 
 		//检查权限的分组
 		checkToken := manageGroup.Group("")
+		checkToken.Use(h.middleware.Cors(*origin))
 		checkToken.Use(h.middleware.CheckAuthToken())
 		checkToken.GET("/user/init_app", h.ctrl.userCtrl.InitApp)
 		checkToken.GET("/manage/setting/get_setting_all", h.ctrl.userCtrl.ManageGetConfigList)
