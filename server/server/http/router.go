@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/ncfg"
+	"github.com/krilie/lico_alone/component/nlog"
 	_ "github.com/krilie/lico_alone/docs"
 	"github.com/krilie/lico_alone/server/http/middleware"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -22,10 +23,11 @@ type HttpService struct {
 	cfg        *ncfg.NConfig
 	ctrl       *Controllers
 	middleware *middleware.GinMiddleware
+	log        *nlog.NLog
 }
 
-func NewHttpService(cfg *ncfg.NConfig, ctrl *Controllers, middleware *middleware.GinMiddleware) *HttpService {
-	return &HttpService{cfg: cfg, ctrl: ctrl, middleware: middleware}
+func NewHttpService(cfg *ncfg.NConfig, ctrl *Controllers, middleware *middleware.GinMiddleware, log *nlog.NLog) *HttpService {
+	return &HttpService{cfg: cfg, ctrl: ctrl, middleware: middleware, log: log}
 }
 
 func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown func(waitSec time.Duration) error) {
@@ -37,6 +39,15 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 	rootRouter := gin.Default() // logger recover
 	rootRouter.Use(h.middleware.MiddlewareRecovery())
 	rootRouter.Use(middleware.RequestOpsLimit()) // 限流
+
+	rootRouter.NoMethod(func(c *gin.Context) {
+		h.log.Get(ctx).WithField("path", c.Request.URL).WithField("method", c.Request.Method).Info("no method")
+		c.JSON(200, "no method")
+	})
+	rootRouter.NoRoute(func(c *gin.Context) {
+		h.log.Get(ctx).WithField("path", c.Request.URL).WithField("method", c.Request.Method).Info("no route")
+		c.JSON(200, "no route")
+	})
 
 	{
 		// 性能
