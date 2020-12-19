@@ -27,6 +27,7 @@ func (m *GinMiddleware) Cors(origin func() string) gin.HandlerFunc {
 		method := c.Request.Method //请求方法
 		if method == "OPTIONS" {
 			c.JSON(http.StatusOK, "Options Request!")
+			return
 		}
 		// 处理请求
 		c.Next() //	处理请求
