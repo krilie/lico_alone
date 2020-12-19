@@ -70,19 +70,22 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 
 	{
 		manageGroup := apiGroup.Group("")
-		origin, err := h.middleware.CfgService.GetValueStr(context2.EmptyAppCtx(), "access-control-allow-origin-m")
-		if err != nil {
-			origin = new(string)
-			*origin = "*"
+		var manageOriginFunc = func() string {
+			origin, err := h.middleware.CfgService.GetValueStr(context2.EmptyAppCtx(), "access-control-allow-origin-m")
+			if err != nil {
+				origin = new(string)
+				*origin = "*"
+			}
+			return *origin
 		}
 		// 不检查权限的分组
-		noCheckToken := manageGroup.Group("", h.middleware.Cors(*origin))
+		noCheckToken := manageGroup.Group("", h.middleware.Cors(manageOriginFunc))
 		noCheckToken.POST("/user/login", h.ctrl.userCtrl.UserLogin)
 		noCheckToken.POST("/user/register", h.ctrl.userCtrl.UserRegister)
 		noCheckToken.POST("/user/send_sms", h.ctrl.userCtrl.UserSendSms)
 
 		//检查权限的分组
-		checkToken := manageGroup.Group("", h.middleware.Cors(*origin), h.middleware.CheckAuthToken())
+		checkToken := manageGroup.Group("", h.middleware.Cors(manageOriginFunc), h.middleware.CheckAuthToken())
 		checkToken.GET("/user/init_app", h.ctrl.userCtrl.InitApp)
 		checkToken.GET("/manage/setting/get_setting_all", h.ctrl.userCtrl.ManageGetConfigList)
 		checkToken.POST("/manage/setting/update_config", h.ctrl.userCtrl.ManageUpdateConfig)
@@ -104,13 +107,16 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 
 	{
 		commonGroup := apiGroup.Group("")
-		origin, err := h.middleware.CfgService.GetValueStr(context2.EmptyAppCtx(), "access-control-allow-origin-c")
-		if err != nil {
-			origin = new(string)
-			*origin = "*"
+		var commonOriginFunc = func() string {
+			origin, err := h.middleware.CfgService.GetValueStr(context2.EmptyAppCtx(), "access-control-allow-origin-c")
+			if err != nil {
+				origin = new(string)
+				*origin = "*"
+			}
+			return *origin
 		}
 		// common 服务
-		commonApi := commonGroup.Group("", h.middleware.Cors(*origin))
+		commonApi := commonGroup.Group("", h.middleware.Cors(commonOriginFunc))
 		commonApi.GET("/common/icp_info", h.ctrl.commonCtrl.GetIcpInfo)
 		commonApi.GET("/common/article/query_sample", h.ctrl.commonCtrl.QueryArticleSample)
 		commonApi.GET("/common/article/get_article", h.ctrl.commonCtrl.GetArticle)
