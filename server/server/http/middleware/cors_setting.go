@@ -11,8 +11,7 @@ import (
 func (m *GinMiddleware) Cors() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		m.log.Get(m.GinUtil.GetAppContext(c)).
-			WithField("path", c.Request.RequestURI).
+		m.log.WithField("path", c.Request.RequestURI).
 			WithField("origin", "origin").
 			WithField("method", c.Request.Method).
 			Info("in cors")
