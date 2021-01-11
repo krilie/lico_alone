@@ -1,16 +1,13 @@
-// +build !auto_test
-
 package cron
 
 import (
+	context2 "context"
 	"fmt"
-	"github.com/krilie/lico_alone/common/context"
 	"testing"
 	"time"
 )
 
 func TestMain(m *testing.M) {
-	DigProvider()
 	m.Run()
 }
 
@@ -23,5 +20,5 @@ func TestCron(t *testing.T) {
 		fmt.Println("ok 2")
 	})
 	time.Sleep(time.Second * 10)
-	c.StopAndWait(context.NewContext())
+	c.StopAndWait(context2.Background())
 }

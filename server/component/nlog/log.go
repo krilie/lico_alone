@@ -42,7 +42,6 @@ func NewLogger(cfg *ncfg.NConfig) *NLog {
 	Log.Infoln("log init ok")
 	log := &NLog{Entry: Log}
 	log.SetUpLogFile(cfg.Cfg.Log.LogFile)
-	GLog = log
 	return log
 }
 
@@ -82,12 +81,15 @@ func (nlog *NLog) Get(ctx context.Context, location ...string) *NLog {
 	if ok {
 		funcName = fmt.Sprint(val)
 	}
-	nCtx := context2.GetContextOrNew(ctx)
-	if nCtx.Module != "" {
-		module = nCtx.Module
+	appValues := context2.GetAppValues(ctx)
+	if appValues == nil {
+		appValues = context2.NewAppCtxValues()
 	}
-	if nCtx.Function != "" {
-		funcName = nCtx.Function
+	if appValues.Module != "" {
+		module = appValues.Module
+	}
+	if appValues.Function != "" {
+		funcName = appValues.Function
 	}
 	if len(location) > 0 {
 		module = location[0]
@@ -95,16 +97,17 @@ func (nlog *NLog) Get(ctx context.Context, location ...string) *NLog {
 	if len(location) > 1 {
 		funcName = location[1]
 	}
+
 	return &NLog{Entry: nlog.WithFields(logrus.Fields{
 		//context_enum.AppName.Str():    nCtx.AppName,
 		//context_enum.AppVersion.Str(): nCtx.AppVersion,
 		//context_enum.AppHost.Str():    nCtx.AppHost,
 		//context_enum.CommitSha.Str(): nCtx.CommitSha,
-		context_enum.TraceId.Str():  nCtx.GetTraceId(),
-		context_enum.ClientId.Str(): nCtx.GetClientId(),
-		context_enum.UserId.Str():   nCtx.GetUserId(),
-		context_enum.Stack.Str():    nCtx.Stack,
-		context_enum.RemoteIp.Str(): nCtx.RemoteIp,
+		context_enum.TraceId.Str():  appValues.TraceId,
+		context_enum.ClientId.Str(): appValues.ClientId,
+		context_enum.UserId.Str():   appValues.UserId,
+		context_enum.Stack.Str():    appValues.Stack,
+		context_enum.RemoteIp.Str(): appValues.RemoteIp,
 		context_enum.Module.Str():   module,
 		context_enum.Function.Str(): funcName})}
 }

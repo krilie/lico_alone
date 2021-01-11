@@ -1,5 +1,3 @@
-// +build !auto_test
-
 package ncfg
 
 import (
@@ -21,11 +19,6 @@ func TestNewNConfig(t *testing.T) {
 		Log: Log{
 			LogFile:  "log.txt",
 			LogLevel: 5,
-			ElfLog: ElfLog{
-				Key:    "",
-				Secret: "",
-				Url:    "",
-			},
 		},
 		DB: DB{
 			ConnStr:         "root:123456@tcp(localhost:3306)/myapp?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai",

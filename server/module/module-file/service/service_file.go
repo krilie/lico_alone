@@ -49,7 +49,7 @@ func (a *FileModule) UploadFile(ctx context.Context, userId, fileName string, fi
 		//if err != nil {
 		//	return err
 		//}
-		url, key, err = a.fileApi.UploadFile(ctx, "static/"+id_util.NextSnowflake()+fileName, newReader, int64(size))
+		url, key, err = a.fileApi.UploadFile(ctx, "static/"+id_util.NextSnowflake()+extension, newReader, int64(size))
 		if err != nil {
 			return err
 		}

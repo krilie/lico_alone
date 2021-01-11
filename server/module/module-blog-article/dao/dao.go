@@ -1,6 +1,7 @@
 package dao
 
 import (
+	context2 "context"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/global"
@@ -17,7 +18,7 @@ type BlogArticleDao struct {
 func NewBlogArticleDao(ndb *ndb.NDb, log *nlog.NLog) *BlogArticleDao {
 	log = log.WithField(context_enum.Module.Str(), "blog article dao")
 	if global.EnableAutoMigrate {
-		err := ndb.GetDb(context.NewContext()).AutoMigrate(&model.Article{})
+		err := ndb.GetDb(context.NewAppCtx(context2.Background())).AutoMigrate(&model.Article{})
 		if err != nil {
 			panic(err)
 		}

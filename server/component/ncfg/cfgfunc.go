@@ -15,6 +15,35 @@ type NConfig struct {
 	RunEnv *run_env.RunEnv
 }
 
+func NewNConfigByCfgStr(cfgStr string) *NConfig {
+	cfg := NewNConfig()
+	err := cfg.LoadFromConfigTomlStr(cfgStr)
+	if err != nil {
+		panic(err)
+	}
+	return cfg
+}
+
+func NewNConfigByCfgStrFromEnv(envName string) *NConfig {
+	cfg := NewNConfig()
+	cfgStr := os.Getenv(envName) //"MYAPP_TEST_CONFIG"
+	err := cfg.LoadFromConfigJsonStr(cfgStr)
+	if err != nil {
+		panic(err)
+	}
+	return cfg
+}
+
+func NewNConfigByCfgStrFromEnvTest() *NConfig {
+	cfg := NewNConfig()
+	cfgStr := os.Getenv("MYAPP_TEST_CONFIG") //"MYAPP_TEST_CONFIG"
+	err := cfg.LoadFromConfigJsonStr(cfgStr)
+	if err != nil {
+		panic(err)
+	}
+	return cfg
+}
+
 func NewNConfig() *NConfig {
 	var cfg = &NConfig{V: viper.New(), Cfg: &Config{}, RunEnv: run_env.RunEnvLocal}
 

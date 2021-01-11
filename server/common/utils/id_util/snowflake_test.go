@@ -1,5 +1,3 @@
-// +build !auto_test
-
 package id_util
 
 import (

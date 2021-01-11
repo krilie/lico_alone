@@ -160,10 +160,16 @@ definitions:
     type: object
   model.QueryArticleModel:
     properties:
+      content:
+        type: string
       description:
         type: string
+      dis_like:
+        type: integer
       id:
         type: string
+      like:
+        type: integer
       picture:
         type: string
       pv:
@@ -259,7 +265,7 @@ paths:
       description: 获取article
       operationId: 获取article
       parameters:
-      - description: 搜索内容
+      - description: 文章id
         in: query
         name: article_id
         required: true
@@ -281,6 +287,103 @@ paths:
           schema:
             type: string
       summary: 获取article
+      tags:
+      - 公共接口
+  /api/common/article/mark/dislike:
+    post:
+      description: 文章点dislike
+      operationId: 文章点dislike
+      parameters:
+      - description: article id
+        in: formData
+        name: article_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 文章点dislike
+      tags:
+      - 公共接口
+  /api/common/article/mark/like:
+    post:
+      description: 文章点like
+      operationId: 文章点like
+      parameters:
+      - description: article id
+        in: formData
+        name: article_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 文章点like
+      tags:
+      - 公共接口
+  /api/common/article/mark/remove_dislike:
+    post:
+      description: 文章点dislike-remove
+      operationId: 文章点dislike-remove
+      parameters:
+      - description: article id
+        in: query
+        name: article_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 文章点dislike-remove
+      tags:
+      - 公共接口
+  /api/common/article/mark/remove_like:
+    post:
+      description: 文章点like-remove
+      operationId: 文章点like-remove
+      parameters:
+      - description: id
+        in: body
+        name: article_id
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 文章点like-remove
       tags:
       - 公共接口
   /api/common/article/query_sample:
@@ -1192,6 +1295,18 @@ paths:
           schema:
             type: string
       summary: 健康检查Hello
+      tags:
+      - 健康检查
+  /health/panic:
+    get:
+      description: 健康检查panic 引发一个panic以测试系统
+      operationId: 健康检查panic
+      responses:
+        "200":
+          description: no success
+          schema:
+            type: string
+      summary: 健康检查panic
       tags:
       - 健康检查
   /health/ping:

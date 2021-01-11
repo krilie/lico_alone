@@ -39,17 +39,18 @@ func (ndb *NDb) TransactionOnNewSession(ctx context.Context, fc func(ctx context
 	ndb.log.Get(ctx).Trace("在新的事务中执行事务代码")
 	defer ndb.log.Get(ctx).Trace("离开新的事务")
 	// 原来的上下文
-	oriCtx := context2.GetContextOrNil(ctx)
-	if oriCtx == nil {
+	values := context2.GetAppValues(ctx)
+	if values == nil {
 		ndb.log.Get(ctx).Error("应用上下文为nil 非法")
 		return errors.New("新创建独立事务无效的上下文")
 	}
 	// 新的上下文
-	var targetCtx *context2.Context = nil
-	targetCtx = oriCtx.Clone()
-	targetCtx.Tx = ndb.db.WithContext(targetCtx) // 新的session 新的事务
+	valuesNew := context2.NewAppCtxValues()
+	valuesNew.CopyFrom(values)
+	appCtxNew := context2.NewAppCtx(ctx, valuesNew)
+	valuesNew.Tx = ndb.db.WithContext(appCtxNew) // 新的session 新的事务
 	// 开始事务
-	return ndb.Transaction(targetCtx, fc)
+	return ndb.Transaction(appCtxNew, fc)
 }
 
 type IGetNDb interface {

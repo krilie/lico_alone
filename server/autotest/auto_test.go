@@ -4,7 +4,7 @@ package autotest
 
 import (
 	"fmt"
-	"github.com/krilie/lico_alone/common/dig"
+	"github.com/krilie/lico_alone/common/appdig"
 	"strconv"
 	"testing"
 )
@@ -13,16 +13,15 @@ import (
 
 func TestMain(t *testing.M) {
 	fmt.Println("自动测试外层TestMain")
-	dig.Container.MustProvide(func() *int {
+	appdig.Container.MustProvide(func() *int {
 		var i = 1
 		return &i
 	})
 	t.Run()
 }
 
-func TestTest(t *testing.T) {
-	t.Log("自动测试外层测试")
-	dig.Container.MustInvoke(func(i *int) {
+func TestAutoTest(t *testing.T) {
+	appdig.Container.MustInvoke(func(i *int) {
 		fmt.Println("自动测试外层测试一 " + strconv.Itoa(*i))
 	})
 }

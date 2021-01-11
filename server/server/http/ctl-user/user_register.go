@@ -21,7 +21,7 @@ func (a *UserCtrl) UserRegister(c *gin.Context) {
 	phone := c.PostForm("phone")
 	password := c.PostForm("password")
 	validCode := c.PostForm("valid_code")
-	err := a.userService.UserRegister(ginutil.MustGetAppCtx(c), phone, password, validCode, "")
+	err := a.userService.UserRegister(a.ginUtil.MustGetAppContext(c), phone, password, validCode, "")
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return

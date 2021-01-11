@@ -1,16 +1,23 @@
 package service
 
 import (
-	"github.com/krilie/lico_alone/common/dig"
+	"github.com/krilie/lico_alone/common/appdig"
+	"github.com/krilie/lico_alone/component"
 	"github.com/krilie/lico_alone/module/module-blog-article/dao"
+	module_like_dislike "github.com/krilie/lico_alone/module/module-like-dislike"
 )
 
-// DigProvider provider
-func DigProvider() {
-	dig.Container.MustProvide(NewBlogArticleModule)
+var DigModuleBlogArticleProviderAll = []interface{}{
+	dao.NewBlogArticleDao,
+	NewBlogArticleModule,
 }
 
-func DigProviderWithDao() {
-	dao.DigProvider()
-	DigProvider()
+// 测试用
+func BuildTestContainer() *appdig.AppContainer {
+	var container = appdig.NewAppDig()
+	container.
+		MustProvides(component.DigComponentProviderAllForTest).
+		MustProvides(DigModuleBlogArticleProviderAll).
+		MustProvides(module_like_dislike.DigModuleLikeDisLikeProviderAll)
+	return container
 }

@@ -25,7 +25,7 @@ func (a *UserCtrl) UserSendSms(c *gin.Context) {
 	}
 	switch c.PostForm("send_type") {
 	case "register":
-		err := a.userService.SendRegisterSms(ginutil.MustGetAppCtx(c), phone)
+		err := a.userService.SendRegisterSms(a.ginUtil.MustGetAppContext(c), phone)
 		if err != nil {
 			ginutil.ReturnWithErr(c, err)
 			return

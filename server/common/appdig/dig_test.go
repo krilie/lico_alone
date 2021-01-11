@@ -1,6 +1,4 @@
-// +build !auto_test
-
-package dig
+package appdig
 
 import (
 	"fmt"

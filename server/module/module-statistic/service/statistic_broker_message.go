@@ -1,15 +1,17 @@
 package service
 
 import (
+	context2 "context"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/broker/messages"
 	"github.com/krilie/lico_alone/module/module-statistic/model"
 )
 
 func (a *StatisticService) HandleBrokerWebStationVisited(msg *messages.WebStationVisitedMessage) {
-	ctx := context.NewContext()
-	ctx.Module = "StatisticService"
-	ctx.Function = "HandleBrokerWebStationVisited"
+	values := context.NewAppCtxValues()
+	values.Module = "StatisticService"
+	values.Function = "HandleBrokerWebStationVisited"
+	ctx := context.NewAppCtx(context2.Background(), values)
 	var vLogs = &model.AddStatVisitorLogsModel{
 		AccessTime: msg.AccessTime,
 		Ip:         msg.Ip,
@@ -31,9 +33,10 @@ func (a *StatisticService) HandleBrokerWebStationVisited(msg *messages.WebStatio
 }
 
 func (a *StatisticService) HandleBrokerArticleVisitorMessage(msg *messages.BlogArticleVisitedMessage) {
-	ctx := context.NewContext()
-	ctx.Module = "StatisticService"
-	ctx.Function = "HandleBrokerArticleVisitorMessage"
+	values := context.NewAppCtxValues()
+	values.Module = "StatisticService"
+	values.Function = "HandleBrokerArticleVisitorMessage"
+	ctx := context.NewAppCtx(context2.Background(), values)
 	var vLogs = &model.AddStatArticleVisitorModel{
 		AccessTime:      msg.VisitedTime,
 		Ip:              msg.VisitorIp,

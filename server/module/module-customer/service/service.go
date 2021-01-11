@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	context2 "github.com/krilie/lico_alone/common/context"
 	infra_ip "github.com/krilie/lico_alone/common/thirdtools/infra-ip"
 	"github.com/krilie/lico_alone/component/broker"
@@ -20,6 +21,6 @@ func NewCustomerModule(broker *broker.Broker, dao *dao.CustomerDao, log *nlog.NL
 		log:   log,
 		ipApi: infra_ip.NewIpInfoApiOne(),
 	}
-	broker.MustRegister(context2.NewContext(), svc.HandleBrokerWebStationVisited)
+	broker.MustRegister(context2.NewAppCtx(context.Background()), svc.HandleBrokerWebStationVisited)
 	return svc
 }

@@ -1,11 +1,9 @@
-// +build !auto_test
-
 package dao
 
 import (
+	"github.com/krilie/lico_alone/common/appdig"
 	com_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/common/utils/str_util"
 	"github.com/krilie/lico_alone/component"
@@ -16,14 +14,13 @@ import (
 	"time"
 )
 
-func TestMain(m *testing.M) {
-	component.DigProviderTest()
-	DigProvider()
-	m.Run()
-}
+var container = appdig.
+	NewAppDig().
+	MustProvides(component.DigComponentProviderAllForTest).
+	MustProvide(NewFileDao)
 
 func TestFileDao_CreateFile(t *testing.T) {
-	dig.Container.MustInvoke(func(dao *FileDao) {
+	container.MustInvoke(func(dao *FileDao) {
 		file := &model.FileMaster{
 			Model: com_model.Model{
 				Id:        id_util.GetUuid(),
@@ -42,12 +39,12 @@ func TestFileDao_CreateFile(t *testing.T) {
 			BizType:     "66",
 			Size:        7,
 		}
-		err := dao.CreateFile(context.NewContext(), file)
+		err := dao.CreateFile(context.EmptyAppCtx(), file)
 		if err != nil {
 			t.Error("err db insert" + str_util.ToJsonPretty(file))
 			t.FailNow()
 		}
-		err = dao.DeleteFile(context.NewContext(), file.Id)
+		err = dao.DeleteFile(context.EmptyAppCtx(), file.Id)
 		if err != nil {
 			t.Error("err db delete" + str_util.ToJsonPretty(file))
 			t.FailNow()
@@ -56,8 +53,8 @@ func TestFileDao_CreateFile(t *testing.T) {
 }
 
 func BenchmarkNewFileDao(b *testing.B) {
-	dig.Container.MustInvoke(func(dao *FileDao) {
-		dao.GetDb(context.NewContext()).Logger.LogMode(logger.Error)
+	container.MustInvoke(func(dao *FileDao) {
+		dao.GetDb(context.EmptyAppCtx()).Logger.LogMode(logger.Error)
 		file := &model.FileMaster{
 			Model: com_model.Model{
 				Id:        id_util.GetUuid(),
@@ -76,12 +73,12 @@ func BenchmarkNewFileDao(b *testing.B) {
 			BizType:     "66",
 			Size:        7,
 		}
-		err := dao.CreateFile(context.NewContext(), file)
+		err := dao.CreateFile(context.EmptyAppCtx(), file)
 		if err != nil {
 			b.Error("err db insert" + str_util.ToJsonPretty(file))
 			b.FailNow()
 		}
-		err = dao.DeleteFile(context.NewContext(), file.Id)
+		err = dao.DeleteFile(context.EmptyAppCtx(), file.Id)
 		if err != nil {
 			b.Error("err db delete" + str_util.ToJsonPretty(file))
 			b.FailNow()

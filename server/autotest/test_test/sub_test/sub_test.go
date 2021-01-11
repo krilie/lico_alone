@@ -2,8 +2,11 @@
 
 package sub_test
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
-func TestSubTest(t *testing.T) {
-	t.Log("自动测试内内层测试 for sub test")
+func TestAutoSubTest(t *testing.T) {
+	fmt.Println("自动测试内内层测试 for sub test")
 }

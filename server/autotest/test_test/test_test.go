@@ -1,17 +1,17 @@
-// +build auto_test
-
 package test_test
 
 import (
 	"fmt"
-	"github.com/krilie/lico_alone/common/dig"
+	"github.com/krilie/lico_alone/common/appdig"
 	"strconv"
 	"testing"
 )
 
+var container = appdig.NewAppDig()
+
 func TestMain(t *testing.M) {
 	fmt.Println("自动测试dig测试main")
-	dig.Container.MustProvide(func() *int {
+	container.MustProvide(func() *int {
 		var i = 2
 		return &i
 	})
@@ -19,13 +19,13 @@ func TestMain(t *testing.M) {
 	fmt.Printf("after run %v \n", run)
 }
 
-func TestOne(t *testing.T) {
+func TestAutoOne(t *testing.T) {
 	fmt.Println("test one")
 }
 
-func TestTwo(t *testing.T) {
+func TestAutoTwo(t *testing.T) {
 	fmt.Println("test two")
-	dig.Container.MustInvoke(func(i *int) {
+	container.MustInvoke(func(i *int) {
 		fmt.Println("auto test two " + strconv.Itoa(*i))
 	})
 }

@@ -1,5 +1,3 @@
-// +build !auto_test
-
 package pswd_util
 
 import (

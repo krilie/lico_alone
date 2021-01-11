@@ -6,15 +6,15 @@ import (
 	"github.com/krilie/lico_alone/server/http/ginutil"
 )
 
-func NeedRoles(auth IAuth, role string) gin.HandlerFunc {
+func (m *GinMiddleware) NeedRoles(role string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// check user get context
-		userId := ginutil.GetUserIdOrAbort(c)
+		userId := m.GinUtil.GetUserIdOrAbort(c)
 		if userId == "" {
 			return
 		}
 		//check user has permission
-		b, err := auth.HasRole(ginutil.MustGetAppCtx(c), userId, role)
+		b, err := m.IAuth.HasRole(m.GinUtil.MustGetAppContext(c), userId, role)
 		if err != nil {
 			ginutil.AbortWithErr(c, err)
 			return

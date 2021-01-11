@@ -19,7 +19,7 @@ type UserDao struct {
 func NewUserDao(db *ndb.NDb, log *nlog.NLog) *UserDao {
 	log = log.WithField(context_enum.Module.Str(), "module user dao")
 	if global.EnableAutoMigrate {
-		err := db.GetDb(context2.NewContext()).AutoMigrate(
+		err := db.GetDb(context2.NewAppCtx(context.Background())).AutoMigrate(
 			&model.Permission{},
 			&model.RolePermission{},
 			&model.Role{},

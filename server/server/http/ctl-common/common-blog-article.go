@@ -19,9 +19,10 @@ import (
 // @Success 200 {object} com_model.CommonReturn{data=com_model.PageData{data=[]model.QueryArticleModel}}
 // @Failure 500 {string} errInfo
 // @Router /api/common/article/query_sample [GET]
-func (common *CommonCtrl) QueryArticleSample(c *gin.Context) {
-	ctx := ginutil.MustGetAppCtx(c)
-	log := common.log.Get(ctx)
+func (con *CommonCtrl) QueryArticleSample(c *gin.Context) {
+	ctx := con.ginUtil.MustGetAppContext(c)
+	log := con.log.Get(ctx)
+	log.Info("on query article sample")
 	var param = &struct {
 		com_model.PageParams
 		SearchKey string `form:"search_key" json:"search_key" xml:"search_key"  binding:"required"`
@@ -33,7 +34,7 @@ func (common *CommonCtrl) QueryArticleSample(c *gin.Context) {
 		return
 	}
 	param.PageParams.CheckOkOrSetDefault()
-	pageData, err := common.CommonService.QueryArticleSamplePage(ctx, param.PageParams, param.SearchKey)
+	pageData, err := con.CommonService.QueryArticleSamplePage(ctx, param.PageParams, param.SearchKey, con.ginUtil.GetCustomerId(c))
 	if err != nil {
 		ginutil.ReturnWithErr(c, err)
 		return
@@ -48,21 +49,125 @@ func (common *CommonCtrl) QueryArticleSample(c *gin.Context) {
 // @Tags 公共接口
 // @ID 获取article
 // @Produce json
-// @Param article_id query string true "搜索内容"
+// @Param article_id query string true "文章id"
 // @Success 200 {object} com_model.CommonReturn{data=model.ArticleDto}
 // @Failure 500 {string} errInfo
 // @Router /api/common/article/get_article [GET]
-func (common *CommonCtrl) GetArticle(c *gin.Context) {
-	ctx := ginutil.MustGetAppCtx(c)
-	log := common.log.Get(ctx)
+func (con *CommonCtrl) GetArticle(c *gin.Context) {
+	ctx := con.ginUtil.MustGetAppContext(c)
+	log := con.log.Get(ctx)
 	articleId := c.Query("article_id")
 
-	article, err := common.CommonService.GetArticleById(ctx, articleId)
+	article, err := con.CommonService.GetArticleById(ctx, articleId, con.ginUtil.GetCustomerId(c))
 	if err != nil {
 		log.Error(err)
 		ginutil.ReturnWithErr(c, err)
 		return
 	}
 	ginutil.ReturnData(c, article)
+	return
+}
+
+// MarkArticleLike 文章点like
+// @Summary 文章点like
+// @Description 文章点like
+// @Tags 公共接口
+// @ID 文章点like
+// @Produce json
+// @Param article_id formData string true "article id"
+// @Success 200 {object} com_model.CommonReturn{}
+// @Failure 500 {string} errInfo
+// @Router /api/common/article/mark/like [POST]
+func (con *CommonCtrl) MarkArticleLike(c *gin.Context) {
+	ctx := con.ginUtil.MustGetAppContext(c)
+	log := con.log.Get(ctx)
+	articleId := c.PostForm("article_id")
+	customerId := con.ginUtil.MustGetAppValues(c).CustomerTraceId
+
+	err := con.CommonService.ModuleArticle.AddLike(ctx, customerId, articleId)
+	if err != nil {
+		log.Error(err)
+		ginutil.ReturnWithErr(c, err)
+		return
+	}
+	ginutil.ReturnOk(c)
+	return
+}
+
+// MarkArticleDisLike 文章点dislike
+// @Summary 文章点dislike
+// @Description 文章点dislike
+// @Tags 公共接口
+// @ID 文章点dislike
+// @Produce json
+// @Param article_id formData string true "article id"
+// @Success 200 {object} com_model.CommonReturn{}
+// @Failure 500 {string} errInfo
+// @Router /api/common/article/mark/dislike [POST]
+func (con *CommonCtrl) MarkArticleDisLike(c *gin.Context) {
+	ctx := con.ginUtil.MustGetAppContext(c)
+	log := con.log.Get(ctx)
+	articleId := c.PostForm("article_id")
+	customerId := con.ginUtil.MustGetAppValues(c).CustomerTraceId
+
+	err := con.CommonService.ModuleArticle.AddDisLike(ctx, customerId, articleId)
+	if err != nil {
+		log.Error(err)
+		ginutil.ReturnWithErr(c, err)
+		return
+	}
+	ginutil.ReturnOk(c)
+	return
+}
+
+// RemoveMarkArticleLike 文章点like-remove
+// @Summary 文章点like-remove
+// @Description 文章点like-remove
+// @Tags 公共接口
+// @ID 文章点like-remove
+// @Produce json
+// @Param article_id body string true "id"
+// @Success 200 {object} com_model.CommonReturn{}
+// @Failure 500 {string} errInfo
+// @Router /api/common/article/mark/remove_like [POST]
+func (con *CommonCtrl) RemoveMarkArticleLike(c *gin.Context) {
+	ctx := con.ginUtil.MustGetAppContext(c)
+	log := con.log.Get(ctx)
+	articleId := c.PostForm("article_id")
+	customerId := con.ginUtil.MustGetAppValues(c).CustomerTraceId
+
+	err := con.CommonService.ModuleArticle.RemoveLike(ctx, customerId, articleId)
+	if err != nil {
+		log.Error(err)
+		ginutil.ReturnWithErr(c, err)
+		return
+	}
+	ginutil.ReturnOk(c)
+	return
+}
+
+// RemoveMarkArticleDisLike 文章点dislike-remove
+// @Summary 文章点dislike-remove
+// @Description 文章点dislike-remove
+// @Tags 公共接口
+// @ID 文章点dislike-remove
+// @Produce json
+// @Param article_id query string true "article id"
+// @Success 200 {object} com_model.CommonReturn{}
+// @Failure 500 {string} errInfo
+// @Router /api/common/article/mark/remove_dislike [POST]
+func (con *CommonCtrl) RemoveMarkArticleDisLike(c *gin.Context) {
+	ctx := con.ginUtil.MustGetAppContext(c)
+	log := con.log.Get(ctx)
+	articleId := c.PostForm("article_id")
+	customerId := con.ginUtil.MustGetAppValues(c).CustomerTraceId
+
+	err := con.CommonService.ModuleArticle.RemoveDisLike(ctx, customerId, articleId)
+	if err != nil {
+		log.Error(err)
+		ginutil.ReturnWithErr(c, err)
+		return
+	}
+	ginutil.ReturnOk(c)
 	return
 }

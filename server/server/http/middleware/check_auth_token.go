@@ -6,6 +6,7 @@ import (
 	jwt2 "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/com-model"
+	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/jwt"
 	"github.com/krilie/lico_alone/server/http/ginutil"
@@ -21,17 +22,17 @@ type IAuth interface {
 }
 
 // check user is login and auth token validation
-func CheckAuthToken(auth IAuth) gin.HandlerFunc {
+func (m *GinMiddleware) CheckAuthToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// get context
-		ctx := ginutil.GetAppCtxOrAbort(c)
+		ctx := m.GinUtil.GetAppContextOrAbort(c)
 		if ctx == nil {
 			return
 		}
 		headerAuth := c.GetHeader(ginutil.HeaderAuthorization)
 		headerAuth = strings.TrimPrefix(headerAuth, "Bearer ")
 
-		var claims, err = auth.CheckJwtToken(headerAuth)
+		var claims, err = m.IAuth.CheckJwtToken(headerAuth)
 		if err != nil {
 			if errors.As(err, &jwt2.ValidationError{}) {
 				validateErr := err.(*jwt2.ValidationError)
@@ -49,7 +50,7 @@ func CheckAuthToken(auth IAuth) gin.HandlerFunc {
 				return
 			}
 		} else {
-			has, err := auth.HasUser(ctx, claims.UserId)
+			has, err := m.IAuth.HasUser(ctx, claims.UserId)
 			if err != nil {
 				ginutil.AbortWithErr(c, err)
 				return
@@ -58,7 +59,9 @@ func CheckAuthToken(auth IAuth) gin.HandlerFunc {
 				ginutil.AbortWithAppErr(c, errs.NewInvalidToken())
 				return
 			}
-			ctx.SetUserId(claims.UserId)
+			// set user id to ctx
+			values := context2.MustGetAppValues(ctx)
+			values.UserId = claims.UserId // 设置用户id
 			c.Next()
 			return
 		}

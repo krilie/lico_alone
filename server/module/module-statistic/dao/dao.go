@@ -1,9 +1,9 @@
 package dao
 
 import (
+	context2 "context"
 	"github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/dig"
 	"github.com/krilie/lico_alone/common/global"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
@@ -19,7 +19,7 @@ type StatisticDao struct {
 func NewStatisticDao(db *ndb.NDb, log *nlog.NLog) *StatisticDao {
 	log = log.WithField(context_enum.Module.Str(), "StatisticDao")
 	if global.EnableAutoMigrate {
-		err := db.GetDb(context.NewContext()).AutoMigrate(new(model.StatVisitorLogs), new(model.StatArticleVisitorLogs))
+		err := db.GetDb(context.NewAppCtx(context2.Background())).AutoMigrate(new(model.StatVisitorLogs), new(model.StatArticleVisitorLogs))
 		if err != nil {
 			panic(err)
 		}
@@ -28,9 +28,4 @@ func NewStatisticDao(db *ndb.NDb, log *nlog.NLog) *StatisticDao {
 		NDb: db,
 		log: log,
 	}
-}
-
-// DigProvider provider
-func DigProvider() {
-	dig.Container.MustProvide(NewStatisticDao)
 }
