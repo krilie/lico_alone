@@ -98,10 +98,11 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 		Handler: rootRouter,
 	}
 	//是否有ssl.public_key ssl.private_key
-	pubKey := httpCfg.SslPub
-	priKey := httpCfg.SslPri
-	if pubKey == "" || priKey == "" {
-		go func() {
+
+	go func() {
+		pubKey := httpCfg.SslPub
+		priKey := httpCfg.SslPri
+		if pubKey == "" || priKey == "" {
 			if err := srv.ListenAndServe(); err != nil {
 				if errors.Is(err, http.ErrServerClosed) {
 					return
@@ -110,9 +111,7 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 				}
 				return
 			}
-		}()
-	} else {
-		go func() {
+		} else {
 			if err := srv.ListenAndServeTLS(pubKey, priKey); err != nil {
 				if errors.Is(err, http.ErrServerClosed) {
 					return
@@ -121,8 +120,9 @@ func InitAndStartHttpServer(ctx context.Context, cfg *ncfg.NConfig, auth middlew
 				}
 				return
 			}
-		}()
-	}
+		}
+	}()
+
 	return func(waitDuration time.Duration) error {
 		ctxTimeout, cancelFunc := context.WithTimeout(ctx, waitDuration)
 		defer cancelFunc()
