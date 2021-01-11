@@ -11,6 +11,7 @@ import (
 // 不能删除 不能添加
 
 func (a *UserService) GetAllConfig(ctx context.Context, searchKey string) ([]*model.Config, error) {
+	a.log.Get(ctx).Info("on get all config func")
 	return a.moduleConfig.GetAllConfig(ctx, searchKey)
 }
 
