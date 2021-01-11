@@ -7,7 +7,6 @@ import (
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
-	context2 "github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/krilie/lico_alone/component/nlog"
 	_ "github.com/krilie/lico_alone/docs"
@@ -39,14 +38,16 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 	rootRouter := gin.Default() // logger recover
 	rootRouter.Use(h.middleware.MiddlewareRecovery())
 	rootRouter.Use(middleware.RequestOpsLimit()) // 限流
+	// cors
+	rootRouter.Use(h.middleware.Cors())
 
 	rootRouter.NoMethod(func(c *gin.Context) {
 		h.log.Get(ctx).WithField("path", c.Request.URL).WithField("method", c.Request.Method).Info("no method")
-		c.JSON(200, "no method")
+		c.JSON(404, "no method")
 	})
 	rootRouter.NoRoute(func(c *gin.Context) {
 		h.log.Get(ctx).WithField("path", c.Request.URL).WithField("method", c.Request.Method).Info("no route")
-		c.JSON(200, "no route")
+		c.JSON(404, "no route")
 	})
 
 	{
@@ -81,23 +82,15 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 
 	{
 		manageGroup := apiGroup.Group("")
-		var manageOriginFunc = func() string {
-			origin, err := h.middleware.CfgService.GetValueStr(context2.EmptyAppCtx(), "access-control-allow-origin-m")
-			if err != nil {
-				origin = new(string)
-				*origin = "*"
-			}
-			return *origin
-		}
 		// 不检查权限的分组
-		noCheckToken := manageGroup.Group("", h.middleware.Cors(manageOriginFunc, "false"))
-		noCheckToken.POST("/user/login", h.ctrl.userCtrl.UserLogin)
-		noCheckToken.POST("/user/register", h.ctrl.userCtrl.UserRegister)
-		noCheckToken.POST("/user/send_sms", h.ctrl.userCtrl.UserSendSms)
+		noCheckToken := manageGroup.Group("")
+		noCheckToken.POST("/manage/user/login", h.ctrl.userCtrl.UserLogin)
+		noCheckToken.POST("/manage/user/register", h.ctrl.userCtrl.UserRegister)
+		noCheckToken.POST("/manage/user/send_sms", h.ctrl.userCtrl.UserSendSms)
 
 		//检查权限的分组
-		checkToken := manageGroup.Group("", h.middleware.Cors(manageOriginFunc, "false"), h.middleware.CheckAuthToken())
-		checkToken.GET("/user/init_app", h.ctrl.userCtrl.InitApp)
+		checkToken := manageGroup.Group("", h.middleware.CheckAuthToken())
+		checkToken.GET("/manage/user/init_app", h.ctrl.userCtrl.InitApp)
 		checkToken.GET("/manage/setting/get_setting_all", h.ctrl.userCtrl.ManageGetConfigList)
 		checkToken.POST("/manage/setting/update_config", h.ctrl.userCtrl.ManageUpdateConfig)
 		checkToken.GET("/manage/setting/get_a_map_key", h.ctrl.userCtrl.ManageGetAMapKey) // 高德地图 获取配置key
@@ -118,16 +111,8 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 
 	{
 		commonGroup := apiGroup.Group("")
-		var commonOriginFunc = func() string {
-			origin, err := h.middleware.CfgService.GetValueStr(context2.EmptyAppCtx(), "access-control-allow-origin-c")
-			if err != nil {
-				origin = new(string)
-				*origin = "*"
-			}
-			return *origin
-		}
 		// common 服务
-		commonApi := commonGroup.Group("", h.middleware.Cors(commonOriginFunc, "true"))
+		commonApi := commonGroup.Group("")
 		commonApi.GET("/common/icp_info", h.ctrl.commonCtrl.GetIcpInfo)
 		commonApi.GET("/common/article/query_sample", h.ctrl.commonCtrl.QueryArticleSample)
 		commonApi.GET("/common/article/get_article", h.ctrl.commonCtrl.GetArticle)
