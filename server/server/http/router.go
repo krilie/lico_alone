@@ -89,7 +89,7 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 			}
 			return *origin
 		}
-		manageGroup.Use(h.middleware.Cors(manageOriginFunc))
+		manageGroup.Use(h.middleware.Cors(manageOriginFunc, "false"))
 		// 不检查权限的分组
 		noCheckToken := manageGroup.Group("")
 		noCheckToken.POST("/user/login", h.ctrl.userCtrl.UserLogin)
@@ -128,7 +128,7 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 			return *origin
 		}
 		// common 服务
-		commonApi := commonGroup.Group("", h.middleware.Cors(commonOriginFunc))
+		commonApi := commonGroup.Group("", h.middleware.Cors(commonOriginFunc, "true"))
 		commonApi.GET("/common/icp_info", h.ctrl.commonCtrl.GetIcpInfo)
 		commonApi.GET("/common/article/query_sample", h.ctrl.commonCtrl.QueryArticleSample)
 		commonApi.GET("/common/article/get_article", h.ctrl.commonCtrl.GetArticle)
