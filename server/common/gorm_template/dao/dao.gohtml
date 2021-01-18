@@ -1,0 +1,32 @@
+package dao
+
+import (
+	context2 "context"
+	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
+	"github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/common/global"
+	"github.com/krilie/lico_alone/component/ndb"
+	"github.com/krilie/lico_alone/component/nlog"
+	"github.com/krilie/lico_alone/module/{{.ParentPackage}}/model"
+)
+
+type {{.ModuleName}}Dao struct {
+	*ndb.NDb
+	log *nlog.NLog
+}
+
+func New{{.ModuleName}}Dao(ndb *ndb.NDb, log *nlog.NLog) *{{.ModuleName}}Dao {
+	log = log.WithField(context_enum.Module.Str(), "{{.ModuleName}} dao")
+	if global.EnableAutoMigrate {
+		{{range $i, $v := .models}}
+			err{{$i}} := ndb.GetDb(context.NewAppCtx(context2.Background())).AutoMigrate(&model.Base{{$v}}{})
+			if err{{$i}} != nil {
+			    panic(err{{$i}})
+			}
+		{{end}}
+	}
+	return &{{.ModuleName}}Dao{
+		NDb: ndb,
+		log: log,
+	}
+}

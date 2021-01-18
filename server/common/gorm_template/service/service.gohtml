@@ -1,0 +1,25 @@
+package service
+
+import (
+	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
+	"github.com/krilie/lico_alone/component/broker"
+	"github.com/krilie/lico_alone/component/nlog"
+	"github.com/krilie/lico_alone/module/{{.ParentPackage}}/dao"
+)
+
+// 系统配置服务
+type {{.ModuleName}}Module struct {
+	Dao               *dao.{{.ModuleName}}Dao
+	log               *nlog.NLog
+	broker            *broker.Broker
+}
+
+func New{{.ModuleName}}Module(log *nlog.NLog, dao *dao.{{.ModuleName}}Dao, broker *broker.Broker) *{{.ModuleName}}Module {
+	log = log.WithField(context_enum.Module.Str(), "{{.ModuleName}} service")
+	var module = &{{.ModuleName}}Module{
+		Dao:               dao,
+		log:               log,
+		broker:            broker,
+	}
+	return module
+}
