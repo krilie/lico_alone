@@ -121,9 +121,11 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 		commonApi.POST("/common/article/mark/remove_like", h.ctrl.commonCtrl.RemoveMarkArticleLike)
 		commonApi.POST("/common/article/mark/remove_dislike", h.ctrl.commonCtrl.RemoveMarkArticleDisLike)
 		commonApi.GET("/common/carousel/query", h.ctrl.commonCtrl.QueryCarousel)
-		commonApi.GET("/common/version", h.ctrl.commonCtrl.Version)     // 版本号
-		commonApi.POST("/common/visited", h.ctrl.commonCtrl.WebVisited) // WebVisited
-		commonApi.GET("/common/about_app", h.ctrl.commonCtrl.AboutApp)  // AboutApp
+		commonApi.GET("/common/version", h.ctrl.commonCtrl.Version)             // 版本号
+		commonApi.POST("/common/visited", h.ctrl.commonCtrl.WebVisited)         // WebVisited
+		commonApi.GET("/common/about_app", h.ctrl.commonCtrl.AboutApp)          // AboutApp
+		commonApi.GET("/common/picture/:id", h.ctrl.commonCtrl.GetSlidePicById) // AboutApp
+
 	}
 
 	// 开始服务

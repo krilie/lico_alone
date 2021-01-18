@@ -7,5 +7,5 @@ import (
 
 func (a *CommonService) QueryCarousel(ctx context.Context) (list []*model.Carousel, err error) {
 	isOnShow := true
-	return a.moduleCarousel.QueryCarousel(ctx, &isOnShow)
+	return a.ModuleCarousel.QueryCarousel(ctx, &isOnShow)
 }

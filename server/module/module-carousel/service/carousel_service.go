@@ -34,3 +34,7 @@ func (c *CarouselModule) UpdateCarousel(ctx context.Context, item *model.UpdateC
 func (c *CarouselModule) DeleteCarouselById(ctx context.Context, id string) error {
 	return c.Dao.DeleteCarouselById(ctx, id)
 }
+
+func (c *CarouselModule) GetCarouselById(ctx context.Context, id string) (model *model.Carousel, err error) {
+	return c.Dao.GetCarouselById(ctx, id)
+}

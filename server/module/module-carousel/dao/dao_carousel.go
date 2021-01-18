@@ -75,6 +75,16 @@ func (a *CarouselDao) DeleteCarouselById(ctx context.Context, id string) error {
 	return nil
 }
 
+func (a *CarouselDao) GetCarouselById(ctx context.Context, id string) (m *model.Carousel, err error) {
+	var carousel = new(model.Carousel)
+	err = a.GetDb(ctx).Model(carousel).Where("id=?", id).Find(&carousel).Error
+	if err != nil {
+		a.log.Get(ctx).Error(err)
+		return nil, err
+	}
+	return carousel, nil
+}
+
 type ICarouselDao interface {
 	QueryCarousel(ctx context.Context, isOnShow *bool) (list []*model.Carousel, err error)
 	CreateCarousel(ctx context.Context, item *model.Carousel) error
