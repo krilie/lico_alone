@@ -1,14 +1,27 @@
 package template_utils
 
 import (
+	"bytes"
+	"go/format"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 	"text/template"
 )
 
-func GenFiles(tmpl *template.Template, origin, out string, vars interface{}) {
-	tmpl, err := tmpl.ParseFiles(origin)
+func GenFiles(origin, out string, vars interface{}) {
+	tmpl := template.New("genCode")
+	originFile, err := os.Open(origin)
+	if err != nil {
+		panic(err)
+	}
+	defer originFile.Close()
+	content, err := ioutil.ReadAll(originFile)
+	if err != nil {
+		panic(err)
+	}
+	tmpl, err = tmpl.Parse(string(content))
 	if err != nil {
 		panic(err)
 	}
@@ -17,15 +30,23 @@ func GenFiles(tmpl *template.Template, origin, out string, vars interface{}) {
 		panic(err)
 	}
 	defer outFile.Close()
-	if err := tmpl.Execute(outFile, vars); nil != err {
+	var buf = &bytes.Buffer{}
+	if err := tmpl.Execute(buf, vars); nil != err {
 		panic(err)
 	}
+	source, err := format.Source(buf.Bytes())
+	if err != nil {
+		panic(err)
+	}
+	write, err := outFile.Write(source)
+	if err != nil || write != len(source) {
+		panic(err)
+	}
+	println(out)
 }
 
 // dir out 都是相对路径的目录
 func GenDir(inDir, outDir string, vars interface{}) {
-	tmpl := template.New("gen code")
-	//tmpl.Funcs()
 
 	currentPath := GetProjectPath()
 	err := filepath.Walk(currentPath+"\\"+inDir, func(path string, info os.FileInfo, err error) error {
@@ -37,7 +58,7 @@ func GenDir(inDir, outDir string, vars interface{}) {
 					panic(err)
 				}
 			}
-			GenFiles(tmpl, path, outPath, vars)
+			GenFiles(path, outPath, vars)
 		}
 		return nil
 	})
