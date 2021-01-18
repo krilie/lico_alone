@@ -71,3 +71,32 @@ func TestStruct(t *testing.T) {
 		b2.HelloB()
 	}
 }
+
+type one struct {
+	name string
+}
+
+func (o *one) Hello2() {
+	println("hello one")
+}
+
+type two struct {
+	name2 string
+}
+
+func (o *two) Hello2() {
+	println("hello two")
+}
+
+type outInterface interface {
+	Hello2()
+}
+
+func Test2(t *testing.T) {
+	var a outInterface = &one{}
+	a.Hello2()
+	var b outInterface = &two{}
+	b.Hello2()
+	_, ok := a.(*one)
+	println(ok)
+}
