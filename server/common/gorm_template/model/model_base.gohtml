@@ -4,9 +4,11 @@ import (
 	"github.com/krilie/lico_alone/common/com-model"
 )
 
-
 {{range $i, $v := .models}}
-	type Base{{$v}} struct {
+	type {{$v}} struct {
 	    com_model.Model
+	}
+	func ({{$v}}) TableName() string {
+	    return "tb_{{ToSnake $v}}"
 	}
 {{end}}

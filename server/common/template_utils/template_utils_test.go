@@ -13,9 +13,9 @@ func TestGetProjectPath(t *testing.T) {
 func TestGenDir(t *testing.T) {
 	GenDir("common\\gorm_template", "module\\module-test",
 		map[string]interface{}{
-			"ParentPackage": "module-test",
-			"ModuleName":    "TestArticle",
-			"models":        []string{"One", "Two"},
+			"packageName": "module-test",
+			"moduleName":  "TestArticle",
+			"models":      []string{"One", "Two"},
 		})
 }
 

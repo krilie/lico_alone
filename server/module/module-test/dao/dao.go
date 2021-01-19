@@ -19,12 +19,12 @@ func NewTestArticleDao(ndb *ndb.NDb, log *nlog.NLog) *TestArticleDao {
 	log = log.WithField(context_enum.Module.Str(), "TestArticle dao")
 	if global.EnableAutoMigrate {
 
-		err0 := ndb.GetDb(context.NewAppCtx(context2.Background())).AutoMigrate(&model.BaseOne{})
+		err0 := ndb.GetDb(context.NewAppCtx(context2.Background())).AutoMigrate(&model.One{})
 		if err0 != nil {
 			panic(err0)
 		}
 
-		err1 := ndb.GetDb(context.NewAppCtx(context2.Background())).AutoMigrate(&model.BaseTwo{})
+		err1 := ndb.GetDb(context.NewAppCtx(context2.Background())).AutoMigrate(&model.Two{})
 		if err1 != nil {
 			panic(err1)
 		}

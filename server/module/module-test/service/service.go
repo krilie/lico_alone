@@ -15,7 +15,7 @@ type TestArticleModule struct {
 }
 
 func NewTestArticleModule(log *nlog.NLog, dao *dao.TestArticleDao, broker *broker.Broker) *TestArticleModule {
-	log = log.WithField(context_enum.Module.Str(), "TestArticle service")
+	log = log.WithField(context_enum.Module.Str(), "test_article service")
 	var module = &TestArticleModule{
 		Dao:    dao,
 		log:    log,

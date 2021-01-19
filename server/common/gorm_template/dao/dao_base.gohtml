@@ -1,0 +1,59 @@
+package dao
+
+import (
+	"context"
+	"errors"
+	sq "github.com/Masterminds/squirrel"
+	"github.com/krilie/lico_alone/common/utils/id_util"
+	"github.com/krilie/lico_alone/module/{{.packageName}}/model"
+	"gorm.io/gorm"
+)
+
+{{range $i, $v := .models}}
+	func (t *{{$.moduleName}}Dao) Get{{$v}}ById(ctx context.Context, id string) (*model.{{$v}}, error) {
+	    {{ToLowerCamel $v}} := new(model.{{$v}})
+	    err := t.GetDb(ctx).First({{ToLowerCamel $v}}, "id=?", id).Error
+	    if err != nil {
+	      if errors.Is(err, gorm.ErrRecordNotFound) {
+	         return nil, nil
+	      }
+	      return nil, err
+	    }
+	    return {{ToLowerCamel $v}}, err
+	}
+
+	func (t *{{$.moduleName}}Dao) Delete{{$v}}ById(ctx context.Context, id string) error {
+	    return t.GetDb(ctx).Delete(&model.{{$v}}{}).Where("id=?", id).Error
+	}
+
+	func (t *{{$.moduleName}}Dao) Update{{$v}}ById(ctx context.Context, {{ToLowerCamel $v}} *model.{{$v}}) error {
+	    result := t.GetDb(ctx).Model(new(model.{{$v}})).Select("*").Updates({{ToLowerCamel $v}})
+	    return result.Error
+	}
+
+	func (t *{{$.moduleName}}Dao) Create{{$v}}(ctx context.Context, {{ToLowerCamel $v}} *model.{{$v}}) error {
+	    if {{ToLowerCamel $v}}.Id == "" {
+	       {{ToLowerCamel $v}}.Id = id_util.GetUuid()
+	    }
+	    err := t.GetDb(ctx).Model({{ToLowerCamel $v}}).Create({{ToLowerCamel $v}}).Error
+	    return err
+	}
+
+	func (t *{{$.moduleName}}Dao) Delete{{$v}}ById2(ctx context.Context, id string) error {
+	    sql, args, err := sq.Delete("tb_{{ToSnake $v}}").Where("id=?", id).ToSql()
+	    if err != nil {
+	        return err
+	    }
+	    t.log.Get(ctx).WithField("sql", sql).WithField("params", args).Debug("sql to exec")
+	    err = t.GetDb(ctx).Exec(sql, args...).Error
+	    return err
+	}
+
+	func (t *{{$.moduleName}}Dao) Delete{{$v}}ById3(ctx context.Context, id string) error {
+	    sql := "delete from tb_{{ToSnake $v}} where id=?"
+	    t.log.Get(ctx).WithField("sql", sql).WithField("params", []interface{}{id}).Debug("sql to exec")
+	    err := t.GetDb(ctx).Exec(sql, id).Error
+	    return err
+	}
+
+{{end}}
