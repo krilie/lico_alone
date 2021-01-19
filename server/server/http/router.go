@@ -30,8 +30,10 @@ func NewHttpService(cfg *ncfg.NConfig, ctrl *Controllers, middleware *middleware
 }
 
 func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown func(waitSec time.Duration) error) {
-	httpCfg := &h.cfg.Cfg.Http
-	fileCfg := &h.cfg.Cfg.FileSave
+
+	var httpCfg = h.cfg.GetHttpCfg()
+	var fileCfg = h.cfg.GetFileSaveCfg()
+
 	// 设置gin mode
 	gin.SetMode(httpCfg.GinMode)
 	// 路径设置 根路径

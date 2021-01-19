@@ -20,7 +20,7 @@ type NLog struct {
 
 func NewLogger(cfg *ncfg.NConfig) *NLog {
 
-	logCfg := cfg.Cfg.Log
+	var logCfg = cfg.GetLogCfg()
 
 	var Log = logrus.NewEntry(logrus.New())
 	Log.Logger.SetFormatter(&logrus.JSONFormatter{
@@ -41,7 +41,7 @@ func NewLogger(cfg *ncfg.NConfig) *NLog {
 		WithField(context_enum.TraceId.Str(), "")
 	Log.Infoln("log init ok")
 	log := &NLog{Entry: Log}
-	log.SetUpLogFile(cfg.Cfg.Log.LogFile)
+	log.SetUpLogFile(logCfg.LogFile)
 	return log
 }
 

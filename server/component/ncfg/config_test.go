@@ -2,11 +2,21 @@ package ncfg
 
 import (
 	"github.com/krilie/lico_alone/common/utils/str_util"
+	"github.com/mitchellh/mapstructure"
 	"os"
 	"testing"
 )
 
 var cfg = NewNConfig()
+
+func TestNewNConfig2(t *testing.T) {
+	eCfg := cfg.V.GetStringMap("email")
+	var emailConfig = Email{}
+	err := mapstructure.Decode(eCfg, &emailConfig)
+	if err != nil {
+		panic(err.Error())
+	}
+}
 
 func TestGetString(t *testing.T) {
 	t.Log(cfg.V.WriteConfig())
