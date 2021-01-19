@@ -7,25 +7,25 @@ import (
 	"github.com/krilie/lico_alone/common/global"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
-	"github.com/krilie/lico_alone/module/{{.ParentPackage}}/model"
+	"github.com/krilie/lico_alone/module/{{.packageName}}/model"
 )
 
-type {{.ModuleName}}Dao struct {
+type {{.moduleName}}Dao struct {
 	*ndb.NDb
 	log *nlog.NLog
 }
 
-func New{{.ModuleName}}Dao(ndb *ndb.NDb, log *nlog.NLog) *{{.ModuleName}}Dao {
-	log = log.WithField(context_enum.Module.Str(), "{{.ModuleName}} dao")
+func New{{.moduleName}}Dao(ndb *ndb.NDb, log *nlog.NLog) *{{.moduleName}}Dao {
+	log = log.WithField(context_enum.Module.Str(), "{{.moduleName}} dao")
 	if global.EnableAutoMigrate {
 		{{range $i, $v := .models}}
-			err{{$i}} := ndb.GetDb(context.NewAppCtx(context2.Background())).AutoMigrate(&model.Base{{$v}}{})
+			err{{$i}} := ndb.GetDb(context.NewAppCtx(context2.Background())).AutoMigrate(&model.{{$v}}{})
 			if err{{$i}} != nil {
-			    panic(err{{$i}})
+			panic(err{{$i}})
 			}
 		{{end}}
 	}
-	return &{{.ModuleName}}Dao{
+	return &TestArticleDao{
 		NDb: ndb,
 		log: log,
 	}

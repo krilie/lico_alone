@@ -3,6 +3,7 @@ module github.com/krilie/lico_alone
 go 1.14
 
 require (
+	github.com/Masterminds/squirrel v1.5.0
 	github.com/ahmetb/go-linq/v3 v3.1.0
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/aliyun/alibaba-cloud-sdk-go v1.61.668
@@ -21,8 +22,10 @@ require (
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.4.2
 	github.com/gomodule/redigo v2.0.0+incompatible
+	github.com/iancoleman/strcase v0.1.3
 	github.com/issue9/assert v1.4.1
 	github.com/issue9/watermark v1.1.0
+	github.com/jinzhu/copier v0.2.3
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/json-iterator/go v1.1.9
 	github.com/juju/ratelimit v1.0.1

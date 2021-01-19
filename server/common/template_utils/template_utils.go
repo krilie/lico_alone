@@ -2,6 +2,7 @@ package template_utils
 
 import (
 	"bytes"
+	"github.com/iancoleman/strcase"
 	"go/format"
 	"io/ioutil"
 	"os"
@@ -12,6 +13,10 @@ import (
 
 func GenFiles(origin, out string, vars interface{}) {
 	tmpl := template.New("genCode")
+
+	tmpl = tmpl.Funcs(template.FuncMap{"ToSnake": strcase.ToSnake})
+	tmpl = tmpl.Funcs(template.FuncMap{"ToLowerCamel": strcase.ToLowerCamel})
+
 	originFile, err := os.Open(origin)
 	if err != nil {
 		panic(err)
