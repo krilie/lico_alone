@@ -2,17 +2,15 @@ package ncfg
 
 import (
 	"flag"
-	"github.com/krilie/lico_alone/common/run_env"
 	"github.com/spf13/viper"
+	"io/ioutil"
 	"log"
 	"os"
 	"strings"
 )
 
 type NConfig struct {
-	V      *viper.Viper
-	Cfg    *Config
-	RunEnv *run_env.RunEnv
+	V *viper.Viper
 }
 
 func NewNConfigByCfgStr(cfgStr string) *NConfig {
@@ -27,7 +25,7 @@ func NewNConfigByCfgStr(cfgStr string) *NConfig {
 func NewNConfigByCfgStrFromEnv(envName string) *NConfig {
 	cfg := NewNConfig()
 	cfgStr := os.Getenv(envName) //"MYAPP_TEST_CONFIG"
-	err := cfg.LoadFromConfigJsonStr(cfgStr)
+	err := cfg.LoadFromConfigTomlStr(cfgStr)
 	if err != nil {
 		panic(err)
 	}
@@ -35,17 +33,11 @@ func NewNConfigByCfgStrFromEnv(envName string) *NConfig {
 }
 
 func NewNConfigByCfgStrFromEnvTest() *NConfig {
-	cfg := NewNConfig()
-	cfgStr := os.Getenv("MYAPP_TEST_CONFIG") //"MYAPP_TEST_CONFIG"
-	err := cfg.LoadFromConfigJsonStr(cfgStr)
-	if err != nil {
-		panic(err)
-	}
-	return cfg
+	return NewNConfigByCfgStrFromEnv("MYAPP_TEST_CONFIG")
 }
 
 func NewNConfig() *NConfig {
-	var cfg = &NConfig{V: viper.New(), Cfg: &Config{}, RunEnv: run_env.RunEnvLocal}
+	var cfg = &NConfig{V: viper.New()}
 
 	//读取环境变量值
 	cfg.V.SetEnvPrefix("MYAPP")
@@ -77,13 +69,12 @@ func NewNConfig() *NConfig {
 	}
 
 	// 命令行配置文件优先级最高
-	cfg.TryLoadFromArgConfigFile()
+	cfg.TryLoadFromCmdConfigFile()
 
 	return cfg
 }
 
-func (cfg *NConfig) TryLoadFromArgConfigFile() bool {
-	// The default set of command-line flags, parsed from os.Args.
+func (cfg *NConfig) TryLoadFromCmdConfigFile() bool {
 	file, _ := os.Open("/dev/null")
 	var commandLine = flag.NewFlagSet(os.Args[0], flag.ContinueOnError)
 	commandLine.SetOutput(file)
@@ -100,23 +91,16 @@ func (cfg *NConfig) TryLoadFromArgConfigFile() bool {
 }
 
 func (cfg *NConfig) LoadConfigByFile(name string) error {
-	cfg.V.SetConfigFile(name)
-	if err := cfg.V.ReadInConfig(); err != nil {
-		switch err.(type) {
-		case viper.ConfigFileNotFoundError:
-			err = cfg.V.WriteConfigAs("config.toml") //new config file and ignore err
-			log.Println("no config file gen and use default:", err)
-		default:
-			log.Println(err)
-		}
+	open, err := os.Open(name)
+	if err != nil {
 		return err
-	} else {
-		err := cfg.V.Unmarshal(cfg.Cfg)
-		if err != nil {
-			return err
-		}
-		return nil
 	}
+	defer open.Close()
+	cfgStr, err := ioutil.ReadAll(open)
+	if err != nil {
+		return err
+	}
+	return cfg.LoadFromConfigTomlStr(string(cfgStr))
 }
 
 func (cfg *NConfig) LoadFromConfigTomlStr(cfgStr string) error {
@@ -130,57 +114,14 @@ func (cfg *NConfig) LoadFromConfigTomlStr(cfgStr string) error {
 		}
 		return err
 	} else {
-		err := cfg.V.Unmarshal(cfg.Cfg)
-		if err != nil {
-			return err
-		}
-		return nil
-	}
-}
-
-func (cfg *NConfig) LoadFromConfigJsonStr(cfgStr string) error {
-	cfg.V.SetConfigType("json")
-	if err := cfg.V.MergeConfig(strings.NewReader(cfgStr)); err != nil {
-		switch err.(type) {
-		case viper.ConfigFileNotFoundError:
-			log.Println("no config find on cfg str gen and use default:", err)
-		default:
-			log.Println(err)
-		}
-		return err
-	} else {
-		err := cfg.V.Unmarshal(cfg.Cfg)
-		if err != nil {
-			return err
-		}
 		return nil
 	}
 }
 
 func (cfg *NConfig) LoadDefaultConfig() error {
-	err2 := cfg.LoadFromConfigTomlStr(defaultCfg)
-	if err2 != nil {
-		return err2
-	}
-	err := cfg.V.Unmarshal(cfg.Cfg)
+	err := cfg.LoadFromConfigTomlStr(defaultCfg)
 	if err != nil {
 		return err
 	}
 	return nil
-}
-
-func (cfg *NConfig) GetInt(key string) int {
-	ok := cfg.V.IsSet(key)
-	if !ok {
-		return 0
-	}
-	return cfg.V.GetInt(key)
-}
-
-func (cfg *NConfig) GetString(key string) string {
-	ok := cfg.V.IsSet(key)
-	if !ok {
-		return ""
-	}
-	return cfg.V.GetString(key)
 }

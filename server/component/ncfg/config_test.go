@@ -10,7 +10,6 @@ var cfg = NewNConfig()
 
 func TestGetString(t *testing.T) {
 	t.Log(cfg.V.WriteConfig())
-	t.Log(str_util.ToJson(cfg.Cfg))
 }
 
 func TestGetInt(t *testing.T) {
@@ -34,7 +33,7 @@ func TestSetEnv(t *testing.T) {
 func TestNConfig_GetInt(t *testing.T) {
 	getenv := os.Getenv("MYAPP_TEST_CONFIG")
 	cfg := NewNConfig()
-	err := cfg.LoadFromConfigJsonStr(getenv)
+	err := cfg.LoadFromConfigTomlStr(getenv)
 	if err != nil {
 		panic(err)
 	}
