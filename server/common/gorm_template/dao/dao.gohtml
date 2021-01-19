@@ -25,7 +25,7 @@ func New{{.moduleName}}Dao(ndb *ndb.NDb, log *nlog.NLog) *{{.moduleName}}Dao {
 			}
 		{{end}}
 	}
-	return &TestArticleDao{
+	return &{{.moduleName}}Dao{
 		NDb: ndb,
 		log: log,
 	}
