@@ -8,6 +8,21 @@ type PageParams struct {
 	PageSize int `form:"page_size" json:"page_size" xml:"page_size"  binding:"required"` // 页大小
 }
 
+func NewPageParams() *PageParams {
+	return &PageParams{
+		PageNum:  1,
+		PageSize: 10,
+	}
+}
+
+func (p *PageParams) OffSet() int64 {
+	return int64((p.PageNum - 1) * p.PageSize)
+}
+
+func (p *PageParams) Limit() int64 {
+	return int64(p.PageSize)
+}
+
 func (p *PageParams) CheckOkOrSetDefault() {
 	if p.PageSize <= 0 {
 		p.PageSize = 10
