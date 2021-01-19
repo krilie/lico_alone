@@ -23,6 +23,7 @@ require (
 	github.com/gomodule/redigo v2.0.0+incompatible
 	github.com/issue9/assert v1.4.1
 	github.com/issue9/watermark v1.1.0
+	github.com/jinzhu/copier v0.2.3
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/json-iterator/go v1.1.9
 	github.com/juju/ratelimit v1.0.1
