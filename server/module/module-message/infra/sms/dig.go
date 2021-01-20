@@ -5,6 +5,6 @@ import (
 )
 
 func NewAliSms2(cfg *ncfg.NConfig) IAliSms {
-	smsCfg := cfg.Cfg.AliSms
+	var smsCfg = cfg.GetAliSmsCfg()
 	return NewAliSms(smsCfg.Key, smsCfg.Secret)
 }

@@ -20,6 +20,7 @@ require (
 	github.com/go-openapi/spec v0.20.0 // indirect
 	github.com/go-redis/redis/v7 v7.0.0-beta.5
 	github.com/go-sql-driver/mysql v1.5.0
+	github.com/goinggo/mapstructure v0.0.0-20140717182941-194205d9b4a9
 	github.com/golang/protobuf v1.4.2
 	github.com/gomodule/redigo v2.0.0+incompatible
 	github.com/iancoleman/strcase v0.1.3
@@ -35,6 +36,7 @@ require (
 	github.com/mikespook/gorbac v2.1.0+incompatible
 	github.com/minio/minio-go v6.0.14+incompatible
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
+	github.com/mitchellh/mapstructure v1.1.2
 	github.com/pkg/errors v0.8.1
 	github.com/prometheus/common v0.4.0
 	github.com/qiniu/api.v7/v7 v7.4.2

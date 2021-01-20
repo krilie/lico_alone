@@ -12,6 +12,6 @@ func TestAutoNewNConfig2(t *testing.T) {
   key = "EEVVEEsss&&8"
   secret = ""
 `
-	cfg := ncfg.NewNConfigByCfgStr(defaultCfg)
-	assert.Equal(t, "EEVVEEsss&&8", cfg.Cfg.AliSms.Key, "not equal")
+	cfg := ncfg.NewNConfigByCfgStr(defaultCfg).GetAliSmsCfg()
+	assert.Equal(t, "EEVVEEsss&&8", cfg.Key, "not equal")
 }

@@ -102,7 +102,10 @@ func (ndb *NDb) CloseDb() {
 	})
 }
 
-func NewNDb(dbCfg *ncfg.NConfig, log *nlog.NLog) (ndb *NDb) {
+func NewNDb(cfg *ncfg.NConfig, log *nlog.NLog) (ndb *NDb) {
+
+	var dbCfg = cfg.GetDbCfg()
+
 	values := context2.NewAppCtxValues()
 	values.Module = "ndb"
 	values.Function = "NewNDb"
@@ -110,10 +113,10 @@ func NewNDb(dbCfg *ncfg.NConfig, log *nlog.NLog) (ndb *NDb) {
 	log = log.Get(ctx)
 	log.Info("no ndb created")
 	ndb = &NDb{log: log}
-	ndb.cfg.ConnStr = dbCfg.Cfg.DB.ConnStr
-	ndb.cfg.MaxOpenConn = dbCfg.Cfg.DB.MaxOpenConn
-	ndb.cfg.MaxIdleConn = dbCfg.Cfg.DB.MaxIdleConn
-	ndb.cfg.ConnMaxLeftTime = dbCfg.Cfg.DB.ConnMaxLeftTime
+	ndb.cfg.ConnStr = dbCfg.ConnStr
+	ndb.cfg.MaxOpenConn = dbCfg.MaxOpenConn
+	ndb.cfg.MaxIdleConn = dbCfg.MaxIdleConn
+	ndb.cfg.ConnMaxLeftTime = dbCfg.ConnMaxLeftTime
 	ndb.Start()
 	return ndb
 }

@@ -16,11 +16,14 @@ type UserModule struct {
 }
 
 func NewUserModule(dao *dao.UserDao, log *nlog.NLog, cfg *ncfg.NConfig) *UserModule {
+
+	var jwtCfg = cfg.GetJwtCfg()
+
 	log = log.WithField(context_enum.Module.Str(), "module user service")
 	return &UserModule{
 		Dao:            dao,
 		log:            log,
-		jwtSecret:      []byte(cfg.Cfg.JWT.HS256key),
-		jwtExpDuration: time.Duration(cfg.Cfg.JWT.NormalExpDuration) * time.Second,
+		jwtSecret:      []byte(jwtCfg.HS256key),
+		jwtExpDuration: time.Duration(jwtCfg.NormalExpDuration) * time.Second,
 	}
 }

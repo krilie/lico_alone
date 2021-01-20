@@ -1,6 +1,9 @@
 package run_env
 
-import "os"
+import (
+	"github.com/krilie/lico_alone/common/utils/id_util"
+	"os"
+)
 
 var (
 	VERSION    string
@@ -28,10 +31,12 @@ var RunEnvLocal = &RunEnv{
 	GitCommit: GIT_COMMIT,
 }
 
+var tempHostName = id_util.NextSnowflake()
+
 func GetHostName() string {
 	hostname, err := os.Hostname()
 	if err != nil {
-		return "host-name"
+		return tempHostName
 	}
 	return hostname
 }

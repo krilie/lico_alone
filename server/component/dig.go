@@ -10,7 +10,7 @@ import (
 )
 
 var DigComponentProviderAll = []interface{}{
-	ncfg.NewNConfig,
+	ncfg.NewNConfigByFileFromEnv("APP_CONFIG_PATH"),
 	nlog.NewLogger,
 	ndb.NewNDb,
 	broker.NewBroker,
@@ -19,7 +19,7 @@ var DigComponentProviderAll = []interface{}{
 }
 
 var DigComponentProviderAllForTest = []interface{}{
-	ncfg.NewNConfigByCfgStrFromEnvTest,
+	ncfg.NewNConfigByCfgStrFromEnvJson("MYAPP_TEST_CONFIG"),
 	nlog.NewLogger,
 	ndb.NewNDb,
 	broker.NewBroker,

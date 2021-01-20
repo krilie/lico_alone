@@ -12,7 +12,7 @@ var container = appdig.NewAppDig()
 
 func TestMain(m *testing.M) {
 
-	container.MustInvoke(ncfg.NewNConfigByCfgStrFromEnvTest)
+	container.MustInvoke(ncfg.NewNConfig)
 	container.MustProvide(nlog.NewLogger)
 	container.MustProvide(NewNDb)
 

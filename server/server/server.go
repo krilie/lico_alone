@@ -30,7 +30,9 @@ func NewServer(httpServer *http.HttpService, cfg *ncfg.NConfig, log *nlog.NLog, 
 
 func (a *Server) StartService(ctx context.Context) {
 
-	closeLogLimit := logcat.BeginLogFileLimit(1024, a.cfg.Cfg.Log.LogFile, time.Hour*8)
+	var logCfg = a.cfg.GetLogCfg()
+
+	closeLogLimit := logcat.BeginLogFileLimit(1024, logCfg.LogFile, time.Hour*8)
 	defer closeLogLimit()
 	defer a.log.CloseAndWait(ctx)
 	defer a.db.CloseDb()

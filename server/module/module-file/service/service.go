@@ -23,17 +23,21 @@ type FileModule struct {
 }
 
 func NewFileModule(dao *dao.FileDao, log *nlog.NLog, cfgs *ncfg.NConfig) *FileModule {
+
+	var fileCfg = ncfg.FileSave{}
+	cfgs.GetConfigItem("file_save", &fileCfg)
+
 	log = log.WithField(context_enum.Module.Str(), "module file service")
 	var fileApi file_api.FileOperator
-	cfg := &cfgs.Cfg.FileSave
-	if cfg.Channel == "local" {
-		fileApi = file_api.NewLocalFileSave(cfg.OssBucket, cfg.OssEndPoint)
-	} else if cfg.Channel == "qiniu" {
-		fileApi = file_api.NewOssQiNiu(cfg)
-	} else if cfg.Channel == "minio" {
-		fileApi = file_api.NewOssMinioClientByCfg(cfg)
+
+	if fileCfg.Channel == "local" {
+		fileApi = file_api.NewLocalFileSave(fileCfg.OssBucket, fileCfg.OssEndPoint)
+	} else if fileCfg.Channel == "qiniu" {
+		fileApi = file_api.NewOssQiNiu(&fileCfg)
+	} else if fileCfg.Channel == "minio" {
+		fileApi = file_api.NewOssMinioClientByCfg(&fileCfg)
 	} else {
-		panic("config error on file save " + cfg.Channel)
+		panic("config error on file save " + fileCfg.Channel)
 	}
 	return &FileModule{
 		dao:     dao,

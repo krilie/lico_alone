@@ -5,6 +5,6 @@ import (
 )
 
 func NewIEmail(cfg *ncfg.NConfig) IEmail {
-	eCfg := cfg.Cfg.Email
-	return NewEmail(eCfg.Address, eCfg.Host, eCfg.Port, eCfg.UserName, eCfg.Password)
+	var emailConfig = cfg.GetEmailCfg()
+	return NewEmail(emailConfig.Address, emailConfig.Host, emailConfig.Port, emailConfig.UserName, emailConfig.Password)
 }

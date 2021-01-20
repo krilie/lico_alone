@@ -15,7 +15,8 @@ var container = appdig.
 
 func TestSendSms(t *testing.T) {
 	container.MustInvoke(func(cfg *ncfg.NConfig) {
-		sms := NewAliSms(cfg.Cfg.AliSms.Key, cfg.Cfg.AliSms.Secret)
+		aliSmsCfg := cfg.GetAliSmsCfg()
+		sms := NewAliSms(aliSmsCfg.Key, aliSmsCfg.Secret)
 		err := sms.SendRegisterSms(context.Background(), "3332234", "223")
 		assert.Nil(t, err, err)
 	})
