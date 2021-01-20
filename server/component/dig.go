@@ -19,7 +19,7 @@ var DigComponentProviderAll = []interface{}{
 }
 
 var DigComponentProviderAllForTest = []interface{}{
-	ncfg.NewNConfigByCfgStrFromEnv("MYAPP_TEST_CONFIG"),
+	ncfg.NewNConfigByCfgStrFromEnvJson("MYAPP_TEST_CONFIG"),
 	nlog.NewLogger,
 	ndb.NewNDb,
 	broker.NewBroker,

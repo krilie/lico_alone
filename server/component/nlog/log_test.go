@@ -9,7 +9,7 @@ import (
 var container = appdig.NewAppDig()
 
 func TestMain(m *testing.M) {
-	container.MustProvide(ncfg.NewNConfig())
+	container.MustProvide(ncfg.NewNConfig)
 	container.MustProvide(NewLogger)
 	m.Run()
 }

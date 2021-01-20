@@ -35,6 +35,18 @@ func NewNConfigByCfgStrFromEnv(envName string) func() *NConfig {
 	}
 }
 
+func NewNConfigByCfgStrFromEnvJson(envName string) func() *NConfig {
+	return func() *NConfig {
+		cfg := NewNConfig()
+		cfgStr := os.Getenv(envName)
+		err := cfg.LoadFromConfigJsonStr(cfgStr)
+		if err != nil {
+			panic(err)
+		}
+		return cfg
+	}
+}
+
 func NewNConfigByFileFromEnv(envName string) func() *NConfig {
 	return func() *NConfig {
 		cfg := NewNConfig()
@@ -79,6 +91,21 @@ func (cfg *NConfig) LoadConfigByFile(name string) error {
 
 func (cfg *NConfig) LoadFromConfigTomlStr(cfgStr string) error {
 	cfg.V.SetConfigType("toml")
+	if err := cfg.V.MergeConfig(strings.NewReader(cfgStr)); err != nil {
+		switch err.(type) {
+		case viper.ConfigFileNotFoundError:
+			log.Println("no config find on cfg str gen and use default:", err)
+		default:
+			log.Println(err)
+		}
+		return err
+	} else {
+		return nil
+	}
+}
+
+func (cfg *NConfig) LoadFromConfigJsonStr(cfgStr string) error {
+	cfg.V.SetConfigType("json")
 	if err := cfg.V.MergeConfig(strings.NewReader(cfgStr)); err != nil {
 		switch err.(type) {
 		case viper.ConfigFileNotFoundError:
