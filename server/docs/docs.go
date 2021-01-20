@@ -412,6 +412,48 @@ var doc = `{
                 }
             }
         },
+        "/api/common/picture/{id}": {
+            "get": {
+                "description": "common查询单个图片信息",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "公共接口"
+                ],
+                "summary": "common查询单个图片信息",
+                "operationId": "common查询单个图片信息",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.CarouselVo"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/common/version": {
             "get": {
                 "description": "Version",
@@ -1893,6 +1935,32 @@ var doc = `{
                 }
             }
         },
+        "model.CarouselVo": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "is_on_show": {
+                    "description": "是否显示",
+                    "type": "boolean"
+                },
+                "message": {
+                    "description": "消息",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "url": {
+                    "description": "图片地址",
+                    "type": "string"
+                }
+            }
+        },
         "model.Config": {
             "type": "object",
             "properties": {
@@ -2005,8 +2073,14 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
-                "dis_like": {
+                "dislike": {
                     "type": "integer"
+                },
+                "has_dislike": {
+                    "type": "boolean"
+                },
+                "has_like": {
+                    "type": "boolean"
                 },
                 "id": {
                     "type": "string"

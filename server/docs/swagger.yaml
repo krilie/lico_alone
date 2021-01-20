@@ -90,6 +90,24 @@ definitions:
         description: 图片地址
         type: string
     type: object
+  model.CarouselVo:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      is_on_show:
+        description: 是否显示
+        type: boolean
+      message:
+        description: 消息
+        type: string
+      updated_at:
+        type: string
+      url:
+        description: 图片地址
+        type: string
+    type: object
   model.Config:
     properties:
       create_time:
@@ -164,8 +182,12 @@ definitions:
         type: string
       description:
         type: string
-      dis_like:
+      dislike:
         type: integer
+      has_dislike:
+        type: boolean
+      has_like:
+        type: boolean
       id:
         type: string
       like:
@@ -476,6 +498,31 @@ paths:
           schema:
             $ref: '#/definitions/com_model.CommonReturn'
       summary: Icp信息
+      tags:
+      - 公共接口
+  /api/common/picture/{id}:
+    get:
+      description: common查询单个图片信息
+      operationId: common查询单个图片信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.CarouselVo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: common查询单个图片信息
       tags:
       - 公共接口
   /api/common/version:

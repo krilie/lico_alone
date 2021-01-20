@@ -11,7 +11,7 @@ import (
 // @Tags 公共接口
 // @ID common查询单个图片信息
 // @Produce json
-// @Success 200 {object} com_model.CommonReturn{data=[]model.Carousel}
+// @Success 200 {object} com_model.CommonReturn{data=[]model.CarouselVo}
 // @Failure 500 {string} errInfo
 // @Router /api/common/picture/{id} [GET]
 func (con *CommonCtrl) GetSlidePicById(c *gin.Context) {

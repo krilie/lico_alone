@@ -16,6 +16,9 @@ import (
 	"os"
 )
 
+//go:generate swag init --parseDependency --parseInternal -g ./main.go  # install: go get -u github.com/swaggo/swag/cmd/swag
+//go:generate swag init --parseInternal -g ./main.go  # install: go get -u github.com/swaggo/swag/cmd/swag
+//go:generate swag init --parseDependency -g ./main.go  # install: go get -u github.com/swaggo/swag/cmd/swag
 //go:generate swag init -g ./main.go  # install: go get -u github.com/swaggo/swag/cmd/swag
 //go:generate go test -run Auto -v ./...
 
