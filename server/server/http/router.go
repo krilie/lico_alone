@@ -37,9 +37,10 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 	// 设置gin mode
 	gin.SetMode(httpCfg.GinMode)
 	// 路径设置 根路径
-	rootRouter := gin.Default() // logger recover
-	rootRouter.Use(h.middleware.MiddlewareRecovery())
-	rootRouter.Use(middleware.RequestOpsLimit()) // 限流
+	rootRouter := gin.Default()                        // logger recover
+	rootRouter.Use(gzip.Gzip(gzip.DefaultCompression)) // gzip
+	rootRouter.Use(h.middleware.MiddlewareRecovery())  // recovery
+	rootRouter.Use(middleware.RequestOpsLimit())       // 限流
 	// cors
 	rootRouter.Use(h.middleware.Cors())
 
