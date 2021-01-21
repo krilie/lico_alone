@@ -23,11 +23,11 @@ import (
 	}
 
 	func (t *{{$.moduleName}}Dao) Delete{{$v}}ById(ctx context.Context, id string) error {
-	    return t.GetDb(ctx).Delete(&model.{{$v}}{}).Where("id=?", id).Error
+	    return t.GetDb(ctx).Where("id=?", id).Delete(&model.{{$v}}{}).Error
 	}
 
 	func (t *{{$.moduleName}}Dao) Update{{$v}}ById(ctx context.Context, {{ToLowerCamel $v}} *model.{{$v}}) error {
-	    result := t.GetDb(ctx).Model(new(model.{{$v}})).Select("*").Updates({{ToLowerCamel $v}})
+	    result := t.GetDb(ctx).Model(new(model.{{$v}})).Select("*").Where("id=?",{{ToLowerCamel $v}}.Id).Updates({{ToLowerCamel $v}})
 	    return result.Error
 	}
 

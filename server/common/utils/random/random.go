@@ -1,4 +1,4 @@
-package id_util
+package random
 
 import (
 	"math/rand"
@@ -12,7 +12,7 @@ const charset = "abcdefghijklmnopqrstuvwxyz" +
 var seededRand *rand.Rand = rand.New(
 	rand.NewSource(time.Now().UnixNano()))
 
-func RandomStrWithCharset(length int, charset string) string {
+func GetRandomStrWithCharset(length int, charset string) string {
 	b := make([]byte, length)
 	for i := range b {
 		b[i] = charset[seededRand.Intn(len(charset))]
@@ -20,14 +20,14 @@ func RandomStrWithCharset(length int, charset string) string {
 	return string(b)
 }
 
-func RandomStr(length int) string {
-	return RandomStrWithCharset(length, charset)
+func GetRandomStr(length int) string {
+	return GetRandomStrWithCharset(length, charset)
 }
 
-func RandomInt() int64 {
+func GetRandomInt() int64 {
 	return rand.Int63()
 }
 
-func RandomIntStr() string {
+func GetRandomIntStr() string {
 	return strconv.FormatInt(rand.Int63(), 10)
 }

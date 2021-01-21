@@ -22,11 +22,11 @@ func (t *CatchwordDao) GetCatchwordById(ctx context.Context, id string) (*model.
 }
 
 func (t *CatchwordDao) DeleteCatchwordById(ctx context.Context, id string) error {
-	return t.GetDb(ctx).Delete(&model.Catchword{}).Where("id=?", id).Error
+	return t.GetDb(ctx).Where("id=?", id).Delete(&model.Catchword{}).Error
 }
 
 func (t *CatchwordDao) UpdateCatchwordById(ctx context.Context, catchword *model.Catchword) error {
-	result := t.GetDb(ctx).Model(new(model.Catchword)).Select("*").Updates(catchword)
+	result := t.GetDb(ctx).Model(new(model.Catchword)).Select("*").Where("id=?", catchword.Id).Updates(catchword)
 	return result.Error
 }
 
