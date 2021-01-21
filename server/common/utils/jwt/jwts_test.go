@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
-	"github.com/krilie/lico_alone/common/utils/strutil"
+	"github.com/krilie/lico_alone/common/utils/jsonutil"
 	"testing"
 	"time"
 )
@@ -41,8 +41,8 @@ func TestNewJwtToken(t *testing.T) {
 
 func TestCheckJwtToken2(t *testing.T) {
 	claims, err := CheckJwtToken([]byte{0x34}, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiIiLCJ1c2VyX2lkIjoiMTI1OTQ5MTY2MTA1MDgxMDM2OCIsImlhdCI6MTU4OTIwMzYxOSwiZXhwIjoxNTg5ODA4NDE5LCJqdGkiOiI0N2Q3NzQ0NDcxYTk0Njk2YThlOWQ3MjM0MTljYjdmMSIsImlzcyI6InN5cyJ9.ggFsvQS5WOPLHImsPmiJswrVx6fE7HGrgq9KSIdHRo0")
-	println(strutil.ToJson(claims))
-	println(strutil.ToJson(err.Error()))
+	println(jsonutil.ToJson(claims))
+	println(jsonutil.ToJson(err.Error()))
 	err1 := err.(*jwt.ValidationError)
 	err2 := err.(*jwt.ValidationError).Inner
 	println(errors.Is(err2, ErrTimeExp))

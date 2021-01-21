@@ -3,7 +3,7 @@ package service
 import (
 	"github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/utils/strutil"
+	"github.com/krilie/lico_alone/common/utils/jsonutil"
 	"github.com/krilie/lico_alone/module/module-file/model"
 	"testing"
 )
@@ -21,6 +21,6 @@ func TestFileModule_QueryFilePage(t *testing.T) {
 			CreatedAtBegin: nil,
 			CreatedAtEnd:   nil,
 		})
-		t.Log(page, count, num, size, strutil.ToJsonPretty(files), err)
+		t.Log(page, count, num, size, jsonutil.ToJsonPretty(files), err)
 	})
 }

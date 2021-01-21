@@ -1,8 +1,11 @@
 package strutil
 
-import "testing"
+import (
+	"github.com/krilie/lico_alone/common/utils/jsonutil"
+	"testing"
+)
 
 func TestToJsonPretty(t *testing.T) {
-	pretty := ToJsonPretty(123231)
+	pretty := jsonutil.ToJsonPretty(123231)
 	t.Log(pretty)
 }

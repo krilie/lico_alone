@@ -2,7 +2,7 @@ package service
 
 import (
 	context2 "github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/utils/strutil"
+	"github.com/krilie/lico_alone/common/utils/jsonutil"
 	"testing"
 )
 
@@ -11,6 +11,6 @@ func TestStatisticService_QueryAllVisitorLonLat(t *testing.T) {
 		ctx := context2.EmptyAppCtx()
 		lat, err := svc.QueryAllVisitorLonLat(ctx)
 		t.Log(err)
-		t.Log(strutil.ToJsonPretty(lat), len(lat))
+		t.Log(jsonutil.ToJsonPretty(lat), len(lat))
 	})
 }

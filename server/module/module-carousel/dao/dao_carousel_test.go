@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/krilie/lico_alone/common/appdig"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/utils/strutil"
+	"github.com/krilie/lico_alone/common/utils/jsonutil"
 	"github.com/krilie/lico_alone/component"
 	"github.com/krilie/lico_alone/module/module-carousel/model"
 	"testing"
@@ -20,7 +20,7 @@ var container = func() *appdig.AppContainer {
 func TestCarouselDao_QueryCarousel(t *testing.T) {
 	container.MustInvoke(func(dao *CarouselDao) {
 		carousels, err := dao.QueryCarousel(context.EmptyAppCtx(), nil)
-		fmt.Println(strutil.ToJsonPretty(carousels))
+		fmt.Println(jsonutil.ToJsonPretty(carousels))
 		t.Log(err)
 	})
 }

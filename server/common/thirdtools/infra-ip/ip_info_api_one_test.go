@@ -3,14 +3,14 @@ package infra_ip
 import (
 	"context"
 	"fmt"
-	"github.com/krilie/lico_alone/common/utils/strutil"
+	"github.com/krilie/lico_alone/common/utils/jsonutil"
 	"testing"
 )
 
 func TestIpInfoApiOne_GetIpInfo(t *testing.T) {
 	var apiOne = NewIpInfoApiOne()
 	info, err := apiOne.GetIpInfo(context.Background(), "223.104.147.153")
-	fmt.Println(strutil.ToJson(info), err)
+	fmt.Println(jsonutil.ToJson(info), err)
 	empty := apiOne.GetIpInfoRegionCityOrEmpty(context.Background(), "223.104.147.153")
 	fmt.Println(empty)
 }

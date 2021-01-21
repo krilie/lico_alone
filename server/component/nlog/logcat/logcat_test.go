@@ -1,7 +1,7 @@
 package logcat
 
 import (
-	"github.com/krilie/lico_alone/common/utils/strutil"
+	"github.com/krilie/lico_alone/common/utils/jsonutil"
 	"testing"
 	"time"
 )
@@ -9,9 +9,9 @@ import (
 func TestReadLogFileInfo(t *testing.T) {
 	info, err := ReadLogFileInfo("C:\\Users\\Administrator\\Desktop\\ccc\\")
 	t.Log(err)
-	t.Log(strutil.ToJson(info))
+	t.Log(jsonutil.ToJson(info))
 	t.Log(GetSumSize(info))
-	t.Log(strutil.ToJson(GetLastShouldDeleteFile(info)))
+	t.Log(jsonutil.ToJson(GetLastShouldDeleteFile(info)))
 }
 
 func TestDeleteOverflowFile(t *testing.T) {

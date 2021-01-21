@@ -4,7 +4,7 @@ import (
 	"github.com/krilie/lico_alone/common/appdig"
 	com_model "github.com/krilie/lico_alone/common/com-model"
 	context2 "github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/utils/strutil"
+	"github.com/krilie/lico_alone/common/utils/jsonutil"
 	"github.com/krilie/lico_alone/component"
 	module_like_dislike "github.com/krilie/lico_alone/module/module-like-dislike"
 	"testing"
@@ -32,6 +32,6 @@ func TestBlogArticleService_QueryArticleSamplePage(t *testing.T) {
 		t.Log(err)
 		t.Log(page)
 		t.Log(count)
-		t.Log(strutil.ToJsonPretty(data))
+		t.Log(jsonutil.ToJsonPretty(data))
 	})
 }

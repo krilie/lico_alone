@@ -5,7 +5,7 @@ import (
 	com_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/utils/id_util"
-	"github.com/krilie/lico_alone/common/utils/strutil"
+	"github.com/krilie/lico_alone/common/utils/jsonutil"
 	"github.com/krilie/lico_alone/component"
 	"github.com/krilie/lico_alone/module/module-file/model"
 	"gorm.io/gorm"
@@ -41,12 +41,12 @@ func TestFileDao_CreateFile(t *testing.T) {
 		}
 		err := dao.CreateFile(context.EmptyAppCtx(), file)
 		if err != nil {
-			t.Error("err db insert" + strutil.ToJsonPretty(file))
+			t.Error("err db insert" + jsonutil.ToJsonPretty(file))
 			t.FailNow()
 		}
 		err = dao.DeleteFile(context.EmptyAppCtx(), file.Id)
 		if err != nil {
-			t.Error("err db delete" + strutil.ToJsonPretty(file))
+			t.Error("err db delete" + jsonutil.ToJsonPretty(file))
 			t.FailNow()
 		}
 	})
@@ -75,12 +75,12 @@ func BenchmarkNewFileDao(b *testing.B) {
 		}
 		err := dao.CreateFile(context.EmptyAppCtx(), file)
 		if err != nil {
-			b.Error("err db insert" + strutil.ToJsonPretty(file))
+			b.Error("err db insert" + jsonutil.ToJsonPretty(file))
 			b.FailNow()
 		}
 		err = dao.DeleteFile(context.EmptyAppCtx(), file.Id)
 		if err != nil {
-			b.Error("err db delete" + strutil.ToJsonPretty(file))
+			b.Error("err db delete" + jsonutil.ToJsonPretty(file))
 			b.FailNow()
 		}
 	})
