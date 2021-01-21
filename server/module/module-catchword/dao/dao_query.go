@@ -12,7 +12,7 @@ import (
 func (t *CatchwordDao) QueryList(ctx context.Context, keyWord string, pageParam com_model.PageParams) (data []*model.Catchword, err error) {
 	sql, args, err := sq.Select("*").
 		From("tb_catchword").
-		Where(sq.Eq{"delete_at": nil}).
+		Where(sq.Eq{"deleted_at": nil}).
 		Where(sq.Or{sq.Like{"title": sqlutil.Like(keyWord)}, sq.Like{"content": sqlutil.Like(keyWord)}}).
 		ToSql()
 	if err != nil {
@@ -20,6 +20,6 @@ func (t *CatchwordDao) QueryList(ctx context.Context, keyWord string, pageParam 
 	}
 	t.log.Get(ctx).WithField("sql", sql).WithField("args", args).Info("sql str build")
 	data = make([]*model.Catchword, 0)
-	err = t.GetDb(ctx).Raw(sql, args).Scan(&data).Error
+	err = t.GetDb(ctx).Raw(sql, args...).Scan(&data).Error
 	return data, err
 }

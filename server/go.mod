@@ -23,6 +23,7 @@ require (
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.4.2
 	github.com/gomodule/redigo v2.0.0+incompatible
+	github.com/google/go-cmp v0.5.0
 	github.com/iancoleman/strcase v0.1.3
 	github.com/issue9/assert v1.4.1
 	github.com/issue9/watermark v1.1.0

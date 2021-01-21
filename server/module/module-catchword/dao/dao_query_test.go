@@ -8,7 +8,7 @@ import (
 	"github.com/krilie/lico_alone/common/utils/random"
 	"github.com/krilie/lico_alone/component"
 	"github.com/krilie/lico_alone/module/module-catchword/model"
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"gorm.io/gorm"
 	"testing"
 	"time"
@@ -21,13 +21,25 @@ var container = func() *appdig.AppContainer {
 	return container
 }()
 
-func TestAutoCatchwordDao_QueryList(t1 *testing.T) {
+func TestAutoCatchwordDao_QueryList(t *testing.T) {
 	container.MustInvoke(func(dao *CatchwordDao) {
-		list, err := dao.QueryList(context.Background(), "a", com_model.PageParams{
+		var catchword = randomCatchword()
+		err := dao.CreateCatchword(context.Background(), catchword)
+		require.Nil(t, err)
+
+		list, err := dao.QueryList(context.Background(), catchword.Title, com_model.PageParams{
 			PageNum:  1,
 			PageSize: 10,
 		})
+		require.Nil(t, err)
+		require.Equal(t, 1, len(list))
+		catchword.CreatedAt = list[0].CreatedAt
+		catchword.UpdatedAt = list[0].UpdatedAt
+		require.Equal(t, catchword, list[0])
 		println(jsonutil.ToJson(list), err)
+
+		err = dao.DeleteCatchwordById(context.Background(), catchword.Id)
+		require.Nil(t, err)
 	})
 }
 
@@ -35,19 +47,20 @@ func TestAutoBase(t *testing.T) {
 	container.MustInvoke(func(dao *CatchwordDao) {
 		var catchword = randomCatchword()
 		err := dao.CreateCatchword(context.Background(), catchword)
-		assert.Nil(t, err)
+		// require 失败 不再向下执行
+		require.Nil(t, err)
 
 		t.Log(jsonutil.ToJson(catchword))
 		catchword.Title = random.GetRandomNum(100)
 		catchword.Content = random.GetRandomStr(400)
-		assert.Nil(t, dao.UpdateCatchwordById(context.Background(), catchword))
+		require.Nil(t, dao.UpdateCatchwordById(context.Background(), catchword))
 		formDb, err := dao.GetCatchwordById(context.Background(), catchword.Id)
-		assert.Nil(t, err)
-		assert.Equal(t, catchword.Title, formDb.Title)
-		assert.Equal(t, catchword.Content, formDb.Content)
+		require.Nil(t, err)
+		require.Equal(t, catchword.Title, formDb.Title)
+		require.Equal(t, catchword.Content, formDb.Content)
 
 		err = dao.DeleteCatchwordById(context.Background(), catchword.Id)
-		assert.Nil(t, err)
+		require.Nil(t, err)
 	})
 }
 
