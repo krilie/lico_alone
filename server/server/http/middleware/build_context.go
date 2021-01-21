@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/krilie/lico_alone/common/context"
 	"github.com/krilie/lico_alone/common/utils/id_util"
-	"github.com/krilie/lico_alone/common/utils/str_util"
+	"github.com/krilie/lico_alone/common/utils/strutil"
 	"github.com/krilie/lico_alone/server/http/ginutil"
 	http_common "github.com/krilie/lico_alone/server/http/http-common"
 	"net/http"
@@ -19,7 +19,7 @@ func (m *GinMiddleware) BuildContext() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		parentCtx := context2.Background()
 		values := context.NewAppCtxValues()
-		values.TraceId = str_util.EmptyOrDefault(c.GetHeader(ginutil.HeaderTraceId), id_util.GetUuid())
+		values.TraceId = strutil.EmptyOrDefault(c.GetHeader(ginutil.HeaderTraceId), id_util.GetUuid())
 		values.StartTime = time.Now()
 		values.RemoteIp = c.ClientIP()
 		// cookie trace id

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	context2 "github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/utils/time_util"
+	"github.com/krilie/lico_alone/common/utils/timeutil"
 	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/sirupsen/logrus"
 	"os"
@@ -60,7 +60,7 @@ func (nlog *NLog) SetUpLogFile(f string) {
 		}
 	}
 	hostname, _ := os.Hostname()
-	var tagStr = hostname + "-" + time.Now().Format(time_util.StringFormat)
+	var tagStr = hostname + "-" + time.Now().Format(timeutil.StringFormat)
 	f = strings.ReplaceAll(f, "*", tagStr)
 	file, e := os.OpenFile(f, os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	if e != nil {

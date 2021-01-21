@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/krilie/lico_alone/common/appdig"
 	com_model "github.com/krilie/lico_alone/common/com-model"
+	"github.com/krilie/lico_alone/common/utils/strutil"
 	"github.com/krilie/lico_alone/component"
 	"testing"
 )
@@ -21,6 +22,6 @@ func TestCatchwordDao_QueryList(t1 *testing.T) {
 			PageNum:  1,
 			PageSize: 10,
 		})
-		println(list, err)
+		println(strutil.ToJson(list), err)
 	})
 }

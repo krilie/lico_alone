@@ -1,4 +1,4 @@
-package obj_util
+package objutil
 
 import (
 	"fmt"

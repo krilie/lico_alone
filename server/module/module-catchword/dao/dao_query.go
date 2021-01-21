@@ -4,7 +4,7 @@ import (
 	"context"
 	sq "github.com/Masterminds/squirrel"
 	com_model "github.com/krilie/lico_alone/common/com-model"
-	"github.com/krilie/lico_alone/common/utils/sql_util"
+	"github.com/krilie/lico_alone/common/utils/sqlutil"
 	"github.com/krilie/lico_alone/module/module-catchword/model"
 )
 
@@ -13,7 +13,7 @@ func (t *CatchwordDao) QueryList(ctx context.Context, keyWord string, pageParam 
 	sql, args, err := sq.Select("*").
 		From("tb_catchword").
 		Where(sq.Eq{"delete_at": nil}).
-		Where(sq.Or{sq.Like{"title": sql_util.Like(keyWord)}, sq.Like{"content": sql_util.Like(keyWord)}}).
+		Where(sq.Or{sq.Like{"title": sqlutil.Like(keyWord)}, sq.Like{"content": sqlutil.Like(keyWord)}}).
 		ToSql()
 	if err != nil {
 		panic(err)

@@ -1,7 +1,7 @@
 package ncfg
 
 import (
-	"github.com/krilie/lico_alone/common/utils/str_util"
+	"github.com/krilie/lico_alone/common/utils/strutil"
 	"github.com/mitchellh/mapstructure"
 	"os"
 	"testing"
@@ -23,8 +23,8 @@ func TestGetString(t *testing.T) {
 }
 
 func TestGetInt(t *testing.T) {
-	t.Log(str_util.ToJsonPretty(cfg))
-	t.Log(str_util.ToJsonPretty(os.Environ()))
+	t.Log(strutil.ToJsonPretty(cfg))
+	t.Log(strutil.ToJsonPretty(os.Environ()))
 }
 
 func TestSaveToFile(t *testing.T) {

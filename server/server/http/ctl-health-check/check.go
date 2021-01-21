@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/context"
-	"github.com/krilie/lico_alone/common/utils/str_util"
+	"github.com/krilie/lico_alone/common/utils/jsonutil"
 	"github.com/krilie/lico_alone/component/ndb"
 	"github.com/krilie/lico_alone/component/nlog"
 	"net/http"
@@ -22,7 +22,7 @@ import (
 func (h *HealthCheckCtrl) Hello(c *gin.Context) {
 	log := h.log.Get(context.NewAppCtx(context2.Background()), "HealthCheckCtrl", "Hello")
 	log.Trace("on health check")
-	log.Infof("headers: %v", str_util.ToJson(c.Request.Header))
+	log.Infof("headers: %v", jsonutil.ToJson(c.Request.Header))
 	log.Infof("remote addr: %v %v", c.Request.RemoteAddr)
 	println("on health check")
 	c.String(http.StatusOK, "hello")

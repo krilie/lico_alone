@@ -1,4 +1,4 @@
-package pswd_util
+package pswdutil
 
 import (
 	"crypto/md5"

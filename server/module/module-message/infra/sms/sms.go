@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/dysmsapi"
-	"github.com/krilie/lico_alone/common/utils/str_util"
+	"github.com/krilie/lico_alone/common/utils/jsonutil"
 )
 
 // 用户登录名称
@@ -39,7 +39,7 @@ func (a *AliSms) SendRegisterSms(ctx context.Context, phone, code string) error 
 	request.PhoneNumbers = phone
 	request.SignName = "迅如雨"
 	request.TemplateCode = "SMS_173946021"
-	request.TemplateParam = str_util.ToJson(map[string]string{"code": code})
+	request.TemplateParam = jsonutil.ToJson(map[string]string{"code": code})
 
 	response, err := a.client.SendSms(request)
 	if err != nil {

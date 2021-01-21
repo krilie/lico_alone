@@ -5,7 +5,7 @@ import (
 	"github.com/krilie/lico_alone/common/com-model"
 	context_enum "github.com/krilie/lico_alone/common/com-model/context-enum"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/common/utils/file_util"
+	"github.com/krilie/lico_alone/common/utils/fileutil"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/module/module-file/model"
 	"gorm.io/gorm"
@@ -19,9 +19,9 @@ func (a *FileModule) UploadFile(ctx context.Context, userId, fileName string, fi
 	log := a.log.Get(ctx).WithField(context_enum.Function.Str(), "UploadFile")
 	err = a.dao.Transaction(ctx, func(ctx context.Context) error {
 		var content string
-		extension := file_util.GetFileExtension(fileName)
+		extension := fileutil.GetFileExtension(fileName)
 		content1 := mime.TypeByExtension(extension)
-		content2, newReader, err := file_util.GetContentType2(file)
+		content2, newReader, err := fileutil.GetContentType2(file)
 		if err != nil {
 			panic(err)
 		}

@@ -1,4 +1,4 @@
-package sql_util
+package sqlutil
 
 func MustToSql() {
 

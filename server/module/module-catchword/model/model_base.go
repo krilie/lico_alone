@@ -7,7 +7,7 @@ import (
 type Catchword struct {
 	com_model.Model
 	Title   string `json:"title" gorm:"column:title;type:varchar(128);not null;default:''"`      // 消息
-	Content string `json:"content" gorm:"column:content;type:varchar(1024);not null;default:''"` // 图片地址
+	Content string `json:"content" gorm:"column:content;type:varchar(2048);not null;default:''"` // 图片地址
 }
 
 func (Catchword) TableName() string {

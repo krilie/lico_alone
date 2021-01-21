@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/ahmetb/go-linq/v3"
 	jsoniter "github.com/json-iterator/go"
-	"github.com/krilie/lico_alone/common/utils/str_util"
+	"github.com/krilie/lico_alone/common/utils/jsonutil"
 	"github.com/krilie/lico_alone/module/module-statistic/model"
 )
 
@@ -28,7 +28,7 @@ func (a *StatisticService) QueryAllVisitorLonLat(ctx context.Context) ([]model.V
 	if err != nil {
 		return nil, err
 	}
-	a.log.Get(ctx).WithField("list_data", str_util.ToJson(list)).Info("get memo list")
+	a.log.Get(ctx).WithField("list_data", jsonutil.ToJson(list)).Info("get memo list")
 	// 整理数据
 	var listRet []model.VisitorLonlatModel
 	linq.From(list).Select(func(o interface{}) interface{} {
@@ -43,6 +43,6 @@ func (a *StatisticService) QueryAllVisitorLonLat(ctx context.Context) ([]model.V
 		return !o.(model.VisitorLonlatModel).IsEmpty()
 	}).Distinct().ToSlice(&listRet)
 	// 返回数据
-	a.log.Get(ctx).WithField("memo_data", str_util.ToJson(listRet)).Info("get memo list")
+	a.log.Get(ctx).WithField("memo_data", jsonutil.ToJson(listRet)).Info("get memo list")
 	return listRet, nil
 }

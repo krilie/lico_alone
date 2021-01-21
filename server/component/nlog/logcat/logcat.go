@@ -1,7 +1,7 @@
 package logcat
 
 import (
-	"github.com/krilie/lico_alone/common/utils/time_util"
+	"github.com/krilie/lico_alone/common/utils/timeutil"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -96,7 +96,7 @@ func GetCreateTimeFromFileName(fileName string) time.Time {
 		return false
 	})
 	if len(fields) >= 2 {
-		t, err := time.Parse(time_util.StringFormat, fields[2])
+		t, err := time.Parse(timeutil.StringFormat, fields[2])
 		if err != nil {
 			return time.Now()
 		}

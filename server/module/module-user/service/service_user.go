@@ -6,7 +6,7 @@ import (
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
 	"github.com/krilie/lico_alone/common/utils/jwt"
-	"github.com/krilie/lico_alone/common/utils/pswd_util"
+	"github.com/krilie/lico_alone/common/utils/pswdutil"
 	"github.com/krilie/lico_alone/module/module-user/model"
 	"gorm.io/gorm"
 	"time"
@@ -21,10 +21,10 @@ func (s *UserModule) ChangeUserPassword(ctx context.Context, userId, oldPswd, ne
 	if user == nil {
 		s.log.Get(ctx).Warnf("change user password no user find id:%v", userId)
 	}
-	if !pswd_util.IsPasswordOk(oldPswd, user.Password, user.Salt) {
+	if !pswdutil.IsPasswordOk(oldPswd, user.Password, user.Salt) {
 		return errs.NewNormal().WithMsg("password err")
 	}
-	user.Password = pswd_util.GetMd5Password(newPswd, user.Salt)
+	user.Password = pswdutil.GetMd5Password(newPswd, user.Salt)
 	err = s.Dao.UpdateUserMaster(ctx, user)
 	return err
 }
@@ -44,7 +44,7 @@ func (s *UserModule) RegisterNewUser(ctx context.Context, phoneNum, password str
 	if master != nil {
 		return errs.NewNormal().WithMsg("此手机号已注册")
 	}
-	salt := pswd_util.GetSalt(6)
+	salt := pswdutil.GetSalt(6)
 	user := &model.UserMaster{
 		Model: com_model.Model{
 			Id:        id_util.GetUuid(),
@@ -55,7 +55,7 @@ func (s *UserModule) RegisterNewUser(ctx context.Context, phoneNum, password str
 		LoginName: phoneNum,
 		PhoneNum:  phoneNum,
 		Email:     "",
-		Password:  pswd_util.GetMd5Password(password, salt),
+		Password:  pswdutil.GetMd5Password(password, salt),
 		Picture:   "",
 		Salt:      salt,
 	}
@@ -68,7 +68,7 @@ func (s *UserModule) UserLogin(ctx context.Context, phoneNum, password, clientId
 	if userMaster == nil {
 		return "", errs.NewNormal().WithMsg("无此用户")
 	}
-	if !pswd_util.IsPasswordOk(password, userMaster.Password, userMaster.Salt) {
+	if !pswdutil.IsPasswordOk(password, userMaster.Password, userMaster.Salt) {
 		return "", errs.NewNormal().WithMsg("密码错误")
 	}
 	claims := jwt.UserClaims{

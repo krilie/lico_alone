@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	com_model "github.com/krilie/lico_alone/common/com-model"
-	"github.com/krilie/lico_alone/common/utils/pswd_util"
+	"github.com/krilie/lico_alone/common/utils/pswdutil"
 	"github.com/krilie/lico_alone/module/module-user/model"
 	"gorm.io/gorm"
 	"time"
@@ -77,7 +77,7 @@ func getInitAdminUserData() initAdminUserStruct {
 		user: model.UserMaster{
 			Model:     com_model.Model{Id: "00001", CreatedAt: time.Now(), UpdatedAt: time.Now(), DeletedAt: gorm.DeletedAt{}},
 			LoginName: "admin", PhoneNum: "123456", Email: "",
-			Password: pswd_util.GetMd5Password("123456", "2345r"),
+			Password: pswdutil.GetMd5Password("123456", "2345r"),
 			Picture:  "", Salt: "2345r",
 		},
 		role: model.Role{

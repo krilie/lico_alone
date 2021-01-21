@@ -2,7 +2,7 @@ package model
 
 import (
 	"github.com/krilie/lico_alone/common/com-model"
-	"github.com/krilie/lico_alone/common/utils/time_util"
+	"github.com/krilie/lico_alone/common/utils/timeutil"
 	"time"
 )
 
@@ -27,7 +27,7 @@ func NewUserMaster(Id string, CreatedAt time.Time, UpdatedAt time.Time, DeletedA
 			Id:        Id,
 			CreatedAt: CreatedAt,
 			UpdatedAt: UpdatedAt,
-			DeletedAt: time_util.SqlNullTime(DeletedAt),
+			DeletedAt: timeutil.SqlNullTime(DeletedAt),
 		},
 		LoginName: LoginName,
 		PhoneNum:  PhoneNum,

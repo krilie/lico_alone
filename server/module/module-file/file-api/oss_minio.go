@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/common/utils/file_util"
+	"github.com/krilie/lico_alone/common/utils/fileutil"
 	"github.com/krilie/lico_alone/component/ncfg"
 	"github.com/minio/minio-go"
 	"io"
@@ -46,7 +46,7 @@ func (f *OssMinio) GetBucketName(ctx context.Context) string {
 }
 
 func (f *OssMinio) UploadFile(ctx context.Context, fileName string, fileStream io.Reader, fileSize int64) (url, key string, err error) {
-	content, reader, err := file_util.GetContentType2(fileStream)
+	content, reader, err := fileutil.GetContentType2(fileStream)
 	if err != nil {
 		return "", "", err
 	}

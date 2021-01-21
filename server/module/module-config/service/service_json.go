@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/common/utils/str_util"
+	"github.com/krilie/lico_alone/common/utils/jsonutil"
 	"github.com/krilie/lico_alone/module/module-config/model"
 	"time"
 )
@@ -32,10 +32,10 @@ func (a *ConfigModule) SetJsonValue(ctx context.Context, name string, value inte
 		return a.Dao.CreateConfig(ctx, &model.Config{
 			CreateTime: time.Now(),
 			Name:       name,
-			Value:      str_util.ToJson(value),
+			Value:      jsonutil.ToJson(value),
 		})
 	} else {
-		config.Value = str_util.ToJson(value)
+		config.Value = jsonutil.ToJson(value)
 		return a.Dao.UpdateConfig(ctx, config)
 	}
 }

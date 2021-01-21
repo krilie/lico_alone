@@ -5,7 +5,7 @@ import (
 	com_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
 	"github.com/krilie/lico_alone/common/utils/id_util"
-	"github.com/krilie/lico_alone/common/utils/str_util"
+	"github.com/krilie/lico_alone/common/utils/jsonutil"
 	"github.com/krilie/lico_alone/module/module-carousel/model"
 	"time"
 )
@@ -29,7 +29,7 @@ func (a *CarouselDao) QueryCarousel(ctx context.Context, isOnShow *bool) (list [
 
 func (a *CarouselDao) CreateCarousel(ctx context.Context, item *model.Carousel) error {
 	log := a.log.Get(ctx).WithFuncName("CreateCarousel")
-	log.WithField("param", str_util.ToJson(item)).Info("params data")
+	log.WithField("param", jsonutil.ToJson(item)).Info("params data")
 
 	if item.Id == "" {
 		item.Id = id_util.GetUuid()

@@ -3,7 +3,7 @@ package service_notify_email
 import (
 	"context"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/common/utils/time_util"
+	"github.com/krilie/lico_alone/common/utils/timeutil"
 	"github.com/krilie/lico_alone/module/module-config/model"
 	ConfigService "github.com/krilie/lico_alone/module/module-config/service"
 	MessageService "github.com/krilie/lico_alone/module/module-message/service"
@@ -34,7 +34,7 @@ func (a *NotificationEmailService) SendServiceUpEmail(ctx context.Context) error
 		return errs.NewInternal().WithMsg("no email config")
 	}
 	// 发送上线邮件
-	err = a.ModuleMessage.SendEmail(ctx, *emailAddr, "app-server", "启动成功: "+time.Now().Format(time_util.DefaultFormat))
+	err = a.ModuleMessage.SendEmail(ctx, *emailAddr, "app-server", "启动成功: "+time.Now().Format(timeutil.DefaultFormat))
 	if err != nil {
 		log.Error(err)
 	}
@@ -51,7 +51,7 @@ func (a *NotificationEmailService) SendGoodMorningEmail(ctx context.Context) err
 	if emailAddr == nil || *emailAddr == "" {
 		return errs.NewInternal().WithMsg("no email config")
 	}
-	err = a.ModuleMessage.SendEmail(ctx, *emailAddr, "早上好", "早上好: "+time.Now().Format(time_util.DefaultFormat))
+	err = a.ModuleMessage.SendEmail(ctx, *emailAddr, "早上好", "早上好: "+time.Now().Format(timeutil.DefaultFormat))
 	if err != nil {
 		log.Error(err)
 	}
@@ -68,7 +68,7 @@ func (a *NotificationEmailService) SendServiceEndEmail(ctx context.Context) erro
 	if emailAddr == nil || *emailAddr == "" {
 		return errs.NewInternal().WithMsg("no email config")
 	}
-	err = a.ModuleMessage.SendEmail(ctx, *emailAddr, "app-server", "服务关闭: "+time.Now().Format(time_util.DefaultFormat))
+	err = a.ModuleMessage.SendEmail(ctx, *emailAddr, "app-server", "服务关闭: "+time.Now().Format(timeutil.DefaultFormat))
 	if err != nil {
 		log.Error(err)
 	}

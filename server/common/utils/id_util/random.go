@@ -2,6 +2,7 @@ package id_util
 
 import (
 	"math/rand"
+	"strconv"
 	"time"
 )
 
@@ -25,4 +26,8 @@ func RandomStr(length int) string {
 
 func RandomInt() int64 {
 	return rand.Int63()
+}
+
+func RandomIntStr() string {
+	return strconv.FormatInt(rand.Int63(), 10)
 }

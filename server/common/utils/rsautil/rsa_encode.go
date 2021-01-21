@@ -1,4 +1,4 @@
-package rsa_util
+package rsautil
 
 import (
 	"crypto"
