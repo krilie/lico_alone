@@ -32,49 +32,48 @@ type UpdateFileReturn struct {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/file/upload [POST]
 func (a *UserCtrl) UploadFile(c *gin.Context) {
-	// 请求
-	ctx := a.ginUtil.MustGetAppContext(c)
+	ginWrap := ginutil.NewGinWrap(c, a.log)
 
 	//NOTE: 使用临时文件缓存
 	err := c.Request.ParseMultipartForm(1024 * 1024 * 5) // 5mb放在内存中 超过放在临时文件中
 	if err != nil {
-		ginutil.ReturnFailure(c, errs.ErrorInternal, err.Error())
+		ginWrap.ReturnFailure(errs.ErrorInternal, err.Error())
 		return
 	}
 	file, err := c.FormFile("file")
 	if err != nil {
-		ginutil.ReturnFailure(c, errs.ErrorParam, "no file found")
+		ginWrap.ReturnFailure(errs.ErrorParam, "no file found")
 		return
 	}
 	f, err := file.Open()
 	if err != nil {
-		ginutil.ReturnFailure(c, errs.ErrorInternal, err.Error())
+		ginWrap.ReturnFailure(errs.ErrorInternal, err.Error())
 		return
 	}
 	defer f.Close()
-	values := context.MustGetAppValues(ctx)
-	url, bucket, key, err := a.userService.UploadFile(ctx, values.UserId, file.Filename, f, int(file.Size))
+	values := context.MustGetAppValues(ginWrap.AppCtx)
+	url, bucket, key, err := a.userService.UploadFile(ginWrap.AppCtx, values.UserId, file.Filename, f, int(file.Size))
 	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnData(c, &UpdateFileReturn{Url: url, Bucket: bucket, Key: key})
+	ginWrap.ReturnData(&UpdateFileReturn{Url: url, Bucket: bucket, Key: key})
 	return
 
 	//NOTE: 不使用文件缓存
 	//reader, err := c.Request.MultipartReader()
 	//if err != nil {
-	//	ginutil.ReturnWithErr(c, err)
+	//	ginWrap.ReturnWithErr( err)
 	//	return
 	//}
 	//for {
 	//	p, err := reader.NextPart()
 	//	if err == io.EOF {
-	//		ginutil.ReturnWithErr(c, errs.NewParamError().WithMsg("no file"))
+	//		ginWrap.ReturnWithErr( errs.NewParamError().WithMsg("no file"))
 	//		return
 	//	}
 	//	if err != nil {
-	//		ginutil.ReturnWithErr(c, err)
+	//		ginWrap.ReturnWithErr( err)
 	//		return
 	//	}
 	//
@@ -94,12 +93,12 @@ func (a *UserCtrl) UploadFile(c *gin.Context) {
 	//
 	//	size := str_util.GetIntOrDef(p.Header.Get("size"), -1)
 	//
-	//	url, bucket, key, err := a.userService.UploadFile(ctx, ctx.UserId, p.FileName(), p, size)
+	//	url, bucket, key, err := a.userService.UploadFile(ginWrap.AppCtx, ctx.UserId, p.FileName(), p, size)
 	//	if err != nil {
-	//		ginutil.ReturnWithErr(c, err)
+	//		ginWrap.ReturnWithErr(err)
 	//		return
 	//	}
-	//	ginutil.ReturnData(c, &UpdateFileReturn{Url: url, Bucket: bucket, Key: key})
+	//	ginWrap.ReturnData(&UpdateFileReturn{Url: url, Bucket: bucket, Key: key})
 	//	return
 	//}
 
@@ -117,16 +116,17 @@ func (a *UserCtrl) UploadFile(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/file/delete [POST]
 func (a *UserCtrl) DeleteFile(c *gin.Context) {
-	ctx := a.ginUtil.MustGetAppContext(c)
-	log := a.log.Get(ctx).WithFuncName("DeleteFile")
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
+	log := a.log.Get(ginWrap.AppCtx).WithFuncName("DeleteFile")
 	fileId := c.PostForm("file_id")
 	if fileId == "" {
 		log.Errorf("no file id found file_id %v", fileId)
-		ginutil.ReturnFailure(c, errs.ErrorParam, "no file id found")
+		ginWrap.ReturnFailure(errs.ErrorParam, "no file id found")
 		return
 	}
-	err := a.userService.ModuleFile.DeleteFileById(ctx, fileId)
-	ginutil.HandlerErrorOrReturnSuccess(c, err)
+	err := a.userService.ModuleFile.DeleteFileById(ginWrap.AppCtx, fileId)
+	ginWrap.HandlerErrorOrReturnSuccess(err)
 	return
 }
 
@@ -152,19 +152,20 @@ func (a *UserCtrl) DeleteFile(c *gin.Context) {
 // @Failure 500 {object} com_model.CommonReturn{data=object}
 // @Router /api/manage/file/query [GET]
 func (a *UserCtrl) QueryFile(c *gin.Context) {
-	ctx := a.ginUtil.MustGetAppContext(c)
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
 	var param = &model.QueryFileParam{}
 	err := c.BindQuery(param)
 	if err != nil {
-		ginutil.ReturnFailure(c, errs.ErrorParam, err.Error())
+		ginWrap.ReturnFailure(errs.ErrorParam, err.Error())
 		return
 	}
-	totalPage, totalCount, pageNum, pageSize, files, err := a.userService.ModuleFile.QueryFilePage(ctx, *param)
+	totalPage, totalCount, pageNum, pageSize, files, err := a.userService.ModuleFile.QueryFilePage(ginWrap.AppCtx, *param)
 	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnData(c, com_model.PageData{
+	ginWrap.ReturnData(com_model.PageData{
 		PageInfo: com_model.PageInfo{
 			TotalCount: totalCount,
 			TotalPage:  totalPage,

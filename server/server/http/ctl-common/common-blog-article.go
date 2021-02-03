@@ -20,8 +20,9 @@ import (
 // @Failure 500 {string} errInfo
 // @Router /api/common/article/query_sample [GET]
 func (con *CommonCtrl) QueryArticleSample(c *gin.Context) {
-	ctx := con.ginUtil.MustGetAppContext(c)
-	log := con.log.Get(ctx)
+	ginWrap := ginutil.NewGinWrap(c, con.log)
+
+	log := con.log.Get(ginWrap.AppCtx)
 	log.Info("on query article sample")
 	var param = &struct {
 		com_model.PageParams
@@ -30,16 +31,16 @@ func (con *CommonCtrl) QueryArticleSample(c *gin.Context) {
 	err := c.ShouldBindQuery(&param)
 	if err != nil {
 		log.Warn(err.Error())
-		ginutil.ReturnWithAppErr(c, errs.NewParamError().WithMsg(err.Error()))
+		ginWrap.ReturnWithAppErr(errs.NewParamError().WithMsg(err.Error()))
 		return
 	}
 	param.PageParams.CheckOkOrSetDefault()
-	pageData, err := con.CommonService.QueryArticleSamplePage(ctx, param.PageParams, param.SearchKey, con.ginUtil.GetCustomerId(c))
+	pageData, err := con.CommonService.QueryArticleSamplePage(ginWrap.AppCtx, param.PageParams, param.SearchKey, ginWrap.GetCustomerId())
 	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnData(c, pageData)
+	ginWrap.ReturnData(pageData)
 	return
 }
 
@@ -54,17 +55,18 @@ func (con *CommonCtrl) QueryArticleSample(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/common/article/get_article [GET]
 func (con *CommonCtrl) GetArticle(c *gin.Context) {
-	ctx := con.ginUtil.MustGetAppContext(c)
-	log := con.log.Get(ctx)
+	ginWrap := ginutil.NewGinWrap(c, con.log)
+
+	log := con.log.Get(ginWrap.AppCtx)
 	articleId := c.Query("article_id")
 
-	article, err := con.CommonService.GetArticleById(ctx, articleId, con.ginUtil.GetCustomerId(c))
+	article, err := con.CommonService.GetArticleById(ginWrap.AppCtx, articleId, ginWrap.GetCustomerId())
 	if err != nil {
 		log.Error(err)
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnData(c, article)
+	ginWrap.ReturnData(article)
 	return
 }
 
@@ -79,18 +81,19 @@ func (con *CommonCtrl) GetArticle(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/common/article/mark/like [POST]
 func (con *CommonCtrl) MarkArticleLike(c *gin.Context) {
-	ctx := con.ginUtil.MustGetAppContext(c)
-	log := con.log.Get(ctx)
-	articleId := c.PostForm("article_id")
-	customerId := con.ginUtil.MustGetAppValues(c).CustomerTraceId
+	ginWrap := ginutil.NewGinWrap(c, con.log)
 
-	err := con.CommonService.ModuleArticle.AddLike(ctx, customerId, articleId)
+	log := con.log.Get(ginWrap.AppCtx)
+	articleId := c.PostForm("article_id")
+	customerId := ginWrap.MustGetAppValues().CustomerTraceId
+
+	err := con.CommonService.ModuleArticle.AddLike(ginWrap.AppCtx, customerId, articleId)
 	if err != nil {
 		log.Error(err)
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnOk(c)
+	ginWrap.ReturnOk()
 	return
 }
 
@@ -105,18 +108,19 @@ func (con *CommonCtrl) MarkArticleLike(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/common/article/mark/dislike [POST]
 func (con *CommonCtrl) MarkArticleDisLike(c *gin.Context) {
-	ctx := con.ginUtil.MustGetAppContext(c)
-	log := con.log.Get(ctx)
-	articleId := c.PostForm("article_id")
-	customerId := con.ginUtil.MustGetAppValues(c).CustomerTraceId
+	ginWrap := ginutil.NewGinWrap(c, con.log)
 
-	err := con.CommonService.ModuleArticle.AddDisLike(ctx, customerId, articleId)
+	log := con.log.Get(ginWrap.AppCtx)
+	articleId := c.PostForm("article_id")
+	customerId := ginWrap.MustGetAppValues().CustomerTraceId
+
+	err := con.CommonService.ModuleArticle.AddDisLike(ginWrap.AppCtx, customerId, articleId)
 	if err != nil {
 		log.Error(err)
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnOk(c)
+	ginWrap.ReturnOk()
 	return
 }
 
@@ -131,18 +135,19 @@ func (con *CommonCtrl) MarkArticleDisLike(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/common/article/mark/remove_like [POST]
 func (con *CommonCtrl) RemoveMarkArticleLike(c *gin.Context) {
-	ctx := con.ginUtil.MustGetAppContext(c)
-	log := con.log.Get(ctx)
-	articleId := c.PostForm("article_id")
-	customerId := con.ginUtil.MustGetAppValues(c).CustomerTraceId
+	ginWrap := ginutil.NewGinWrap(c, con.log)
 
-	err := con.CommonService.ModuleArticle.RemoveLike(ctx, customerId, articleId)
+	log := con.log.Get(ginWrap.AppCtx)
+	articleId := c.PostForm("article_id")
+	customerId := ginWrap.MustGetAppValues().CustomerTraceId
+
+	err := con.CommonService.ModuleArticle.RemoveLike(ginWrap.AppCtx, customerId, articleId)
 	if err != nil {
 		log.Error(err)
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnOk(c)
+	ginWrap.ReturnOk()
 	return
 }
 
@@ -157,17 +162,18 @@ func (con *CommonCtrl) RemoveMarkArticleLike(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/common/article/mark/remove_dislike [POST]
 func (con *CommonCtrl) RemoveMarkArticleDisLike(c *gin.Context) {
-	ctx := con.ginUtil.MustGetAppContext(c)
-	log := con.log.Get(ctx)
-	articleId := c.PostForm("article_id")
-	customerId := con.ginUtil.MustGetAppValues(c).CustomerTraceId
+	ginWrap := ginutil.NewGinWrap(c, con.log)
 
-	err := con.CommonService.ModuleArticle.RemoveDisLike(ctx, customerId, articleId)
+	log := con.log.Get(ginWrap.AppCtx)
+	articleId := c.PostForm("article_id")
+	customerId := ginWrap.MustGetAppValues().CustomerTraceId
+
+	err := con.CommonService.ModuleArticle.RemoveDisLike(ginWrap.AppCtx, customerId, articleId)
 	if err != nil {
 		log.Error(err)
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnOk(c)
+	ginWrap.ReturnOk()
 	return
 }

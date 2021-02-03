@@ -3,6 +3,7 @@ package module
 import (
 	article_module "github.com/krilie/lico_alone/module/module-blog-article/service"
 	carousel_module "github.com/krilie/lico_alone/module/module-carousel/service"
+	"github.com/krilie/lico_alone/module/module-catchword/service"
 	ConfigService "github.com/krilie/lico_alone/module/module-config/service"
 	customer_module "github.com/krilie/lico_alone/module/module-customer/service"
 	dynamic_module "github.com/krilie/lico_alone/module/module-dynamic-share/service"
@@ -27,6 +28,7 @@ func BuildProviderList() []interface{} {
 		dynamic_module.DigModuleDynamicShareProviderAll,
 		ConfigService.DigModuleConfigProviderAll,
 		module_like_dislike.DigModuleLikeDisLikeProviderAll,
+		service.DigModuleCatchwordProviderAll,
 	}
 	var targetList []interface{}
 	for i := range list {

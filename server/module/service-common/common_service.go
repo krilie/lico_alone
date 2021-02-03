@@ -6,6 +6,7 @@ import (
 	"github.com/krilie/lico_alone/component/broker/messages"
 	service2 "github.com/krilie/lico_alone/module/module-blog-article/service"
 	service3 "github.com/krilie/lico_alone/module/module-carousel/service"
+	service6 "github.com/krilie/lico_alone/module/module-catchword/service"
 	"github.com/krilie/lico_alone/module/module-config/model"
 	"github.com/krilie/lico_alone/module/module-config/service"
 	service4 "github.com/krilie/lico_alone/module/module-customer/service"
@@ -19,16 +20,25 @@ type CommonService struct {
 	ModuleCarousel     *service3.CarouselModule
 	moduleCustomer     *service4.CustomerModule
 	moduleDynamicShare *service5.DynamicShareModule
+	ModuleCatchword    *service6.CatchwordModule
 	broker             *broker.Broker
 }
 
-func NewCommonService(broker *broker.Broker, moduleCustomer *service4.CustomerModule, moduleArticle *service2.BlogArticleModule, configService *service.ConfigModule, moduleCarousel *service3.CarouselModule, moduleDynamicShare *service5.DynamicShareModule) *CommonService {
+func NewCommonService(
+	broker *broker.Broker,
+	moduleCustomer *service4.CustomerModule,
+	moduleArticle *service2.BlogArticleModule,
+	configService *service.ConfigModule,
+	moduleCarousel *service3.CarouselModule,
+	moduleDynamicShare *service5.DynamicShareModule,
+	moduleCatchword *service6.CatchwordModule) *CommonService {
 	return &CommonService{
 		configService:      configService,
 		ModuleArticle:      moduleArticle,
 		ModuleCarousel:     moduleCarousel,
 		moduleCustomer:     moduleCustomer,
 		moduleDynamicShare: moduleDynamicShare,
+		ModuleCatchword:    moduleCatchword,
 		broker:             broker,
 	}
 }

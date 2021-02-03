@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	common_model "github.com/krilie/lico_alone/common/com-model"
 	context2 "github.com/krilie/lico_alone/common/context"
+	"github.com/krilie/lico_alone/server/http/ginutil"
 	"net/http"
 	"strings"
 )
@@ -46,6 +47,6 @@ func (m *GinMiddleware) Cors() gin.HandlerFunc {
 		}
 		// 处理请求
 		c.Next() //	处理请求
-		m.log.Get(m.GinUtil.GetAppContext(c)).Info("end of cors")
+		m.log.Get(ginutil.NewGinWrap(c, m.log).AppCtx).Info("end of cors")
 	}
 }

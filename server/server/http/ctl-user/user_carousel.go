@@ -2,6 +2,7 @@ package ctl_user
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/krilie/lico_alone/common/utils/strutil"
 	"github.com/krilie/lico_alone/module/module-carousel/model"
 	"github.com/krilie/lico_alone/server/http/ginutil"
 )
@@ -18,12 +19,13 @@ import (
 // @Failure 500 {string} errInfo
 // @Router /api/manage/carousel/query [get]
 func (a *UserCtrl) QueryCarousel(c *gin.Context) {
-	ctx := a.ginUtil.MustGetAppContext(c)
-	log := a.log.Get(ctx).WithFuncName("QueryCarousel")
-	isOnShow := ginutil.ParseBoolOrNil(c.Query("is_on_show"))
-	carousel, err := a.userService.QueryCarousel(ctx, isOnShow)
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
+	log := a.log.Get(ginWrap.AppCtx).WithFuncName("QueryCarousel")
+	isOnShow := strutil.ParseBoolOrNil(c.Query("is_on_show"))
+	carousel, err := a.userService.QueryCarousel(ginWrap.AppCtx, isOnShow)
 	log.Infof("err %v", err)
-	ginutil.HandlerErrorOrReturnData(c, err, carousel)
+	ginWrap.HandlerErrorOrReturnData(err, carousel)
 	return
 }
 
@@ -39,15 +41,16 @@ func (a *UserCtrl) QueryCarousel(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/carousel/create [POST]
 func (a *UserCtrl) CreateCarousel(c *gin.Context) {
-	ctx := a.ginUtil.MustGetAppContext(c)
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
 	var item = new(model.CreateCarouselModel)
 	err := c.ShouldBindJSON(item)
 	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	err = a.userService.CreateCarousel(ctx, item)
-	ginutil.HandlerErrorOrReturnSuccess(c, err)
+	err = a.userService.CreateCarousel(ginWrap.AppCtx, item)
+	ginWrap.HandlerErrorOrReturnSuccess(err)
 	return
 }
 
@@ -63,15 +66,16 @@ func (a *UserCtrl) CreateCarousel(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/carousel/update [POST]
 func (a *UserCtrl) UpdateCarousel(c *gin.Context) {
-	ctx := a.ginUtil.MustGetAppContext(c)
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
 	var item = new(model.UpdateCarouselModel)
 	err := c.ShouldBindJSON(item)
 	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	err = a.userService.UpdateCarousel(ctx, item)
-	ginutil.HandlerErrorOrReturnSuccess(c, err)
+	err = a.userService.UpdateCarousel(ginWrap.AppCtx, item)
+	ginWrap.HandlerErrorOrReturnSuccess(err)
 	return
 }
 
@@ -87,8 +91,9 @@ func (a *UserCtrl) UpdateCarousel(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/carousel/delete_by_id [POST]
 func (a *UserCtrl) DeleteCarouselById(c *gin.Context) {
-	ctx := a.ginUtil.MustGetAppContext(c)
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
 	carouselId := c.PostForm("carousel_id")
-	err := a.userService.DeleteCarouselById(ctx, carouselId)
-	ginutil.HandlerErrorOrReturnSuccess(c, err)
+	err := a.userService.DeleteCarouselById(ginWrap.AppCtx, carouselId)
+	ginWrap.HandlerErrorOrReturnSuccess(err)
 }

@@ -18,49 +18,54 @@ var (
 	GinKeyAppContext     = "GinKeyAppContext"
 )
 
-type GinUtils struct {
+type GinWrap struct {
 	log *nlog.NLog
+	*gin.Context
+	AppCtx context2.Context
 }
 
-func NewGinUtils(log *nlog.NLog) *GinUtils {
-	return &GinUtils{log: log}
+func NewGinWrap(ctx *gin.Context, log *nlog.NLog) *GinWrap {
+	var wrap = &GinWrap{log: log, Context: ctx}
+	wrap.AppCtx = wrap.GetAppContext()
+	wrap.log = wrap.log.Get(wrap.AppCtx, "gin wrap")
+	return wrap
 }
 
 // 给中间件使用
 // get app context or nil
-func (g *GinUtils) GetAppValuesOrAbort(c *gin.Context) *context.AppCtxValues {
-	appContext := g.GetAppContext(c)
+func (g *GinWrap) GetAppValuesOrAbort() *context.AppCtxValues {
+	appContext := g.GetAppContext()
 	if appContext == nil {
 		g.log.WithFuncName("GetAppValuesOrAbort").Error("can not get service context for next step")
-		c.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
+		g.Context.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
 		return nil
 	}
 	value := context.GetAppValues(appContext)
 	if value == nil {
 		g.log.WithFuncName("GetAppValuesOrAbort").Error("can not get service context for next step")
-		c.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
+		g.Context.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
 		return nil
 	}
 	return value
 }
 
-func (g *GinUtils) GetAppContextOrAbort(c *gin.Context) context2.Context {
-	appContext := g.GetAppContext(c)
+func (g *GinWrap) GetAppContextOrAbort() context2.Context {
+	appContext := g.GetAppContext()
 	if appContext == nil {
 		g.log.WithFuncName("GetAppValuesOrAbort").Error("can not get service context for next step")
-		c.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
+		g.Context.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
 		return nil
 	}
 	return appContext
 }
 
-func (g *GinUtils) GetUserIdOrAbort(c *gin.Context) string {
-	values := g.GetAppValuesOrAbort(c)
+func (g *GinWrap) GetUserIdOrAbort() string {
+	values := g.GetAppValuesOrAbort()
 	if values == nil {
 		return ""
 	}
 	if values.UserId == "" {
-		AbortWithErr(c, errs.NewInvalidToken().WithMsg("登录信息无效"))
+		g.AbortWithErr(errs.NewInvalidToken().WithMsg("登录信息无效"))
 		return ""
 	} else {
 		return values.UserId
@@ -68,30 +73,30 @@ func (g *GinUtils) GetUserIdOrAbort(c *gin.Context) string {
 }
 
 // GetAppValuesOrReturn get app context or nil
-func (g *GinUtils) GetAppValuesOrReturn(c *gin.Context) *context.AppCtxValues {
-	appContext := g.GetAppContext(c)
+func (g *GinWrap) GetAppValuesOrReturn() *context.AppCtxValues {
+	appContext := g.GetAppContext()
 	if appContext == nil {
 		g.log.WithFuncName("GetAppValuesOrAbort").Error("GetAppValuesOrReturn", "can not get service context for next step")
-		c.JSON(200, com_model.NewRet(errs.NewInternal().WithMsg("ctx not get")))
+		g.Context.JSON(200, com_model.NewRet(errs.NewInternal().WithMsg("ctx not get")))
 		return nil
 	}
 	value := context.GetAppValues(appContext)
 	if value == nil {
 		g.log.WithFuncName("GetAppValuesOrAbort").Error("GetAppValuesOrReturn", "can not get service context for next step")
-		c.JSON(200, com_model.NewRet(errs.NewInternal().WithMsg("ctx not get")))
+		g.Context.JSON(200, com_model.NewRet(errs.NewInternal().WithMsg("ctx not get")))
 		return nil
 	}
 	return value
 }
 
-func (g *GinUtils) MustGetAppValues(c *gin.Context) *context.AppCtxValues {
-	appContext := g.MustGetAppContext(c)
+func (g *GinWrap) MustGetAppValues() *context.AppCtxValues {
+	appContext := g.MustGetAppContext()
 	value := context.MustGetAppValues(appContext)
 	return value
 }
 
-func (g *GinUtils) GetUserId(c *gin.Context) string {
-	values := g.MustGetAppValues(c)
+func (g *GinWrap) GetUserId() string {
+	values := g.MustGetAppValues()
 	if values.UserId != "" {
 		return values.UserId
 	} else {
@@ -100,8 +105,8 @@ func (g *GinUtils) GetUserId(c *gin.Context) string {
 	}
 }
 
-func (g *GinUtils) MustGetUserId(c *gin.Context) string {
-	values := g.MustGetAppValues(c)
+func (g *GinWrap) MustGetUserId() string {
+	values := g.MustGetAppValues()
 	if values.UserId != "" {
 		return values.UserId
 	} else {
@@ -110,8 +115,8 @@ func (g *GinUtils) MustGetUserId(c *gin.Context) string {
 	}
 }
 
-func (g *GinUtils) GetCustomerId(c *gin.Context) string {
-	values := g.MustGetAppValues(c)
+func (g *GinWrap) GetCustomerId() string {
+	values := g.MustGetAppValues()
 	if values.CustomerTraceId != "" {
 		return values.CustomerTraceId
 	} else {
@@ -120,16 +125,16 @@ func (g *GinUtils) GetCustomerId(c *gin.Context) string {
 	}
 }
 
-func (g *GinUtils) MustGetAppContext(c *gin.Context) context2.Context {
-	appContext := g.GetAppContext(c)
+func (g *GinWrap) MustGetAppContext() context2.Context {
+	appContext := g.GetAppContext()
 	if appContext == nil {
 		panic(errors.New("no app context"))
 	}
 	return appContext
 }
 
-func (g *GinUtils) GetAppContext(c *gin.Context) context2.Context {
-	value, exists := c.Get(GinKeyAppContext)
+func (g *GinWrap) GetAppContext() context2.Context {
+	value, exists := g.Context.Get(GinKeyAppContext)
 	if !exists {
 		g.log.WithFuncName("GetAppValuesOrAbort").Panic("GetAppValuesOrReturn", "can not get service context for next step")
 		return nil

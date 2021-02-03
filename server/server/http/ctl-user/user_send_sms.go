@@ -18,25 +18,27 @@ import (
 // @Failure 500 {string} errInfo
 // @Router /api/user/send_sms [post]
 func (a *UserCtrl) UserSendSms(c *gin.Context) {
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
 	phone := c.PostForm("phone")
 	if phone == "" {
-		ginutil.ReturnWithErr(c, errs.NewParamError().WithMsg("手机号不正确"))
+		ginWrap.ReturnWithErr(errs.NewParamError().WithMsg("手机号不正确"))
 		return
 	}
 	switch c.PostForm("send_type") {
 	case "register":
-		err := a.userService.SendRegisterSms(a.ginUtil.MustGetAppContext(c), phone)
+		err := a.userService.SendRegisterSms(ginWrap.AppCtx, phone)
 		if err != nil {
-			ginutil.ReturnWithErr(c, err)
+			ginWrap.ReturnWithErr(err)
 			return
 		}
-		ginutil.ReturnOk(c)
+		ginWrap.ReturnOk()
 		return
 	case "login", "change_password":
-		ginutil.ReturnWithErr(c, errs.NewNormal().WithMsg("未实现"))
+		ginWrap.ReturnWithErr(errs.NewNormal().WithMsg("未实现"))
 		return
 	default:
-		ginutil.ReturnWithErr(c, errs.NewParamError().WithMsg("未知发送类型"))
+		ginWrap.ReturnWithErr(errs.NewParamError().WithMsg("未知发送类型"))
 		return
 	}
 }

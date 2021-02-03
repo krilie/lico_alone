@@ -10,13 +10,15 @@ import (
 func (m *GinMiddleware) MiddlewareRecovery() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
+			ginWrap := ginutil.NewGinWrap(c, m.log)
+
 			if err := recover(); err != nil {
-				ctx := m.GinUtil.GetAppContext(c)
+				ctx := ginWrap.GetAppContext()
 				if ctx == nil {
 					ctx = context2.EmptyAppCtx()
 				}
 				m.log.Get(ctx).WithError(err).Error("internal err")
-				ginutil.AbortWithErr(c, errs.NewInternal().WithMsg("internal err by recovery"))
+				ginWrap.AbortWithErr(errs.NewInternal().WithMsg("internal err by recovery"))
 				return
 			}
 		}()

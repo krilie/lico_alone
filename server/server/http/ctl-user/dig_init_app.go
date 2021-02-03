@@ -2,7 +2,6 @@ package ctl_user
 
 import (
 	"github.com/gin-gonic/gin"
-	service_user "github.com/krilie/lico_alone/module/service-user"
 	"github.com/krilie/lico_alone/server/http/ginutil"
 )
 
@@ -17,7 +16,9 @@ import (
 // @Failure 500 {string} errInfo
 // @Router /api/user/init_app [get]
 func (a *UserCtrl) InitApp(c *gin.Context) {
-	var data *service_user.InitAppData = a.userService.InitAppData(a.ginUtil.MustGetAppContext(c))
-	ginutil.ReturnData(c, data)
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
+	var data = a.userService.InitAppData(ginWrap.AppCtx)
+	ginWrap.ReturnData(data)
 	return
 }

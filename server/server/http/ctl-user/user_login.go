@@ -17,13 +17,15 @@ import (
 // @Failure 500 {string} errInfo
 // @Router /api/user/login [post]
 func (a *UserCtrl) UserLogin(c *gin.Context) {
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
 	phone := c.PostForm("phone")
 	password := c.PostForm("password")
-	jwt, err := a.userService.UserLogin(a.ginUtil.MustGetAppContext(c), phone, password, "")
+	jwt, err := a.userService.UserLogin(ginWrap.AppCtx, phone, password, "")
 	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnData(c, gin.H{"token": jwt})
+	ginWrap.ReturnData(gin.H{"token": jwt})
 	return
 }

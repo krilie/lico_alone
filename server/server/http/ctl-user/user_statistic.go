@@ -16,11 +16,13 @@ import (
 // @Failure 500 {string} errInfo
 // @Router /api/manage/statistic/get_visitor_points [get]
 func (a *UserCtrl) ManageGetVisitorPoints(c *gin.Context) {
-	point, err := a.userService.GetAllVisitorPoint(a.ginUtil.MustGetAppContext(c))
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
+	point, err := a.userService.GetAllVisitorPoint(ginWrap.AppCtx)
 	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnData(c, point)
+	ginWrap.ReturnData(point)
 	return
 }

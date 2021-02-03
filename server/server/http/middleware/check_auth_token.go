@@ -24,8 +24,9 @@ type IAuth interface {
 // check user is login and auth token validation
 func (m *GinMiddleware) CheckAuthToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		ginWrap := ginutil.NewGinWrap(c, m.log)
 		// get context
-		ctx := m.GinUtil.GetAppContextOrAbort(c)
+		ctx := ginWrap.AppCtx
 		if ctx == nil {
 			return
 		}
@@ -37,7 +38,7 @@ func (m *GinMiddleware) CheckAuthToken() gin.HandlerFunc {
 			if errors.As(err, &jwt2.ValidationError{}) {
 				validateErr := err.(*jwt2.ValidationError)
 				if errors.Is(validateErr.Inner, jwt.ErrIatTime) {
-					ginutil.AbortWithErr(c, errs.NewInvalidToken().WithMsg("token format error"))
+					ginWrap.AbortWithErr(errs.NewInvalidToken().WithMsg("token format error"))
 					return
 				} else if errors.Is(validateErr.Inner, jwt.ErrTimeExp) {
 					c.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInvalidToken().WithMsg("token expired")))
@@ -52,11 +53,11 @@ func (m *GinMiddleware) CheckAuthToken() gin.HandlerFunc {
 		} else {
 			has, err := m.IAuth.HasUser(ctx, claims.UserId)
 			if err != nil {
-				ginutil.AbortWithErr(c, err)
+				ginWrap.AbortWithErr(err)
 				return
 			}
 			if !has {
-				ginutil.AbortWithAppErr(c, errs.NewInvalidToken())
+				ginWrap.AbortWithAppErr(errs.NewInvalidToken())
 				return
 			}
 			// set user id to ctx
