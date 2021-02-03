@@ -23,7 +23,6 @@ require (
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.4.2
 	github.com/gomodule/redigo v2.0.0+incompatible
-	github.com/google/go-cmp v0.5.0
 	github.com/iancoleman/strcase v0.1.3
 	github.com/issue9/assert v1.4.1
 	github.com/issue9/watermark v1.1.0
@@ -62,6 +61,7 @@ require (
 	github.com/yuin/goldmark v1.2.1
 	go.uber.org/automaxprocs v1.3.0
 	go.uber.org/dig v1.10.0
+	go.uber.org/zap v1.16.0
 	golang.org/x/net v0.0.0-20210119194325-5f4716e94777 // indirect
 	golang.org/x/text v0.3.5 // indirect
 	golang.org/x/tools v0.1.0 // indirect
@@ -73,6 +73,7 @@ require (
 	gopkg.in/go-playground/validator.v9 v9.30.0
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 	gopkg.in/ini.v1 v1.46.0 // indirect
+	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 	gorm.io/driver/mysql v0.3.0
 	gorm.io/gorm v1.20.8
 )
