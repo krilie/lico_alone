@@ -15,9 +15,10 @@ import (
 // @Failure 500 {string} errInfo
 // @Router /api/common/picture/{id} [GET]
 func (con *CommonCtrl) GetSlidePicById(c *gin.Context) {
-	ctx := con.ginUtil.MustGetAppContext(c)
-	id := c.Param("id")
-	carousel, err := con.CommonService.ModuleCarousel.GetCarouselById(ctx, id)
-	ginutil.HandlerErrorOrReturnData(c, err, carousel)
+	ginWrap := ginutil.NewGinWrap(c, con.log)
+
+	id := ginWrap.Param("id")
+	carousel, err := con.CommonService.ModuleCarousel.GetCarouselById(ginWrap.AppCtx, id)
+	ginWrap.HandlerErrorOrReturnData(err, carousel)
 	return
 }

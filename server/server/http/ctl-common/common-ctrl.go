@@ -17,14 +17,12 @@ type CommonCtrl struct {
 	runEnv        *run_env.RunEnv
 	log           *nlog.NLog
 	middleware    *middleware.GinMiddleware
-	ginUtil       *ginutil.GinUtils
 }
 
 func NewCommonCtrl(
 	log *nlog.NLog,
 	common *common_service.CommonService,
 	middleware *middleware.GinMiddleware,
-	ginUtil *ginutil.GinUtils,
 	cfg *ncfg.NConfig) *CommonCtrl {
 
 	log = log.WithField(context_enum.Module.Str(), "common controller")
@@ -33,7 +31,6 @@ func NewCommonCtrl(
 		runEnv:        cfg.RunEnv,
 		log:           log,
 		middleware:    middleware,
-		ginUtil:       ginUtil,
 	}
 }
 
@@ -46,8 +43,10 @@ func NewCommonCtrl(
 // @Success 500 {object} com_model.CommonReturn
 // @Router /api/common/icp_info [get]
 func (con *CommonCtrl) GetIcpInfo(c *gin.Context) {
-	info := con.CommonService.GetIcpInfo(con.ginUtil.MustGetAppContext(c))
-	ginutil.ReturnData(c, info)
+	ginWrap := ginutil.NewGinWrap(c, con.log)
+
+	info := con.CommonService.GetIcpInfo(ginWrap.AppCtx)
+	ginWrap.ReturnData(info)
 }
 
 // UserLogin Version
@@ -77,10 +76,11 @@ func (con *CommonCtrl) Version(c *gin.Context) {
 // @Success 500 {object} com_model.CommonReturn
 // @Router /api/common/visited [post]
 func (con *CommonCtrl) WebVisited(c *gin.Context) {
-	ctx := con.ginUtil.MustGetAppContext(c)
-	values := context.MustGetAppValues(ctx)
-	con.CommonService.WebVisited(ctx, values.RemoteIp, values.CustomerTraceId)
-	ginutil.ReturnOk(c)
+	ginWrap := ginutil.NewGinWrap(c, con.log)
+
+	values := context.MustGetAppValues(ginWrap.AppCtx)
+	con.CommonService.WebVisited(ginWrap.AppCtx, values.RemoteIp, values.CustomerTraceId)
+	ginWrap.ReturnOk()
 }
 
 // AboutApp AboutApp
@@ -92,7 +92,8 @@ func (con *CommonCtrl) WebVisited(c *gin.Context) {
 // @Success 500 {object} com_model.CommonReturn
 // @Router /api/common/about_app [get]
 func (con *CommonCtrl) AboutApp(c *gin.Context) {
-	ctx := con.ginUtil.MustGetAppContext(c)
-	app, err := con.CommonService.GetAboutApp(ctx)
-	ginutil.HandlerErrorOrReturnData(c, err, app)
+	ginWrap := ginutil.NewGinWrap(c, con.log)
+
+	app, err := con.CommonService.GetAboutApp(ginWrap.AppCtx)
+	ginWrap.HandlerErrorOrReturnData(err, app)
 }

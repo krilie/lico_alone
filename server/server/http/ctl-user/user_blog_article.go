@@ -20,16 +20,18 @@ import (
 // @Failure 500 {string} errInfo
 // @Router /api/manage/article/get_by_id [get]
 func (a *UserCtrl) GetArticleById(c *gin.Context) {
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
 	id := c.Query("id")
-	article, err := a.userService.GetArticleById(a.ginUtil.MustGetAppContext(c), id)
+	article, err := a.userService.GetArticleById(ginWrap.AppCtx, id)
 	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
 	if article == nil {
 	}
 
-	ginutil.ReturnData(c, article)
+	ginWrap.ReturnData(article)
 	return
 }
 
@@ -45,20 +47,22 @@ func (a *UserCtrl) GetArticleById(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/article/update [POST]
 func (a *UserCtrl) UpdateArticle(c *gin.Context) {
-	log := a.log.Get(a.ginUtil.MustGetAppContext(c), "userControl", "UpdateArticle")
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
+	log := a.log.Get(ginWrap.AppCtx, "userControl", "UpdateArticle")
 	param := &model.UpdateArticleModel{}
 	err := c.ShouldBindJSON(param)
 	if err != nil {
 		log.Errorf("user param err %v", err)
-		ginutil.ReturnFailure(c, errs.ErrorParam, "参数错误")
+		ginWrap.ReturnFailure(errs.ErrorParam, "参数错误")
 		return
 	}
-	err = a.userService.UpdateArticleSample(a.ginUtil.MustGetAppContext(c), param)
+	err = a.userService.UpdateArticleSample(ginWrap.AppCtx, param)
 	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnOk(c)
+	ginWrap.ReturnOk()
 	return
 }
 
@@ -76,8 +80,9 @@ func (a *UserCtrl) UpdateArticle(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/article/query [GET]
 func (a *UserCtrl) QueryArticle(c *gin.Context) {
-	ctx := a.ginUtil.MustGetAppContext(c)
-	log := a.log.Get(ctx)
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
+	log := a.log.Get(ginWrap.AppCtx)
 	// 参数
 	var param = &struct {
 		com_model.PageParams
@@ -86,17 +91,17 @@ func (a *UserCtrl) QueryArticle(c *gin.Context) {
 	err := c.ShouldBindQuery(param)
 	if err != nil {
 		log.Warn(err.Error())
-		ginutil.ReturnWithAppErr(c, errs.NewParamError().WithMsg(err.Error()))
+		ginWrap.ReturnWithAppErr(errs.NewParamError().WithMsg(err.Error()))
 		return
 	}
 	// 查询
 	param.PageParams.CheckOkOrSetDefault()
-	page, count, data, err := a.userService.ModuleArticle.QueryArticlePage(ctx, param.PageParams, param.SearchKey, a.ginUtil.MustGetUserId(c))
+	page, count, data, err := a.userService.ModuleArticle.QueryArticlePage(ginWrap.AppCtx, param.PageParams, param.SearchKey, ginWrap.MustGetUserId())
 	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnData(c, com_model.NewSuccess(com_model.PageData{
+	ginWrap.ReturnData(com_model.NewSuccess(com_model.PageData{
 		PageInfo: com_model.PageInfo{
 			TotalCount: count,
 			TotalPage:  page,
@@ -119,17 +124,19 @@ func (a *UserCtrl) QueryArticle(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/article/delete [POST]
 func (a *UserCtrl) DeleteArticle(c *gin.Context) {
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
 	articleId := c.PostForm("article_id")
 	if articleId == "" {
-		ginutil.ReturnWithErr(c, errs.NewParamError().WithMsg("no id find on post form"))
+		ginWrap.ReturnWithErr(errs.NewParamError().WithMsg("no id find on post form"))
 		return
 	}
-	_, err := a.userService.DeleteArticleById(a.ginUtil.MustGetAppContext(c), articleId)
+	_, err := a.userService.DeleteArticleById(ginWrap.AppCtx, articleId)
 	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnOk(c)
+	ginWrap.ReturnOk()
 	return
 }
 
@@ -145,20 +152,21 @@ func (a *UserCtrl) DeleteArticle(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/article/create [POST]
 func (a *UserCtrl) CreateArticle(c *gin.Context) {
-	ctx := a.ginUtil.MustGetAppContext(c)
-	log := a.log.Get(ctx)
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
+	log := a.log.Get(ginWrap.AppCtx)
 	var param = &model.CreateArticleModel{}
 	err := c.ShouldBindJSON(param)
 	if err != nil {
 		log.Warn(err.Error())
-		ginutil.ReturnWithAppErr(c, errs.NewParamError().WithMsg(err.Error()))
+		ginWrap.ReturnWithAppErr(errs.NewParamError().WithMsg(err.Error()))
 		return
 	}
-	err = a.userService.CreateArticle(ctx, param)
+	err = a.userService.CreateArticle(ginWrap.AppCtx, param)
 	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnOk(c)
+	ginWrap.ReturnOk()
 	return
 }

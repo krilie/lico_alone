@@ -3,8 +3,8 @@ package middleware
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/juju/ratelimit"
+	com_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/errs"
-	"github.com/krilie/lico_alone/server/http/ginutil"
 	"io/ioutil"
 	"time"
 )
@@ -37,7 +37,7 @@ func OpsLimit(ops int) gin.HandlerFunc {
 		limitOps--
 		defer func() { limitOps++ }()
 		if limitOps < 0 {
-			ginutil.AbortWithAppErr(c, errs.NewNormal().WithMsg("操作太频繁"))
+			c.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewNormal().WithMsg("操作太频繁")))
 			return
 		}
 		c.Next()

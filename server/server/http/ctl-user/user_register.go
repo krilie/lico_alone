@@ -18,14 +18,16 @@ import (
 // @Failure 500 {string} errInfo
 // @Router /api/user/register [post]
 func (a *UserCtrl) UserRegister(c *gin.Context) {
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
 	phone := c.PostForm("phone")
 	password := c.PostForm("password")
 	validCode := c.PostForm("valid_code")
-	err := a.userService.UserRegister(a.ginUtil.MustGetAppContext(c), phone, password, validCode, "")
+	err := a.userService.UserRegister(ginWrap.AppCtx, phone, password, validCode, "")
 	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnOk(c)
+	ginWrap.ReturnOk()
 	return
 }

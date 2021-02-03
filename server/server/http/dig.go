@@ -4,7 +4,6 @@ import (
 	ctl_common "github.com/krilie/lico_alone/server/http/ctl-common"
 	ctl_health_check "github.com/krilie/lico_alone/server/http/ctl-health-check"
 	ctl_user "github.com/krilie/lico_alone/server/http/ctl-user"
-	"github.com/krilie/lico_alone/server/http/ginutil"
 	"github.com/krilie/lico_alone/server/http/middleware"
 )
 
@@ -23,7 +22,6 @@ func NewController(commonCtrl *ctl_common.CommonCtrl, userCtrl *ctl_user.UserCtr
 }
 
 var DigControllerProviderAll = []interface{}{
-	ginutil.NewGinUtils,
 	middleware.NewGinMiddleware,
 	ctl_common.NewCommonCtrl,
 	ctl_user.NewUserCtrl,

@@ -8,19 +8,21 @@ import (
 
 func (m *GinMiddleware) NeedRoles(role string) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		ginWrap := ginutil.NewGinWrap(c, m.log)
+
 		// check user get context
-		userId := m.GinUtil.GetUserIdOrAbort(c)
+		userId := ginWrap.GetUserIdOrAbort()
 		if userId == "" {
 			return
 		}
 		//check user has permission
-		b, err := m.IAuth.HasRole(m.GinUtil.MustGetAppContext(c), userId, role)
+		b, err := m.IAuth.HasRole(ginWrap.MustGetAppContext(), userId, role)
 		if err != nil {
-			ginutil.AbortWithErr(c, err)
+			ginWrap.AbortWithErr(err)
 			return
 		}
 		if !b {
-			ginutil.AbortWithErr(c, errs.NewNoPermission().WithMsg("没有权限"))
+			ginWrap.AbortWithErr(errs.NewNoPermission().WithMsg("没有权限"))
 			return
 		}
 		c.Next()

@@ -6,6 +6,7 @@ import (
 	"github.com/krilie/lico_alone/component/nlog"
 	service2 "github.com/krilie/lico_alone/module/module-blog-article/service"
 	service4 "github.com/krilie/lico_alone/module/module-carousel/service"
+	service6 "github.com/krilie/lico_alone/module/module-catchword/service"
 	ConfigService "github.com/krilie/lico_alone/module/module-config/service"
 	service3 "github.com/krilie/lico_alone/module/module-file/service"
 	MessageService "github.com/krilie/lico_alone/module/module-message/service"
@@ -22,6 +23,7 @@ type UserService struct {
 	ModuleFile      *service3.FileModule
 	ModuleCarousel  *service4.CarouselModule
 	ModuleStatistic *service5.StatisticService
+	ModuleCatchword *service6.CatchwordModule
 	NCfg            *ncfg.NConfig
 }
 
@@ -38,6 +40,7 @@ func NewUserService(
 	moduleMsg *MessageService.MessageModule,
 	moduleCarousel *service4.CarouselModule,
 	moduleStatistic *service5.StatisticService,
+	moduleCatchword *service6.CatchwordModule,
 	nCfg *ncfg.NConfig,
 ) *UserService {
 	log = log.WithField(context_enum.Module.Str(), "service user")
@@ -50,6 +53,7 @@ func NewUserService(
 		ModuleFile:      moduleFile,
 		ModuleCarousel:  moduleCarousel,
 		ModuleStatistic: moduleStatistic,
+		ModuleCatchword: moduleCatchword,
 		NCfg:            nCfg,
 	}
 }

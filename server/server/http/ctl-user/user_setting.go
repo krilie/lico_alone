@@ -17,13 +17,15 @@ import (
 // @Failure 500 {string} errInfo
 // @Router /api/manage/setting/get_setting_all [get]
 func (a *UserCtrl) ManageGetConfigList(c *gin.Context) {
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
 	searchKey := c.Query("searchKey")
-	config, err := a.userService.GetAllConfig(a.ginUtil.MustGetAppContext(c), searchKey)
+	config, err := a.userService.GetAllConfig(ginWrap.AppCtx, searchKey)
 	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnData(c, config)
+	ginWrap.ReturnData(config)
 	return
 }
 
@@ -40,14 +42,16 @@ func (a *UserCtrl) ManageGetConfigList(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/setting/update_config [post]
 func (a *UserCtrl) ManageUpdateConfig(c *gin.Context) {
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
 	name := c.PostForm("name")
 	value := c.PostForm("value")
-	err := a.userService.UpdateConfig(a.ginUtil.MustGetAppContext(c), name, value)
+	err := a.userService.UpdateConfig(ginWrap.AppCtx, name, value)
 	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnOk(c)
+	ginWrap.ReturnOk()
 	return
 }
 
@@ -62,11 +66,13 @@ func (a *UserCtrl) ManageUpdateConfig(c *gin.Context) {
 // @Failure 500 {string} errInfo
 // @Router /api/manage/setting/get_a_map_key [get]
 func (a *UserCtrl) ManageGetAMapKey(c *gin.Context) {
-	key, err := a.userService.GetAMapKey(a.ginUtil.MustGetAppContext(c))
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
+	key, err := a.userService.GetAMapKey(ginWrap.AppCtx)
 	if err != nil {
-		ginutil.ReturnWithErr(c, err)
+		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginutil.ReturnData(c, gin.H{"a_map_key": key})
+	ginWrap.ReturnData(gin.H{"a_map_key": key})
 	return
 }

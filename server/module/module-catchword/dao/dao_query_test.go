@@ -76,3 +76,11 @@ func randomCatchword() *model.Catchword {
 		Content: random.GetRandomStr(7),
 	}
 }
+
+func TestCatchwordDao_QueryListForWebShow(t *testing.T) {
+	container.MustInvoke(func(dao *CatchwordDao) {
+		show, err := dao.QueryListForWebShow(context.Background(), "", time.Now(), 4)
+		require.Nil(t, err)
+		println(jsonutil.ToJson(show))
+	})
+}
