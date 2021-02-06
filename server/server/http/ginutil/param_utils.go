@@ -9,6 +9,15 @@ func (g *GinWrap) PathParamOrDefault(key, def string) string {
 	}
 }
 
+func (g *GinWrap) PathParamOrEmpty(key string) string {
+	var val = g.Context.Param(key)
+	if val == "" {
+		return ""
+	} else {
+		return val
+	}
+}
+
 func (g *GinWrap) QueryParamOrDefault(key, def string) string {
 	val, ok := g.Context.GetQuery(key)
 	if !ok {
@@ -20,6 +29,17 @@ func (g *GinWrap) QueryParamOrDefault(key, def string) string {
 	return val
 }
 
+func (g *GinWrap) QueryParamOrEmpty(key string) string {
+	val, ok := g.Context.GetQuery(key)
+	if !ok {
+		return ""
+	}
+	if val == "" {
+		return ""
+	}
+	return val
+}
+
 func (g *GinWrap) FormParamOrDefault(key, def string) string {
 	val, ok := g.Context.GetPostForm(key)
 	if !ok {
@@ -27,6 +47,16 @@ func (g *GinWrap) FormParamOrDefault(key, def string) string {
 	}
 	if val == "" {
 		return def
+	}
+	return val
+}
+func (g *GinWrap) FormParamOrEmpty(key string) string {
+	val, ok := g.Context.GetPostForm(key)
+	if !ok {
+		return ""
+	}
+	if val == "" {
+		return ""
 	}
 	return val
 }

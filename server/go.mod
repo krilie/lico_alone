@@ -27,6 +27,7 @@ require (
 	github.com/issue9/assert v1.4.1
 	github.com/issue9/watermark v1.1.0
 	github.com/jinzhu/copier v0.2.3
+	github.com/jinzhu/now v1.1.1
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/json-iterator/go v1.1.9
 	github.com/juju/ratelimit v1.0.1
