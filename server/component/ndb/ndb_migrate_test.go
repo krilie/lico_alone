@@ -8,7 +8,7 @@ import (
 )
 
 func TestMigrate3(t *testing.T) {
-	db, err := sql.Open("mysql", "test:123456@tcp(localhost:3306)/test?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai&multiStatements=true")
+	db, err := sql.Open("mysql", "test:123456@tcp(lizo.top:3306)/?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai&multiStatements=true")
 	if err != nil {
 		panic(err)
 	}
