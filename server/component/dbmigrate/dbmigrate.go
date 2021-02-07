@@ -9,7 +9,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
-func Migrate(db *sql.DB, dbName string, path string, version uint) {
+func Migrate(db *sql.DB, path string, version uint) {
 	driver, err := mysql.WithInstance(db, &mysql.Config{})
 	if err != nil {
 		panic(err)
@@ -17,7 +17,7 @@ func Migrate(db *sql.DB, dbName string, path string, version uint) {
 
 	m, err := migrate.NewWithDatabaseInstance(
 		path, // "file://component/dbmigrate/migrations", // 相对目录
-		dbName, driver)
+		"mysql", driver)
 	if err != nil {
 		panic(err)
 	}

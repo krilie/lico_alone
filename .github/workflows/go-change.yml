@@ -2,8 +2,7 @@ name: Go
 on:
   push:
     branches:
-      - master
-      - dev
+      - catchword
 jobs:
 
   build:
@@ -12,13 +11,11 @@ jobs:
     steps:
       - name: 检出代码
         uses: actions/checkout@v1
-
       - name: 设置golang1.15
         uses: actions/setup-go@v1
         with:
           go-version: 1.15
         id: go
-
       - name: 使用golang包缓存
         uses: actions/cache@v1
         with:
@@ -26,8 +23,19 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
-
       # 自动化测试时使用的配置信息
+      - name: Setup MySQL
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          host port: 3306
+          container port: # optional, default is 3306
+          character set server: # optional, default is utf8mb4
+          collation server: # optional, default is utf8mb4_general_ci
+          mysql version: # optional, default is latest
+          mysql root password: # optional, default is
+          mysql database: # optional, default is
+          mysql user: # optional, default is
+          mysql password: # optional, default is
       - name: golang测试与golang构建
         env:
           CGO_ENABLED: 0
@@ -42,7 +50,6 @@ jobs:
       - name: 复制文件到docker文件夹&&设置环境变量
         run: |
           cp ./server/lico_alone ./docker/lico_alone
-          cp -rf ./server/migrations ./docker/migrations
           echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
           echo "DOCKER_IMAGE_TAGS_LATEST=latest" >> $GITHUB_ENV
           echo "DOCKER_IMAGE_TAGS_VERSION=$(cat version)" >> $GITHUB_ENV

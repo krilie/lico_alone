@@ -33,6 +33,12 @@ func TestMigrate(t *testing.T) {
 		err := db.Ping()
 		assert.Equal(t, nil, err, "should not err")
 		innerDb, _ := db.db.DB()
-		dbmigrate.Migrate(innerDb, "test", "file://c://sqls", 20210206140300)
+		dbmigrate.Migrate(innerDb, "file://c://sqls", 20210206140300)
 	})
+}
+
+func TestGetDbNameFromConnectStr(t *testing.T) {
+	println(GetDbNameFromConnectStr("test:123456@tcp(lizo.top:3306)/1?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai&multiStatements=true"))
+	println(GetDbNameFromConnectStr("test:123456@tcp(lizo.top:3306)/12?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai&multiStatements=true"))
+	println(GetDbNameFromConnectStr("test:123456@tcp(lizo.top:3306)/abc?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai&multiStatements=true"))
 }
