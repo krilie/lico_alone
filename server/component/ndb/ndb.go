@@ -124,6 +124,12 @@ func NewNDb(cfg *ncfg.NConfig, log *nlog.NLog) (ndb *NDb) {
 }
 
 func (ndb *NDb) MigrationDb() {
+	defer func() {
+		if err := recover(); err != nil {
+			ndb.log.WithField("err", err).WithField("db_version", dbVersion).WithField("migration_path", ndb.cfg.MigrationPath).Info("migrations failure")
+			panic(err)
+		}
+	}()
 	// 数据库迁移
 	var dbName = GetDbNameFromConnectStr(ndb.cfg.ConnStr)
 	var connectStrForMigration = strings.Replace(ndb.cfg.ConnStr, dbName, "", 1)
@@ -132,7 +138,11 @@ func (ndb *NDb) MigrationDb() {
 		panic(err)
 	}
 	defer migrationDb.Close()
-	_, err = migrationDb.Exec("CREATE DATABASE IF NOT EXISTS ? DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci;", dbName)
+	_, err = migrationDb.Exec("CREATE DATABASE IF NOT EXISTS " + dbName + " DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci;")
+	if err != nil {
+		panic(err)
+	}
+	_, err = migrationDb.Exec("USE " + dbName)
 	if err != nil {
 		panic(err)
 	}
@@ -141,10 +151,10 @@ func (ndb *NDb) MigrationDb() {
 	}
 	// 如果没有则创建数据库
 	dbmigrate.Migrate(migrationDb, "file://"+ndb.cfg.MigrationPath, dbVersion) // 指定数据库版本
+	ndb.log.WithField("db_name", dbName).WithField("db_version", dbVersion).WithField("migration_path", ndb.cfg.MigrationPath).Info("migrations ok")
 }
 
 func GetDbNameFromConnectStr(connectStr string) (dbName string) {
-	// test:123456@tcp(lizo.top:3306)/?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai&multiStatements=true
 	begin := strings.Index(connectStr, "/")
 	if begin == -1 {
 		return ""
