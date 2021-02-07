@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker run -it -v "$PWD":/app -v "$PWD"/.cache/gopath:/root/go -v "$PWD"/.cache/gocache:/root/.cache/go-build golang:1.15.5-alpine3.12 \
+docker run -it -v "$PWD":/app -v "$PWD"/.cache/gopath:/go -v "$PWD"/.cache/gocache:/root/.cache/ golang:1.15.5-alpine3.12 \
            /bin/sh -c "cd /app && export CGO_ENABLED=0 && export GOPROXY=https://goproxy.io,direct && go build -v"
 if [ "$?" -eq 0 ];then
   echo "build ok"
