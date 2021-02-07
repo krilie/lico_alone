@@ -42,6 +42,7 @@ jobs:
       - name: 复制文件到docker文件夹&&设置环境变量
         run: |
           cp ./server/lico_alone ./docker/lico_alone
+          cp -rf ./server/migrations ./docker/migrations
           echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
           echo "DOCKER_IMAGE_TAGS_LATEST=latest" >> $GITHUB_ENV
           echo "DOCKER_IMAGE_TAGS_VERSION=$(cat version)" >> $GITHUB_ENV
