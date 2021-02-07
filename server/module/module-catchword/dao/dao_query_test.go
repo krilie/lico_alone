@@ -8,6 +8,7 @@ import (
 	"github.com/krilie/lico_alone/common/utils/random"
 	"github.com/krilie/lico_alone/component"
 	"github.com/krilie/lico_alone/module/module-catchword/model"
+	"github.com/prometheus/common/log"
 	"github.com/stretchr/testify/require"
 	"gorm.io/gorm"
 	"testing"
@@ -50,7 +51,7 @@ func TestAutoBase(t *testing.T) {
 		// require 失败 不再向下执行
 		require.Nil(t, err)
 
-		t.Log(jsonutil.ToJson(catchword))
+		log.Info(jsonutil.ToJson(catchword))
 		catchword.Title = random.GetRandomNum(100)
 		catchword.Content = random.GetRandomStr(400)
 		require.Nil(t, dao.UpdateCatchwordById(context.Background(), catchword))
