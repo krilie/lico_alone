@@ -1,5 +1,6 @@
-/docker
 /.git
 /.idea
 /.github
 /.drone
+/.cache
+lico_alone*

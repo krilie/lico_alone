@@ -6,6 +6,7 @@
 *.dll
 *.so
 *.dylib
+lico_alone
 
 # Test binary, build with `go test -c`
 *.test
@@ -13,5 +14,17 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+.cache/
 .idea/
 *.log
+
+vendor/
+server.iml
+static_files/
+log.txt
+
+www
+!www/.gitignore
+/node_modules/
+
+config-test2.toml
