@@ -36,6 +36,9 @@ jobs:
           export MYAPP_TEST_CONFIG='${{ secrets.TEST_CONFIG }}'
           export TZ='Asia/Shanghai'
           go build -ldflags "-X 'github.com/krilie/lico_alone/common/run_env.VERSION=`cat ../version`' -X 'github.com/krilie/lico_alone/common/run_env.BUILD_TIME=`date "+%Y-%m-%d %H:%M:%S"`' -X 'github.com/krilie/lico_alone/common/run_env.GO_VERSION=`go version`' -X 'github.com/krilie/lico_alone/common/run_env.GIT_COMMIT=${GITHUB_SHA}'"  -v .
+          who
+          pwd
+          cp -rf ./migrations /home/migrations
           go test -run Auto -v ./...
           cd ..
 
