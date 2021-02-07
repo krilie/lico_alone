@@ -376,6 +376,71 @@ var doc = `{
                 }
             }
         },
+        "/api/common/catchword/query": {
+            "get": {
+                "description": "common查询时代热词",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "公共接口"
+                ],
+                "summary": "common查询时代热词",
+                "operationId": "common查询时代热词",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "搜索关键词",
+                        "name": "key_word",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "从什么时间开始 2021-02-06 10:34:03",
+                        "name": "form",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "倒序取多少个",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "时间排序",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.CatchwordVo"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/common/icp_info": {
             "get": {
                 "description": "Icp信息",
@@ -1957,6 +2022,32 @@ var doc = `{
                 },
                 "url": {
                     "description": "图片地址",
+                    "type": "string"
+                }
+            }
+        },
+        "model.CatchwordVo": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "图片地址",
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "sort": {
+                    "description": "自增排序字段",
+                    "type": "integer"
+                },
+                "title": {
+                    "description": "消息",
+                    "type": "string"
+                },
+                "updated_at": {
                     "type": "string"
                 }
             }

@@ -108,6 +108,24 @@ definitions:
         description: 图片地址
         type: string
     type: object
+  model.CatchwordVo:
+    properties:
+      content:
+        description: 图片地址
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      sort:
+        description: 自增排序字段
+        type: integer
+      title:
+        description: 消息
+        type: string
+      updated_at:
+        type: string
+    type: object
   model.Config:
     properties:
       create_time:
@@ -477,6 +495,47 @@ paths:
           schema:
             type: string
       summary: common查询轮播图
+      tags:
+      - 公共接口
+  /api/common/catchword/query:
+    get:
+      description: common查询时代热词
+      operationId: common查询时代热词
+      parameters:
+      - description: 搜索关键词
+        in: query
+        name: key_word
+        required: true
+        type: string
+      - description: 从什么时间开始 2021-02-06 10:34:03
+        in: query
+        name: form
+        required: true
+        type: string
+      - description: 倒序取多少个
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 时间排序
+          schema:
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.CatchwordVo'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: common查询时代热词
       tags:
       - 公共接口
   /api/common/icp_info:
