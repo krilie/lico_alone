@@ -1,14 +1,10 @@
-FROM golang:1.15.5-alpine3.12 as goBuilder
-ADD ./ /myapp
-WORKDIR /myapp
-RUN export CGO_ENABLED=0 && export GOPROXY=https://goproxy.io,direct && cd ./server && go build -v -o myapp
-
 FROM alpine:3.12
 MAINTAINER lico
+# Install base packages
 RUN apk update && apk add curl bash tree tzdata \
     && cp -r -f /usr/share/zoneinfo/Hongkong /etc/localtime
-COPY --from=goBuilder /myapp/server/myapp /
-COPY --from=goBuilder /myapp/server/migrations /migrations
-RUN chmod u+x /myapp
+COPY lico_alone /
+COPY migrations /migrations
+RUN chmod u+x /lico_alone
 EXPOSE 80
-CMD ["/myapp"]
+CMD ["/lico_alone"]

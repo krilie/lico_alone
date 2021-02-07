@@ -1,5 +1,5 @@
-/docker
 /.git
 /.idea
 /.github
 /.drone
+/.cache
