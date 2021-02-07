@@ -52,3 +52,8 @@ func TestNConfig_GetInt(t *testing.T) {
 		panic(err)
 	}
 }
+
+func TestNewNConfigByCfgStr(t *testing.T) {
+	dbCfg := cfg.GetDbCfg()
+	t.Log(jsonutil.ToJsonPretty(dbCfg))
+}

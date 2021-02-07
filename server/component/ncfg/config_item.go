@@ -32,6 +32,7 @@ type DB struct {
 	MaxOpenConn     int    `mapstructure:"max_open_conn" json:"max_open_conn" toml:"max_open_conn"`
 	MaxIdleConn     int    `mapstructure:"max_idle_conn" json:"max_idle_conn" toml:"max_idle_conn"`
 	ConnMaxLeftTime int    `mapstructure:"conn_max_left_time" json:"conn_max_left_time" toml:"conn_max_left_time"` // 秒数
+	MigrationPath   string `mapstructure:"migration_path" json:"migration_path" toml:"migration_path"`             // 数据库脚本目录
 }
 
 type FileSave struct {

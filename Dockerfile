@@ -8,6 +8,7 @@ MAINTAINER lico
 RUN apk update && apk add curl bash tree tzdata \
     && cp -r -f /usr/share/zoneinfo/Hongkong /etc/localtime
 COPY --from=goBuilder /myapp/server/myapp /
+COPY --from=goBuilder /myapp/server/migrations /migrations
 RUN chmod u+x /myapp
 EXPOSE 80
 CMD ["/myapp"]

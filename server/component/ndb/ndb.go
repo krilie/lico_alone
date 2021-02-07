@@ -18,12 +18,7 @@ import (
 const gormTransConDb = "gormTransConDb"
 
 type NDb struct {
-	cfg struct {
-		ConnStr         string
-		MaxOpenConn     int
-		MaxIdleConn     int
-		ConnMaxLeftTime int
-	}
+	cfg         ncfg.DB
 	log         *nlog.NLog
 	onceStartDb sync.Once
 	onceStopDb  sync.Once
@@ -113,10 +108,13 @@ func NewNDb(cfg *ncfg.NConfig, log *nlog.NLog) (ndb *NDb) {
 	log = log.Get(ctx)
 	log.Info("no ndb created")
 	ndb = &NDb{log: log}
-	ndb.cfg.ConnStr = dbCfg.ConnStr
-	ndb.cfg.MaxOpenConn = dbCfg.MaxOpenConn
-	ndb.cfg.MaxIdleConn = dbCfg.MaxIdleConn
-	ndb.cfg.ConnMaxLeftTime = dbCfg.ConnMaxLeftTime
+	ndb.cfg = *dbCfg
+	if ndb.cfg.MigrationPath == "" {
+		ndb.cfg.MigrationPath = "/migrations"
+	}
 	ndb.Start()
+	// 数据库迁移
+	ndb.Migration(ctx, "file://"+ndb.cfg.MigrationPath, 210001)
+
 	return ndb
 }

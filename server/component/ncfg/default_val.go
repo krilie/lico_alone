@@ -10,6 +10,7 @@ var defaultCfg = `
   conn_str = "root:123456@tcp(localhost:3306)/myapp?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai"
   max_idle_conn = 10
   max_open_conn = 5
+  migration_path = /migrations
 
 [email]
   address = ""

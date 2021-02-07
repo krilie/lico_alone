@@ -8,9 +8,9 @@ import (
 )
 
 func TestMigrate3(t *testing.T) {
-	db, err := sql.Open("mysql", "test:123456@tcp(localhost:3306)/myapp_test?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai&multiStatements=true")
+	db, err := sql.Open("mysql", "test:123456@tcp(localhost:3306)/test?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai&multiStatements=true")
 	if err != nil {
 		panic(err)
 	}
-	dbmigrate.Migrate(db, "file://c://sqls", 20210206140300)
+	dbmigrate.Migrate(db, "file://../dbmigrate/migrations", 20210206140300)
 }

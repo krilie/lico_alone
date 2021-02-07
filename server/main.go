@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/krilie/lico_alone/common/appdig"
 	"github.com/krilie/lico_alone/common/context"
-	run_env "github.com/krilie/lico_alone/common/run_env"
+	"github.com/krilie/lico_alone/common/run_env"
 	"github.com/krilie/lico_alone/component"
 	"github.com/krilie/lico_alone/component/nlog"
 	"github.com/krilie/lico_alone/module/module"
