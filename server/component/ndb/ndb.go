@@ -19,7 +19,7 @@ import (
 )
 
 const gormTransConDb = "gormTransConDb"
-const dbVersion = 20210206140300
+const dbVersion = 210001
 
 type NDb struct {
 	cfg         ncfg.DB
