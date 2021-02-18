@@ -25,7 +25,6 @@ func TestNewNConfig(t *testing.T) {
 			MaxOpenConn:     5,
 			MaxIdleConn:     10,
 			ConnMaxLeftTime: 60 * 60 * 4, // 4h
-			MigrationPath:   "/migrations",
 		},
 		FileSave: FileSave{
 			OssKey:      "",

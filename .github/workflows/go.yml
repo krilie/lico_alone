@@ -35,7 +35,6 @@ jobs:
           go build -ldflags "-X 'github.com/krilie/lico_alone/common/run_env.VERSION=`cat ./version`' -X 'github.com/krilie/lico_alone/common/run_env.BUILD_TIME=`date "+%Y-%m-%d %H:%M:%S"`' -X 'github.com/krilie/lico_alone/common/run_env.GO_VERSION=`go version`' -X 'github.com/krilie/lico_alone/common/run_env.GIT_COMMIT=${GITHUB_SHA}'" -v .
           pwd
           export MYAPP_TEST_CONFIG='${{ secrets.TEST_CONFIG }}'
-          sudo cp -rf ./migrations /migrations
           go test -run Auto -v ./...
 
       - name: 设置Docker使用的环境变量

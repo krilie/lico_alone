@@ -116,9 +116,7 @@ func NewNDb(cfg *ncfg.NConfig, log *nlog.NLog) (ndb *NDb) {
 	log.Info("no ndb created")
 	ndb = &NDb{log: log}
 	ndb.cfg = *dbCfg
-	if ndb.cfg.MigrationPath == "" {
-		ndb.cfg.MigrationPath = "/migrations"
-	}
+
 	ndb.Start()
 	return ndb
 }
@@ -126,7 +124,7 @@ func NewNDb(cfg *ncfg.NConfig, log *nlog.NLog) (ndb *NDb) {
 func (ndb *NDb) MigrationDb() {
 	defer func() {
 		if err := recover(); err != nil {
-			ndb.log.WithField("err", err).WithField("db_version", dbVersion).WithField("migration_path", ndb.cfg.MigrationPath).Info("migrations failure")
+			ndb.log.WithField("err", err).WithField("db_version", dbVersion).WithField("migration_path", "iofs").Info("migrations failure")
 			panic(err)
 		}
 	}()
@@ -146,12 +144,10 @@ func (ndb *NDb) MigrationDb() {
 	if err != nil {
 		panic(err)
 	}
-	if ndb.cfg.MigrationPath == "" {
-		ndb.cfg.MigrationPath = "/migrations"
-	}
+
 	// 如果没有则创建数据库
-	dbmigrate.Migrate(migrationDb, "file://"+ndb.cfg.MigrationPath, dbVersion) // 指定数据库版本
-	ndb.log.WithField("db_name", dbName).WithField("db_version", dbVersion).WithField("migration_path", ndb.cfg.MigrationPath).Info("migrations ok")
+	dbmigrate.Migrate(migrationDb, dbVersion) // 指定数据库版本
+	ndb.log.WithField("db_name", dbName).WithField("db_version", dbVersion).WithField("migration_path", "iofs").Info("migrations ok")
 }
 
 func GetDbNameFromConnectStr(connectStr string) (dbName string) {
