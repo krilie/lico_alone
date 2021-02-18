@@ -21,7 +21,7 @@ require (
 	github.com/go-openapi/swag v0.19.13 // indirect
 	github.com/go-redis/redis/v7 v7.0.0-beta.5
 	github.com/go-sql-driver/mysql v1.5.0
-	github.com/golang-migrate/migrate/v4 v4.14.1
+	github.com/golang-migrate/migrate/v4 v4.14.2-0.20201125065321-a53e6fc42574
 	github.com/golang/protobuf v1.4.3
 	github.com/gomodule/redigo v2.0.0+incompatible
 	github.com/iancoleman/strcase v0.1.3
@@ -30,11 +30,11 @@ require (
 	github.com/jinzhu/copier v0.2.3
 	github.com/jinzhu/now v1.1.1
 	github.com/jmoiron/sqlx v1.2.0
+	github.com/johejo/golang-migrate-extra v0.0.0-20210217013041-51a992e50d16
 	github.com/json-iterator/go v1.1.9
 	github.com/juju/ratelimit v1.0.1
 	github.com/krilie/go-smq v0.0.0-20200426063429-520e51d883e3
 	github.com/krilie/s-file v1.1.0
-	github.com/lib/pq v1.8.0
 	github.com/microcosm-cc/bluemonday v1.0.4 // indirect
 	github.com/mikespook/gorbac v2.1.0+incompatible
 	github.com/minio/minio-go v6.0.14+incompatible
