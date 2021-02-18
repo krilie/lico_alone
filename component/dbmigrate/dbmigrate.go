@@ -11,6 +11,7 @@ import (
 	"github.com/johejo/golang-migrate-extra/source/iofs"
 )
 
+// 相对目录
 //go:embed migrations/*.sql
 var sqlFiles embed.FS
 
@@ -27,7 +28,7 @@ func Migrate(db *sql.DB, version uint) {
 
 	m, err := migrate.NewWithInstance(
 		"iofs",
-		d, // "file://component/dbmigrate/migrations", // 相对目录
+		d, // 相对目录
 		"mysql", driver)
 	if err != nil {
 		panic(err)

@@ -33,7 +33,7 @@ func TestMigrate(t *testing.T) {
 		err := db.Ping()
 		assert.Equal(t, nil, err, "should not err")
 		innerDb, _ := db.db.DB()
-		dbmigrate.Migrate(innerDb, "file://c://sqls", 20210206140300)
+		dbmigrate.Migrate(innerDb, 20210206140300)
 	})
 }
 
