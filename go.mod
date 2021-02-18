@@ -1,6 +1,6 @@
 module github.com/krilie/lico_alone
 
-go 1.14
+go 1.16
 
 require (
 	github.com/Masterminds/squirrel v1.5.0
