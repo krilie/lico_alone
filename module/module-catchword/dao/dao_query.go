@@ -15,6 +15,9 @@ func (t *CatchwordDao) QueryList(ctx context.Context, keyWord string, pageParam 
 		From("tb_catchword").
 		Where(sq.Eq{"deleted_at": nil}).
 		Where(sq.Or{sq.Like{"title": sqlutil.Like(keyWord)}, sq.Like{"content": sqlutil.Like(keyWord)}}).
+		OrderBy("create_at desc,id asc").
+		Offset(uint64(pageParam.PageNum * pageParam.PageSize)).
+		Limit(uint64(pageParam.PageSize)).
 		ToSql()
 	if err != nil {
 		panic(err)
@@ -32,7 +35,7 @@ func (t *CatchwordDao) QueryListForWebShow(ctx context.Context, keyWord string, 
 		Where(sq.Eq{"deleted_at": nil}).
 		Where(sq.Or{sq.Like{"title": sqlutil.Like(keyWord)}, sq.Like{"content": sqlutil.Like(keyWord)}}).
 		Where(sq.LtOrEq{"create_at": from}).
-		OrderBy("create_at desc").
+		OrderBy("create_at desc,id asc").
 		Limit(uint64(limit)).
 		ToSql()
 	if err != nil {
