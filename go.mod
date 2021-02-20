@@ -18,7 +18,7 @@ require (
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-ini/ini v1.46.0 // indirect
 	github.com/go-openapi/spec v0.20.1 // indirect
-	github.com/go-openapi/swag v0.19.13 // indirect
+	github.com/go-openapi/swag v0.19.14 // indirect
 	github.com/go-redis/redis/v7 v7.0.0-beta.5
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang-migrate/migrate/v4 v4.14.2-0.20201125065321-a53e6fc42574
@@ -59,7 +59,7 @@ require (
 	github.com/spf13/viper v1.4.0
 	github.com/streadway/amqp v0.0.0-20200108173154-1c71cc93ed71
 	github.com/stretchr/testify v1.6.1
-	github.com/swaggo/gin-swagger v1.2.0
+	github.com/swaggo/gin-swagger v1.3.0
 	github.com/swaggo/swag v1.7.0
 	github.com/yuin/goldmark v1.2.1
 	go.uber.org/automaxprocs v1.3.0
