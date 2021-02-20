@@ -110,6 +110,10 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 		checkToken.POST("/manage/carousel/update", h.ctrl.userCtrl.UpdateCarousel)
 		checkToken.POST("/manage/carousel/delete_by_id", h.ctrl.userCtrl.DeleteCarouselById)
 		checkToken.GET("/manage/statistic/get_visitor_points", h.ctrl.userCtrl.ManageGetVisitorPoints)
+
+		checkToken.POST("/manage/catchword/add", h.ctrl.userCtrl.AddCatchword)
+		checkToken.POST("/manage/catchword/update", h.ctrl.userCtrl.UpdateCatchword)
+		checkToken.POST("/manage/catchword/delete", h.ctrl.userCtrl.DeleteCatchword)
 	}
 
 	{

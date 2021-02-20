@@ -1110,6 +1110,154 @@ var doc = `{
                 }
             }
         },
+        "/api/manage/catchword/add": {
+            "post": {
+                "description": "添加时代语",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "时代语"
+                ],
+                "summary": "添加时代语",
+                "operationId": "添加时代语",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "添加内容",
+                        "name": "param",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.AddCatchwordModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/com_model.SingleId"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/manage/catchword/delete": {
+            "post": {
+                "description": "删除时代语",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "时代语"
+                ],
+                "summary": "删除时代语",
+                "operationId": "删除时代语",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/com_model.CommonReturn"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/manage/catchword/update": {
+            "post": {
+                "description": "更新时代语",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "时代语"
+                ],
+                "summary": "更新时代语",
+                "operationId": "更新时代语",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "添加内容",
+                        "name": "param",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UpdateCatchwordModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/com_model.CommonReturn"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/manage/file/delete": {
             "post": {
                 "description": "文件删除",
@@ -1921,6 +2069,14 @@ var doc = `{
                 }
             }
         },
+        "com_model.SingleId": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
         "ctl_user.UpdateFileReturn": {
             "type": "object",
             "properties": {
@@ -1931,6 +2087,25 @@ var doc = `{
                     "type": "string"
                 },
                 "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.AddCatchwordModel": {
+            "type": "object",
+            "required": [
+                "content",
+                "sort",
+                "title"
+            ],
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "title": {
                     "type": "string"
                 }
             }
@@ -2233,6 +2408,29 @@ var doc = `{
                 },
                 "url": {
                     "description": "图片地址",
+                    "type": "string"
+                }
+            }
+        },
+        "model.UpdateCatchwordModel": {
+            "type": "object",
+            "required": [
+                "content",
+                "id",
+                "sort",
+                "title"
+            ],
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "title": {
                     "type": "string"
                 }
             }

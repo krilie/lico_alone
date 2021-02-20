@@ -37,6 +37,11 @@ definitions:
       total_page:
         type: integer
     type: object
+  com_model.SingleId:
+    properties:
+      id:
+        type: string
+    type: object
   ctl_user.UpdateFileReturn:
     properties:
       bucket:
@@ -45,6 +50,19 @@ definitions:
         type: string
       url:
         type: string
+    type: object
+  model.AddCatchwordModel:
+    properties:
+      content:
+        type: string
+      sort:
+        type: integer
+      title:
+        type: string
+    required:
+    - content
+    - sort
+    - title
     type: object
   model.ArticleDto:
     properties:
@@ -248,6 +266,22 @@ definitions:
       url:
         description: 图片地址
         type: string
+    type: object
+  model.UpdateCatchwordModel:
+    properties:
+      content:
+        type: string
+      id:
+        type: string
+      sort:
+        type: integer
+      title:
+        type: string
+    required:
+    - content
+    - id
+    - sort
+    - title
     type: object
   model.VisitorLonlatModel:
     properties:
@@ -953,6 +987,103 @@ paths:
       summary: 管理员更新轮播图
       tags:
       - 轮播图
+  /api/manage/catchword/add:
+    post:
+      description: 添加时代语
+      operationId: 添加时代语
+      parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 添加内容
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/model.AddCatchwordModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  $ref: '#/definitions/com_model.SingleId'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 添加时代语
+      tags:
+      - 时代语
+  /api/manage/catchword/delete:
+    post:
+      description: 删除时代语
+      operationId: 删除时代语
+      parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: id
+        in: formData
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 删除时代语
+      tags:
+      - 时代语
+  /api/manage/catchword/update:
+    post:
+      description: 更新时代语
+      operationId: 更新时代语
+      parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 添加内容
+        in: body
+        name: param
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateCatchwordModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/com_model.CommonReturn'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 更新时代语
+      tags:
+      - 时代语
   /api/manage/file/delete:
     post:
       description: 文件删除
