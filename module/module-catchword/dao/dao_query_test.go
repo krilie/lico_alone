@@ -28,10 +28,11 @@ func TestAutoCatchwordDao_QueryList(t *testing.T) {
 		err := dao.CreateCatchword(context.Background(), catchword)
 		require.Nil(t, err)
 
-		list, err := dao.QueryList(context.Background(), catchword.Title, com_model.PageParams{
+		pageInfo, list, err := dao.QueryList(context.Background(), catchword.Title, com_model.PageParams{
 			PageNum:  1,
 			PageSize: 10,
 		})
+		println(jsonutil.ToJson(pageInfo), err)
 		require.Nil(t, err)
 		require.Equal(t, 1, len(list))
 		catchword.CreatedAt = list[0].CreatedAt

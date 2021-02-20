@@ -18,7 +18,7 @@ func (a *DynamicShareDao) DeleteDynamicShare(ctx context.Context, ids []string) 
 }
 
 func (a *DynamicShareDao) UpdateDynamicShare(ctx context.Context, u model.UpdateDynamicShareModel) error {
-	affected, err := a.Exec(ctx,
+	affected, err := ndb.Exec(ctx, a.GetDb(ctx),
 		"update tb_dynamic_share set content=?,sort=? where id=? and deleted_at is null",
 		u.Content, u.Sort, u.Id)
 	if err != nil {

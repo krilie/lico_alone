@@ -43,7 +43,7 @@ func (a *LikeDisLikeDao) AddLikeDisLikeRecord(ctx context.Context, params LikeDi
 	sql := `insert into 
                 tb_like_dislike(id, created_at, updated_at, deleted_at, user_id, business_type, business_id, give_type)
                 VALUES (?,?,?,?,?,?,?,?)`
-	exec, err := a.Exec(ctx, sql, id_util.GetUuid(), time.Now(), time.Now(), nil, params.UserId, params.BusinessType, params.BusinessId, params.GiveType)
+	exec, err := ndb.Exec(ctx, a.GetDb(ctx), sql, id_util.GetUuid(), time.Now(), time.Now(), nil, params.UserId, params.BusinessType, params.BusinessId, params.GiveType)
 	if err != nil {
 		return err
 	}
@@ -65,7 +65,7 @@ func (a *LikeDisLikeDao) RemoveLikeDisLikeRecord(ctx context.Context, params Lik
 	sql := `update tb_like_dislike 
             set deleted_at=? 
             where deleted_at is null and give_type=? and business_id =? and business_type=? and user_id=?`
-	affected, err := a.Exec(ctx, sql, time.Now(), params.GiveType, params.BusinessId, params.BusinessType, params.UserId)
+	affected, err := ndb.Exec(ctx, a.GetDb(ctx), sql, time.Now(), params.GiveType, params.BusinessId, params.BusinessType, params.UserId)
 	if err != nil {
 		return err
 	}
@@ -79,7 +79,7 @@ func (a *LikeDisLikeDao) HasLikeDisLikeRecord(ctx context.Context, params LikeDi
 	sql := `select count(id) from tb_like_dislike 
            where deleted_at is null and give_type=? and business_type=? and business_id=? and user_id=?`
 	var count = 0
-	err := a.RawQuery(ctx, &count, sql, params.GiveType, params.BusinessType, params.BusinessId, params.UserId)
+	err := ndb.RawQuery(ctx, a.GetDb(ctx), &count, sql, params.GiveType, params.BusinessType, params.BusinessId, params.UserId)
 	if err != nil {
 		return false, err
 	}
@@ -92,7 +92,7 @@ func (a *LikeDisLikeDao) GetLikeDiskLikeResult(ctx context.Context, businessType
             where deleted_at is null and business_type=? and business_id in (?) 
             group by business_id, business_type, give_type
             order by count desc `
-	err = a.RawQuery(ctx, &res, sql, businessType, businessIds)
+	err = ndb.RawQuery(ctx, a.GetDb(ctx), &res, sql, businessType, businessIds)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func (a *LikeDisLikeDao) GetLikeUserLikeDisLike(ctx context.Context, businessTyp
             where deleted_at is null and business_type=? and business_id in (?) and user_id=?
             group by business_id, business_type, give_type
             order by count desc `
-	err = a.RawQuery(ctx, &res, sql, businessType, businessIds, userId)
+	err = ndb.RawQuery(ctx, a.GetDb(ctx), &res, sql, businessType, businessIds, userId)
 	if err != nil {
 		return nil, err
 	}

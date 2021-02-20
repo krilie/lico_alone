@@ -4,8 +4,8 @@ package com_model
 // @Param page_num query int true "page_num页索引"
 // @Param page_size query int true "page_size页大小"
 type PageParams struct {
-	PageNum  int `form:"page_num" json:"page_num" xml:"page_num"  binding:"required"`    // 页索引
-	PageSize int `form:"page_size" json:"page_size" xml:"page_size"  binding:"required"` // 页大小
+	PageNum  int64 `form:"page_num" json:"page_num" xml:"page_num"  binding:"required"`    // 页索引
+	PageSize int64 `form:"page_size" json:"page_size" xml:"page_size"  binding:"required"` // 页大小
 }
 
 func NewPageParams() *PageParams {
@@ -34,13 +34,30 @@ func (p *PageParams) CheckOkOrSetDefault() {
 
 // PaginationResult 分页查询结果
 type PageInfo struct {
-	TotalCount int `json:"total_count" swaggo:"true,总条数"` // 总数据条数
-	TotalPage  int `json:"total_page" swaggo:"true,所有页数"`
-	PageNum    int `json:"page_num" swaggo:"true,当前页码"`
-	PageSize   int `json:"page_size" swggo:"true,页大小"`
+	TotalCount int64 `json:"total_count" swaggo:"true,总条数"` // 总数据条数
+	TotalPage  int64 `json:"total_page" swaggo:"true,所有页数"`
+	PageNum    int64 `json:"page_num" swaggo:"true,当前页码"`
+	PageSize   int64 `json:"page_size" swggo:"true,页大小"`
 }
 
 type PageData struct {
 	PageInfo PageInfo    `json:"page_info"` // 分页信息
 	Data     interface{} `json:"data"`      // 列表数据
+}
+
+func NewPageData(pageNum, pageSize, totalCount int64, data interface{}) *PageData {
+	return &PageData{
+		PageInfo: *NewPageInfo(pageNum, pageSize, totalCount),
+		Data:     data,
+	}
+}
+
+func NewPageInfo(pageNum, pageSize, totalCount int64) *PageInfo {
+	totalPage := (totalCount + pageSize - 1) / pageSize
+	return &PageInfo{
+		TotalCount: totalCount,
+		TotalPage:  totalPage,
+		PageNum:    pageNum,
+		PageSize:   pageSize,
+	}
 }

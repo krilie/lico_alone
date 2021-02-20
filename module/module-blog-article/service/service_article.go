@@ -74,7 +74,7 @@ func (s *BlogArticleModule) GetArticleById(ctx context.Context, articleId, uId s
 }
 
 // 分页查询
-func (s *BlogArticleModule) QueryArticleSamplePage(ctx context.Context, page common_model.PageParams, searchKey string, uId string) (totalCount, totalPage int, data []*model.QueryArticleModelSample, err error) {
+func (s *BlogArticleModule) QueryArticleSamplePage(ctx context.Context, page common_model.PageParams, searchKey string, uId string) (totalCount, totalPage int64, data []*model.QueryArticleModelSample, err error) {
 
 	page.CheckOkOrSetDefault()
 
@@ -161,7 +161,7 @@ func (s *BlogArticleModule) QueryArticleSamplePage(ctx context.Context, page com
 }
 
 // 分页查询
-func (s *BlogArticleModule) QueryArticlePage(ctx context.Context, page common_model.PageParams, searchKey, uId string) (totalPage, totalCount int, tdata []*model.QueryArticleModel, err error) {
+func (s *BlogArticleModule) QueryArticlePage(ctx context.Context, page common_model.PageParams, searchKey, uId string) (totalPage, totalCount int64, tdata []*model.QueryArticleModel, err error) {
 
 	page.CheckOkOrSetDefault()
 

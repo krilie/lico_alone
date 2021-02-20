@@ -44,9 +44,9 @@ type QueryDynamicShareModel struct {
 	ContentLike string
 }
 type QueryDynamicShareResModel struct {
-	TotalPage  int
-	TotalCount int
-	PageNum    int
-	PageSize   int
+	TotalPage  int64
+	TotalCount int64
+	PageNum    int64
+	PageSize   int64
 	Data       []DynamicShare
 }

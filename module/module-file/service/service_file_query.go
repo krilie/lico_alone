@@ -6,7 +6,7 @@ import (
 	"github.com/krilie/lico_alone/module/module-file/model"
 )
 
-func (a *FileModule) QueryFilePage(ctx context.Context, param model.QueryFileParam) (totalPage, totalCount, pageNum, pageSize int, files []*model.FileMaster, err error) {
+func (a *FileModule) QueryFilePage(ctx context.Context, param model.QueryFileParam) (totalPage, totalCount, pageNum, pageSize int64, files []*model.FileMaster, err error) {
 	param.PageParams.CheckOkOrSetDefault()
 	db := a.dao.GetDb(ctx)
 	db = db.Model(new(model.FileMaster))
