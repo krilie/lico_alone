@@ -26,7 +26,7 @@ func (t *CatchwordDao) DeleteCatchwordById(ctx context.Context, id string) error
 }
 
 func (t *CatchwordDao) UpdateCatchwordById(ctx context.Context, catchword *model.Catchword) error {
-	result := t.GetDb(ctx).Model(new(model.Catchword)).Select("*").Where("id=?", catchword.Id).Updates(catchword)
+	result := t.GetDb(ctx).Model(new(model.Catchword)).Select("*").Omit("create_at", "delete_at").Where("id=?", catchword.Id).Updates(catchword)
 	return result.Error
 }
 

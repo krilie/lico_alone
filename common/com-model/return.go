@@ -62,3 +62,7 @@ func NewSuccess(data interface{}) *CommonReturn {
 		Data:    data,
 	}
 }
+
+type SingleId struct {
+	Id string `json:"id"`
+}

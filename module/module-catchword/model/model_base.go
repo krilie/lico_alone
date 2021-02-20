@@ -24,3 +24,14 @@ type CatchwordVo struct {
 	Title     string    `json:"title" gorm:"column:title;type:varchar(128);not null;default:''"`      // 消息
 	Content   string    `json:"content" gorm:"column:content;type:varchar(2048);not null;default:''"` // 图片地址
 }
+
+type AddCatchwordModel struct {
+	Sort    int64  `json:"sort"`
+	Title   string `json:"title"`
+	Content string `json:"content"`
+}
+
+type UpdateCatchwordModel struct {
+	Id string `json:"id"`
+	AddCatchwordModel
+}

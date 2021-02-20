@@ -27,7 +27,7 @@ import (
 	}
 
 	func (t *{{$.moduleName}}Dao) Update{{$v}}ById(ctx context.Context, {{ToLowerCamel $v}} *model.{{$v}}) error {
-	    result := t.GetDb(ctx).Model(new(model.{{$v}})).Select("*").Where("id=?",{{ToLowerCamel $v}}.Id).Updates({{ToLowerCamel $v}})
+	    result := t.GetDb(ctx).Model(new(model.{{$v}})).Select("*").Omit("create_at","delete_at").Where("id=?",{{ToLowerCamel $v}}.Id).Updates({{ToLowerCamel $v}})
 	    return result.Error
 	}
 
