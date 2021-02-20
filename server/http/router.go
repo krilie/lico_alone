@@ -76,10 +76,10 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 		rootRouter.GET("health/panic", h.ctrl.healthCheckCtrl.Panic)
 	}
 
+	rootRouter.Use(h.middleware.Cors()) // cors
 	// api路由 + 中间件
 	apiGroup := rootRouter.Group("/api")
 	apiGroup.Use(h.middleware.MiddlewareRecovery()) // recovery
-	apiGroup.Use(h.middleware.Cors())               // cors
 	apiGroup.Use(h.middleware.BuildContext())
 
 	{
