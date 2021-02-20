@@ -22,8 +22,8 @@ func (t *CatchwordDao) QueryList(ctx context.Context, keyWord string, pageParam 
 	dataSql, dataArgs := sqlBuilder.
 		Columns("*").
 		OrderBy("created_at desc,id asc").
-		Offset(uint64((pageParam.PageNum - 1) * pageParam.PageSize)).
-		Limit(uint64(pageParam.PageSize)).
+		Offset(uint64(pageParam.OffSet())).
+		Limit(uint64(pageParam.Limit())).
 		MustSql()
 	// query total and data
 	t.log.Get(ctx).WithField("sql", dataSql).WithField("args", dataArgs).Info("sql str build")
