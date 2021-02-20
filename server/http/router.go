@@ -41,8 +41,6 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 	rootRouter.Use(gzip.Gzip(gzip.DefaultCompression)) // gzip
 	rootRouter.Use(h.middleware.MiddlewareRecovery())  // recovery
 	rootRouter.Use(middleware.RequestOpsLimit())       // 限流
-	// cors
-	rootRouter.Use(h.middleware.Cors())
 
 	rootRouter.NoMethod(func(c *gin.Context) {
 		h.log.Get(ctx).WithField("path", c.Request.URL).WithField("method", c.Request.Method).Info("no method")
@@ -68,7 +66,7 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 		}
 		// swagger + gzip压缩
 		if httpCfg.EnableSwagger {
-			rootRouter.GET("/swagger/*any", gzip.Gzip(gzip.DefaultCompression), ginSwagger.WrapHandler(swaggerFiles.Handler))
+			rootRouter.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 		}
 	}
 
@@ -79,6 +77,8 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 		rootRouter.GET("health/panic", h.ctrl.healthCheckCtrl.Panic)
 	}
 
+	// cors
+	rootRouter.Use(h.middleware.Cors())
 	// api路由 + 中间件
 	apiGroup := rootRouter.Group("/api")
 	apiGroup.Use(h.middleware.BuildContext())
