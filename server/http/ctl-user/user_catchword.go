@@ -37,3 +37,56 @@ func (a *UserCtrl) AddCatchword(c *gin.Context) {
 
 	ginWrap.ReturnData(com_model.SingleId{Id: catchwordId})
 }
+
+// UpdateCatchword 更新时代语
+// @Tags 时代语
+// @ID 更新时代语
+// @Summary 更新时代语
+// @Description 更新时代语
+// @Produce json
+// @Param Authorization header string true "凭证token" default({{token}})
+// @Param param body model.UpdateCatchwordModel true "添加内容"
+// @Success 200 {object} com_model.CommonReturn
+// @Failure 500 {string} errInfo
+// @Router /api/manage/catchword/update [POST]
+func (a *UserCtrl) UpdateCatchword(c *gin.Context) {
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
+	var param model.UpdateCatchwordModel
+	err := ginWrap.ShouldBindJSON(&param)
+	if err != nil {
+		ginWrap.ReturnWithAppErr(errs.NewParamError().WithError(err).WithMsg("参数错误"))
+		return
+	}
+
+	err = a.userService.ModuleCatchword.UpdateCatchword(ginWrap.AppCtx, &param)
+	if err != nil {
+		ginWrap.ReturnWithErr(err)
+		return
+	}
+
+	ginWrap.ReturnOk()
+}
+
+// UpdateCatchword 删除时代语
+// @Tags 时代语
+// @ID 删除时代语
+// @Summary 删除时代语
+// @Description 删除时代语
+// @Produce json
+// @Param Authorization header string true "凭证token" default({{token}})
+// @Param id formData string true "id"
+// @Success 200 {object} com_model.CommonReturn
+// @Failure 500 {string} errInfo
+// @Router /api/manage/catchword/delete [POST]
+func (a *UserCtrl) DeleteCatchword(c *gin.Context) {
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
+	err := a.userService.ModuleCatchword.DeleteCatchword(ginWrap.AppCtx, ginWrap.PostForm("id"))
+	if err != nil {
+		ginWrap.ReturnWithErr(err)
+		return
+	}
+
+	ginWrap.ReturnOk()
+}
