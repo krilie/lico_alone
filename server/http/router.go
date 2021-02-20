@@ -39,7 +39,6 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 	// 路径设置 根路径
 	rootRouter := gin.Default()                        // logger recover
 	rootRouter.Use(gzip.Gzip(gzip.DefaultCompression)) // gzip
-	rootRouter.Use(h.middleware.MiddlewareRecovery())  // recovery
 	rootRouter.Use(middleware.RequestOpsLimit())       // 限流
 
 	rootRouter.NoMethod(func(c *gin.Context) {
@@ -77,10 +76,10 @@ func (h *HttpService) InitAndStartHttpService(ctx context.Context) (shutDown fun
 		rootRouter.GET("health/panic", h.ctrl.healthCheckCtrl.Panic)
 	}
 
-	// cors
-	rootRouter.Use(h.middleware.Cors())
 	// api路由 + 中间件
 	apiGroup := rootRouter.Group("/api")
+	apiGroup.Use(h.middleware.MiddlewareRecovery()) // recovery
+	apiGroup.Use(h.middleware.Cors())               // cors
 	apiGroup.Use(h.middleware.BuildContext())
 
 	{
