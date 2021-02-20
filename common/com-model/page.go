@@ -61,3 +61,10 @@ func NewPageInfo(pageNum, pageSize, totalCount int64) *PageInfo {
 		PageSize:   pageSize,
 	}
 }
+
+func NewPageData2(pageInfo *PageInfo, data interface{}) *PageData {
+	return &PageData{
+		PageInfo: *pageInfo,
+		Data:     data,
+	}
+}

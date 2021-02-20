@@ -90,3 +90,41 @@ func (a *UserCtrl) DeleteCatchword(c *gin.Context) {
 
 	ginWrap.ReturnOk()
 }
+
+// UpdateCatchword 查询时代语
+// @Tags 时代语
+// @ID 查询时代语
+// @Summary 查询时代语
+// @Description 查询时代语
+// @Produce json
+// @Param Authorization header string true "凭证token" default({{token}})
+// @Param key_word query string true "key word"
+// @Param page_size query int true "page size"
+// @Param page_num query int true "page num"
+// @Success 200 {object} com_model.CommonReturn{data=com_model.PageData{data=[]model.CatchwordVo}}
+// @Failure 500 {string} errInfo
+// @Router /api/manage/catchword/query [GET]
+func (a *UserCtrl) QueryCatchword(c *gin.Context) {
+	ginWrap := ginutil.NewGinWrap(c, a.log)
+
+	var param = struct {
+		KeyWord string `json:"key_word" url:"key_word" form:"key_word" binding:""`
+		com_model.PageParams
+	}{}
+	err := ginWrap.ShouldBindQuery(&param)
+	if err != nil {
+		ginWrap.ReturnWithParamErr(err)
+		return
+	}
+
+	pageInfo, data, err := a.userService.ModuleCatchword.Dao.QueryList(ginWrap.AppCtx, param.KeyWord, com_model.PageParams{
+		PageNum:  param.PageNum,
+		PageSize: param.PageSize,
+	})
+	if err != nil {
+		ginWrap.ReturnWithErr(err)
+		return
+	}
+
+	ginWrap.ReturnData(com_model.NewPageData2(pageInfo, data))
+}

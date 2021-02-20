@@ -1053,6 +1053,58 @@ paths:
       summary: 删除时代语
       tags:
       - 时代语
+  /api/manage/catchword/query:
+    get:
+      description: 查询时代语
+      operationId: 查询时代语
+      parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: key word
+        in: query
+        name: key_word
+        required: true
+        type: string
+      - description: page size
+        in: query
+        name: page_size
+        required: true
+        type: integer
+      - description: page num
+        in: query
+        name: page_num
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/com_model.PageData'
+                  - properties:
+                      data:
+                        items:
+                          $ref: '#/definitions/model.CatchwordVo'
+                        type: array
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 查询时代语
+      tags:
+      - 时代语
   /api/manage/catchword/update:
     post:
       description: 更新时代语

@@ -61,6 +61,10 @@ func (g *GinWrap) ReturnWithAppErr(err *errs.Err) {
 	g.Context.JSON(200, com_model.NewRet(err))
 }
 
+func (g *GinWrap) ReturnWithParamErr(err error) {
+	g.Context.JSON(200, com_model.NewFailure(errs.ErrorParam, err.Error()))
+}
+
 func (g *GinWrap) ReturnOk() {
 	g.Context.JSON(200, com_model.StdSuccess)
 }

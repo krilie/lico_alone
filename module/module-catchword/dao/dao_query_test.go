@@ -5,6 +5,7 @@ import (
 	"github.com/krilie/lico_alone/common/appdig"
 	com_model "github.com/krilie/lico_alone/common/com-model"
 	"github.com/krilie/lico_alone/common/utils/jsonutil"
+	"github.com/krilie/lico_alone/common/utils/objutil"
 	"github.com/krilie/lico_alone/common/utils/random"
 	"github.com/krilie/lico_alone/component"
 	"github.com/krilie/lico_alone/module/module-catchword/model"
@@ -37,7 +38,7 @@ func TestAutoCatchwordDao_QueryList(t *testing.T) {
 		require.Equal(t, 1, len(list))
 		catchword.CreatedAt = list[0].CreatedAt
 		catchword.UpdatedAt = list[0].UpdatedAt
-		require.Equal(t, catchword, list[0])
+		require.Equal(t, objutil.MustCopy(&model.CatchwordVo{}, catchword), list[0])
 		println(jsonutil.ToJson(list), err)
 
 		err = dao.DeleteCatchwordById(context.Background(), catchword.Id)

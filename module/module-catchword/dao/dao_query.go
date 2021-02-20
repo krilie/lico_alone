@@ -11,7 +11,7 @@ import (
 )
 
 // QueryList 查询列表
-func (t *CatchwordDao) QueryList(ctx context.Context, keyWord string, pageParam com_model.PageParams) (pageInfo *com_model.PageInfo, data []*model.Catchword, err error) {
+func (t *CatchwordDao) QueryList(ctx context.Context, keyWord string, pageParam com_model.PageParams) (pageInfo *com_model.PageInfo, data []*model.CatchwordVo, err error) {
 	sqlBuilder := sq.Select().
 		From("tb_catchword").
 		Where(sq.Eq{"deleted_at": nil}).
@@ -28,7 +28,7 @@ func (t *CatchwordDao) QueryList(ctx context.Context, keyWord string, pageParam 
 	// query total and data
 	t.log.Get(ctx).WithField("sql", dataSql).WithField("args", dataArgs).Info("sql str build")
 
-	data = make([]*model.Catchword, 0)
+	data = make([]*model.CatchwordVo, 0)
 	totalCount, err := ndb.GetPageDataFormSql(ctx, t.GetDb(ctx), countSql, dataSql, countArgs, dataArgs, &data)
 	if err != nil {
 		return nil, nil, err
