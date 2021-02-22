@@ -16,7 +16,7 @@ import (
 // @Param valid_code formData string true "验证码"
 // @Success 200 {object} com_model.CommonReturn{data=object}
 // @Failure 500 {string} errInfo
-// @Router /api/user/register [post]
+// @Router /api/manage/user/register [post]
 func (a *UserCtrl) UserRegister(c *gin.Context) {
 	ginWrap := ginutil.NewGinWrap(c, a.log)
 
