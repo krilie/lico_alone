@@ -13,7 +13,7 @@ import (
 // @ID common查询时代热词
 // @Produce json
 // @Param key_word query string true "搜索关键词"
-// @Param form query int true "从什么时间开始 0"
+// @Param from query int true "从什么时间开始 0"
 // @Param limit query int true "倒序取多少个"
 // @Success 200 {object} com_model.CommonReturn{data=[]model.CatchwordVo} "时间排序"
 // @Failure 500 {string} errInfo
@@ -28,7 +28,7 @@ func (con *CommonCtrl) QueryCatchword(c *gin.Context) {
 			ginWrap.AppCtx,
 			ginWrap.QueryParamOrEmpty("key_word"),
 			strutil.GetIntOrDef(ginWrap.Query("from"), 0),
-			c.GetInt("limit"))
+			strutil.GetIntOrDef(ginWrap.Query("limit"), 0))
 	ginWrap.HandlerErrorOrReturnData(err, data)
 	return
 }
