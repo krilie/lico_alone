@@ -21,7 +21,7 @@ func (t *CatchwordDao) QueryList(ctx context.Context, keyWord string, pageParam 
 	// dataSql
 	dataSql, dataArgs := sqlBuilder.
 		Columns("*").
-		OrderBy("created_at desc,id asc").
+		OrderBy("sort asc,created_at desc,id asc").
 		Offset(uint64(pageParam.OffSet())).
 		Limit(uint64(pageParam.Limit())).
 		MustSql()
