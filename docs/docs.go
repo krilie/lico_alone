@@ -396,8 +396,8 @@ var doc = `{
                         "required": true
                     },
                     {
-                        "type": "string",
-                        "description": "从什么时间开始 2021-02-06 10:34:03",
+                        "type": "integer",
+                        "description": "从什么时间开始 0",
                         "name": "form",
                         "in": "query",
                         "required": true

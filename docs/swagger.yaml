@@ -541,11 +541,11 @@ paths:
         name: key_word
         required: true
         type: string
-      - description: 从什么时间开始 2021-02-06 10:34:03
+      - description: 从什么时间开始 0
         in: query
         name: form
         required: true
-        type: string
+        type: integer
       - description: 倒序取多少个
         in: query
         name: limit

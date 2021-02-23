@@ -46,7 +46,7 @@ func (t *CatchwordDao) QueryListForWebShow(ctx context.Context, keyWord string, 
 	}
 	// build sql
 	sql, args, err := sqlBuild.
-		OrderBy("create_at desc,id asc").
+		OrderBy("created_at desc,id asc").
 		Offset(uint64(from)).
 		Limit(uint64(limit)).
 		ToSql()
