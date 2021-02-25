@@ -398,7 +398,7 @@ var doc = `{
                     {
                         "type": "integer",
                         "description": "从什么时间开始 0",
-                        "name": "form",
+                        "name": "from",
                         "in": "query",
                         "required": true
                     },
@@ -2404,6 +2404,9 @@ var doc = `{
         "model.IcpInfo": {
             "type": "object",
             "properties": {
+                "domain": {
+                    "type": "string"
+                },
                 "label": {
                     "type": "string"
                 },

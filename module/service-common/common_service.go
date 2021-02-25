@@ -46,7 +46,7 @@ func NewCommonService(
 func (a *CommonService) GetIcpInfo(ctx context.Context) (info model.IcpInfo) {
 	_, err := a.configService.GetJsonValue(ctx, model.ConfigItemsIcpInfo.Val(), &info)
 	if err != nil {
-		return model.IcpInfo{Name: "", Link: "", Label: ""}
+		return model.IcpInfo{Name: "", Link: "", Label: "", Domain: ""}
 	}
 	return info
 }
