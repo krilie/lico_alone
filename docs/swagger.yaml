@@ -205,6 +205,8 @@ definitions:
     type: object
   model.IcpInfo:
     properties:
+      domain:
+        type: string
       label:
         type: string
       link:
@@ -541,11 +543,11 @@ paths:
         name: key_word
         required: true
         type: string
-      - description: 从什么时间开始 2021-02-06 10:34:03
+      - description: 从什么时间开始 0
         in: query
-        name: form
+        name: from
         required: true
-        type: string
+        type: integer
       - description: 倒序取多少个
         in: query
         name: limit
@@ -1437,37 +1439,7 @@ paths:
       summary: 获取所有访问地点
       tags:
       - 配置项
-  /api/user/init_app:
-    get:
-      description: 用户初始化数据
-      operationId: 用户初始化
-      parameters:
-      - default: '{{token}}'
-        description: 凭证token
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/com_model.CommonReturn'
-            - properties:
-                data:
-                  $ref: '#/definitions/service_user.InitAppData'
-              type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            type: string
-      summary: 用户初始化
-      tags:
-      - 用户
-  /api/user/login:
+  /api/manage/user/login:
     post:
       description: 用户用密码登录
       operationId: 用户登录
@@ -1501,7 +1473,7 @@ paths:
       summary: 用户登录
       tags:
       - 用户
-  /api/user/register:
+  /api/manage/user/register:
     post:
       description: 用户注册
       operationId: 用户注册
@@ -1540,7 +1512,7 @@ paths:
       summary: 用户注册
       tags:
       - 用户
-  /api/user/send_sms:
+  /api/manage/user/send_sms:
     post:
       description: 用户发短信
       operationId: 用户发短信
@@ -1572,6 +1544,36 @@ paths:
           schema:
             type: string
       summary: 用户发短信
+      tags:
+      - 用户
+  /api/user/init_app:
+    get:
+      description: 用户初始化数据
+      operationId: 用户初始化
+      parameters:
+      - default: '{{token}}'
+        description: 凭证token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/com_model.CommonReturn'
+            - properties:
+                data:
+                  $ref: '#/definitions/service_user.InitAppData'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 用户初始化
       tags:
       - 用户
   /health:

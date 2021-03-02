@@ -396,9 +396,9 @@ var doc = `{
                         "required": true
                     },
                     {
-                        "type": "string",
-                        "description": "从什么时间开始 2021-02-06 10:34:03",
-                        "name": "form",
+                        "type": "integer",
+                        "description": "从什么时间开始 0",
+                        "name": "from",
                         "in": "query",
                         "required": true
                     },
@@ -1824,56 +1824,7 @@ var doc = `{
                 }
             }
         },
-        "/api/user/init_app": {
-            "get": {
-                "description": "用户初始化数据",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "用户"
-                ],
-                "summary": "用户初始化",
-                "operationId": "用户初始化",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "default": "{{token}}",
-                        "description": "凭证token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/com_model.CommonReturn"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/service_user.InitAppData"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/user/login": {
+        "/api/manage/user/login": {
             "post": {
                 "description": "用户用密码登录",
                 "produces": [
@@ -1928,7 +1879,7 @@ var doc = `{
                 }
             }
         },
-        "/api/user/register": {
+        "/api/manage/user/register": {
             "post": {
                 "description": "用户注册",
                 "produces": [
@@ -1990,7 +1941,7 @@ var doc = `{
                 }
             }
         },
-        "/api/user/send_sms": {
+        "/api/manage/user/send_sms": {
             "post": {
                 "description": "用户发短信",
                 "produces": [
@@ -2030,6 +1981,55 @@ var doc = `{
                                     "properties": {
                                         "data": {
                                             "type": "object"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/init_app": {
+            "get": {
+                "description": "用户初始化数据",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户"
+                ],
+                "summary": "用户初始化",
+                "operationId": "用户初始化",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "{{token}}",
+                        "description": "凭证token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/com_model.CommonReturn"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/service_user.InitAppData"
                                         }
                                     }
                                 }
@@ -2404,6 +2404,9 @@ var doc = `{
         "model.IcpInfo": {
             "type": "object",
             "properties": {
+                "domain": {
+                    "type": "string"
+                },
                 "label": {
                     "type": "string"
                 },

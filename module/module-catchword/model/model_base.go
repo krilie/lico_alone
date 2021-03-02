@@ -32,6 +32,8 @@ type AddCatchwordModel struct {
 }
 
 type UpdateCatchwordModel struct {
-	Id string `json:"id" form:"id" binding:"required"`
-	AddCatchwordModel
+	Id      string `json:"id" form:"id" binding:"required"`
+	Sort    int64  `json:"sort" form:"sort" binding:"required"`
+	Title   string `json:"title" json:"title" binding:"required"`
+	Content string `json:"content" json:"content" binding:"required"`
 }

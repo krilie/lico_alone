@@ -32,7 +32,7 @@ func (a *CatchwordModule) DeleteCatchword(ctx context.Context, id string) error 
 
 func (a *CatchwordModule) UpdateCatchword(ctx context.Context, model *model2.UpdateCatchwordModel) error {
 	return a.Dao.UpdateCatchwordById(ctx, &model2.Catchword{
-		Model:   com_model.Model{Id: model.Id},
+		Model:   com_model.Model{Id: model.Id, UpdatedAt: time.Now()},
 		Sort:    model.Sort,
 		Title:   model.Title,
 		Content: model.Content,

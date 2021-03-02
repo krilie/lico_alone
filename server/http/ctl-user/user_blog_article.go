@@ -101,7 +101,7 @@ func (a *UserCtrl) QueryArticle(c *gin.Context) {
 		ginWrap.ReturnWithErr(err)
 		return
 	}
-	ginWrap.ReturnData(com_model.NewSuccess(com_model.PageData{
+	ginWrap.ReturnData(com_model.PageData{
 		PageInfo: com_model.PageInfo{
 			TotalCount: count,
 			TotalPage:  page,
@@ -109,7 +109,7 @@ func (a *UserCtrl) QueryArticle(c *gin.Context) {
 			PageSize:   param.PageSize,
 		},
 		Data: data,
-	}))
+	})
 }
 
 // DeleteArticle 删除文章

@@ -15,7 +15,7 @@ import (
 // @Param password formData string true "用户密码"
 // @Success 200 {object} com_model.CommonReturn{data=object} "2000 {token:"asb"}"
 // @Failure 500 {string} errInfo
-// @Router /api/user/login [post]
+// @Router /api/manage/user/login [post]
 func (a *UserCtrl) UserLogin(c *gin.Context) {
 	ginWrap := ginutil.NewGinWrap(c, a.log)
 

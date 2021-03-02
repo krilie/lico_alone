@@ -2,7 +2,7 @@ package ctl_common
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/now"
+	"github.com/krilie/lico_alone/common/utils/strutil"
 	"github.com/krilie/lico_alone/server/http/ginutil"
 )
 
@@ -13,7 +13,7 @@ import (
 // @ID common查询时代热词
 // @Produce json
 // @Param key_word query string true "搜索关键词"
-// @Param form query string true "从什么时间开始 2021-02-06 10:34:03"
+// @Param from query int true "从什么时间开始 0"
 // @Param limit query int true "倒序取多少个"
 // @Success 200 {object} com_model.CommonReturn{data=[]model.CatchwordVo} "时间排序"
 // @Failure 500 {string} errInfo
@@ -27,8 +27,8 @@ func (con *CommonCtrl) QueryCatchword(c *gin.Context) {
 		QueryListForWebShow(
 			ginWrap.AppCtx,
 			ginWrap.QueryParamOrEmpty("key_word"),
-			now.MustParse(ginWrap.QueryParamOrEmpty("form")),
-			c.GetInt("limit"))
+			strutil.GetIntOrDef(ginWrap.Query("from"), 0),
+			strutil.GetIntOrDef(ginWrap.Query("limit"), 0))
 	ginWrap.HandlerErrorOrReturnData(err, data)
 	return
 }
