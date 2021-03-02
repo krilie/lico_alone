@@ -10,16 +10,7 @@ import (
 )
 
 var DigComponentProviderAll = []interface{}{
-	ncfg.NewNConfigByFileFromEnv("APP_CONFIG_PATH"),
-	nlog.NewLogger,
-	ndb.NewNDb,
-	broker.NewBroker,
-	cache.NewCache,
-	cron.NewCrone,
-}
-
-var DigComponentProviderAllForTest = []interface{}{
-	ncfg.NewNConfigByCfgStrFromEnvJson("MYAPP_TEST_CONFIG"),
+	ncfg.NewNConfig,
 	nlog.NewLogger,
 	ndb.NewNDb,
 	broker.NewBroker,
