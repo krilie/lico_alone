@@ -10,7 +10,7 @@ import (
 
 var container = appdig.
 	NewAppDig().
-	MustProvides(component.DigComponentProviderAllForTest).
+	MustProvides(component.DigComponentProviderAll).
 	MustProvide(NewCommonService)
 
 func TestCommonService_GetIcpInfo(t *testing.T) {

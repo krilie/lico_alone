@@ -11,7 +11,7 @@ import (
 
 var container = appdig.
 	NewAppDig().
-	MustProvides(component.DigComponentProviderAllForTest).
+	MustProvides(component.DigComponentProviderAll).
 	MustProvides(DigModuleStatisticProviderAll)
 
 func TestStatisticService_HandleBrokerWebStationVisited(t *testing.T) {

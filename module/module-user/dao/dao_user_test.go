@@ -12,7 +12,7 @@ import (
 
 var container = appdig.
 	NewAppDig().
-	MustProvides(component.DigComponentProviderAllForTest).
+	MustProvides(component.DigComponentProviderAll).
 	MustProvide(NewUserDao)
 
 func TestDao_GetAllValidUserId(t *testing.T) {

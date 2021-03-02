@@ -12,7 +12,7 @@ import (
 
 var container = appdig.
 	NewAppDig().
-	MustProvides(component.DigComponentProviderAllForTest).
+	MustProvides(component.DigComponentProviderAll).
 	MustProvide(NewDynamicShareDao)
 
 var testData = []model.DynamicShare{

@@ -7,6 +7,6 @@ import (
 )
 
 var container = appdig.NewAppDig().
-	MustProvides(component.DigComponentProviderAllForTest).
+	MustProvides(component.DigComponentProviderAll).
 	MustProvides(module.DigProviderModuleAll).
 	MustProvide(NewUserService)

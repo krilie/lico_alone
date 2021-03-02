@@ -13,7 +13,7 @@ import (
 
 var container = appdig.
 	NewAppDig().
-	MustProvides(component.DigComponentProviderAllForTest).
+	MustProvides(component.DigComponentProviderAll).
 	MustProvides(DigModuleFileProviderAll)
 
 func TestFileService_UploadFile(t *testing.T) {
