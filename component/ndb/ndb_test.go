@@ -14,7 +14,7 @@ var container = appdig.NewAppDig()
 
 func TestMain(m *testing.M) {
 
-	container.MustProvide(ncfg.NewNConfigByCfgStrFromEnvJson("MYAPP_TEST_CONFIG"))
+	container.MustProvide(ncfg.NewNConfig)
 	container.MustProvide(nlog.NewLogger)
 	container.MustProvide(NewNDb)
 

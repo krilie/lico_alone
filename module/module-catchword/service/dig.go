@@ -15,7 +15,7 @@ var DigModuleCatchwordProviderAll = []interface{}{
 func BuildTestContainer() *appdig.AppContainer {
 	var container = appdig.NewAppDig()
 	container.
-		MustProvides(component.DigComponentProviderAllForTest).
+		MustProvides(component.DigComponentProviderAll).
 		MustProvides(DigModuleCatchwordProviderAll)
 	return container
 }

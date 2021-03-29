@@ -14,51 +14,6 @@ type NConfig struct {
 	RunEnv *run_env.RunEnv
 }
 
-func NewNConfigByCfgStr(cfgStr string) *NConfig {
-	cfg := NewNConfig()
-	err := cfg.LoadFromConfigTomlStr(cfgStr)
-	if err != nil {
-		panic(err)
-	}
-	return cfg
-}
-
-func NewNConfigByCfgStrFromEnv(envName string) func() *NConfig {
-	return func() *NConfig {
-		cfg := NewNConfig()
-		cfgStr := os.Getenv(envName)
-		err := cfg.LoadFromConfigTomlStr(cfgStr)
-		if err != nil {
-			panic(err)
-		}
-		return cfg
-	}
-}
-
-func NewNConfigByCfgStrFromEnvJson(envName string) func() *NConfig {
-	return func() *NConfig {
-		cfg := NewNConfig()
-		cfgStr := os.Getenv(envName)
-		err := cfg.LoadFromConfigJsonStr(cfgStr)
-		if err != nil {
-			panic(err)
-		}
-		return cfg
-	}
-}
-
-func NewNConfigByFileFromEnv(envName string) func() *NConfig {
-	return func() *NConfig {
-		cfg := NewNConfig()
-		filePath := os.Getenv(envName)
-		err := cfg.LoadConfigByFile(filePath)
-		if err != nil {
-			panic(err)
-		}
-		return cfg
-	}
-}
-
 func NewNConfig() *NConfig {
 	var cfg = &NConfig{V: viper.New(), RunEnv: run_env.RunEnvLocal}
 
@@ -68,12 +23,75 @@ func NewNConfig() *NConfig {
 	replacer := strings.NewReplacer(".", "_")
 	cfg.V.SetEnvKeyReplacer(replacer)
 
-	err := cfg.LoadDefaultConfig()
+	// 命令行位置 > 环境变量位置 > 环境变量配置 > 默认位置
+
+	// 默认位置的配置文件
+	err := cfg.LoadConfigByFile("config.toml")
 	if err != nil {
-		log.Println("加载默认配置值时失败 :" + err.Error())
+		println("warn:默认位置 未能加载 " + err.Error())
+	} else {
+		println("info:成功加载 默认位置")
+	}
+	// 默认环境变量位置
+	err = cfg.LoadConfigByFile(os.Getenv("APP_CONFIG_PATH"))
+	if err != nil {
+		println("warn:环境变量位置 未能加载" + err.Error())
+	} else {
+		println("info:成功加载 环境变量配置文件位置")
+	}
+	// 默认环境变量内容
+	err = cfg.LoadFromConfigJsonStr(os.Getenv("MYAPP_TEST_CONFIG"))
+	if err != nil {
+		println("warn:环境变量配置内容 未能加载" + err.Error())
+	} else {
+		println("info:成功加载环境变量配置内容")
+	}
+	// 配置位置 --config_path
+	configPath := func() string {
+		for _, value := range os.Args[1:] {
+			if strings.HasPrefix(value, "config_path") ||
+				strings.HasPrefix(value, "-config_path") ||
+				strings.HasPrefix(value, "--config_path") {
+				split := strings.Split(value, "=")
+				return split[1]
+			}
+		}
+		return ""
+	}()
+	if configPath != "" {
+		err = cfg.LoadConfigByFile(configPath)
+		if err != nil {
+			println("warn:命令行配置文件位置 未能加载" + err.Error())
+		} else {
+			println("info:成功从命令行加载配置文件位置")
+		}
+	} else {
+		println("warn:命令行配置文件位置 未能加载")
 	}
 
 	return cfg
+}
+
+func NewNConfigFromTomlFilePathEnv(cfgPathEnvName string) func() *NConfig {
+	return func() *NConfig {
+		var cfg = NewNConfig()
+		err := cfg.LoadConfigByFile(os.Getenv(cfgPathEnvName))
+		if err != nil {
+			panic(err)
+		}
+		return cfg
+	}
+}
+
+func NewNConfigFromFilePathJsonContent(cfgContentEnvName string) func() *NConfig {
+	return func() *NConfig {
+		var cfg = NewNConfig()
+		err := cfg.LoadFromConfigJsonStr(os.Getenv(cfgContentEnvName))
+		if err != nil {
+			panic(err)
+		}
+		return cfg
+	}
 }
 
 func (cfg *NConfig) LoadConfigByFile(name string) error {
@@ -117,12 +135,4 @@ func (cfg *NConfig) LoadFromConfigJsonStr(cfgStr string) error {
 	} else {
 		return nil
 	}
-}
-
-func (cfg *NConfig) LoadDefaultConfig() error {
-	err := cfg.LoadFromConfigTomlStr(defaultCfg)
-	if err != nil {
-		return err
-	}
-	return nil
 }

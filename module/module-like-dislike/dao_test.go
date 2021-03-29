@@ -11,7 +11,7 @@ import (
 
 var container = appdig.
 	NewAppDig().
-	MustProvides(component.DigComponentProviderAllForTest).
+	MustProvides(component.DigComponentProviderAll).
 	MustProvide(NewLikeDisLikeDao)
 
 func TestNewLikeDisLikeDao(t *testing.T) {

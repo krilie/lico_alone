@@ -16,7 +16,7 @@ import (
 
 var container = appdig.
 	NewAppDig().
-	MustProvides(component.DigComponentProviderAllForTest).
+	MustProvides(component.DigComponentProviderAll).
 	MustProvide(NewFileDao)
 
 func TestFileDao_CreateFile(t *testing.T) {

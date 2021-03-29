@@ -11,7 +11,7 @@ import (
 
 var container = appdig.
 	NewAppDig().
-	MustProvides(component.DigComponentProviderAllForTest)
+	MustProvides(component.DigComponentProviderAll)
 
 func TestSendSms(t *testing.T) {
 	container.MustInvoke(func(cfg *ncfg.NConfig) {
