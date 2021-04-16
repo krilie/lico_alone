@@ -12,7 +12,7 @@ var DigModuleBlogArticleProviderAll = []interface{}{
 	NewBlogArticleModule,
 }
 
-// 测试用
+// BuildTestContainer 测试用
 func BuildTestContainer() *appdig.AppContainer {
 	var container = appdig.NewAppDig()
 	container.

@@ -8,7 +8,7 @@ import (
 	"github.com/krilie/lico_alone/server/http/ginutil"
 )
 
-// ManageUpdateConfig 通过id获取文章
+// GetArticleById 通过id获取文章
 // @Summary 通过id获取文章
 // @Description 获取一个文章信息
 // @Tags 文章管理
@@ -35,7 +35,7 @@ func (a *UserCtrl) GetArticleById(c *gin.Context) {
 	return
 }
 
-// ManageUpdateConfig 更新文章内容
+// UpdateArticle 更新文章内容
 // @Summary 更新文章内容
 // @Description 更新文章内容
 // @Tags 文章管理
@@ -140,7 +140,7 @@ func (a *UserCtrl) DeleteArticle(c *gin.Context) {
 	return
 }
 
-// DeleteArticle 创建文章
+// CreateArticle 创建文章
 // @Summary 创建文章
 // @Description 创建文章
 // @Tags 文章管理

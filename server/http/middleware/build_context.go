@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-// 请求到来后第一个经过的中间件
+// BuildContext 请求到来后第一个经过的中间件
 // 从请中中构建context上下文的中间件
 func (m *GinMiddleware) BuildContext() gin.HandlerFunc {
 	return func(c *gin.Context) {

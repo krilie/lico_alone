@@ -23,7 +23,7 @@ func NewNotificationEmailService(moduleConfig *ConfigService.ConfigModule, modul
 	}
 }
 
-// SendRunUpEmail 发送服务启动消息
+// SendServiceUpEmail SendRunUpEmail 发送服务启动消息
 func (a *NotificationEmailService) SendServiceUpEmail(ctx context.Context) error {
 	emailAddr, err := a.ModuleConfig.GetValueStr(ctx, model.ConfigItemsNotificationEmail.Val())
 	if err != nil {
@@ -58,7 +58,7 @@ func (a *NotificationEmailService) SendGoodMorningEmail(ctx context.Context) err
 	return err
 }
 
-// SendGoodMorningEmail 发送服务关闭消息
+// SendServiceEndEmail SendGoodMorningEmail 发送服务关闭消息
 func (a *NotificationEmailService) SendServiceEndEmail(ctx context.Context) error {
 	emailAddr, err := a.ModuleConfig.GetValueStr(ctx, model.ConfigItemsNotificationEmail.Val())
 	if err != nil {

@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-// 权限接口
+// IAuth 权限接口
 type IAuth interface {
 	HasUser(ctx context.Context, userId string) (bool, error)
 	HasPermission(ctx context.Context, userId, method, path string) (bool, error)
@@ -21,7 +21,7 @@ type IAuth interface {
 	CheckJwtToken(tokenStr string) (userClaims jwt.UserClaims, err error)
 }
 
-// check user is login and auth token validation
+// CheckAuthToken check user is login and auth token validation
 func (m *GinMiddleware) CheckAuthToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ginWrap := ginutil.NewGinWrap(c, m.log)

@@ -53,7 +53,7 @@ func (a *Server) StartService(ctx context.Context) {
 	})
 }
 
-// 接收信号和退出
+// WaitSignalAndExit 接收信号和退出
 func WaitSignalAndExit(ctx context.Context, exit func()) {
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL)

@@ -5,7 +5,7 @@ import (
 	"github.com/krilie/lico_alone/common/errs"
 )
 
-// 处理错误，如果有错误返回真 无错误返回假
+// HandlerError 处理错误，如果有错误返回真 无错误返回假
 func (g *GinWrap) HandlerError(err error) bool {
 	if err == nil {
 		return false
@@ -15,7 +15,7 @@ func (g *GinWrap) HandlerError(err error) bool {
 	}
 }
 
-// 处理错误 如果没有返回通用成功
+// HandlerErrorOrReturnSuccess 处理错误 如果没有返回通用成功
 func (g *GinWrap) HandlerErrorOrReturnSuccess(err error) {
 	if err == nil {
 		g.Context.JSON(200, com_model.StdSuccess)
@@ -26,7 +26,7 @@ func (g *GinWrap) HandlerErrorOrReturnSuccess(err error) {
 	}
 }
 
-// 处理错误 如果没有返回通用成功
+// HandlerErrorOrReturnJson 处理错误 如果没有返回通用成功
 func (g *GinWrap) HandlerErrorOrReturnJson(err error, ret interface{}) {
 	if err == nil {
 		g.Context.JSON(200, ret)
@@ -37,7 +37,7 @@ func (g *GinWrap) HandlerErrorOrReturnJson(err error, ret interface{}) {
 	}
 }
 
-// 处理错误 如果没有返回通用成功
+// HandlerErrorOrReturnData 处理错误 如果没有返回通用成功
 func (g *GinWrap) HandlerErrorOrReturnData(err error, data interface{}) {
 	if err == nil {
 		g.ReturnData(data)
@@ -48,7 +48,7 @@ func (g *GinWrap) HandlerErrorOrReturnData(err error, data interface{}) {
 	}
 }
 
-// abort with err use err's default http status
+// ReturnWithErr abort with err use err's default http status
 func (g *GinWrap) ReturnWithErr(err error) {
 	if nErr := errs.ToErrOrNil(err); nErr != nil {
 		g.Context.JSON(200, com_model.NewRet(nErr))

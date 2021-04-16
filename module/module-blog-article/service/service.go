@@ -10,7 +10,7 @@ import (
 	module_like_dislike "github.com/krilie/lico_alone/module/module-like-dislike"
 )
 
-// 系统配置服务
+// BlogArticleModule 系统配置服务
 type BlogArticleModule struct {
 	Dao               *dao.BlogArticleDao
 	log               *nlog.NLog

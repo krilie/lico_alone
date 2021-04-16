@@ -5,7 +5,7 @@ import (
 	"github.com/krilie/lico_alone/common/errs"
 )
 
-// abort with err use err's default http status
+// AbortWithErr abort with err use err's default http status
 func (g *GinWrap) AbortWithErr(err error) {
 	if nErr := errs.ToErrOrNil(err); nErr != nil {
 		g.Context.AbortWithStatusJSON(200, com_model.NewRet(nErr))
