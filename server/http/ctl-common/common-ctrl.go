@@ -34,7 +34,7 @@ func NewCommonCtrl(
 	}
 }
 
-// Health Icp信息
+// GetIcpInfo Icp信息
 // @Summary Icp信息
 // @Description Icp信息
 // @Tags 公共接口
@@ -49,7 +49,7 @@ func (con *CommonCtrl) GetIcpInfo(c *gin.Context) {
 	ginWrap.ReturnData(info)
 }
 
-// UserLogin Version
+// Version Version
 // @Summary Version
 // @Description Version
 // @Tags 公共接口

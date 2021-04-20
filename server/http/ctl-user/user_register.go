@@ -5,7 +5,7 @@ import (
 	"github.com/krilie/lico_alone/server/http/ginutil"
 )
 
-// UserLogin 用户注册
+// UserRegister 用户注册
 // @Summary 用户注册
 // @Description 用户注册
 // @Tags 用户

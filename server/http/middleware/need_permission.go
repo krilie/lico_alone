@@ -6,7 +6,7 @@ import (
 	"github.com/krilie/lico_alone/server/http/ginutil"
 )
 
-// check user has some permission request by used url
+// NeedPermission check user has some permission request by used url
 func (m *GinMiddleware) NeedPermission() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ginWrap := ginutil.NewGinWrap(c, m.log)

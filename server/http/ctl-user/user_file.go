@@ -130,7 +130,7 @@ func (a *UserCtrl) DeleteFile(c *gin.Context) {
 	return
 }
 
-// QueryArticle 文件查询
+// QueryFile 文件查询
 // @Summary 文件查询
 // @Description 文件查询
 // @Tags 文件管理

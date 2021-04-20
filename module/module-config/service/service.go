@@ -6,7 +6,7 @@ import (
 	"github.com/krilie/lico_alone/module/module-config/dao"
 )
 
-// 系统配置服务
+// ConfigModule 系统配置服务
 type ConfigModule struct {
 	Dao *dao.ConfigDao
 	log *nlog.NLog

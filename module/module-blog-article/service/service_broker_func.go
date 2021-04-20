@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// 文章被访问的消息
+// HandleBrokerBlogArticleVisitedMessage 文章被访问的消息
 func (s *BlogArticleModule) HandleBrokerBlogArticleVisitedMessage(msg *messages.BlogArticleVisitedMessage) {
 	log := s.log.Get(msg.GetCtx()).WithField("param_msg", msg)
 	log.Info("handle a broker of blog article visited message")

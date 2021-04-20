@@ -8,7 +8,7 @@ import (
 	"github.com/krilie/lico_alone/common/errs"
 )
 
-// 给中间件使用
+// GetAppValuesOrAbort 给中间件使用
 // get app context or nil
 func (g *GinWrap) GetAppValuesOrAbort() *context.AppCtxValues {
 	appContext := g.GetAppContext()

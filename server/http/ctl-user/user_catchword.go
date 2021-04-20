@@ -68,7 +68,7 @@ func (a *UserCtrl) UpdateCatchword(c *gin.Context) {
 	ginWrap.ReturnOk()
 }
 
-// UpdateCatchword 删除时代语
+// DeleteCatchword 删除时代语
 // @Tags 时代语
 // @ID 删除时代语
 // @Summary 删除时代语
@@ -91,7 +91,7 @@ func (a *UserCtrl) DeleteCatchword(c *gin.Context) {
 	ginWrap.ReturnOk()
 }
 
-// UpdateCatchword 查询时代语
+// QueryCatchword 查询时代语
 // @Tags 时代语
 // @ID 查询时代语
 // @Summary 查询时代语
