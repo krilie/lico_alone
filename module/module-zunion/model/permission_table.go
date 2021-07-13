@@ -5,17 +5,21 @@ import (
 	"time"
 )
 
-type Permission struct {
-	CreatedAt   time.Time      `gorm:"column:created_at;type:datetime(3)" json:"created_at"`
-	UpdatedAt   time.Time      `gorm:"column:updated_at;type:datetime(3)" json:"updated_at"`
-	DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at;index;type:datetime(3)" json:"deleted_at"`
-	Name        string         `gorm:"column:name;primaryKey;type:varchar(32)" json:"name"`
-	Description string         `gorm:"column:description;type:varchar(100);not null" json:"description"`
-	RefMethod   string         `gorm:"column:ref_method;not null;type:varchar(255)" json:"ref_method"`
-	RefPath     string         `gorm:"column:ref_path;not null;type:varchar(255)" json:"ref_path"`
-	Sort        int            `gorm:"column:sort;not null;type:int(11)" json:"sort"`
+// TbComment
+// 1c'f
+type TbComment struct {
+	CreatedAt time.Time      `gorm:"column:created_at;type:datetime(3)" json:"created_at"`
+	UpdatedAt time.Time      `gorm:"column:updated_at;type:datetime(3)" json:"updated_at"`
+	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at;index;type:datetime(3)" json:"deleted_at"`
+
+	Id        string `gorm:"column:id;primaryKey;type:varchar(32)" json:"id"`
+	UserId    string `gorm:"column:user_id;type:varchar(32)" json:"user_id"`
+	CommentId string `gorm:"column:comment_id;type:varchar(32)" json:"comment_id"`
+	TargetId  string `gorm:"column:target_id;type:varchar(32)" json:"target_id"`
+
+	Content string `gorm:"column:content;type:varchar(100);not null" json:"content"`
 }
 
-func (Permission) TableName() string {
-	return "tb_auth_permission"
+func (TbComment) TableName() string {
+	return "tb_comment"
 }
