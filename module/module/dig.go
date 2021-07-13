@@ -12,6 +12,7 @@ import (
 	message_module "github.com/krilie/lico_alone/module/module-message/service"
 	statistic_module "github.com/krilie/lico_alone/module/module-statistic/service"
 	user_module "github.com/krilie/lico_alone/module/module-user/service"
+	service2 "github.com/krilie/lico_alone/module/module-zunion/service"
 )
 
 var DigProviderModuleAll = BuildProviderList()
@@ -29,6 +30,7 @@ func BuildProviderList() []interface{} {
 		ConfigService.DigModuleConfigProviderAll,
 		module_like_dislike.DigModuleLikeDisLikeProviderAll,
 		service.DigModuleCatchwordProviderAll,
+		service2.DigModuleZUnionProviderAll,
 	}
 	var targetList []interface{}
 	for i := range list {

@@ -86,7 +86,7 @@ func GetProjectPath() string {
 // C:\project\lico_alone\server\module\module-time-oc = outFullPath
 // oriFileBasePath = C:\project\lico_alone\server\common\gorm_template
 func BuildGoFilePath(projectPath, oriFilePath, oriFileBasePath, oriFileName, outPath string) (dirPath, outFilePath string) {
-	// C:\project\lico_alone\server\common\gorm_template\dao\dao.gohtml => \dao\dao.gohtml
+	// C:\project\lico_alone\server\common\gorm_template\dao\dao.go => \dao\dao.go
 	var oriFileRelativePath = strings.ReplaceAll(oriFilePath, oriFileBasePath, "")
 	// \dao\
 	var midPath = strings.ReplaceAll(oriFileRelativePath, oriFileName, "")
