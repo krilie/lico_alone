@@ -34,7 +34,7 @@ func (ndb *NDb) Transaction(ctx context.Context, fc func(ctx context.Context) er
 	return err
 }
 
-// 无论有没有事务都开启新事务
+// TransactionOnNewSession 无论有没有事务都开启新事务
 func (ndb *NDb) TransactionOnNewSession(ctx context.Context, fc func(ctx context.Context) error) (err error) {
 	ndb.log.Get(ctx).Trace("在新的事务中执行事务代码")
 	defer ndb.log.Get(ctx).Trace("离开新的事务")

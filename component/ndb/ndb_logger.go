@@ -9,6 +9,7 @@ import (
 	"time"
 )
 
+// ndbLogger 给gorm.Db用的log组件包装
 type ndbLogger struct {
 	*nlog.NLog
 }

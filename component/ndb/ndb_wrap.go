@@ -5,13 +5,13 @@ import (
 	"gorm.io/gorm"
 )
 
-// 不返回结果的执行
+// Exec 不返回结果的执行
 func Exec(ctx context.Context, db *gorm.DB, sql string, values ...interface{}) (affected int64, err error) {
 	resultDb := db.Exec(sql, values...)
 	return resultDb.RowsAffected, resultDb.Error
 }
 
-// 返回结果的执行
+// RawQuery 返回结果的执行
 func RawQuery(ctx context.Context, db *gorm.DB, outData interface{}, sql string, values ...interface{}) error {
 	raw := db.Raw(sql, values...)
 	err := raw.Error
@@ -22,7 +22,7 @@ func RawQuery(ctx context.Context, db *gorm.DB, outData interface{}, sql string,
 	return nil
 }
 
-// 返回结果的执行 只返回一个数值的 如 select count(1) ...
+// Count 返回结果的执行 只返回一个数值的 如 select count(1) ...
 func Count(ctx context.Context, db *gorm.DB, sql string, values ...interface{}) (count int64, err error) {
 	raw := db.Raw(sql, values...)
 	err = raw.Error

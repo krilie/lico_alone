@@ -21,6 +21,7 @@ import (
 const gormTransConDb = "gormTransConDb"
 const dbVersion = 210001
 
+// NDb 把gorm.DB包起来 给出常用方法及事务包装方法
 type NDb struct {
 	cfg         ncfg.DB
 	log         *nlog.NLog
@@ -29,6 +30,7 @@ type NDb struct {
 	db          *gorm.DB
 }
 
+// GetDb 获取gorm.DB
 func (ndb *NDb) GetDb(ctx context.Context) *gorm.DB {
 	values := context2.GetAppValues(ctx)
 	if values == nil {
@@ -54,6 +56,7 @@ func (ndb *NDb) GetSessionDb(ctx context.Context) *gorm.DB {
 	}
 }
 
+// Ping ping db
 func (ndb *NDb) Ping() error {
 	db, err := ndb.db.DB()
 	if err != nil {
@@ -62,6 +65,7 @@ func (ndb *NDb) Ping() error {
 	return db.Ping()
 }
 
+// Start 启动数据库 多次调用只执行一次
 func (ndb *NDb) Start() {
 	ndb.onceStartDb.Do(func() {
 		// 数据库迁移
@@ -89,6 +93,7 @@ func (ndb *NDb) Start() {
 	})
 }
 
+// CloseDb 关闭db
 func (ndb *NDb) CloseDb() {
 	ndb.onceStopDb.Do(func() {
 		db, err2 := ndb.db.DB()
@@ -104,6 +109,7 @@ func (ndb *NDb) CloseDb() {
 	})
 }
 
+// NewNDb 创建并开启Db
 func NewNDb(cfg *ncfg.NConfig, log *nlog.NLog) (ndb *NDb) {
 
 	var dbCfg = cfg.GetDbCfg()
@@ -121,6 +127,7 @@ func NewNDb(cfg *ncfg.NConfig, log *nlog.NLog) (ndb *NDb) {
 	return ndb
 }
 
+// MigrationDb 数据库创建
 func (ndb *NDb) MigrationDb() {
 	defer func() {
 		if err := recover(); err != nil {

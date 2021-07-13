@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// GetTxFromCtx 从上下文中获取Tx数据库
 func GetTxFromCtx(ctx context.Context) *gorm.DB {
 	values := context2.GetAppValues(ctx)
 	if values == nil {
@@ -20,6 +21,7 @@ func GetTxFromCtx(ctx context.Context) *gorm.DB {
 	}
 }
 
+// SetTxToCtx 设置tx到上下文
 func SetTxToCtx(ctx context.Context, tx *gorm.DB) {
 	values := context2.GetAppValues(ctx)
 	if values == nil {
@@ -29,6 +31,7 @@ func SetTxToCtx(ctx context.Context, tx *gorm.DB) {
 	}
 }
 
+// ClearTxOnCtl 清理Tx与Ctl
 func ClearTxOnCtl(ctx context.Context) {
 	SetTxToCtx(ctx, nil)
 }

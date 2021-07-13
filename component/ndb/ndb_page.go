@@ -6,6 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// pageGetCount 获取数据个数
 func pageGetCount(db *gorm.DB, pageSize int64) (totalCount, totalPage int64, err error) {
 	var totalCount64 int64
 	err = db.Count(&totalCount64).Error
@@ -20,6 +21,7 @@ func pageGetCount(db *gorm.DB, pageSize int64) (totalCount, totalPage int64, err
 	return totalCount64, totalPage, nil
 }
 
+// PageGetData 获取分页数据
 func PageGetData(countDb, dataDb *gorm.DB, pageNum, pageSize int64, data interface{}) (totalCount, totalPage int64, err error) {
 	if pageNum <= 0 || pageSize <= 0 {
 		return 0, 0, errs.NewParamError().WithMsg("错误的分页参数")
@@ -42,7 +44,7 @@ func Like(val string) string {
 	return "%" + val + "%"
 }
 
-// 执行一个count查询 一个date查询
+// GetPageDataFormSql 执行一个count查询 一个date查询
 func GetPageDataFormSql(ctx context.Context, db *gorm.DB, countSql, dataSql string, countArgs, dataArgs []interface{}, data interface{}) (totalCount int64, err error) {
 
 	totalCount, err = Count(ctx, db, countSql, countArgs...)
