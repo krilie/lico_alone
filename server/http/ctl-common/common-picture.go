@@ -17,7 +17,7 @@ import (
 func (con *CommonCtrl) GetSlidePicById(c *gin.Context) {
 	ginWrap := ginutil.NewGinWrap(c, con.log)
 
-	id := ginWrap.Param("id")
+	id := ginWrap.GinCtx.Param("id")
 	carousel, err := con.CommonService.ModuleCarousel.GetCarouselById(ginWrap.AppCtx, id)
 	ginWrap.HandlerErrorOrReturnData(err, carousel)
 	return

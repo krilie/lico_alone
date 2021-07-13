@@ -1,7 +1,7 @@
 package ginutil
 
 func (g *GinWrap) PathParamOrDefault(key, def string) string {
-	var val = g.Context.Param(key)
+	var val = g.GinCtx.Param(key)
 	if val == "" {
 		return def
 	} else {
@@ -10,7 +10,7 @@ func (g *GinWrap) PathParamOrDefault(key, def string) string {
 }
 
 func (g *GinWrap) PathParamOrEmpty(key string) string {
-	var val = g.Context.Param(key)
+	var val = g.GinCtx.Param(key)
 	if val == "" {
 		return ""
 	} else {
@@ -19,7 +19,7 @@ func (g *GinWrap) PathParamOrEmpty(key string) string {
 }
 
 func (g *GinWrap) QueryParamOrDefault(key, def string) string {
-	val, ok := g.Context.GetQuery(key)
+	val, ok := g.GinCtx.GetQuery(key)
 	if !ok {
 		return def
 	}
@@ -30,7 +30,7 @@ func (g *GinWrap) QueryParamOrDefault(key, def string) string {
 }
 
 func (g *GinWrap) QueryParamOrEmpty(key string) string {
-	val, ok := g.Context.GetQuery(key)
+	val, ok := g.GinCtx.GetQuery(key)
 	if !ok {
 		return ""
 	}
@@ -41,7 +41,7 @@ func (g *GinWrap) QueryParamOrEmpty(key string) string {
 }
 
 func (g *GinWrap) FormParamOrDefault(key, def string) string {
-	val, ok := g.Context.GetPostForm(key)
+	val, ok := g.GinCtx.GetPostForm(key)
 	if !ok {
 		return def
 	}
@@ -51,7 +51,7 @@ func (g *GinWrap) FormParamOrDefault(key, def string) string {
 	return val
 }
 func (g *GinWrap) FormParamOrEmpty(key string) string {
-	val, ok := g.Context.GetPostForm(key)
+	val, ok := g.GinCtx.GetPostForm(key)
 	if !ok {
 		return ""
 	}

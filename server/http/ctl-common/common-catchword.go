@@ -27,8 +27,8 @@ func (con *CommonCtrl) QueryCatchword(c *gin.Context) {
 		QueryListForWebShow(
 			ginWrap.AppCtx,
 			ginWrap.QueryParamOrEmpty("key_word"),
-			strutil.GetIntOrDef(ginWrap.Query("from"), 0),
-			strutil.GetIntOrDef(ginWrap.Query("limit"), 0))
+			strutil.GetIntOrDef(ginWrap.GinCtx.Query("from"), 0),
+			strutil.GetIntOrDef(ginWrap.GinCtx.Query("limit"), 0))
 	ginWrap.HandlerErrorOrReturnData(err, data)
 	return
 }

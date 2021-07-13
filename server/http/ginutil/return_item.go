@@ -18,7 +18,7 @@ func (g *GinWrap) HandlerError(err error) bool {
 // HandlerErrorOrReturnSuccess 处理错误 如果没有返回通用成功
 func (g *GinWrap) HandlerErrorOrReturnSuccess(err error) {
 	if err == nil {
-		g.Context.JSON(200, com_model.StdSuccess)
+		g.GinCtx.JSON(200, com_model.StdSuccess)
 		return
 	} else {
 		g.ReturnWithErr(err)
@@ -29,7 +29,7 @@ func (g *GinWrap) HandlerErrorOrReturnSuccess(err error) {
 // HandlerErrorOrReturnJson 处理错误 如果没有返回通用成功
 func (g *GinWrap) HandlerErrorOrReturnJson(err error, ret interface{}) {
 	if err == nil {
-		g.Context.JSON(200, ret)
+		g.GinCtx.JSON(200, ret)
 		return
 	} else {
 		g.ReturnWithErr(err)
@@ -51,28 +51,28 @@ func (g *GinWrap) HandlerErrorOrReturnData(err error, data interface{}) {
 // ReturnWithErr abort with err use err's default http status
 func (g *GinWrap) ReturnWithErr(err error) {
 	if nErr := errs.ToErrOrNil(err); nErr != nil {
-		g.Context.JSON(200, com_model.NewRet(nErr))
+		g.GinCtx.JSON(200, com_model.NewRet(nErr))
 	} else {
-		g.Context.JSON(200, com_model.NewRetFromErr(err))
+		g.GinCtx.JSON(200, com_model.NewRetFromErr(err))
 	}
 }
 
 func (g *GinWrap) ReturnWithAppErr(err *errs.Err) {
-	g.Context.JSON(200, com_model.NewRet(err))
+	g.GinCtx.JSON(200, com_model.NewRet(err))
 }
 
 func (g *GinWrap) ReturnWithParamErr(err error) {
-	g.Context.JSON(200, com_model.NewFailure(errs.ErrorParam, err.Error()))
+	g.GinCtx.JSON(200, com_model.NewFailure(errs.ErrorParam, err.Error()))
 }
 
 func (g *GinWrap) ReturnOk() {
-	g.Context.JSON(200, com_model.StdSuccess)
+	g.GinCtx.JSON(200, com_model.StdSuccess)
 }
 
 func (g *GinWrap) ReturnData(data interface{}) {
-	g.Context.JSON(200, com_model.NewSuccess(data))
+	g.GinCtx.JSON(200, com_model.NewSuccess(data))
 }
 
 func (g *GinWrap) ReturnFailure(code errs.ErrCode, msg string) {
-	g.Context.JSON(200, com_model.NewFailure(code, msg))
+	g.GinCtx.JSON(200, com_model.NewFailure(code, msg))
 }

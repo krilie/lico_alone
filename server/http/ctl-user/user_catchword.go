@@ -23,7 +23,7 @@ func (a *UserCtrl) AddCatchword(c *gin.Context) {
 	ginWrap := ginutil.NewGinWrap(c, a.log)
 
 	var param model.AddCatchwordModel
-	err := ginWrap.ShouldBindJSON(&param)
+	err := ginWrap.GinCtx.ShouldBindJSON(&param)
 	if err != nil {
 		ginWrap.ReturnWithAppErr(errs.NewParamError().WithError(err).WithMsg("参数错误"))
 		return
@@ -53,7 +53,7 @@ func (a *UserCtrl) UpdateCatchword(c *gin.Context) {
 	ginWrap := ginutil.NewGinWrap(c, a.log)
 
 	var param model.UpdateCatchwordModel
-	err := ginWrap.ShouldBindJSON(&param)
+	err := ginWrap.GinCtx.ShouldBindJSON(&param)
 	if err != nil {
 		ginWrap.ReturnWithAppErr(errs.NewParamError().WithError(err).WithMsg("参数错误"))
 		return
@@ -82,7 +82,7 @@ func (a *UserCtrl) UpdateCatchword(c *gin.Context) {
 func (a *UserCtrl) DeleteCatchword(c *gin.Context) {
 	ginWrap := ginutil.NewGinWrap(c, a.log)
 
-	err := a.userService.ModuleCatchword.DeleteCatchword(ginWrap.AppCtx, ginWrap.PostForm("id"))
+	err := a.userService.ModuleCatchword.DeleteCatchword(ginWrap.AppCtx, ginWrap.GinCtx.PostForm("id"))
 	if err != nil {
 		ginWrap.ReturnWithErr(err)
 		return
@@ -111,7 +111,7 @@ func (a *UserCtrl) QueryCatchword(c *gin.Context) {
 		KeyWord string `json:"key_word" url:"key_word" form:"key_word" binding:""`
 		com_model.PageParams
 	}{}
-	err := ginWrap.ShouldBindQuery(&param)
+	err := ginWrap.GinCtx.ShouldBindQuery(&param)
 	if err != nil {
 		ginWrap.ReturnWithParamErr(err)
 		return

@@ -14,13 +14,13 @@ func (g *GinWrap) GetAppValuesOrAbort() *context.AppCtxValues {
 	appContext := g.GetAppContext()
 	if appContext == nil {
 		g.log.WithFuncName("GetAppValuesOrAbort").Error("can not get service context for next step")
-		g.Context.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
+		g.GinCtx.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
 		return nil
 	}
 	value := context.GetAppValues(appContext)
 	if value == nil {
 		g.log.WithFuncName("GetAppValuesOrAbort").Error("can not get service context for next step")
-		g.Context.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
+		g.GinCtx.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
 		return nil
 	}
 	return value
@@ -30,7 +30,7 @@ func (g *GinWrap) GetAppContextOrAbort() context2.Context {
 	appContext := g.GetAppContext()
 	if appContext == nil {
 		g.log.WithFuncName("GetAppValuesOrAbort").Error("can not get service context for next step")
-		g.Context.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
+		g.GinCtx.AbortWithStatusJSON(200, com_model.NewRetFromErr(errs.NewInternal()))
 		return nil
 	}
 	return appContext
@@ -54,13 +54,13 @@ func (g *GinWrap) GetAppValuesOrReturn() *context.AppCtxValues {
 	appContext := g.GetAppContext()
 	if appContext == nil {
 		g.log.WithFuncName("GetAppValuesOrAbort").Error("GetAppValuesOrReturn", "can not get service context for next step")
-		g.Context.JSON(200, com_model.NewRet(errs.NewInternal().WithMsg("ctx not get")))
+		g.GinCtx.JSON(200, com_model.NewRet(errs.NewInternal().WithMsg("ctx not get")))
 		return nil
 	}
 	value := context.GetAppValues(appContext)
 	if value == nil {
 		g.log.WithFuncName("GetAppValuesOrAbort").Error("GetAppValuesOrReturn", "can not get service context for next step")
-		g.Context.JSON(200, com_model.NewRet(errs.NewInternal().WithMsg("ctx not get")))
+		g.GinCtx.JSON(200, com_model.NewRet(errs.NewInternal().WithMsg("ctx not get")))
 		return nil
 	}
 	return value
@@ -111,7 +111,7 @@ func (g *GinWrap) MustGetAppContext() context2.Context {
 }
 
 func (g *GinWrap) GetAppContext() context2.Context {
-	value, exists := g.Context.Get(GinKeyAppContext)
+	value, exists := g.GinCtx.Get(GinKeyAppContext)
 	if !exists {
 		g.log.WithFuncName("GetAppValuesOrAbort").Error("GetAppValuesOrReturn", "can not get service context for next step")
 		return nil
