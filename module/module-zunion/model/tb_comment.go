@@ -20,6 +20,7 @@ type TbComment struct {
 	Content      string `gorm:"column:content;type:varchar(100);not null" json:"content"`        // 此为评论的内容
 	LikeCount    int    `gorm:"column:like_count;type:int(11);not null" json:"like_count"`       // 喜欢数
 	DislikeCount int    `gorm:"column:dislike_count;type:int(11);not null" json:"dislike_count"` // 不喜欢数
+	IsCheck      bool   `gorm:"column:is_check;type:tinyint(1);not null" json:"is_check"`        // 是否审核
 }
 
 func (TbComment) TableName() string {
