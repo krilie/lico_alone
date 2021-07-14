@@ -12,5 +12,5 @@ func TestMigrate3(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	dbmigrate.Migrate(db, 210001)
+	dbmigrate.Migrate(db, 210002)
 }

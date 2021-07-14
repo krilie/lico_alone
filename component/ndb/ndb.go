@@ -19,7 +19,7 @@ import (
 )
 
 const gormTransConDb = "gormTransConDb"
-const dbVersion = 210001
+const dbVersion = 210002
 
 // NDb 把gorm.DB包起来 给出常用方法及事务包装方法
 type NDb struct {
