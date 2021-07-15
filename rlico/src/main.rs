@@ -1,6 +1,7 @@
 mod dao;
 mod model;
 mod service;
+mod util;
 
 use tide::Request;
 use tide::prelude::*;
