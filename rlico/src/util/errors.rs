@@ -1,6 +1,6 @@
 use tide::new;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct LicoError {
     pub msg: String,
     pub kind: i32,
@@ -21,7 +21,10 @@ impl LicoError {
         self.with_msg(msg);
         self
     }
+    pub fn build(&mut self) -> LicoError {
+        LicoError { msg: self.msg.clone(), kind: self.kind.clone() }
+    }
     // 常有错误
-    pub fn not_found() -> &mut LicoError { LicoError::new().with_msg_kind(4004, "not found".to_string()) }
-    pub fn internal_err() -> &mut LicoError { LicoError::new().with_msg_kind(5000, "internal err".to_string()) }
+    pub fn not_found() -> LicoError { LicoError{kind:4004,msg: "not found".to_string()} }
+    pub fn internal_err() -> LicoError { LicoError{kind:5000,msg: "internal err".to_string()} }
 }

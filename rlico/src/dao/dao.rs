@@ -27,10 +27,16 @@ fn test() -> Result<(), Error> {
         let mut x1 = pool.begin().await?;
         let mut connection = pool.acquire().await?;
         connection.ping().await?;
+
+        // sqlx::query("DELETE FROM tablename WHERE 1=2").execute(&pool).await?;
         let x: Vec<forTest> = sqlx::query_as("select * from for_test").fetch_all(&mut connection).await?;
         for x2 in x {
             println!("{:?}", x2);
         }
+
+        let mut stream = sqlx::query_as::<_, forTest>("select * from for_test where name=?")
+            .bind("user_email")
+            .fetch(&mut connection);
 
         Ok(())
     })
