@@ -6,7 +6,11 @@ use crate::dao::create_mysql_pool;
 use chrono::{DateTime, Local};
 use tide::http::cookies::EncodedCookie;
 
-pub async fn add_comment<'a>(executor: impl Executor<'a>, comment: &TbComment) -> Result<(), LicoError> {
+pub async fn add_comment<'e, 'c: 'e,  E,DB>(executor:E, comment: &TbComment) -> Result<(), LicoError>
+    where
+        E: 'e + Executor<'c, Database = DB>,
+        DB: 'e,
+{
     let sql = r######"insert into
                           tb_comment(id, created_at, updated_at, deleted_at, user_id, comment_id, target_id, content, like_count, dislike_count, is_check)
                           VALUES(?,?,?,?,?,?,?,?,?,?,?)"######;
@@ -20,8 +24,8 @@ pub async fn add_comment<'a>(executor: impl Executor<'a>, comment: &TbComment) -
 #[test]
 pub fn test() {
     async_std::task::block_on(async {
-        let conn = create_mysql_pool("mysql://test:123456@lizo.top/test").await?;
-        let comment = add_comment(&conn.acquire().await?, &TbComment {
+        let mut conn = create_mysql_pool("mysql://test:123456@lizo.top/test").await?;
+        let comment = add_comment(&mut conn.acquire().await?, &TbComment {
             create_at: Local::now(),
             update_at: Local::now(),
             delete_at: None,
