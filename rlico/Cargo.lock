@@ -1599,6 +1599,8 @@ dependencies = [
  "async-std",
  "chrono",
  "serde",
+ "serde_derive",
+ "serde_json",
  "sqlx",
  "tide",
 ]

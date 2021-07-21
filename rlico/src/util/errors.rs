@@ -1,10 +1,20 @@
 use tide::new;
+use std::error::Error;
+use std::fmt::{Display, Formatter};
 
 #[derive(Debug, Clone)]
 pub struct LicoError {
     pub msg: String,
     pub kind: i32,
 }
+
+impl Display for LicoError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "kind:{} msg:{}", self.kind, self.msg)
+    }
+}
+
+impl Error for LicoError { /* 没有子错误*/ }
 
 impl LicoError {
     pub fn new() -> LicoError { LicoError { msg: "success".to_string(), kind: 2000 } }
@@ -25,6 +35,6 @@ impl LicoError {
         LicoError { msg: self.msg.clone(), kind: self.kind.clone() }
     }
     // 常有错误
-    pub fn not_found() -> LicoError { LicoError{kind:4004,msg: "not found".to_string()} }
-    pub fn internal_err() -> LicoError { LicoError{kind:5000,msg: "internal err".to_string()} }
+    pub fn not_found() -> LicoError { LicoError { kind: 4004, msg: "not found".to_string() } }
+    pub fn internal_err() -> LicoError { LicoError { kind: 5000, msg: "internal err".to_string() } }
 }
