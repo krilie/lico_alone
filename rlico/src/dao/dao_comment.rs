@@ -6,10 +6,7 @@ use crate::dao::create_mysql_pool;
 use chrono::{DateTime, Local};
 use tide::http::cookies::EncodedCookie;
 
-pub async fn add_comment<'e, 'c: 'e,  E,DB>(executor:E, comment: &TbComment) -> Result<(), LicoError>
-    where
-        E: 'e + Executor<'c, Database = DB>,
-        DB: 'e,
+pub async fn add_comment<'e,DB>(executor:Box<dyn Executor<'e, Database=DB>>, comment: &TbComment) -> Result<(), LicoError>
 {
     let sql = r######"insert into
                           tb_comment(id, created_at, updated_at, deleted_at, user_id, comment_id, target_id, content, like_count, dislike_count, is_check)
