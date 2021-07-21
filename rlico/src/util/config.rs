@@ -1,27 +1,23 @@
 extern crate serde;
 extern crate toml;
 
-#[derive(Debug, Clone, Serialize, Deserialize, )]
-pub struct Config {
-    pub db_config: DbConfig,
-    #[serde(default)]
-    pub http_addr: Vec<String>,
-
-}
+use serde_derive::Serialize;
 
 #[derive(Debug, Clone, Serialize, Deserialize, )]
 pub struct DbConfig {
     pub conn_str: String,
 }
 
+#[derive(Serialize)]
+pub struct TestVal {
+    pub name: String,
+    pub http_addr: String,
+    pub db: DbConfig,
+}
+
 #[test]
-pub fn test() {
-    let cfg = Config { db_config: DbConfig { conn_str: "mysql://test:123456@lizo.top/test".to_string() }, http_addr: vec!["0.0.0.0:80".to_string()] };
-    println!("{}", serde_json::to_string(&cfg).unwrap());
-    match toml::to_string(&cfg) {
-        Ok(valStr) => { println!("{}", valStr) }
-        Err(err) => {
-            println!("err {:?}", err)
-        }
-    }
+pub fn test2() {
+    let test = TestVal { name: "123".to_string(), db: DbConfig { conn_str: "234".to_string() }, http_addr: "123".to_string() };
+    let val = toml::to_string(&test).unwrap();
+    println!("{}", val);
 }

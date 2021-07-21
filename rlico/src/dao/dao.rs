@@ -8,7 +8,6 @@ pub async fn create_mysql_pool(conn_str: &str) -> Result<Pool<MySql>, Error> {
     MySqlPoolOptions::new()
         .max_connections(5)
         .connect(conn_str).await
-    // .connect("mysql://test:123456@lizo.top/test")
 }
 
 #[test]
