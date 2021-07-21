@@ -1,11 +1,19 @@
 use tide::new;
 use std::error::Error;
 use std::fmt::{Display, Formatter};
+use crate::util::com_result::ComResult;
+use std::any::Any;
 
 #[derive(Debug, Clone)]
 pub struct LicoError {
     pub msg: String,
     pub kind: i32,
+}
+
+impl From<String> for LicoError {
+    fn from(t: String) -> Self {
+        LicoError { msg: t.to_string(), kind: 5000 }
+    }
 }
 
 impl Display for LicoError {
@@ -37,4 +45,17 @@ impl LicoError {
     // 常有错误
     pub fn not_found() -> LicoError { LicoError { kind: 4004, msg: "not found".to_string() } }
     pub fn internal_err() -> LicoError { LicoError { kind: 5000, msg: "internal err".to_string() } }
+}
+
+#[test]
+fn test(){
+   fn gen_err()->Result<(),String> {
+       Result::Err("hello error".to_string())
+   }
+    fn use_err()->Result<(),LicoError> {
+        let x = gen_err()?;
+        Ok(())
+    }
+    let re = use_err();
+    println!("{:?}",re);
 }
