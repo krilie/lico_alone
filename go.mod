@@ -60,13 +60,12 @@ require (
 	github.com/stretchr/testify v1.6.1
 	github.com/swaggo/gin-swagger v1.3.0
 	github.com/swaggo/swag v1.7.0
-	github.com/yuin/goldmark v1.2.1
+	github.com/yuin/goldmark v1.4.13
 	go.mongodb.org/mongo-driver v1.5.1
 	go.uber.org/automaxprocs v1.3.0
 	go.uber.org/dig v1.10.0
 	go.uber.org/zap v1.16.0
-	golang.org/x/net v0.0.0-20210119194325-5f4716e94777 // indirect
-	golang.org/x/tools v0.1.0 // indirect
+	golang.org/x/net v0.7.0 // indirect
 	google.golang.org/grpc v1.33.1
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
