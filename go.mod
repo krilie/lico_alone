@@ -34,7 +34,7 @@ require (
 	github.com/juju/ratelimit v1.0.1
 	github.com/krilie/go-smq v0.0.0-20200426063429-520e51d883e3
 	github.com/krilie/s-file v1.1.0
-	github.com/microcosm-cc/bluemonday v1.0.4 // indirect
+	github.com/microcosm-cc/bluemonday v1.0.20 // indirect
 	github.com/mikespook/gorbac v2.1.0+incompatible
 	github.com/minio/minio-go v6.0.14+incompatible
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
@@ -65,7 +65,6 @@ require (
 	go.uber.org/automaxprocs v1.3.0
 	go.uber.org/dig v1.10.0
 	go.uber.org/zap v1.16.0
-	golang.org/x/net v0.0.0-20210119194325-5f4716e94777 // indirect
 	golang.org/x/tools v0.1.0 // indirect
 	google.golang.org/grpc v1.33.1
 	google.golang.org/protobuf v1.25.0
